@@ -27,7 +27,7 @@ export function App() {
     }
 
     setStatus('success')
-    setMessage("Thanks! We'll be in touch!")
+    setMessage("You'll be travelling in no time! Be in touch soon!”")
     setName('')
     setEmail('')
     setIsOpen(false)
@@ -61,7 +61,7 @@ export function App() {
           <p className="subtitle">Be the first to join our community.</p>
         </div>
         <button className="cta" type="button" onClick={() => setIsOpen(true)}>
-          Register
+          Sign me up!
         </button>
         {message ? <p className={`notice ${status}`}>{message}</p> : null}
       </section>
