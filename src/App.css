@@ -13,12 +13,12 @@
 
 .card {
   width: min(100%, 520px);
-  background: rgba(18, 18, 20, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  border: none;
   border-radius: 20px;
   padding: clamp(1.5rem, 4vw, 2.25rem);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
+  box-shadow: none;
+  backdrop-filter: none;
   animation: fadeInZoom 500ms ease-out;
 }
 
@@ -33,15 +33,20 @@
   color: #d4a441;
 }
 
-h1 {
+.title {
   margin: 0 0 0.75rem;
-  font-size: 2rem;
+  font-size: clamp(1.75rem, 5vw, 2.4rem);
+  white-space: nowrap;
 }
 
 .subtitle {
   margin: 0;
   color: #b0b3b8;
   line-height: 1.6;
+}
+
+.accent {
+  color: #d4a441;
 }
 
 .form {
