@@ -207,3 +207,21 @@ button:disabled {
     transform: scale(1);
   }
 }
+
+@media (max-width: 640px) {
+  .title {
+    white-space: nowrap;
+    font-size: clamp(1.35rem, 6vw, 2.2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .card {
+    width: min(100%, 560px);
+  }
+}
+
+@media (max-width: 420px) {
+  .title {
+    font-size: clamp(1.2rem, 5.5vw, 1.9rem);
+  }
+}
