@@ -9,6 +9,7 @@ export function App() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<FormStatus>('idle')
   const [message, setMessage] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -29,47 +30,65 @@ export function App() {
     setMessage("Thanks! We'll be in touch!")
     setName('')
     setEmail('')
+    setIsOpen(false)
   }
 
   return (
     <main className="page">
       <section className="card">
-        <div className="logo">
-          tripcerto<span className="logo-dot">.</span>
+        <div className="headline-block">
+          <div className="logo">
+            tripcerto<span className="logo-dot">.</span>
+          </div>
+          <h1 className="title">
+            The <span className="accent">future of travel</span> is coming...
+          </h1>
+          <p className="subtitle">Be the first to join our community.</p>
         </div>
-        <h1 className="title">
-          The <span className="accent">future of travel</span> is coming...
-        </h1>
-        <p className="subtitle">Be the first to join our community.</p>
-        <form className="form" onSubmit={handleSubmit}>
-          <label className="field">
-            Name
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Your name"
-              required
-            />
-          </label>
-          <label className="field">
-            Email
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@example.com"
-              required
-            />
-          </label>
-          <button type="submit" disabled={status === 'loading'}>
-            {status === 'loading' ? 'Submitting...' : 'Notify me'}
-          </button>
-        </form>
+        <button className="cta" type="button" onClick={() => setIsOpen(true)}>
+          Register
+        </button>
         {message ? <p className={`notice ${status}`}>{message}</p> : null}
       </section>
+      {isOpen ? (
+        <div className="modal-backdrop" role="presentation" onClick={() => setIsOpen(false)}>
+          <div
+            className="modal"
+            role="dialog"
+            aria-modal="true"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2>Register your interest</h2>
+            <form className="form" onSubmit={handleSubmit}>
+              <label className="field">
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="Your name"
+                  required
+                />
+              </label>
+              <label className="field">
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="you@example.com"
+                  required
+                />
+              </label>
+              <div className="modal-actions">
+                <button type="submit" disabled={status === 'loading'}>
+                  {status === 'loading' ? 'Submitting...' : 'Submit'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : null}
     </main>
   )
 }
