@@ -38,7 +38,7 @@ export function App() {
           tripcerto<span className="logo-dot">.</span>
         </div>
         <h1 className="title">
-          The <span className="accent">future of travel</span>
+          The <span className="accent">future of travel</span> is coming...
         </h1>
         <p className="subtitle">Be the first to join our community.</p>
         <form className="form" onSubmit={handleSubmit}>
