@@ -26,7 +26,7 @@ export function App() {
     }
 
     setStatus('success')
-    setMessage("Thanks! We'll be in touch.")
+    setMessage("Thanks! We'll be in touch!")
     setName('')
     setEmail('')
   }
