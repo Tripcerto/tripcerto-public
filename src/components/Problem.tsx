@@ -61,31 +61,9 @@ export function Problem() {
 
         <div className="stats-grid">
           {STATS.map((s) => (
-            <div
-              key={s.kpi}
-              style={{
-                background: 'var(--bg)',
-                padding: '40px 32px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 14,
-                minHeight: 200,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 'clamp(56px, 6vw, 84px)',
-                  fontWeight: 500,
-                  letterSpacing: '-0.035em',
-                  lineHeight: 1,
-                  color: 'var(--gold-soft)',
-                }}
-              >
-                {s.kpi}
-              </span>
-              <p style={{ margin: 0, fontSize: 18, color: 'var(--ink)', fontWeight: 500, lineHeight: 1.35 }}>
-                {s.label}
-              </p>
+            <div key={s.kpi} className="stat-card">
+              <span className="stat-kpi">{s.kpi}</span>
+              <p className="stat-label">{s.label}</p>
             </div>
           ))}
         </div>

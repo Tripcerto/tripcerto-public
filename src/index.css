@@ -521,9 +521,48 @@ section {
   overflow: hidden;
 }
 
+.stat-card {
+  background: var(--bg);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 200px;
+}
+
+.stat-kpi {
+  font-size: clamp(56px, 6vw, 84px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--gold-soft);
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 18px;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
 @media (max-width: 900px) {
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .stat-card {
+    padding: 24px 20px;
+    gap: 8px;
+    min-height: 0;
+  }
+  .stat-kpi {
+    font-size: clamp(40px, 12vw, 56px);
+  }
+  .stat-label {
+    font-size: 15px;
   }
 }
 
