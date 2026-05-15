@@ -1,8 +1,17 @@
 import { IArrow } from './icons'
+import { Threads } from './Threads'
 
 export function Hero() {
   return (
     <section className="hero" aria-label="Hero">
+      <div className="hero-bg" aria-hidden="true">
+        <Threads
+          color={[0.769, 0.573, 0.247]}
+          amplitude={2.0}
+          distance={0.2}
+          enableMouseInteraction
+        />
+      </div>
       <div className="shell hero-shell">
         <div className="hero-spacer-top" />
         <div className="hero-content">
@@ -12,7 +21,7 @@ export function Hero() {
           </h1>
           <p className="hero-sub">
             Stella is an agentic AI that turns the way travellers actually talk &mdash; moods, must-haves,
-            dealbreakers &mdash; into personalised suggestions that remove the friction from closing sales.
+            dealbreakers &mdash; into behavioural data that removes the friction from closing sales.
           </p>
           <div className="hero-ctas">
             <a

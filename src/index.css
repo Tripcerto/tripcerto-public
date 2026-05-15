@@ -847,18 +847,72 @@ section {
 
 /* ---------- hero ---------- */
 .hero {
+  position: relative;
   min-height: calc(100vh - 64px);
   display: flex;
   align-items: stretch;
   justify-content: center;
   padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+  transform: translateY(-18%);
+  mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    #000 55%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    #000 55%,
+    transparent 100%
+  );
+}
+
+.hero-bg > .threads-container {
+  pointer-events: auto;
 }
 
 .hero-shell {
+  position: relative;
+  z-index: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 64px);
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    opacity: 0.6;
+    transform: translateY(-12%);
+    mask-image: radial-gradient(
+      ellipse 95% 65% at 50% 40%,
+      #000 50%,
+      transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 95% 65% at 50% 40%,
+      #000 50%,
+      transparent 100%
+    );
+  }
+  .hero-bg > .threads-container {
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg {
+    display: none;
+  }
 }
 
 .hero-content {
