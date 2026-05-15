@@ -1,0 +1,95 @@
+interface Stat {
+  kpi: string
+  label: string
+}
+
+const STATS: Stat[] = [
+  { kpi: '60%', label: 'Increase in average site session duration' },
+  { kpi: '390%', label: 'Increase in web lead conversion' },
+  { kpi: '40%', label: 'Increase in sales from web leads' },
+]
+
+export function Problem() {
+  return (
+    <section id="problem">
+      <div className="shell">
+        <div className="grid-cols-2" style={{ marginBottom: 56 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <span className="eyebrow">
+              <span className="dot" />
+              Problem
+            </span>
+            <h2 className="section-title">
+              Travel websites are losing 40&ndash;60% of organic traffic to AI language models.
+            </h2>
+            <p className="section-sub" style={{ maxWidth: 'unset' }}>
+              Keeping customers on your website has never been more important. Tripcerto is built for exactly that.
+            </p>
+          </div>
+          <div
+            style={{
+              padding: '32px 28px',
+              background: 'var(--bg-elev)',
+              border: '1px solid var(--line)',
+              borderRadius: 'var(--radius)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
+            }}
+          >
+            <span className="label-mono" style={{ marginBottom: 8 }}>
+              Your website today
+            </span>
+            <p style={{ margin: 0, fontSize: 16, color: 'var(--ink-dim)', lineHeight: 1.6 }}>
+              Visitors land, scan a form, and leave. The ones who stay submit vague enquiries your team spends hours
+              qualifying. AI overviews are pulling the rest away before they even click.
+            </p>
+            <p
+              style={{
+                margin: '12px 0 0',
+                fontSize: 16,
+                color: 'var(--gold-soft)',
+                fontWeight: 500,
+                lineHeight: 1.5,
+              }}
+            >
+              Tripcerto keeps them talking &mdash; and turns that conversation into 3&times; more enquiries than a
+              static form ever could.
+            </p>
+          </div>
+        </div>
+
+        <div className="stats-grid">
+          {STATS.map((s) => (
+            <div
+              key={s.kpi}
+              style={{
+                background: 'var(--bg)',
+                padding: '40px 32px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 14,
+                minHeight: 200,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 'clamp(56px, 6vw, 84px)',
+                  fontWeight: 500,
+                  letterSpacing: '-0.035em',
+                  lineHeight: 1,
+                  color: 'var(--gold-soft)',
+                }}
+              >
+                {s.kpi}
+              </span>
+              <p style={{ margin: 0, fontSize: 18, color: 'var(--ink)', fontWeight: 500, lineHeight: 1.35 }}>
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,27 +1,25 @@
 # Tripcerto Public
 
-This repo hosts the public-facing Tripcerto surface: a lightweight domain used to explain the product at a high level and capture early interest.
+This repo hosts the public-facing Tripcerto surface at `tripcerto.com`: a B2B marketing landing page that explains the product to tour operators, DMCs, and travel agencies.
 
 It is intentionally separate from the main Tripcerto product repo.
 
-## What This Repo Currently Hosts
+## What This Repo Hosts
 
-- the public `tripcerto` landing domain
-- a high-level overview of the Tripcerto system
-- the public brand surface and basic static assets
-- a simple Supabase-backed interest signup flow
+- The public `tripcerto.com` landing page (single page, no routing)
+- The brand surface (typography, colour tokens, basic static assets)
 
 ## What Stays In The Private Repo
 
 The main Tripcerto product and operations stack lives in a separate private monorepo. That includes:
 
-- the core consumer product surfaces
-- the dedicated Stella chat experience
-- internal admin and curation tools
-- shared frontend packages
+- The core consumer product surfaces
+- The dedicated Stella chat experience
+- Internal admin and curation tools
+- Shared frontend packages
 - Supabase edge functions
-- the recommendation, enrichment, and media pipelines
-- the underlying schema, matching logic, and operational tooling
+- The recommendation, enrichment, and media pipelines
+- The underlying schema, matching logic, and operational tooling
 
 ## Why The Split Exists
 
@@ -32,7 +30,7 @@ The private monorepo is where the actual application stack evolves. That is wher
 In short:
 
 - `tripcerto-public` explains the product
-- the private Tripcerto monorepo runs the product
+- The private Tripcerto monorepo runs the product
 
 ## System Overview
 
@@ -40,10 +38,10 @@ Tripcerto is a travel intelligence platform built around Stella, a conversationa
 
 At a high level, the system does four things:
 
-1. accepts natural-language travel input
-2. turns that input into structured trip preferences
-3. matches those preferences against destinations, stays, and travel inventory
-4. streams recommendations and guidance back to the user
+1. Accepts natural-language travel input
+2. Turns that input into structured trip preferences
+3. Matches those preferences against destinations, stays, and travel inventory
+4. Streams recommendations and guidance back to the user
 
 The key architectural idea is that Tripcerto does not treat each chat turn as an isolated prompt. It builds and updates structured trip memory over time, then uses that memory to improve subsequent recommendations.
 
@@ -121,9 +119,9 @@ flowchart LR
 
 The detail intentionally stops short of implementation-level specifics, but the shape is important:
 
-- multiple product surfaces feed a shared backend platform
-- the Stella orchestrator sits at the center of the recommendation experience
-- shared modules keep matching, grounding, readiness, and guardrails separated instead of collapsing everything into one handler
+- Multiple product surfaces feed a shared backend platform
+- The Stella orchestrator sits at the center of the recommendation experience
+- Shared modules keep matching, grounding, readiness, and guardrails separated instead of collapsing everything into one handler
 
 ## Stella Orchestrator
 
@@ -149,29 +147,12 @@ flowchart TD
 
 Why this matters:
 
-- session handling is separated from enrichment
-- enrichment is separated from prompt assembly
-- prompt assembly is separated from tool execution
-- tool execution is separated from persistence
+- Session handling is separated from enrichment
+- Enrichment is separated from prompt assembly
+- Prompt assembly is separated from tool execution
+- Tool execution is separated from persistence
 
 That structure makes the recommendation flow easier to reason about, safer to extend, and much less fragile than a single oversized chat handler.
-
-## Shared Layers, Kept High Level
-
-These layers live in the private monorepo, but they are useful to understand from a system-design perspective:
-
-| Layer | High-level role |
-| --- | --- |
-| Shared UI | Reusable components and interface primitives used across product surfaces |
-| Shared core/client utilities | Typed shared client logic and cross-surface helpers |
-| Shared backend modules | Common orchestration building blocks such as grounding, matching, readiness, and provider abstraction |
-| Media worker | Asynchronous processing for uploaded media and derivative generation |
-
-The important point is not the file structure itself. It is the separation of responsibilities:
-
-- UI concerns stay in shared frontend layers
-- orchestration concerns stay in backend modules
-- heavy media work stays off the request path
 
 ## Memory And Matching Model
 
@@ -179,50 +160,50 @@ Tripcerto uses structured preference memory rather than relying on one-shot prom
 
 In practice, that means the system can:
 
-- carry preferences forward across a conversation
-- distinguish trip-wide preferences from leg-specific context
-- update recommendations as the user becomes more specific
-- use explicit positive and negative feedback to refine later results
+- Carry preferences forward across a conversation
+- Distinguish trip-wide preferences from leg-specific context
+- Update recommendations as the user becomes more specific
+- Use explicit positive and negative feedback to refine later results
 
 This is the core product behavior behind Stella: conversation becomes reusable trip context rather than disposable chat history.
 
-## Public Vs Private Deployment Split
+## This Repo's Stack
 
-The easiest way to think about the current setup is:
+The public site is intentionally minimal:
 
-| Surface | Purpose |
-| --- | --- |
-| `tripcerto-public` | Public overview site and interest capture |
-| Private Tripcerto monorepo | Product apps, shared packages, backend functions, data model, admin tools, and recommendation engine |
+- React 19 + TypeScript (strict)
+- Vite 7
+- No framework, no UI library, no Tailwind — design tokens live in `src/index.css` as CSS variables
+- Deployed on Vercel (auto-deploy on push to `main`)
 
-That split is deliberate.
+## Project Structure
 
-The public repo should remain:
-
-- lightweight
-- easy to share
-- easy to deploy
-- low-risk from an operational and security perspective
-
-The private repo can then carry the full product surface area without forcing that complexity into the public-facing site.
-
-## Tech Summary
-
-At a high level, the broader Tripcerto platform is built around:
-
-- React frontend surfaces
-- shared typed packages
-- Supabase edge functions and PostgreSQL
-- vector-backed retrieval and matching
-- external providers for LLMs, maps, media, and travel content
-
-This public repo, by contrast, is intentionally much smaller. It is just the public shell.
+```
+src/
+  App.tsx                # Section composition
+  main.tsx               # React root
+  index.css              # Design tokens + utility classes
+  components/
+    Nav.tsx, Hero.tsx, Problem.tsx, MatchingSection.tsx,
+    BriefReveal.tsx, Features.tsx, Integration.tsx,
+    PilotCTA.tsx, FAQ.tsx, Footer.tsx, icons.tsx
+public/
+  unnamed.png            # Favicon / OG image
+index.html               # Document shell, fonts, meta
+```
 
 ## Local Development
 
 ```bash
 npm install
-npm run dev
+npm run dev       # Vite dev server on http://localhost:5173
+npm run build     # tsc -b && vite build
+npm run lint      # eslint .
+npm run preview   # serve dist/ locally
 ```
 
-Environment variables are used for the public Supabase signup flow.
+No runtime environment variables are required. See `.env.example`.
+
+## Deployment
+
+Vercel watches `main`. Push to `main` triggers a production build. PRs against `main` produce preview deployments.
