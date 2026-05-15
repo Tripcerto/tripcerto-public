@@ -342,8 +342,7 @@ section {
 /* Lifted "card" sections (Problem, Features, Pilot) sit on bg-elev with rounded corners. */
 /* MatchingSection, Integration, FAQ stay flat between them. */
 main > section#problem .shell,
-main > section#features .shell,
-main > section#pilot .shell {
+main > section#features .shell {
   background: var(--bg-elev);
   border: 1px solid var(--line);
   border-radius: 28px;
@@ -369,34 +368,42 @@ main > section#pilot .shell {
   display: none;
 }
 
-/* Pilot card — full-width single column, sizes to content */
-main > section#pilot .shell {
-  padding: 48px 64px 72px;
+/* Pilot section is the edge-to-edge "card" — full viewport bleed */
+main > section#pilot {
+  background: var(--bg-elev);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 96px 0;
   overflow: hidden;
   position: relative;
 }
 
 @media (max-width: 900px) {
-  main > section#pilot .shell {
-    padding: 32px 28px 48px;
+  main > section#pilot {
+    padding: 72px 0;
   }
 }
 
-/* Soft aurora fills the pilot card edge-to-edge, sits behind content */
+#pilot .shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* Blurred Threads fills the entire section edge-to-edge */
 .pilot-aurora-bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  border-radius: 28px;
   overflow: hidden;
-  opacity: 0.85;
+  opacity: 1;
+  filter: blur(7px);
 }
 
 @media (max-width: 900px) {
   .pilot-aurora-bg {
-    border-radius: 20px;
-    opacity: 0.7;
+    opacity: 0.9;
+    filter: blur(5px);
   }
 }
 
@@ -404,10 +411,6 @@ main > section#pilot .shell {
   .pilot-aurora-bg {
     display: none;
   }
-}
-
-#pilot .pilot-panel {
-  z-index: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -461,8 +464,7 @@ main > section#pilot .shell {
 
 @media (max-width: 900px) {
   main > section#problem .shell,
-  main > section#features .shell,
-  main > section#pilot .shell {
+  main > section#features .shell {
     border-radius: 20px;
     padding: 32px 24px 48px;
     width: calc(100% - 32px);
