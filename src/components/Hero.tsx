@@ -11,8 +11,8 @@ export function Hero() {
             <span style={{ color: 'var(--gold)' }}>Stella doesn&rsquo;t either.</span>
           </h1>
           <p className="hero-sub">
-            Stella turns the way travellers actually talk &mdash; moods, must-haves, dealbreakers &mdash; into
-            personalised suggestions that remove the friction from closing sales.
+            Stella is an agentic AI that turns the way travellers actually talk &mdash; moods, must-haves,
+            dealbreakers &mdash; into personalised suggestions that remove the friction from closing sales.
           </p>
           <div className="hero-ctas">
             <a href="#pilot" className="btn btn-primary btn-lg">

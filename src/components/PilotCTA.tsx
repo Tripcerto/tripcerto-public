@@ -6,7 +6,6 @@ const META: Array<{ k: string; v: string }> = [
   { k: 'Stack', v: 'Claude Sonnet · pgvector · Supabase' },
 ]
 
-const MAILTO_DEMO = 'mailto:hello@tripcerto.com?subject=Tripcerto%20demo%20request'
 const MAILTO_CONTACT = 'mailto:hello@tripcerto.com'
 
 export function PilotCTA() {
@@ -31,18 +30,11 @@ export function PilotCTA() {
                   textWrap: 'balance',
                 }}
               >
-                Book a 20-minute demo. Walk away with your white-label sandbox.
+                Book a 20-minute demo
               </h2>
-              <p style={{ margin: 0, color: 'var(--ink-dim)', fontSize: 17, maxWidth: '52ch' }}>
-                Pilots run 90 days, fixed-fee, with a published exit clause. No public pricing &mdash; we calibrate to
-                enquiry volume and inventory size.
-              </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <a href={MAILTO_DEMO} className="btn btn-primary btn-lg">
-                  Book a demo <IArrow size={15} />
-                </a>
-                <a href={MAILTO_CONTACT} className="btn btn-ghost btn-lg">
-                  Contact us
+                <a href={MAILTO_CONTACT} className="btn btn-primary btn-lg">
+                  Contact us <IArrow size={15} />
                 </a>
               </div>
             </div>
