@@ -24,6 +24,10 @@ const FAQS: Faq[] = [
     a: 'A subdomain pilot needs zero engineering on your end. Webhook-to-CRM is 1–2 days of work. Embed is one script tag.',
   },
   {
+    q: 'What makes Stella actually agentic?',
+    a: 'She runs a tool-using loop, not a script. Each turn, Claude reads the conversation and chooses what to do next — extract preferences, search your scored inventory, surface matches, or hand off to a human — and chains those moves inside one streaming response. The brief assembles itself from her decisions, not a fixed funnel.',
+  },
+  {
     q: 'Which AI models do you use, and is data sent to them?',
     a: 'Reasoning: Claude Sonnet 4.6. Lighter ops: GPT-4.1-mini. Both run with strict no-training data policies. PII is redacted before model calls; raw conversation is stored on your tenant.',
   },
