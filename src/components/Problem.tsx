@@ -22,9 +22,6 @@ export function Problem() {
             <h2 className="section-title">
               Travel websites are losing 40&ndash;60% of organic traffic to AI language models.
             </h2>
-            <p className="section-sub" style={{ maxWidth: 'unset' }}>
-              Keeping customers on your website has never been more important. Tripcerto is built for exactly that.
-            </p>
           </div>
           <div
             style={{
@@ -42,7 +39,7 @@ export function Problem() {
             </span>
             <p style={{ margin: 0, fontSize: 16, color: 'var(--ink-dim)', lineHeight: 1.6 }}>
               Visitors land, scan a form, and leave. The ones who stay submit vague enquiries your team spends hours
-              qualifying. AI overviews are pulling the rest away before they even click.
+              qualifying.
             </p>
             <p
               style={{

@@ -28,7 +28,7 @@ export function Hero() {
             />
           </h1>
           <p className="hero-sub">
-            Stella is an agentic AI that turns the way travellers actually talk &mdash; moods, must-haves,
+            Stella is an agentic AI that turns the way travellers actually talk &mdash; vibes, must-haves,
             dealbreakers &mdash; into behavioural data that removes the friction from closing sales.
           </p>
           <div className="hero-ctas">
@@ -38,7 +38,7 @@ export function Hero() {
               rel="noopener noreferrer"
               className="btn btn-primary btn-lg"
             >
-              Book a 20-min demo <IArrow size={15} />
+              Book a demo <IArrow size={15} />
             </a>
           </div>
         </div>

@@ -13,7 +13,7 @@ export function PilotCTA() {
               <span className="dot" />
               Pilot programme · open
             </span>
-            <h2 className="pilot-title">Book a 20-minute demo</h2>
+            <h2 className="pilot-title">Book a demo</h2>
             <p className="pilot-sub">
               See Stella turn a real chat into a qualified brief, in your branding. Yours to keep at the
               end.
