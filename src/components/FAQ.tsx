@@ -25,7 +25,7 @@ const FAQS: Faq[] = [
   },
   {
     q: 'What makes Stella actually agentic?',
-    a: 'She runs a tool-using loop, not a script. Each turn, Claude reads the conversation and chooses what to do next — extract preferences, search your scored inventory, surface matches, or hand off to a human — and chains those moves inside one streaming response. The brief assembles itself from her decisions, not a fixed funnel.',
+    a: 'Real agentic AI, not a scripted bot. The model decides every move in real time — extracting preferences, querying your scored inventory, surfacing matches, or routing to your team. Each conversation ends with a structured brief, assembled from those decisions, not collected through a form.',
   },
   {
     q: 'Which AI models do you use, and is data sent to them?',

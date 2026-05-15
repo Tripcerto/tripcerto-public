@@ -1,5 +1,5 @@
 import { cloneElement, type ReactElement } from 'react'
-import { ICode, IDatabase, ILink } from './icons'
+import { ICode, IDatabase, IHammer, ILink } from './icons'
 import type { IconProps } from './icons'
 
 interface Mode {
@@ -43,6 +43,20 @@ export function Integration() {
           </span>
           <h2 className="section-title">Three ways to launch. No rebuild required.</h2>
         </div>
+
+        <div className="integration-lead">
+          <span className="integration-lead-icon">
+            <IHammer size={22} sw={1.5} />
+          </span>
+          <div>
+            <h4>Built to fit your stack</h4>
+            <p>
+              Stella works alongside your current website, CRM, and sales process &mdash; so you can start capturing
+              better leads without changing how your team operates.
+            </p>
+          </div>
+        </div>
+
         <div className="integration-grid">
           {MODES.map((m) => (
             <div
@@ -67,19 +81,6 @@ export function Integration() {
               </span>
             </div>
           ))}
-        </div>
-
-        <div className="integration-foot">
-          <span className="integration-foot-icon">
-            <ILink size={22} sw={1.5} />
-          </span>
-          <div>
-            <h4>Built to fit your stack</h4>
-            <p>
-              Stella works alongside your current website, CRM, and sales process &mdash; so you can start capturing
-              better leads without changing how your team operates.
-            </p>
-          </div>
         </div>
       </div>
     </section>

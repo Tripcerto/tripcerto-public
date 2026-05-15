@@ -306,16 +306,15 @@ button {
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-muted);
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 240, 220, 0.02);
+  padding: 0;
+  border: 0;
+  background: none;
 }
 
 .eyebrow .dot {
@@ -328,14 +327,128 @@ button {
 
 /* ---------- section spacing ---------- */
 section {
-  padding: 96px 0;
+  padding: 80px 0;
   position: relative;
   scroll-margin-top: 80px;
 }
 
 @media (max-width: 900px) {
   section {
-    padding: 64px 0;
+    padding: 56px 0;
+  }
+}
+
+/* ---------- alternating elevated panels ---------- */
+/* Lifted "card" sections (Problem, Features, Pilot) sit on bg-elev with rounded corners. */
+/* MatchingSection, Integration, FAQ stay flat between them. */
+main > section#problem,
+main > section#features,
+main > section#pilot {
+  padding: 40px 0;
+}
+
+main > section#problem .shell,
+main > section#features .shell,
+main > section#pilot .shell {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 48px 56px 72px;
+  box-sizing: border-box;
+  width: calc(100% - 64px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 24px 60px -30px rgba(0, 0, 0, 0.7);
+}
+
+/* The .shell of #pilot IS the card now — neutralize the legacy inner panel */
+#pilot .pilot-panel {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  position: relative;
+}
+
+#pilot .pilot-grid-bg {
+  display: none;
+}
+
+/* Pilot card — full-width single column, sizes to content */
+main > section#pilot .shell {
+  padding: 48px 64px 72px;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  main > section#pilot .shell {
+    padding: 32px 28px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pilot-ripple-bg {
+    display: none;
+  }
+}
+
+/* Pilot content layout: lead column stretches, CTAs anchored to bottom */
+.pilot-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+}
+
+.pilot-title {
+  margin: 0;
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.pilot-sub {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 18px;
+  max-width: 52ch;
+  line-height: 1.55;
+}
+
+.pilot-ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+@media (max-width: 900px) {
+  .pilot-lead {
+    height: auto;
+  }
+  .pilot-ctas {
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  main > section#problem,
+  main > section#features,
+  main > section#pilot {
+    padding: 24px 0;
+  }
+  main > section#problem .shell,
+  main > section#features .shell,
+  main > section#pilot .shell {
+    border-radius: 20px;
+    padding: 32px 24px 48px;
+    width: calc(100% - 32px);
   }
 }
 
@@ -641,21 +754,21 @@ section {
   gap: 16px;
 }
 
-.integration-foot {
-  margin-top: 32px;
+.integration-lead {
+  margin-bottom: 40px;
   padding: 0 4px;
   display: flex;
   align-items: flex-start;
   gap: 14px;
 }
 
-.integration-foot-icon {
+.integration-lead-icon {
   color: var(--gold);
   flex-shrink: 0;
   margin-top: 2px;
 }
 
-.integration-foot h4 {
+.integration-lead h4 {
   margin: 0 0 6px;
   font-size: 18px;
   font-weight: 500;
@@ -663,7 +776,7 @@ section {
   letter-spacing: -0.005em;
 }
 
-.integration-foot p {
+.integration-lead p {
   margin: 0;
   color: var(--ink-dim);
   font-size: 14px;
@@ -678,8 +791,8 @@ section {
 }
 
 @media (max-width: 720px) {
-  .integration-foot {
-    margin-top: 24px;
+  .integration-lead {
+    margin-bottom: 28px;
   }
 }
 
@@ -696,20 +809,6 @@ section {
   }
 }
 
-.pilot-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-
-@media (max-width: 900px) {
-  .pilot-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-}
 
 .faq-grid {
   display: grid;
@@ -927,7 +1026,7 @@ section {
 
 .hero-title {
   font-size: clamp(44px, 6.4vw, 88px);
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.028em;
   margin: 0;
   font-weight: 500;
@@ -935,11 +1034,11 @@ section {
 }
 
 .hero-sub {
-  font-size: 21px;
+  font-size: 22px;
   color: var(--ink-dim);
-  max-width: 60ch;
-  margin: 40px 0 0;
-  line-height: 1.55;
+  max-width: 62ch;
+  margin: 64px 0 0;
+  line-height: 1.7;
   text-wrap: pretty;
 }
 
@@ -948,7 +1047,18 @@ section {
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 56px;
+  margin-top: 88px;
+}
+
+@media (max-width: 720px) {
+  .hero-sub {
+    font-size: 19px;
+    margin-top: 40px;
+    line-height: 1.6;
+  }
+  .hero-ctas {
+    margin-top: 56px;
+  }
 }
 
 .hero-spacer-top {

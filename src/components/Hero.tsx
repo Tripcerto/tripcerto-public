@@ -1,4 +1,5 @@
 import { IArrow } from './icons'
+import { ShinyText } from './ShinyText'
 import { Threads } from './Threads'
 
 export function Hero() {
@@ -17,7 +18,14 @@ export function Hero() {
         <div className="hero-content">
           <h1 className="hero-title">
             Travellers don&rsquo;t think in categories.{' '}
-            <span style={{ color: 'var(--gold)' }}>Stella doesn&rsquo;t either.</span>
+            <ShinyText
+              text="Stella doesn’t either."
+              color="#c4923f"
+              shineColor="#d6a85a"
+              speed={4.5}
+              delay={3.5}
+              spread={110}
+            />
           </h1>
           <p className="hero-sub">
             Stella is an agentic AI that turns the way travellers actually talk &mdash; moods, must-haves,
