@@ -341,12 +341,17 @@ section {
 /* ---------- alternating elevated panels ---------- */
 /* Lifted "card" sections (Problem, Features, Pilot) sit on bg-elev with rounded corners. */
 /* MatchingSection, Integration, FAQ stay flat between them. */
+main > section#problem,
+main > section#features {
+  padding: 32px 0 80px;
+}
+
 main > section#problem .shell,
 main > section#features .shell {
   background: var(--bg-elev);
   border: 1px solid var(--line);
   border-radius: 28px;
-  padding: 48px 56px 72px;
+  padding: 48px 56px;
   box-sizing: border-box;
   width: calc(100% - 64px);
   box-shadow:
@@ -373,14 +378,14 @@ main > section#pilot {
   background: var(--bg-elev);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  padding: 96px 0;
+  padding: 80px 0;
   overflow: hidden;
   position: relative;
 }
 
 @media (max-width: 900px) {
   main > section#pilot {
-    padding: 72px 0;
+    padding: 56px 0;
   }
 }
 
@@ -423,13 +428,16 @@ main > section#pilot {
 .pilot-lead {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  height: 100%;
+  gap: 28px;
+}
+
+.pilot-lead .eyebrow {
+  margin-bottom: 4px;
 }
 
 .pilot-title {
   margin: 0;
-  font-size: clamp(36px, 4vw, 52px);
+  font-size: clamp(40px, 4.4vw, 60px);
   line-height: 1.05;
   letter-spacing: -0.022em;
   font-weight: 500;
@@ -439,34 +447,36 @@ main > section#pilot {
 .pilot-sub {
   margin: 0;
   color: var(--ink-dim);
-  font-size: 18px;
-  max-width: 52ch;
-  line-height: 1.55;
+  font-size: 19px;
+  max-width: 56ch;
+  line-height: 1.65;
 }
 
 .pilot-ctas {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-top: auto;
-  padding-top: 32px;
+  margin-top: 16px;
 }
 
 @media (max-width: 900px) {
   .pilot-lead {
-    height: auto;
+    gap: 20px;
   }
   .pilot-ctas {
     margin-top: 8px;
-    padding-top: 8px;
   }
 }
 
 @media (max-width: 900px) {
+  main > section#problem,
+  main > section#features {
+    padding: 24px 0 56px;
+  }
   main > section#problem .shell,
   main > section#features .shell {
     border-radius: 20px;
-    padding: 32px 24px 48px;
+    padding: 32px 24px;
     width: calc(100% - 32px);
   }
 }
