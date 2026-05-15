@@ -1,9 +1,10 @@
 import { IArrow } from './icons'
 
 const META: Array<{ k: string; v: string }> = [
-  { k: 'Pilots available?', v: 'Yes' },
-  { k: 'Time-to-launch', v: '6 weeks' },
-  { k: 'Stack', v: 'Claude Sonnet · pgvector · Supabase' },
+  { k: "What you'll see", v: 'Live white-label sandbox' },
+  { k: 'Time to launch', v: '1 week (subdomain) · 6 weeks (full)' },
+  { k: 'Pilot terms', v: '90 days · fixed-fee · published exit' },
+  { k: 'Your data', v: 'Yours · never co-mingled · CSV/JSON export' },
 ]
 
 const MAILTO_CONTACT = 'mailto:hello@tripcerto.com'
@@ -32,6 +33,9 @@ export function PilotCTA() {
               >
                 Book a 20-minute demo
               </h2>
+              <p style={{ margin: 0, color: 'var(--ink-dim)', fontSize: 17, maxWidth: '52ch' }}>
+                See Stella turn a real chat into a qualified brief, in your branding. Yours to keep at the end.
+              </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <a href={MAILTO_CONTACT} className="btn btn-primary btn-lg">
                   Contact us <IArrow size={15} />

@@ -14,13 +14,13 @@ const ITEMS: Feature[] = [
   { icon: <IFilter />, title: 'Qualified briefs', body: 'Must-have / nice-to-have / must-exclude. Every message tightens the fingerprint.' },
   { icon: <IDatabase />, title: 'Inventory scoring', body: "Your destinations, stays, and packages ranked against each traveller's fingerprint." },
   { icon: <IUsers />, title: 'Group planning', body: 'Travellers invite their group. Shared preferences feed one merged brief.' },
+  { icon: <IGauge />, title: 'Admin analytics', body: 'Sessions, drop-off, top-scored inventory, conversion. See what your audience wants.' },
   {
     icon: <IHandoff />,
     title: 'CRM handoff',
     body: 'Briefs land in your inbox, HubSpot, Salesforce, or webhook. No copy-paste.',
     soon: true,
   },
-  { icon: <IGauge />, title: 'Admin analytics', body: 'Sessions, drop-off, top-scored inventory, conversion. See what your audience wants.' },
 ]
 
 export function Features() {
