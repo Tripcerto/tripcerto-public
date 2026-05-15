@@ -1,4 +1,5 @@
 import { IArrow } from './icons'
+import { SoftAurora } from './SoftAurora'
 
 const MAILTO_CONTACT = 'mailto:hello@tripcerto.com'
 const CALENDAR_BOOKING = 'https://calendar.app.google/kQsnVUt2ABMxFwjw7'
@@ -7,6 +8,24 @@ export function PilotCTA() {
   return (
     <section id="pilot">
       <div className="shell">
+        <div className="pilot-aurora-bg" aria-hidden="true">
+          <SoftAurora
+            color1="#c4923f"
+            color2="#d6a85a"
+            speed={0.6}
+            scale={0.4}
+            brightness={0.6}
+            noiseFrequency={2.5}
+            noiseAmplitude={2}
+            bandHeight={0.5}
+            bandSpread={0.9}
+            octaveDecay={0.24}
+            layerOffset={0}
+            colorSpeed={0.9}
+            enableMouseInteraction
+            mouseInfluence={0.1}
+          />
+        </div>
         <div className="pilot-panel">
           <div className="pilot-lead">
             <span className="eyebrow">

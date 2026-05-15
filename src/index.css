@@ -382,6 +382,34 @@ main > section#pilot .shell {
   }
 }
 
+/* Soft aurora fills the pilot card edge-to-edge, sits behind content */
+.pilot-aurora-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .pilot-aurora-bg {
+    border-radius: 20px;
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pilot-aurora-bg {
+    display: none;
+  }
+}
+
+#pilot .pilot-panel {
+  z-index: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pilot-ripple-bg {
     display: none;
