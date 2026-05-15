@@ -30,22 +30,10 @@ export function Features() {
         </div>
         <div className="features-grid">
           {ITEMS.map((it) => (
-            <div
-              key={it.title}
-              style={{
-                background: 'var(--bg)',
-                padding: '28px 24px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-                minHeight: 200,
-              }}
-            >
-              <span style={{ color: 'var(--gold)' }}>{cloneElement(it.icon, { size: 22, sw: 1.5 })}</span>
-              <h3 style={{ margin: 0, fontSize: 17, fontWeight: 500 }}>{it.title}</h3>
-              <p style={{ margin: 0, color: 'var(--ink-dim)', fontSize: 14, lineHeight: 1.5, whiteSpace: 'pre-line' }}>
-                {it.body}
-              </p>
+            <div key={it.title} className="feature-card">
+              <span className="feature-icon">{cloneElement(it.icon, { size: 22, sw: 1.5 })}</span>
+              <h3 className="feature-title">{it.title}</h3>
+              <p className="feature-body">{it.body}</p>
             </div>
           ))}
         </div>

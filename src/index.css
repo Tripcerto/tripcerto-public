@@ -576,9 +576,50 @@ section {
   overflow: hidden;
 }
 
+.feature-card {
+  background: var(--bg);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 200px;
+}
+
+.feature-icon {
+  color: var(--gold);
+}
+
+.feature-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.feature-body {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
 @media (max-width: 900px) {
   .features-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .feature-card {
+    padding: 18px 20px;
+    gap: 8px;
+    min-height: 0;
+  }
+  .feature-title {
+    font-size: 16px;
+  }
+  .feature-body {
+    font-size: 13.5px;
   }
 }
 
