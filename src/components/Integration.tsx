@@ -69,13 +69,13 @@ export function Integration() {
           ))}
         </div>
 
-        <div className="card" style={{ marginTop: 24, padding: 28, display: 'flex', alignItems: 'center', gap: 24 }}>
-          <span style={{ color: 'var(--gold)', flexShrink: 0 }}>
-            <ILink size={28} sw={1.5} />
+        <div className="integration-foot">
+          <span className="integration-foot-icon">
+            <ILink size={22} sw={1.5} />
           </span>
           <div>
-            <h4 style={{ margin: '0 0 6px', fontSize: 16, fontWeight: 500 }}>Built to fit your stack</h4>
-            <p style={{ margin: 0, color: 'var(--ink-dim)', fontSize: 14, lineHeight: 1.5 }}>
+            <h4>Built to fit your stack</h4>
+            <p>
               Stella works alongside your current website, CRM, and sales process &mdash; so you can start capturing
               better leads without changing how your team operates.
             </p>
