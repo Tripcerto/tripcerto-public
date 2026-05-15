@@ -21,7 +21,7 @@ const FAQS: Faq[] = [
   },
   {
     q: 'How heavy is the integration on our side?',
-    a: 'A subdomain pilot needs zero engineering on your end. Webhook-to-CRM is 1–2 days of work. Embed is one script tag.',
+    a: 'It depends on the mode — we scope each one with you. Subdomain is fully hosted, with no engineering on your side. Embed drops Stella into your existing site as a chat widget or full-page planner. API + webhook delivers structured briefs straight into your CRM or booking workflow.',
   },
   {
     q: 'What makes Stella actually agentic?',
@@ -29,7 +29,7 @@ const FAQS: Faq[] = [
   },
   {
     q: 'Which AI models do you use, and is data sent to them?',
-    a: 'Reasoning: Claude Sonnet 4.6. Lighter ops: GPT-4.1-mini. Both run with strict no-training data policies. PII is redacted before model calls; raw conversation is stored on your tenant.',
+    a: 'Anthropic Claude Sonnet 4.6 runs the agentic loop — every decision, tool call, and traveller-facing reply. OpenAI is used only for embeddings, which feed our pgvector knowledge layer for inventory matching and semantic recall; never for reasoning or generation. Both providers operate under strict no-training agreements. PII is redacted before any model call; raw conversation stays on your tenant.',
   },
 ]
 

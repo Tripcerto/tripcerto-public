@@ -110,7 +110,7 @@ button {
 .nav-links {
   display: flex;
   gap: 28px;
-  color: var(--ink-dim);
+  color: var(--ink);
   font-size: 14px;
   justify-content: center;
 }
@@ -120,7 +120,7 @@ button {
 }
 
 .nav-links a:hover {
-  color: var(--ink);
+  color: var(--gold-soft);
 }
 
 .wordmark {
@@ -341,12 +341,6 @@ section {
 /* ---------- alternating elevated panels ---------- */
 /* Lifted "card" sections (Problem, Features, Pilot) sit on bg-elev with rounded corners. */
 /* MatchingSection, Integration, FAQ stay flat between them. */
-main > section#problem,
-main > section#features,
-main > section#pilot {
-  padding: 40px 0;
-}
-
 main > section#problem .shell,
 main > section#features .shell,
 main > section#pilot .shell {
@@ -438,11 +432,6 @@ main > section#pilot .shell {
 }
 
 @media (max-width: 900px) {
-  main > section#problem,
-  main > section#features,
-  main > section#pilot {
-    padding: 24px 0;
-  }
   main > section#problem .shell,
   main > section#features .shell,
   main > section#pilot .shell {

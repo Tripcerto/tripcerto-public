@@ -6,7 +6,6 @@ interface Mode {
   icon: ReactElement<IconProps>
   label: string
   body: string
-  time: string
   soon?: boolean
 }
 
@@ -15,19 +14,16 @@ const MODES: Mode[] = [
     icon: <ILink />,
     label: 'Subdomain',
     body: 'Launch Stella on a branded planning URL like plan.yourbrand.com. We handle setup, theming, and deployment.',
-    time: 'Live in ~1 week',
   },
   {
     icon: <ICode />,
     label: 'Embed widget',
     body: 'Add Stella to your existing site with a simple script tag. Use it as a floating assistant or full-page planner.',
-    time: 'Live in 1 day',
   },
   {
     icon: <IDatabase />,
     label: 'API + webhook',
     body: 'Send qualified briefs straight into your CRM, booking tools, or internal workflow.',
-    time: 'Coming soon',
     soon: true,
   },
 ]
@@ -73,12 +69,11 @@ export function Integration() {
               <span style={{ color: 'var(--gold)' }}>{cloneElement(m.icon, { size: 22, sw: 1.5 })}</span>
               <h3 style={{ margin: 0, fontSize: 18, fontWeight: 500 }}>{m.label}</h3>
               <p style={{ margin: 0, color: 'var(--ink-dim)', fontSize: 14, lineHeight: 1.5 }}>{m.body}</p>
-              <span
-                className="label-mono"
-                style={{ marginTop: 'auto', color: m.soon ? 'var(--ink-muted)' : 'var(--gold-soft)' }}
-              >
-                {m.time}
-              </span>
+              {m.soon ? (
+                <span className="label-mono" style={{ marginTop: 'auto', color: 'var(--ink-muted)' }}>
+                  Coming soon
+                </span>
+              ) : null}
             </div>
           ))}
         </div>
