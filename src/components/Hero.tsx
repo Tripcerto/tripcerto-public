@@ -15,7 +15,12 @@ export function Hero() {
             dealbreakers &mdash; into personalised suggestions that remove the friction from closing sales.
           </p>
           <div className="hero-ctas">
-            <a href="#pilot" className="btn btn-primary btn-lg">
+            <a
+              href="https://calendar.app.google/kQsnVUt2ABMxFwjw7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary btn-lg"
+            >
               Book a 20-min demo <IArrow size={15} />
             </a>
           </div>

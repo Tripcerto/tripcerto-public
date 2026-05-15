@@ -8,6 +8,7 @@ const META: Array<{ k: string; v: string }> = [
 ]
 
 const MAILTO_CONTACT = 'mailto:hello@tripcerto.com'
+const CALENDAR_BOOKING = 'https://calendar.app.google/kQsnVUt2ABMxFwjw7'
 
 export function PilotCTA() {
   return (
@@ -37,8 +38,16 @@ export function PilotCTA() {
                 See Stella turn a real chat into a qualified brief, in your branding. Yours to keep at the end.
               </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <a href={MAILTO_CONTACT} className="btn btn-primary btn-lg">
-                  Contact us <IArrow size={15} />
+                <a
+                  href={CALENDAR_BOOKING}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-lg"
+                >
+                  Book a demo <IArrow size={15} />
+                </a>
+                <a href={MAILTO_CONTACT} className="btn btn-ghost btn-lg">
+                  Contact us
                 </a>
               </div>
             </div>
