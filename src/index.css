@@ -663,21 +663,12 @@ main > section#pilot {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 16px 40px;
+  padding: 16px 32px;
+  min-width: 0;
   background: none;
   border: 0;
   align-items: center;
   text-align: center;
-}
-
-.stat-card:first-child {
-  padding-left: 0;
-  padding-right: 96px;
-}
-
-.stat-card:last-child {
-  padding-right: 0;
-  padding-left: 96px;
 }
 
 .stat-card:nth-child(2),
@@ -686,7 +677,7 @@ main > section#pilot {
 }
 
 .stat-kpi {
-  font-size: clamp(56px, 6vw, 84px);
+  font-size: clamp(48px, 5.5vw, 84px);
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1;
@@ -700,12 +691,16 @@ main > section#pilot {
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.005em;
-  white-space: nowrap;
+  text-wrap: balance;
+  max-width: 28ch;
 }
 
 @media (max-width: 1180px) {
+  .stat-card {
+    padding: 16px 20px;
+  }
   .stat-label {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 
@@ -715,17 +710,14 @@ main > section#pilot {
     gap: 28px;
   }
   .stat-card,
-  .stat-card:first-child,
   .stat-card:nth-child(2),
   .stat-card:last-child {
-    align-items: flex-start;
-    text-align: left;
     border-left: 0;
     padding: 0;
   }
   .stat-label {
-    white-space: normal;
     font-size: 16px;
+    max-width: none;
   }
 }
 
