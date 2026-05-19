@@ -7,8 +7,19 @@ import { MatchingSection } from './components/MatchingSection'
 import { Nav } from './components/Nav'
 import { PilotCTA } from './components/PilotCTA'
 import { Problem } from './components/Problem'
+import {
+  useGlobalClickTracking,
+  useScrollDepth,
+  useSectionViews,
+  useTimeOnPage,
+} from './lib/analytics'
 
 export function App() {
+  useGlobalClickTracking()
+  useScrollDepth()
+  useSectionViews()
+  useTimeOnPage()
+
   return (
     <>
       <Nav />

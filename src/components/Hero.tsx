@@ -37,6 +37,8 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-primary btn-lg"
+              data-track="book_demo_hero"
+              data-track-kind="cta"
             >
               Book a demo <IArrow size={15} />
             </a>

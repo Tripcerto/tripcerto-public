@@ -33,10 +33,17 @@ export function PilotCTA() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary btn-lg"
+                data-track="book_demo_pilot"
+                data-track-kind="cta"
               >
                 Book a demo <IArrow size={15} />
               </a>
-              <a href={MAILTO_CONTACT} className="btn btn-ghost btn-lg">
+              <a
+                href={MAILTO_CONTACT}
+                className="btn btn-ghost btn-lg"
+                data-track="contact_us_pilot"
+                data-track-kind="cta"
+              >
                 Contact us
               </a>
             </div>
