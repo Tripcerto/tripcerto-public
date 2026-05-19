@@ -20,7 +20,7 @@ export function Problem() {
               Problem
             </span>
             <h2 className="section-title">
-              Travel websites are losing 40&ndash;60% of organic traffic to AI language models.
+              95% of visitors to travel websites leave without taking action.
             </h2>
           </div>
           <div
