@@ -5,15 +5,17 @@ interface BriefSignals {
   confidence: number
 }
 
+// Tag labels are verbatim production `dotpess_names` so the demo brief
+// mirrors what Stella's pipeline actually extracts and matches on.
 const BRIEF = {
   summary: 'Anniversary · 2 adults · South Africa · 10 nights · Oct 5–15',
-  must: ['Winelands tasting', 'Safari game drive', 'Boutique lodge', 'Two-base itinerary'],
-  nice: ['Cape Town city day', 'Private chef dinner', 'Scenic helicopter', 'Mountain views'],
-  exclude: ['Large group resorts', 'All-inclusive', 'Self-drive', 'Backpacker hostels'],
+  must: ['Safari', 'Game Drive', 'Wildlife', 'Wine', 'Vineyard', 'Lodge', 'Boutique'],
+  nice: ['City', 'Chef’s Table', 'Fine Dining', 'Helicopter', 'Mountain', 'Spa'],
+  exclude: ['Resort', 'All-Inclusive', 'Self-Drive', 'Backpacking'],
   signals: {
     budget: '$15–25k',
     groupSize: '2 Adults',
-    style: 'Luxury, Adventure',
+    style: 'Ultra-Luxury, Romantic',
     confidence: 0.96,
   } satisfies BriefSignals,
 } as const

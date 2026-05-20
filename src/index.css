@@ -617,30 +617,20 @@ main > section#pilot {
   font-size: 12px;
 }
 
-.footer-grid {
+.footer-inner {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 14px 32px;
-}
-
-.footer-identity p {
-  margin: 0;
-}
-
-.footer-company {
-  color: var(--ink-dim);
-}
-
-.footer-identity p + p {
-  margin-top: 4px;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
 }
 
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 12px;
 }
 
 .footer-links a {
@@ -652,10 +642,14 @@ main > section#pilot {
   color: var(--gold);
 }
 
-.footer-copy {
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
+.footer-sep {
+  color: var(--ink-muted);
+  opacity: 0.5;
+}
+
+.footer-company {
+  margin: 0;
+  color: var(--ink-dim);
 }
 
 /* ---------- utility ---------- */

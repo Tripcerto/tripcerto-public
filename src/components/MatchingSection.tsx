@@ -7,12 +7,13 @@ interface Stay {
   excluded?: boolean
 }
 
+// Fictional properties — region-consistent with the demo brief, not real businesses.
 const STAYS: Stay[] = [
-  { name: 'Delaire Graff Estate', region: 'Stellenbosch · Winelands', score: 0.96 },
-  { name: 'Singita Boulders Lodge', region: 'Sabi Sand · Safari', score: 0.91 },
-  { name: 'La Residence', region: 'Franschhoek · Winelands', score: 0.85 },
-  { name: 'Londolozi Tree Camp', region: 'Sabi Sand · Safari', score: 0.79 },
-  { name: 'Sun City Resort', region: 'North West · Resort', score: 0.18, excluded: true },
+  { name: 'Ashworth Wine Estate', region: 'Stellenbosch · Winelands', score: 0.96 },
+  { name: 'Camp Khaya', region: 'Sabi Sand · Safari', score: 0.87 },
+  { name: 'The Hawthorne', region: 'Franschhoek · Winelands', score: 0.73 },
+  { name: 'Sable Tree Camp', region: 'Sabi Sand · Safari', score: 0.58 },
+  { name: 'Palmview Grand Resort', region: 'North West · Resort', score: 0.14, excluded: true },
 ]
 
 export function MatchingSection() {
