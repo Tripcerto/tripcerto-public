@@ -617,6 +617,47 @@ main > section#pilot {
   font-size: 12px;
 }
 
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px 32px;
+}
+
+.footer-identity p {
+  margin: 0;
+}
+
+.footer-company {
+  color: var(--ink-dim);
+}
+
+.footer-identity p + p {
+  margin-top: 4px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.footer-links a {
+  color: var(--ink-dim);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+.footer-copy {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
 /* ---------- utility ---------- */
 .text-gold {
   color: var(--gold);
