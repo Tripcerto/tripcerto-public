@@ -12,9 +12,6 @@ export function Footer() {
           <p className="footer-company">
             Tripcerto Ltd — registered in England &amp; Wales, company no. 16121124
           </p>
-          <p className="footer-address">
-            Registered office: 118 Jellicoe Avenue, Alverstoke, Hampshire, United Kingdom, PO12 2PX
-          </p>
         </div>
         <nav className="footer-links" aria-label="Legal and contact">
           {LEGAL_LINKS.map((l) => (
