@@ -2,12 +2,16 @@ import { IArrow } from './icons'
 import { ShinyText } from './ShinyText'
 import { Threads } from './Threads'
 
+// Stable reference — inline array literals make Threads' effect deps churn,
+// tearing down and rebuilding the WebGL context on every render.
+const THREADS_COLOR: [number, number, number] = [0.769, 0.573, 0.247]
+
 export function Hero() {
   return (
     <section className="hero" aria-label="Hero">
       <div className="hero-bg" aria-hidden="true">
         <Threads
-          color={[0.769, 0.573, 0.247]}
+          color={THREADS_COLOR}
           amplitude={2.0}
           distance={0.2}
           enableMouseInteraction

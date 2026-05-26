@@ -170,12 +170,19 @@ export function Threads({
 
     function resize() {
       const { clientWidth, clientHeight } = container
+      if (clientWidth === 0 || clientHeight === 0) return
       renderer.setSize(clientWidth, clientHeight)
       program.uniforms.iResolution.value.r = clientWidth
       program.uniforms.iResolution.value.g = clientHeight
       program.uniforms.iResolution.value.b = clientWidth / clientHeight
     }
     window.addEventListener('resize', resize)
+    // Observe the container itself — `window resize` misses layout shifts
+    // (font swap, mobile address-bar collapse, parent re-layout) that change
+    // our box without changing the viewport. Without this, the shader keeps
+    // a stale `iResolution` and the wave appears "stuck" against the top.
+    const resizeObserver = new ResizeObserver(() => resize())
+    resizeObserver.observe(container)
     resize()
 
     const currentMouse: [number, number] = [0.5, 0.5]
@@ -220,6 +227,7 @@ export function Threads({
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current)
       window.removeEventListener('resize', resize)
+      resizeObserver.disconnect()
 
       if (enableMouseInteraction) {
         window.removeEventListener('mousemove', handleMouseMove)
