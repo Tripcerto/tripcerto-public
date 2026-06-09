@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tripcerto — LinkedIn Banner Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  :root {
+    --bg: #0b0a08;
+    --bg-elev: #131110;
+    --bg-elev-2: #1a1715;
+    --line: rgba(255, 240, 220, 0.08);
+    --line-strong: rgba(255, 240, 220, 0.14);
+    --ink: #f3ede2;
+    --ink-dim: #b9b1a1;
+    --ink-muted: #7d7669;
+    --gold: #c4923f;
+    --gold-soft: #d6a85a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(196, 146, 63, 0.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(196, 146, 63, 0.04), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+  header.page { padding: 48px 0 8px; }
+  .page h1 {
+    font-size: 30px; font-weight: 500; letter-spacing: -0.025em;
+    margin: 0 0 6px;
+  }
+  .page h1 .dot { color: var(--gold); }
+  .page .lede { color: var(--ink-dim); max-width: 70ch; margin: 0 0 18px; }
+  .specs {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px;
+  }
+  .spec {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: var(--gold-soft); background: rgba(196, 146, 63, 0.08);
+    border: 1px solid rgba(196, 146, 63, 0.18);
+    padding: 5px 10px; border-radius: 6px;
+  }
+  .spec.dim { color: var(--ink-muted); background: rgba(255,240,220,0.02); border-color: var(--line); }
+
+  /* ---- controls ---- */
+  .controls {
+    position: sticky; top: 0; z-index: 20;
+    margin: 22px 0 30px;
+    background: rgba(11, 10, 8, 0.86);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex; flex-wrap: wrap; gap: 8px 26px; align-items: center;
+  }
+  .ctl { display: flex; flex-direction: column; gap: 4px; min-width: 132px; }
+  .ctl label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-muted);
+    display: flex; justify-content: space-between; gap: 10px;
+  }
+  .ctl label output { color: var(--gold-soft); }
+  input[type=range] { accent-color: var(--gold); width: 100%; }
+  .chk {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink-dim); cursor: pointer;
+    align-self: end; padding-bottom: 2px;
+  }
+  .chk input { accent-color: var(--gold); width: 15px; height: 15px; }
+
+  /* ---- option cards ---- */
+  .option { margin: 0 0 46px; }
+  .option-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px; flex-wrap: wrap; }
+  .option-head .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--gold); border: 1px solid rgba(196,146,63,0.3);
+    border-radius: 5px; padding: 2px 7px;
+  }
+  .option-head h2 { font-size: 19px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .option-head p { margin: 0; color: var(--ink-muted); font-size: 13.5px; }
+
+  .stage {
+    position: relative; max-width: 1180px; margin: 0 auto;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 24px 60px -28px rgba(0,0,0,0.8);
+  }
+  .stage canvas.banner { width: 100%; height: auto; display: block; }
+
+  /* safe-zone overlay (not exported) */
+  .safe { position: absolute; inset: 0; pointer-events: none; display: none; }
+  body.show-safe .safe { display: block; }
+  .safe .avatar {
+    position: absolute; left: 0; bottom: 0;
+    width: 35.86%; height: 66.67%;
+    background: rgba(214, 168, 90, 0.10);
+    border: 2px dashed rgba(214, 168, 90, 0.72);
+    border-width: 2px 2px 0 0;
+  }
+  .safe .avatar b {
+    position: absolute; left: 10px; top: 9px;
+    font: 600 11px/1 'Instrument Sans'; color: #e9c98a;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .safe .titlesafe {
+    position: absolute; left: 8.5%; right: 8.5%; top: 11%; bottom: 13%;
+    border: 1.5px dashed rgba(243, 237, 226, 0.30);
+  }
+  .safe .titlesafe b {
+    position: absolute; right: 8px; top: 6px;
+    font: 600 10px/1 'Instrument Sans'; color: rgba(243, 237, 226, 0.5);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  .actions { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 40px; padding: 0 18px; border-radius: 999px;
+    border: 1px solid transparent; font-family: inherit;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: transform 0.15s, background 0.15s, border-color 0.15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--gold); color: #1a1106; }
+  .btn-primary:hover { background: var(--gold-soft); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { border-color: rgba(255, 240, 220, 0.28); }
+
+  footer.page { color: var(--ink-muted); font-size: 13px; padding-top: 18px; border-top: 1px solid var(--line); }
+  footer.page code { font-family: 'JetBrains Mono', monospace; color: var(--gold-soft); font-size: 12px; }
+  .glwarn { color: #e0a08f; font-size: 13px; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page">
+    <h1>Tripcerto — LinkedIn banner options<span class="dot">.</span></h1>
+    <p class="lede">
+      Static LinkedIn banner drafts built from the live homepage hero — the same
+      <em>Threads</em> wave shader, frozen to a single frame and softened for export.
+    </p>
+    <div class="specs">
+      <span class="spec">Personal profile · 1584 × 396 px · 4:1</span>
+      <span class="spec dim">Exports at 2× — 3168 × 792 px PNG</span>
+      <span class="spec dim">Company Page cover would be 1128 × 191 px</span>
+    </div>
+    <p class="glwarn" id="glwarn" hidden>⚠ WebGL is unavailable in this browser — the wave can't render. Banners show without it.</p>
+  </header>
+
+  <div class="controls" id="controls">
+    <div class="ctl">
+      <label>Wave frame <output id="o-frame"></output></label>
+      <input type="range" id="frame" min="0" max="40" step="0.1" value="6.5" />
+    </div>
+    <div class="ctl">
+      <label>Wave blur <output id="o-blur"></output></label>
+      <input type="range" id="blur" min="0" max="8" step="0.25" value="1.5" />
+    </div>
+    <div class="ctl">
+      <label>Wave opacity <output id="o-opacity"></output></label>
+      <input type="range" id="opacity" min="0.25" max="1" step="0.02" value="0.96" />
+    </div>
+    <label class="chk"><input type="checkbox" id="safe" /> Show safe zones</label>
+  </div>
+
+  <section class="option" data-opt="0">
+    <div class="option-head">
+      <span class="num">01</span>
+      <h2>Primary</h2>
+      <p>The homepage hero copy, carried straight across.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c0"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="0">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="1">
+    <div class="option-head">
+      <span class="num">02</span>
+      <h2>Demand</h2>
+      <p>Your new copy, with the logo kept quiet at the bottom.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c1"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="1">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="2">
+    <div class="option-head">
+      <span class="num">03</span>
+      <h2>Demand + top logo</h2>
+      <p>The same copy with the logo moved out of the headline field.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c2"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="2">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="3">
+    <div class="option-head">
+      <span class="num">04</span>
+      <h2>Intent</h2>
+      <p>A slightly warmer line that still lands on qualified demand.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c3"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="3">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="4">
+    <div class="option-head">
+      <span class="num">05</span>
+      <h2>Direct</h2>
+      <p>The most explicit demand-generation wording, with logo bottom-right.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c4"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="4">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="5">
+    <div class="option-head">
+      <span class="num">06</span>
+      <h2>Reference hero</h2>
+      <p>Screenshot-inspired, but right-aligned to avoid the LinkedIn profile photo.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c5"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="5">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="6">
+    <div class="option-head">
+      <span class="num">07</span>
+      <h2>Reference compact</h2>
+      <p>Same right-aligned structure, with less small copy.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c6"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="6">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="option" data-opt="7">
+    <div class="option-head">
+      <span class="num">08</span>
+      <h2>Reference minimal</h2>
+      <p>The screenshot mood with only the main copy.</p>
+    </div>
+    <div class="stage">
+      <canvas class="banner" id="c7"></canvas>
+      <div class="safe"><div class="avatar"><b>Profile photo</b></div><div class="titlesafe"><b>Keep key text here</b></div></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-dl="7">Download PNG</button>
+    </div>
+  </section>
+
+  <div class="actions" style="margin-bottom:34px">
+    <button class="btn btn-ghost" id="dl-all">Download all</button>
+  </div>
+
+  <footer class="page">
+    The wave is the real <code>Threads</code> shader from <code>tripcerto-public/src/components/Threads.tsx</code>,
+    rendered once at a fixed time and blurred in canvas so it exports as a fully static image. Safe zones: LinkedIn covers the bottom-left
+    <code>568 × 264 px</code> with the profile photo, and crops the sides on mobile — keep key text centered.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- geometry ---------- */
+  var W = 1584, H = 396;        // LinkedIn personal banner, logical px
+  var S = 2;                    // export scale
+  var CW = W * S, CH = H * S;   // canvas pixels
+  var cx = CW / 2;
+
+  /* ---------- the Threads shader (verbatim from Threads.tsx) + an elliptical mask ---------- */
+  var VERT = [
+    'attribute vec2 position;',
+    'void main() { gl_Position = vec4(position, 0.0, 1.0); }'
+  ].join('\n');
+
+  var FRAG = [
+    'precision highp float;',
+    'uniform float iTime;',
+    'uniform vec3 iResolution;',
+    'uniform vec3 uColor;',
+    'uniform float uAmplitude;',
+    'uniform float uDistance;',
+    'uniform vec2 uMouse;',
+    'uniform vec2 uMaskCenter;',
+    'uniform vec2 uMaskScale;',
+    'uniform float uMaskInner;',
+    '#define PI 3.1415926538',
+    'const int u_line_count = 40;',
+    'const float u_line_width = 7.0;',
+    'const float u_line_blur = 10.0;',
+    'float Perlin2D(vec2 P) {',
+    '  vec2 Pi = floor(P);',
+    '  vec4 Pf_Pfmin1 = P.xyxy - vec4(Pi, Pi + 1.0);',
+    '  vec4 Pt = vec4(Pi.xy, Pi.xy + 1.0);',
+    '  Pt = Pt - floor(Pt * (1.0 / 71.0)) * 71.0;',
+    '  Pt += vec2(26.0, 161.0).xyxy;',
+    '  Pt *= Pt;',
+    '  Pt = Pt.xzxz * Pt.yyww;',
+    '  vec4 hash_x = fract(Pt * (1.0 / 951.135664));',
+    '  vec4 hash_y = fract(Pt * (1.0 / 642.949883));',
+    '  vec4 grad_x = hash_x - 0.49999;',
+    '  vec4 grad_y = hash_y - 0.49999;',
+    '  vec4 grad_results = inversesqrt(grad_x * grad_x + grad_y * grad_y)',
+    '    * (grad_x * Pf_Pfmin1.xzxz + grad_y * Pf_Pfmin1.yyww);',
+    '  grad_results *= 1.4142135623730950;',
+    '  vec2 blend = Pf_Pfmin1.xy * Pf_Pfmin1.xy * Pf_Pfmin1.xy',
+    '    * (Pf_Pfmin1.xy * (Pf_Pfmin1.xy * 6.0 - 15.0) + 10.0);',
+    '  vec4 blend2 = vec4(blend, vec2(1.0 - blend));',
+    '  return dot(grad_results, blend2.zxzx * blend2.wwyy);',
+    '}',
+    'float pixel(float count, vec2 resolution) {',
+    '  return (1.0 / max(resolution.x, resolution.y)) * count;',
+    '}',
+    'float lineFn(vec2 st, float width, float perc, float offset, vec2 mouse, float time, float amplitude, float distance) {',
+    '  float split_offset = (perc * 0.4);',
+    '  float split_point = 0.1 + split_offset;',
+    '  float amplitude_normal = smoothstep(split_point, 0.7, st.x);',
+    '  float amplitude_strength = 0.5;',
+    '  float finalAmplitude = amplitude_normal * amplitude_strength',
+    '    * amplitude * (1.0 + (mouse.y - 0.5) * 0.2);',
+    '  float time_scaled = time / 10.0 + (mouse.x - 0.5) * 1.0;',
+    '  float blur = smoothstep(split_point, split_point + 0.05, st.x) * perc;',
+    '  float xnoise = mix(',
+    '    Perlin2D(vec2(time_scaled, st.x + perc) * 2.5),',
+    '    Perlin2D(vec2(time_scaled, st.x + time_scaled) * 3.5) / 1.5,',
+    '    st.x * 0.3',
+    '  );',
+    '  float y = 0.5 + (perc - 0.5) * distance + xnoise / 2.0 * finalAmplitude;',
+    '  float line_start = smoothstep(',
+    '    y + (width / 2.0) + (u_line_blur * pixel(1.0, iResolution.xy) * blur),',
+    '    y, st.y);',
+    '  float line_end = smoothstep(',
+    '    y, y - (width / 2.0) - (u_line_blur * pixel(1.0, iResolution.xy) * blur),',
+    '    st.y);',
+    '  return clamp(',
+    '    (line_start - line_end) * (1.0 - smoothstep(0.0, 1.0, pow(perc, 0.3))),',
+    '    0.0, 1.0);',
+    '}',
+    'void mainImage(out vec4 fragColor, in vec2 fragCoord) {',
+    '  vec2 uv = fragCoord / iResolution.xy;',
+    '  float line_strength = 1.0;',
+    '  for (int i = 0; i < u_line_count; i++) {',
+    '    float p = float(i) / float(u_line_count);',
+    '    line_strength *= (1.0 - lineFn(',
+    '      uv,',
+    '      u_line_width * pixel(1.0, iResolution.xy) * (1.0 - p),',
+    '      p,',
+    '      (PI * 1.0) * p,',
+    '      uMouse, iTime, uAmplitude, uDistance));',
+    '  }',
+    '  float colorVal = 1.0 - line_strength;',
+    '  vec2 m = (uv - uMaskCenter) / uMaskScale;',
+    '  float mask = 1.0 - smoothstep(uMaskInner, 1.0, length(m));',
+    '  colorVal *= mask;',
+    '  fragColor = vec4(uColor * colorVal, colorVal);',
+    '}',
+    'void main() { mainImage(gl_FragColor, gl_FragCoord.xy); }'
+  ].join('\n');
+
+  /* ---------- WebGL setup (renders the wave once, into an offscreen 1584x396 canvas) ---------- */
+  var glCanvas = document.createElement('canvas');
+  glCanvas.width = W; glCanvas.height = H;
+  var gl = null, prog = null, uni = {}, glOK = false;
+
+  function compile(type, src) {
+    var sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      console.error('shader error:', gl.getShaderInfoLog(sh));
+      return null;
+    }
+    return sh;
+  }
+
+  function initGL() {
+    try {
+      gl = glCanvas.getContext('webgl', {
+        alpha: true, premultipliedAlpha: true, antialias: true, preserveDrawingBuffer: true
+      });
+    } catch (e) { gl = null; }
+    if (!gl) return false;
+
+    var vs = compile(gl.VERTEX_SHADER, VERT);
+    var fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return false;
+
+    prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      console.error('link error:', gl.getProgramInfoLog(prog));
+      return false;
+    }
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, 'position');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    ['iTime', 'iResolution', 'uColor', 'uAmplitude', 'uDistance', 'uMouse',
+     'uMaskCenter', 'uMaskScale', 'uMaskInner'].forEach(function (n) {
+      uni[n] = gl.getUniformLocation(prog, n);
+    });
+
+    gl.viewport(0, 0, W, H);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0, 0, 0, 0);
+    return true;
+  }
+
+  function renderWave() {
+    if (!glOK) return;
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform1f(uni.iTime, parseFloat(els.frame.value));
+    gl.uniform3f(uni.iResolution, W, H, W / H);
+    gl.uniform3f(uni.uColor, 0.769, 0.573, 0.247);   // #c4923f — hero gold
+    gl.uniform1f(uni.uAmplitude, 1.7);
+    gl.uniform1f(uni.uDistance, 0.46);
+    gl.uniform2f(uni.uMouse, 0.5, 0.5);
+    gl.uniform2f(uni.uMaskCenter, 0.5, 0.5);
+    gl.uniform2f(uni.uMaskScale, 1.28, 0.66);
+    gl.uniform1f(uni.uMaskInner, 0.26);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  /* ---------- 2D drawing helpers ---------- */
+  function font(weight, size, family) {
+    return weight + ' ' + size + "px '" + family + "'";
+  }
+
+  // subtle gold sheen, matching the hero ShinyText gradient
+  function goldFill(ctx, x0, x1) {
+    var g = ctx.createLinearGradient(x0, 0, x1, 0);
+    g.addColorStop(0.00, '#b5832f');
+    g.addColorStop(0.40, '#c4923f');
+    g.addColorStop(0.52, '#d8a957');
+    g.addColorStop(0.64, '#c4923f');
+    g.addColorStop(1.00, '#a3712b');
+    return g;
+  }
+
+  // centered text line with optional max width auto-fit, gold gradient, letter spacing
+  function line(ctx, str, y, opts) {
+    opts = opts || {};
+    var size = opts.size, weight = opts.weight || '500', fam = opts.family || 'Instrument Sans';
+    var txt = opts.upper ? str.toUpperCase() : str;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    if (opts.letter != null) ctx.letterSpacing = opts.letter + 'px';
+    ctx.font = font(weight, size, fam);
+    if (opts.maxW) {
+      while (ctx.measureText(txt).width > opts.maxW && size > 8) {
+        size -= 2;
+        ctx.font = font(weight, size, fam);
+      }
+    }
+    if (opts.shadow !== false) {
+      ctx.shadowColor = 'rgba(0,0,0,0.55)';
+      ctx.shadowBlur = size * 0.42;
+      ctx.shadowOffsetY = size * 0.045;
+    }
+    if (opts.fill === 'gold') {
+      var w = ctx.measureText(txt).width;
+      ctx.fillStyle = goldFill(ctx, cx - w / 2, cx + w / 2);
+    } else {
+      ctx.fillStyle = opts.fill || '#f3ede2';
+    }
+    ctx.fillText(txt, cx, y);
+    ctx.restore();
+  }
+
+  function textLine(ctx, str, x, y, opts) {
+    opts = opts || {};
+    var size = opts.size, weight = opts.weight || '500', fam = opts.family || 'Instrument Sans';
+    var txt = opts.upper ? str.toUpperCase() : str;
+    ctx.save();
+    ctx.textAlign = opts.align || 'left';
+    ctx.textBaseline = 'alphabetic';
+    if (opts.letter != null) ctx.letterSpacing = opts.letter + 'px';
+    ctx.font = font(weight, size, fam);
+    if (opts.maxW) {
+      while (ctx.measureText(txt).width > opts.maxW && size > 8) {
+        size -= 2;
+        ctx.font = font(weight, size, fam);
+      }
+    }
+    if (opts.shadow !== false) {
+      ctx.shadowColor = 'rgba(0,0,0,0.58)';
+      ctx.shadowBlur = size * 0.35;
+      ctx.shadowOffsetY = size * 0.04;
+    }
+    if (opts.fill === 'gold') {
+      var w = ctx.measureText(txt).width;
+      var startX = opts.align === 'right' ? x - w : x;
+      ctx.fillStyle = goldFill(ctx, startX, startX + w);
+    } else {
+      ctx.fillStyle = opts.fill || '#f3ede2';
+    }
+    ctx.fillText(txt, x, y);
+    ctx.restore();
+  }
+
+  function wrapText(ctx, str, x, y, maxW, lineH, opts) {
+    opts = opts || {};
+    ctx.save();
+    ctx.font = font(opts.weight || '400', opts.size, opts.family || 'Instrument Sans');
+    var words = str.split(' ');
+    var lineText = '';
+    var lines = [];
+    words.forEach(function (word) {
+      var test = lineText ? lineText + ' ' + word : word;
+      if (ctx.measureText(test).width > maxW && lineText) {
+        lines.push(lineText);
+        lineText = word;
+      } else {
+        lineText = test;
+      }
+    });
+    if (lineText) lines.push(lineText);
+    ctx.restore();
+    lines.forEach(function (ln, i) {
+      textLine(ctx, ln, x, y + i * lineH, opts);
+    });
+    return y + lines.length * lineH;
+  }
+
+  function miniFeature(ctx, icon, labelA, labelB, x, y) {
+    textLine(ctx, icon, x, y, {
+      size: 22 * S, weight: '500', fill: '#c4923f',
+      family: icon === '<>' ? 'JetBrains Mono' : 'Instrument Sans',
+      shadow: false
+    });
+    textLine(ctx, labelA, x, y + 36 * S, { size: 18 * S, weight: '400', fill: '#f3ede2', shadow: false });
+    textLine(ctx, labelB, x, y + 62 * S, { size: 18 * S, weight: '400', fill: '#f3ede2', shadow: false });
+  }
+
+  function tMark(ctx, x, y, size) {
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = font('700', size, 'Instrument Sans');
+    ctx.shadowColor = 'rgba(0,0,0,0.45)';
+    ctx.shadowBlur = size * 0.22;
+    ctx.shadowOffsetY = size * 0.035;
+    ctx.fillStyle = '#f3ede2';
+    ctx.fillText('t', x, y);
+    var w = ctx.measureText('t').width;
+    ctx.fillStyle = goldFill(ctx, x + w + size * 0.12, x + w + size * 0.42);
+    ctx.fillRect(x + w + size * 0.12, y - size * 0.2, size * 0.32, size * 0.32);
+    ctx.restore();
+  }
+
+  // the "tripcerto." wordmark, with the gold dot
+  function wordmarkAt(ctx, x, y, size, align) {
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.letterSpacing = (size * -0.014) + 'px';
+    ctx.font = font('600', size, 'Instrument Sans');
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = size * 0.32;
+    ctx.shadowOffsetY = size * 0.04;
+    var wWord = ctx.measureText('tripcerto').width;
+    var wDot = ctx.measureText('tripcerto.').width - wWord;
+    var total = wWord + wDot;
+    if (align === 'center') x -= total / 2;
+    if (align === 'right') x -= total;
+    ctx.fillStyle = '#f3ede2';
+    ctx.fillText('tripcerto', x, y);
+    ctx.fillStyle = '#c4923f';
+    ctx.fillText('.', x + wWord, y);
+    ctx.restore();
+  }
+
+  function wordmark(ctx, y, size) {
+    wordmarkAt(ctx, cx, y, size, 'center');
+  }
+
+  /* ---------- the options ---------- */
+  // All sizes are in 2x canvas px.
+  var OPTIONS = [
+    {
+      // 01 — Primary
+      draw: function (ctx) {
+        var size = 56 * S, lh = size * 1.22, mid = CH * 0.45;
+        line(ctx, 'Travellers don’t think in categories.', mid - lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: '#f3ede2', maxW: CW * 0.86 });
+        line(ctx, 'Stella doesn’t either.', mid + lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: 'gold', maxW: CW * 0.86 });
+        wordmark(ctx, CH - 46 * S, 22 * S);
+      }
+    },
+    {
+      // 02 — Demand
+      draw: function (ctx) {
+        var size = 62 * S, lh = size * 1.12, mid = CH * 0.45;
+        line(ctx, 'Agentic AI for', mid - lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: '#f3ede2', maxW: CW * 0.82 });
+        line(ctx, 'Qualified Travel Demand', mid + lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: 'gold', maxW: CW * 0.86 });
+        wordmark(ctx, CH - 46 * S, 22 * S);
+      }
+    },
+    {
+      // 03 — Demand + top logo
+      draw: function (ctx) {
+        var size = 58 * S, lh = size * 1.12, mid = CH * 0.48;
+        wordmarkAt(ctx, 88 * S, 76 * S, 26 * S, 'left');
+        line(ctx, 'Agentic AI for', mid - lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: '#f3ede2', maxW: CW * 0.82 });
+        line(ctx, 'Qualified Travel Demand', mid + lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: 'gold', maxW: CW * 0.86 });
+      }
+    },
+    {
+      // 04 — Intent
+      draw: function (ctx) {
+        var size = 58 * S, lh = size * 1.14, mid = CH * 0.45;
+        line(ctx, 'From traveller intent', mid - lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: '#f3ede2', maxW: CW * 0.82 });
+        line(ctx, 'to qualified demand.', mid + lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: 'gold', maxW: CW * 0.82 });
+        wordmark(ctx, CH - 46 * S, 22 * S);
+      }
+    },
+    {
+      // 05 — Direct
+      draw: function (ctx) {
+        var size = 57 * S, lh = size * 1.15, mid = CH * 0.45;
+        line(ctx, 'Qualify travel demand', mid - lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: '#f3ede2', maxW: CW * 0.82 });
+        line(ctx, 'before the brief.', mid + lh / 2 + size * 0.34,
+          { size: size, weight: '500', fill: 'gold', maxW: CW * 0.82 });
+        wordmarkAt(ctx, CW - 88 * S, CH - 48 * S, 22 * S, 'right');
+      }
+    },
+    {
+      // 06 — Reference hero
+      waveRect: [CW * 0.36, CH * 0.10, CW * 0.88, CH * 0.92],
+      focus: 'right',
+      draw: function (ctx) {
+        var x = CW - 88 * S;
+        wordmarkAt(ctx, x, 70 * S, 38 * S, 'right');
+        textLine(ctx, 'Agentic AI for', x, 154 * S, {
+          size: 60 * S, weight: '500', fill: '#f3ede2', maxW: CW * 0.47, align: 'right'
+        });
+        textLine(ctx, 'Qualified Travel Demand', x, 228 * S, {
+          size: 60 * S, weight: '500', fill: 'gold', maxW: CW * 0.62, align: 'right'
+        });
+        wrapText(ctx,
+          'Stella turns how travellers actually talk into structured behavioural insight for better discovery, qualification, and higher-converting sales conversations.',
+          x, 284 * S, CW * 0.43, 25 * S,
+          { size: 16 * S, weight: '400', fill: '#d6cfc3', shadow: false, align: 'right' });
+      }
+    },
+    {
+      // 07 — Reference compact
+      waveRect: [CW * 0.29, CH * 0.08, CW * 0.98, CH * 0.96],
+      focus: 'right',
+      draw: function (ctx) {
+        var x = CW - 88 * S;
+        wordmarkAt(ctx, x, 72 * S, 34 * S, 'right');
+        textLine(ctx, 'Agentic AI for', x, 162 * S, {
+          size: 64 * S, weight: '500', fill: '#f3ede2', maxW: CW * 0.5, align: 'right'
+        });
+        textLine(ctx, 'Qualified Travel Demand', x, 236 * S, {
+          size: 61 * S, weight: '500', fill: 'gold', maxW: CW * 0.61, align: 'right'
+        });
+        textLine(ctx, 'Built to turn traveller intent into qualified, scored demand.',
+          x, 292 * S, { size: 19 * S, weight: '400', fill: '#d6cfc3', maxW: CW * 0.47, shadow: false, align: 'right' });
+      }
+    },
+    {
+      // 08 — Reference minimal
+      waveRect: [CW * 0.23, CH * 0.08, CW * 1.04, CH * 0.98],
+      focus: 'right',
+      draw: function (ctx) {
+        var x = CW - 88 * S;
+        wordmarkAt(ctx, x, 74 * S, 34 * S, 'right');
+        textLine(ctx, 'Qualified', x, 176 * S, {
+          size: 72 * S, weight: '500', fill: '#f3ede2', maxW: CW * 0.43, align: 'right'
+        });
+        textLine(ctx, 'Travel Demand', x, 256 * S, {
+          size: 72 * S, weight: '500', fill: 'gold', maxW: CW * 0.48, align: 'right'
+        });
+        textLine(ctx, 'Agentic AI for travel teams',
+          x, 312 * S, { size: 20 * S, weight: '400', fill: '#d6cfc3', maxW: CW * 0.42, shadow: false, align: 'right' });
+      }
+    }
+  ];
+
+  /* ---------- background + compositing ---------- */
+  function paintBackground(ctx) {
+    ctx.fillStyle = '#0b0a08';
+    ctx.fillRect(0, 0, CW, CH);
+    var g = ctx.createRadialGradient(CW * 0.82, -CH * 0.25, 0, CW * 0.82, -CH * 0.25, CW * 0.55);
+    g.addColorStop(0, 'rgba(196,146,63,0.13)');
+    g.addColorStop(1, 'rgba(196,146,63,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, CW, CH);
+    g = ctx.createRadialGradient(CW * 0.03, CH * 0.7, 0, CW * 0.03, CH * 0.7, CW * 0.42);
+    g.addColorStop(0, 'rgba(196,146,63,0.06)');
+    g.addColorStop(1, 'rgba(196,146,63,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, CW, CH);
+  }
+
+  var canvases = [], ctxs = [];
+
+  function paintOption(i) {
+    var ctx = ctxs[i];
+    ctx.clearRect(0, 0, CW, CH);
+    paintBackground(ctx);
+
+    if (glOK) {
+      var opt = OPTIONS[i];
+      var rect = opt.waveRect || [-12 * S, -12 * S, CW + 24 * S, CH + 24 * S];
+      ctx.globalAlpha = parseFloat(els.opacity.value);
+      ctx.imageSmoothingQuality = 'high';
+      ctx.filter = 'blur(' + (parseFloat(els.blur.value) * S) + 'px)';
+      ctx.drawImage(glCanvas, rect[0], rect[1], rect[2], rect[3]);
+      ctx.filter = 'none';
+      ctx.globalAlpha = 1;
+    }
+
+    var focusX = OPTIONS[i].focus === 'left' ? CW * 0.26 : OPTIONS[i].focus === 'right' ? CW * 0.72 : cx;
+    var g = ctx.createRadialGradient(focusX, CH * 0.47, 0, focusX, CH * 0.47, CW * 0.45);
+    var sideFocus = OPTIONS[i].focus === 'left' || OPTIONS[i].focus === 'right';
+    g.addColorStop(0, sideFocus ? 'rgba(11,10,8,0.22)' : 'rgba(11,10,8,0.38)');
+    g.addColorStop(0.56, sideFocus ? 'rgba(11,10,8,0.14)' : 'rgba(11,10,8,0.24)');
+    g.addColorStop(1, 'rgba(11,10,8,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, CW, CH);
+
+    OPTIONS[i].draw(ctx);
+  }
+
+  /* ---------- controls ---------- */
+  var els = {};
+  ['frame', 'blur', 'opacity', 'safe'].forEach(function (id) {
+    els[id] = document.getElementById(id);
+  });
+  var outs = {
+    frame: document.getElementById('o-frame'),
+    blur: document.getElementById('o-blur'),
+    opacity: document.getElementById('o-opacity')
+  };
+
+  function syncOutputs() {
+    outs.frame.textContent = parseFloat(els.frame.value).toFixed(1);
+    outs.blur.textContent = parseFloat(els.blur.value).toFixed(2) + 'px';
+    outs.opacity.textContent = Math.round(parseFloat(els.opacity.value) * 100) + '%';
+  }
+
+  var pending = false;
+  function schedule() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function () {
+      pending = false;
+      render();
+    });
+  }
+
+  function render() {
+    syncOutputs();
+    renderWave();
+    for (var i = 0; i < OPTIONS.length; i++) paintOption(i);
+  }
+
+  ['frame', 'blur', 'opacity'].forEach(function (id) {
+    els[id].addEventListener('input', schedule);
+  });
+  els.safe.addEventListener('change', function () {
+    document.body.classList.toggle('show-safe', els.safe.checked);
+  });
+
+  /* ---------- download ---------- */
+  var FILES = [
+    'primary',
+    'demand',
+    'demand-top-logo',
+    'intent',
+    'direct',
+    'reference-hero',
+    'reference-compact',
+    'reference-minimal'
+  ];
+  function download(i) {
+    canvases[i].toBlob(function (blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'tripcerto-linkedin-banner-0' + (i + 1) + '-' + FILES[i] + '.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    }, 'image/png');
+  }
+  document.querySelectorAll('[data-dl]').forEach(function (btn) {
+    btn.addEventListener('click', function () { download(parseInt(btn.dataset.dl, 10)); });
+  });
+  document.getElementById('dl-all').addEventListener('click', function () {
+    OPTIONS.forEach(function (_, i) { setTimeout(function () { download(i); }, i * 350); });
+  });
+
+  /* ---------- boot ---------- */
+  for (var i = 0; i < OPTIONS.length; i++) {
+    var c = document.getElementById('c' + i);
+    c.width = CW; c.height = CH;
+    canvases.push(c);
+    ctxs.push(c.getContext('2d'));
+  }
+
+  glOK = initGL();
+  if (!glOK) document.getElementById('glwarn').hidden = false;
+
+  function start() { render(); }
+
+  if (document.fonts && document.fonts.ready) {
+    Promise.all([
+      document.fonts.load("400 80px 'Instrument Sans'"),
+      document.fonts.load("500 80px 'Instrument Sans'"),
+      document.fonts.load("600 80px 'Instrument Sans'"),
+      document.fonts.load("500 40px 'JetBrains Mono'")
+    ]).then(function () { return document.fonts.ready; })
+      .then(start)
+      .catch(start);
+  } else {
+    setTimeout(start, 400);
+  }
+})();
+</script>
+</body>
+</html>

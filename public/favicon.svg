@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="107 123 286 286">
+  <style>
+    .t { fill: #131110 }
+    @media (prefers-color-scheme: dark) { .t { fill: #f3ede2 } }
+  </style>
+  <path class="t" d="M224 144L226 144L226 201L276 202L276 236L226 237L226 332L228 339L236 348L245 352L260 353L276 349L276 384L260 388L234 388L219 385L207 380L193 368L186 355L182 339L181 237L146 236L146 202L180 202L181 161Z"/>
+  <rect x="303" y="333" width="52" height="53" rx="2" fill="#c4923f"/>
+</svg>
