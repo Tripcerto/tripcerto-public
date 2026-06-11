@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 
 const LINKS = [
   { href: '#problem', label: 'Problem' },
-  { href: '#demo', label: 'Solution' },
-  { href: '#features', label: 'Platform' },
-  { href: '#integration', label: 'Integrations' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '#journey', label: 'Journey' },
+  { href: '#how', label: 'How it works' },
+  { href: '#data-control', label: 'Data control' },
+  { href: '#why-now', label: 'Why now' },
+  { href: '#company', label: 'Team' },
 ]
+const CALENDAR_BOOKING = 'https://calendar.app.google/kQsnVUt2ABMxFwjw7'
 
 export function Nav() {
   const [open, setOpen] = useState(false)
@@ -33,6 +35,16 @@ export function Nav() {
             </a>
           ))}
         </nav>
+        <a
+          href={CALENDAR_BOOKING}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary btn-pill nav-cta"
+          data-track="book_demo_nav"
+          data-track-kind="cta"
+        >
+          Book a demo
+        </a>
         <button
           type="button"
           className="nav-burger"
@@ -52,6 +64,7 @@ export function Nav() {
         id="nav-mobile-panel"
         className={`nav-mobile-panel${open ? ' is-open' : ''}`}
         aria-hidden={!open}
+        inert={!open}
       >
         <nav className="nav-mobile-links" aria-label="Mobile">
           {LINKS.map((l) => (
@@ -59,6 +72,17 @@ export function Nav() {
               {l.label}
             </a>
           ))}
+          <a
+            href={CALENDAR_BOOKING}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-mobile-cta"
+            data-track="book_demo_nav"
+            data-track-kind="cta"
+            onClick={() => setOpen(false)}
+          >
+            Book a demo
+          </a>
         </nav>
       </div>
     </header>
