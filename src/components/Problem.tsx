@@ -1,68 +1,48 @@
-interface Stat {
-  kpi: string
-  label: string
-}
-
-const STATS: Stat[] = [
-  { kpi: '60%', label: 'Increase in average site session duration' },
-  { kpi: '390%', label: 'Increase in web lead conversion' },
-  { kpi: '40%', label: 'Increase in sales from web leads' },
-]
+import { AssetChips } from './AssetChips'
+import { DelayStat } from './DelayStat'
+import { StatCard } from './StatCard'
 
 export function Problem() {
   return (
-    <section id="problem">
+    <section id="problem" className="band-revenue">
       <div className="shell">
-        <div className="grid-cols-2" style={{ marginBottom: 56 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <span className="eyebrow">
-              <span className="dot" />
-              Problem
-            </span>
-            <h2 className="section-title">
-              95% of visitors to travel websites leave without taking action.
-            </h2>
-          </div>
-          <div
-            style={{
-              padding: '32px 28px',
-              background: 'var(--bg-elev)',
-              border: '1px solid var(--line)',
-              borderRadius: 'var(--radius)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8,
-            }}
-          >
-            <span className="label-mono" style={{ marginBottom: 8 }}>
-              Your website today
-            </span>
-            <p style={{ margin: 0, fontSize: 16, color: 'var(--ink-dim)', lineHeight: 1.6 }}>
-              Visitors land, scan a form, and leave. The ones who stay submit vague enquiries your team spends hours
-              qualifying.
-            </p>
-            <p
-              style={{
-                margin: '12px 0 0',
-                fontSize: 16,
-                color: 'var(--gold-soft)',
-                fontWeight: 500,
-                lineHeight: 1.5,
-              }}
-            >
-              Tripcerto keeps them talking &mdash; and turns that conversation into 3&times; more enquiries than a
-              static form ever could.
-            </p>
-          </div>
+        <div className="section-header reveal" style={{ maxWidth: 840 }}>
+          <span className="eyebrow">
+            <span className="dot" />
+            The problem
+          </span>
+          <h2 className="section-title">
+            You aren&rsquo;t delivering value <span className="serif">quick enough</span>.
+          </h2>
+          <p className="section-sub" style={{ maxWidth: 720 }}>
+            Travel companies already hold the knowledge that wins bookings. The problem is that it sits
+            fragmented across websites, teams, suppliers, inventory and CRM &mdash; moving by hand at the
+            exact moment a traveller&rsquo;s intent is highest.
+          </p>
         </div>
 
-        <div className="stats-grid">
-          {STATS.map((s) => (
-            <div key={s.kpi} className="stat-card">
-              <span className="stat-kpi">{s.kpi}</span>
-              <p className="stat-label">{s.label}</p>
-            </div>
-          ))}
+        <AssetChips />
+        <DelayStat />
+
+        <div className="stats reveal" style={{ marginTop: 18 }}>
+          <StatCard
+            theme="Personalisation"
+            kpi="5–15%"
+            gloss="Revenue uplift personalisation typically drives, alongside 10–30% higher marketing ROI."
+            src="McKinsey · personalisation research"
+          />
+          <StatCard
+            theme="Friction"
+            kpi="~70%"
+            gloss="Average cart and checkout abandonment — 18% leave because the process is too long or complicated."
+            src="Baymard Institute · 50 studies"
+          />
+          <StatCard
+            theme="Trust"
+            kpi="68%"
+            gloss="Of travellers won't trust AI alone to complete a booking — 89% want AI involved, but only 12% are comfortable letting it decide."
+            src="68% Expedia Group · 89/12% Booking.com"
+          />
         </div>
       </div>
     </section>
