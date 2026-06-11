@@ -148,7 +148,17 @@ export function Threads({
     // re-reads it; a mid-session orientation flip keeping the prior DPR is acceptable.
     const isPhone = window.matchMedia('(max-width: 640px)').matches
     const dpr = isPhone ? 1 : Math.min(window.devicePixelRatio || 1, 2)
-    const renderer = new Renderer({ alpha: true, dpr })
+
+    // WebGL may be unavailable — disabled in the browser, GPU blocklisted, or the
+    // process is out of live contexts. ogl's Renderer throws in that case, so
+    // guard it: on failure we leave the container empty and the surface paints
+    // the page background with no animation, matching the reduced-motion path.
+    let renderer: Renderer
+    try {
+      renderer = new Renderer({ alpha: true, dpr })
+    } catch {
+      return
+    }
     const gl = renderer.gl
     gl.clearColor(0, 0, 0, 0)
     gl.enable(gl.BLEND)
