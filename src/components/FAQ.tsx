@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { IMinus, IPlus } from './icons'
 
 interface Faq {
@@ -8,38 +8,91 @@ interface Faq {
 
 const FAQS: Faq[] = [
   {
-    q: 'Who owns the data — us or you?',
-    a: 'You. Conversations, briefs, and inventory belong to the partner. Your data is secure, never co-mingled, and exportable in JSON or CSV at any time.',
+    q: 'Who owns the data?',
+    a: 'You. Conversations, briefs, inventory and the customer insight they generate belong to you. Your data is secure, never combined with other partners’ data, and exportable in JSON or CSV at any time.',
   },
   {
-    q: 'How much branding control do we get?',
-    a: 'Full theming: logo, accent palette, typography, voice, custom domain. Stella is renamed if you want — she becomes your branded AI chat.',
+    q: 'How is our proprietary data protected?',
+    a: 'Your rates, content, inventory, booking history and customer conversations are processed inside an isolated partner environment. They are not pooled across partners and not used to train shared models — the matching intelligence is ours, the proprietary data flowing through it is yours, and it is exportable at any time.',
   },
   {
-    q: 'What does inventory upload look like?',
-    a: 'CSV import or read-only API connection to your existing PMS / CRM. We auto-extract concepts; you approve before they go live. Re-imports are diffed.',
+    q: 'How does Tripcerto differ from a chatbot?',
+    a: 'A chatbot answers questions. Tripcerto extracts structured traveller signals, scores them against your catalogue, and hands your team a qualified brief — keeping the insight from every conversation with you, not a model vendor.',
   },
   {
-    q: 'How heavy is the integration on our side?',
-    a: 'It depends on the mode — we scope each one with you. Subdomain is fully hosted, with no engineering on your side. Embed drops Stella into your existing site as a chat widget or full-page planner. API + webhook delivers structured briefs straight into your CRM or booking workflow.',
+    q: 'What does implementation involve?',
+    a: 'You connect your catalogue by CSV import; we auto-extract the concepts that matter and your team approves them before anything goes live. Re-imports are diffed. Qualified briefs are delivered to your inbox today, with CRM and webhook routing on the roadmap.',
   },
   {
-    q: 'What makes Stella actually agentic?',
-    a: 'Real agentic AI, not a scripted bot. The model decides every move in real time — extracting preferences, querying your scored inventory, surfacing matches, or routing to your team. Each conversation ends with a structured brief, assembled from those decisions, not collected through a form.',
-  },
-  {
-    q: 'Which AI models do you use, and is data sent to them?',
-    a: 'Anthropic Claude Sonnet 4.6 runs the agentic loop — every decision, tool call, and traveller-facing reply. OpenAI is used only for embeddings, which feed our pgvector knowledge layer for inventory matching and semantic recall; never for reasoning or generation. Both providers operate under strict no-training agreements. PII is redacted before any model call; raw conversation stays on your tenant.',
+    q: 'Which models do you use?',
+    a: 'Anthropic’s Claude runs the reasoning loop; OpenAI handles the embeddings that power matching and semantic recall, and generates the structured brief. Your data sits in an isolated, per-partner environment.',
   },
 ]
 
-export function FAQ() {
-  const [open, setOpen] = useState<number>(0)
+function FaqRow({
+  faq,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  faq: Faq
+  index: number
+  isOpen: boolean
+  onToggle: () => void
+}) {
+  const innerRef = useRef<HTMLDivElement | null>(null)
+  const [maxHeight, setMaxHeight] = useState(0)
+  const panelId = `faq-panel-${index}`
+  const triggerId = `faq-trigger-${index}`
+
+  // Measure the real content height so long answers never clip (replaces the
+  // fixed 240px cap). Re-measure on open/close and on resize.
+  useLayoutEffect(() => {
+    const measure = () => setMaxHeight(isOpen ? (innerRef.current?.scrollHeight ?? 0) : 0)
+    measure()
+  }, [isOpen, faq.a])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const onResize = () => setMaxHeight(innerRef.current?.scrollHeight ?? 0)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [isOpen])
 
   return (
-    <section id="faq">
+    <div className="faq-row">
+      <button
+        id={triggerId}
+        type="button"
+        className="faq-trigger"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        <span>{faq.q}</span>
+        <span className="faq-icon">{isOpen ? <IMinus size={18} /> : <IPlus size={18} />}</span>
+      </button>
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={triggerId}
+        className="faq-body"
+        style={{ maxHeight: `${maxHeight}px`, opacity: isOpen ? 1 : 0 }}
+      >
+        <div ref={innerRef}>
+          <p>{faq.a}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function FAQ() {
+  const [open, setOpen] = useState<number>(0)
+  return (
+    <section id="faq" className="band-close">
       <div className="shell faq-grid">
-        <div>
+        <div className="reveal">
           <span className="eyebrow">
             <span className="dot" />
             FAQ
@@ -52,36 +105,16 @@ export function FAQ() {
             <a href="mailto:hello@tripcerto.com">hello@tripcerto.com</a> &mdash; we&rsquo;re quick.
           </p>
         </div>
-        <div>
-          {FAQS.map((f, i) => {
-            const isOpen = open === i
-            const panelId = `faq-panel-${i}`
-            const triggerId = `faq-trigger-${i}`
-            return (
-              <div key={f.q} className="faq-row">
-                <button
-                  id={triggerId}
-                  type="button"
-                  className="faq-trigger"
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpen(isOpen ? -1 : i)}
-                >
-                  <span>{f.q}</span>
-                  <span className="faq-icon">{isOpen ? <IMinus size={18} /> : <IPlus size={18} />}</span>
-                </button>
-                <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={triggerId}
-                  className="faq-body"
-                  style={{ maxHeight: isOpen ? 240 : 0, opacity: isOpen ? 1 : 0 }}
-                >
-                  <p>{f.a}</p>
-                </div>
-              </div>
-            )
-          })}
+        <div className="reveal">
+          {FAQS.map((f, i) => (
+            <FaqRow
+              key={f.q}
+              faq={f}
+              index={i}
+              isOpen={open === i}
+              onToggle={() => setOpen(open === i ? -1 : i)}
+            />
+          ))}
         </div>
       </div>
     </section>
