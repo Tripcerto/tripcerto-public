@@ -257,10 +257,10 @@ main > section.band-close { background: rgba(239, 228, 211, 0.34); }
   .dgm-relay .relay-track { flex-direction: column; align-items: stretch; }
   .dgm-relay .relay-track .dgm-conn.h { display: none; }
   .dgm-relay .relay-track .dgm-node { position: relative; }
-  .dgm-relay .relay-track .dgm-node + .dgm-node { margin-top: 30px; }
-  .dgm-relay .relay-track .dgm-node + .dgm-node::before { content: ""; position: absolute; top: -26px; left: 50%;
+  .dgm-relay .relay-track .dgm-conn.h + .dgm-node { margin-top: 30px; }
+  .dgm-relay .relay-track .dgm-conn.h + .dgm-node::before { content: ""; position: absolute; top: -26px; left: 50%;
     width: 1px; height: 14px; transform: translateX(-50%); background: linear-gradient(180deg, var(--gold-deep), var(--gold)); }
-  .dgm-relay .relay-track .dgm-node + .dgm-node::after { content: ""; position: absolute; top: -14px; left: 50%;
+  .dgm-relay .relay-track .dgm-conn.h + .dgm-node::after { content: ""; position: absolute; top: -14px; left: 50%;
     transform: translateX(-50%); border-left: 4px solid transparent; border-right: 4px solid transparent;
     border-top: 5px solid var(--gold-soft); }
 }
@@ -293,14 +293,22 @@ main > section.band-close { background: rgba(239, 228, 211, 0.34); }
 .dgm-layer .stage-blocks .dgm-node { flex: 1; justify-content: center; }
 .dgm-layer .stage-conn { align-self: center; margin: 0 14px; }
 @media (max-width: 900px) {
-  .dgm-layer .ins-row { grid-template-columns: 1fr; }
+  .dgm-layer .ins-row { grid-template-columns: 1fr; gap: 4px; }
   .dgm-layer .outs-row { grid-template-columns: repeat(2, 1fr); }
   .dgm-layer .dgm-conn.split { display: none; }
-  .dgm-layer .layer-vconn { display: block; margin: 10px auto; }
+  .dgm-layer .layer-vconn { display: block; }
+  /* On mobile the layer flow is vertical: enlarge and tighten the connectors so
+     the dotted line bridges card-to-card instead of floating in the grid gap. */
+  .dgm-layer .input-vconn,
+  .dgm-layer .layer-vconn,
+  .dgm-layer .layer-vconn.always { width: 18px; height: 40px; margin: 4px auto; }
 }
 @media (max-width: 640px) {
   .dgm-layer .layer-stages { grid-template-columns: 1fr; gap: 0; }
-  .dgm-layer .stage-conn { transform: rotate(90deg); margin: 24px auto 12px; display: block; }
+  /* The horizontal stage connector is rotated to point downward between stacked
+     stages; rotate() doesn't reserve layout height, so its 54px visual span
+     overflows the 16px box — the larger margins keep it clear of the stage label. */
+  .dgm-layer .stage-conn { transform: rotate(90deg); margin: 34px auto 30px; display: block; }
   .dgm-layer .outs-row { grid-template-columns: 1fr; }
 }
 
