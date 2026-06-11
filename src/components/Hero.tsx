@@ -1,54 +1,59 @@
-import { IArrow } from './icons'
 import { ShinyText } from './ShinyText'
 import { Threads } from './Threads'
 
-// Stable reference — inline array literals make Threads' effect deps churn,
-// tearing down and rebuilding the WebGL context on every render.
-const THREADS_COLOR: [number, number, number] = [0.769, 0.573, 0.247]
+const CALENDAR_BOOKING = 'https://calendar.app.google/kQsnVUt2ABMxFwjw7'
+// Stable module-level colour array — inline literals churn Threads' effect deps
+// and tear down the WebGL context every render. Darkened for the cream bg (§8a).
+const THREADS_COLOR: [number, number, number] = [0.49, 0.33, 0.13]
 
 export function Hero() {
   return (
     <section className="hero" aria-label="Hero">
       <div className="hero-bg" aria-hidden="true">
-        <Threads
-          color={THREADS_COLOR}
-          amplitude={2.0}
-          distance={0.2}
-          enableMouseInteraction
-        />
+        <Threads color={THREADS_COLOR} amplitude={2.0} distance={0.2} enableMouseInteraction />
       </div>
+      <div className="hero-grad" aria-hidden="true" />
       <div className="shell hero-shell">
-        <div className="hero-spacer-top" />
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Travellers don&rsquo;t think in categories.{' '}
+        <h1 className="hero-title">
+          <span className="hero-line">Revenue is lost</span>
+          <span className="hero-line">
+            when information moves{' '}
             <ShinyText
-              text="Stella doesn’t either."
-              color="#c4923f"
-              shineColor="#d6a85a"
+              text="slowly"
+              className="serif"
+              color="#7d5520"
+              shineColor="#b9832f"
               speed={4.5}
               delay={3.5}
               spread={110}
             />
-          </h1>
-          <p className="hero-sub">
-            Stella is an agentic AI that turns the way travellers actually talk &mdash; vibes, must-haves,
-            dealbreakers &mdash; into behavioural data that removes the friction from closing sales.
-          </p>
-          <div className="hero-ctas">
-            <a
-              href="https://calendar.app.google/kQsnVUt2ABMxFwjw7"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary btn-lg"
-              data-track="book_demo_hero"
-              data-track-kind="cta"
-            >
-              Book a demo <IArrow size={15} />
-            </a>
-          </div>
+            .
+          </span>
+        </h1>
+        <p className="hero-tagline">Tripcerto helps companies move quickly and win more bookings.</p>
+        <div className="hero-ctas">
+          <a
+            href={CALENDAR_BOOKING}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary btn-pill btn-lg"
+            data-track="book_demo_hero"
+            data-track-kind="cta"
+          >
+            Book a demo <span className="arrow">→</span>
+          </a>
+          <a
+            href="#how"
+            className="btn btn-ghost btn-lg"
+            data-track="see_how_it_works_hero"
+            data-track-kind="cta"
+          >
+            See how it works
+          </a>
         </div>
-        <div className="hero-spacer-bottom" />
+        <p className="hero-strip">
+          Operators · OTAs · DMCs · TMCs · Accommodation · Experiences · Flights · Ground transport
+        </p>
       </div>
     </section>
   )
