@@ -180,16 +180,22 @@ The public site is intentionally minimal:
 
 ```
 src/
-  App.tsx                # Section composition
+  App.tsx                # 9-section composition + useReveal()
   main.tsx               # React root
-  index.css              # Design tokens + utility classes
+  index.css              # Cream design tokens + utility classes
   components/
-    Nav.tsx, Hero.tsx, Problem.tsx, MatchingSection.tsx,
-    BriefReveal.tsx, Features.tsx, Integration.tsx,
-    PilotCTA.tsx, FAQ.tsx, Footer.tsx, icons.tsx
+    Nav.tsx, Hero.tsx, Problem.tsx (AssetChips, DelayStat),
+    JourneySection.tsx (RelayFunnel),
+    HowItWorksSection.tsx (LayerDiagram, VerticalsRow),
+    DataControlSection.tsx (BoundaryDiagram),
+    WhyNowSection.tsx, TeamSection.tsx, FAQ.tsx, PilotCTA.tsx, Footer.tsx,
+    StatCard.tsx, MemberCard.tsx, diagram/ (DgmNode, DgmConnector, FanConnector),
+    Threads.tsx, ShinyText.tsx, SoftAurora.tsx, icons.tsx
+  hooks/    useReveal.ts # Scroll-in reveal (IntersectionObserver)
+  lib/      analytics.ts # Vercel Analytics event tracking
 public/
-  unnamed.png            # Favicon / OG image
-index.html               # Document shell, fonts, meta
+  favicon.*, apple-touch-icon.png, icon-192/512.png, site.webmanifest, og-image.png
+index.html               # Document shell, fonts, cream meta/OG
 ```
 
 ## Local Development
