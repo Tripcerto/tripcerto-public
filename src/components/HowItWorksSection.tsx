@@ -29,7 +29,7 @@ export function HowItWorksSection() {
           }}
         >
           Give every visitor a relevant, personalised response in the moment —{' '}
-          <span style={{ color: 'var(--gold-soft)' }}>maximise every opportunity</span>.
+          <span style={{ color: 'var(--gold-ink)' }}>maximise every opportunity</span>.
         </p>
       </div>
     </section>

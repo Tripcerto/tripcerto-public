@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section className="hero" aria-label="Hero">
       <div className="hero-bg" aria-hidden="true">
-        <Threads color={THREADS_COLOR} amplitude={2.0} distance={0.2} enableMouseInteraction />
+        <Threads color={THREADS_COLOR} amplitude={3.0} distance={0.32} enableMouseInteraction />
       </div>
       <div className="hero-grad" aria-hidden="true" />
       <div className="shell hero-shell">
@@ -22,7 +22,7 @@ export function Hero() {
               text="slowly"
               className="serif"
               color="#7d5520"
-              shineColor="#b9832f"
+              shineColor="#a8772a"
               speed={4.5}
               delay={3.5}
               spread={110}
