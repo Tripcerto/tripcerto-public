@@ -1,12 +1,15 @@
+import { DataControlSection } from './components/DataControlSection'
 import { FAQ } from './components/FAQ'
-import { Features } from './components/Features'
 import { Footer } from './components/Footer'
 import { Hero } from './components/Hero'
-import { Integration } from './components/Integration'
-import { MatchingSection } from './components/MatchingSection'
+import { HowItWorksSection } from './components/HowItWorksSection'
+import { JourneySection } from './components/JourneySection'
 import { Nav } from './components/Nav'
 import { PilotCTA } from './components/PilotCTA'
 import { Problem } from './components/Problem'
+import { TeamSection } from './components/TeamSection'
+import { WhyNowSection } from './components/WhyNowSection'
+import { useReveal } from './hooks/useReveal'
 import {
   useGlobalClickTracking,
   useScrollDepth,
@@ -19,6 +22,7 @@ export function App() {
   useScrollDepth()
   useSectionViews()
   useTimeOnPage()
+  useReveal()
 
   return (
     <>
@@ -26,11 +30,13 @@ export function App() {
       <main>
         <Hero />
         <Problem />
-        <MatchingSection />
-        <Features />
-        <Integration />
-        <PilotCTA />
+        <JourneySection />
+        <HowItWorksSection />
+        <DataControlSection />
+        <WhyNowSection />
+        <TeamSection />
         <FAQ />
+        <PilotCTA />
       </main>
       <Footer />
     </>
