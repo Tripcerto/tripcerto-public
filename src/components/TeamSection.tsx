@@ -39,9 +39,9 @@ export function TeamSection() {
             layer that removes it.
           </p>
         </div>
-        <div className="team-grid reveal">
-          {MEMBERS.map((m) => (
-            <MemberCard key={m.name} {...m} />
+        <div className="team-grid">
+          {MEMBERS.map((m, i) => (
+            <MemberCard key={m.name} index={i} {...m} />
           ))}
         </div>
       </div>

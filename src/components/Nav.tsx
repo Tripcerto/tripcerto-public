@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { ThemeToggle } from './ThemeToggle'
 
 const LINKS = [
   { href: '#problem', label: 'Problem' },
@@ -19,11 +20,18 @@ export function Nav() {
       if (e.key === 'Escape') setOpen(false)
     }
     document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
+    // lock body scroll while the full-screen menu is open
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+    }
   }, [open])
 
   return (
-    <header className="nav">
+    <>
+      <header className="nav">
       <div className="shell nav-inner">
         <a href="#" className="wordmark" onClick={() => setOpen(false)}>
           tripcerto<span className="dot">.</span>
@@ -35,31 +43,41 @@ export function Nav() {
             </a>
           ))}
         </nav>
-        <a
-          href={CALENDAR_BOOKING}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-primary btn-pill nav-cta"
-          data-track="book_demo_nav"
-          data-track-kind="cta"
-        >
-          Book a demo
-        </a>
-        <button
-          type="button"
-          className="nav-burger"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="nav-mobile-panel"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className={`burger-icon${open ? ' is-open' : ''}`} aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-        </button>
+        <div className="nav-actions">
+          <a
+            href={CALENDAR_BOOKING}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary btn-pill nav-cta"
+            data-track="book_demo_nav"
+            data-track-kind="cta"
+          >
+            Book a demo
+          </a>
+          <button
+            type="button"
+            className="nav-burger"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="nav-mobile-panel"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className={`burger-icon${open ? ' is-open' : ''}`} aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+        </div>
       </div>
+        {/* desktop: pinned flush to the header's top-right corner, outside the
+            centered shell (nav-actions reserves room). Hidden on mobile, where
+            the toggle lives in the burger panel footer below. */}
+        <ThemeToggle />
+      </header>
+      {/* sibling of <header>, NOT a child: the nav's backdrop-filter makes it a
+          containing block for position:fixed, which would collapse this overlay
+          to the 64px bar. Out here it's fixed to the viewport. */}
       <div
         id="nav-mobile-panel"
         className={`nav-mobile-panel${open ? ' is-open' : ''}`}
@@ -72,6 +90,11 @@ export function Nav() {
               {l.label}
             </a>
           ))}
+        </nav>
+        <div className="nav-mobile-theme-row">
+          <ThemeToggle variant="menu" />
+        </div>
+        <div className="nav-mobile-foot">
           <a
             href={CALENDAR_BOOKING}
             target="_blank"
@@ -83,8 +106,8 @@ export function Nav() {
           >
             Book a demo
           </a>
-        </nav>
+        </div>
       </div>
-    </header>
+    </>
   )
 }
