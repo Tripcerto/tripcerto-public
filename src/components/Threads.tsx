@@ -143,7 +143,12 @@ export function Threads({
     if (!containerRef.current) return
     const container = containerRef.current
 
-    const renderer = new Renderer({ alpha: true })
+    // Responsive contract §6: cap cost on phones (DPR 1), allow crisper waves on
+    // tablet/desktop (DPR ≤ 2). Read once at mount — a remount (route change)
+    // re-reads it; a mid-session orientation flip keeping the prior DPR is acceptable.
+    const isPhone = window.matchMedia('(max-width: 640px)').matches
+    const dpr = isPhone ? 1 : Math.min(window.devicePixelRatio || 1, 2)
+    const renderer = new Renderer({ alpha: true, dpr })
     const gl = renderer.gl
     gl.clearColor(0, 0, 0, 0)
     gl.enable(gl.BLEND)
