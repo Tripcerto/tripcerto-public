@@ -28,7 +28,7 @@ export function HowItWorksSection() {
             letterSpacing: '-.01em',
           }}
         >
-          Give every visitor a relevant, personalised response in the moment —{' '}
+          Give every visitor a relevant, personalised response instantly —{' '}
           <span style={{ color: 'var(--gold-ink)' }}>maximise every opportunity</span>.
         </p>
       </div>

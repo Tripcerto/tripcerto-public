@@ -14,7 +14,7 @@ describe('HowItWorksSection', () => {
 
     const text = container.textContent ?? ''
     expect(text).toContain('Your branded surface')
-    expect(text).toContain('Your catalogue')
+    expect(text).toContain('Your Preferred Product')
     expect(text).not.toContain('Partner Inventory')
     expect(text).not.toContain('Outgrow')
     // verticals row

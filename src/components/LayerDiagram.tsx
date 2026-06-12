@@ -24,8 +24,8 @@ const STAGES = [
     blocks: [
       { nt: 'Customer-defined trip profiles', meta: 'Created by them, informed by you' },
       {
-        nt: 'Your catalogue',
-        meta: 'Your expert content and approved catalogue — inside your isolated environment.',
+        nt: 'Your Preferred Product',
+        meta: 'Total control over what is offered.',
       },
     ],
   },
