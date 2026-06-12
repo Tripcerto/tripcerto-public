@@ -76,8 +76,7 @@ export function RelayFunnel() {
         </div>
 
         <figcaption className="dgm-cap">
-          <b>Same demand. Less leakage.</b>{' '}
-          <span className="ill">Timings illustrative · speed-to-lead up to 391%: Leads360/HubSpot.</span>
+          <b>Same demand. Less leakage.</b>
         </figcaption>
       </div>
     </figure>

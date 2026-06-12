@@ -6,7 +6,7 @@ vi.mock('./Threads', () => ({ Threads: () => null }))
 import { Hero } from './Hero'
 
 describe('Hero', () => {
-  it('shows the cream headline, tagline, strip and both CTAs', () => {
+  it('shows the cream headline, tagline, strip and the single demo CTA', () => {
     render(<Hero />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Revenue is lost')
     expect(screen.getByText('Tripcerto helps companies move quickly and win more bookings.')).toBeInTheDocument()
@@ -16,7 +16,7 @@ describe('Hero', () => {
     expect(book).toHaveAttribute('href', 'https://calendar.app.google/kQsnVUt2ABMxFwjw7')
     expect(book).toHaveAttribute('target', '_blank')
 
-    const see = screen.getByRole('link', { name: 'See how it works' })
-    expect(see).toHaveAttribute('href', '#how')
+    // "See how it works" was removed site-wide; only the demo CTA remains.
+    expect(screen.queryByRole('link', { name: 'See how it works' })).toBeNull()
   })
 })

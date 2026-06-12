@@ -7,7 +7,6 @@ import { JourneySection } from './components/JourneySection'
 import { Nav } from './components/Nav'
 import { PilotCTA } from './components/PilotCTA'
 import { Problem } from './components/Problem'
-import { TeamSection } from './components/TeamSection'
 import { WhyNowSection } from './components/WhyNowSection'
 import { useReveal } from './hooks/useReveal'
 import {
@@ -34,7 +33,6 @@ export function App() {
         <HowItWorksSection />
         <DataControlSection />
         <WhyNowSection />
-        <TeamSection />
         <FAQ />
         <PilotCTA />
       </main>

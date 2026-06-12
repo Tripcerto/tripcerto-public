@@ -4,10 +4,7 @@ const PRODUCT = [
   { href: '#data-control', label: 'Data control' },
   { href: '#why-now', label: 'Why now' },
 ]
-const COMPANY = [
-  { href: '#company', label: 'Team' },
-  { href: 'mailto:hello@tripcerto.com', label: 'Contact' },
-]
+const COMPANY = [{ href: 'mailto:hello@tripcerto.com', label: 'Contact' }]
 const LEGAL = [
   { href: '/legal/privacy/', label: 'Privacy' },
   { href: '/legal/terms/', label: 'Terms' },

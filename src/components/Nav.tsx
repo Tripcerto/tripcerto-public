@@ -7,7 +7,6 @@ const LINKS = [
   { href: '#how', label: 'How it works' },
   { href: '#data-control', label: 'Data control' },
   { href: '#why-now', label: 'Why now' },
-  { href: '#company', label: 'Team' },
 ]
 const CALENDAR_BOOKING = 'https://calendar.app.google/kQsnVUt2ABMxFwjw7'
 

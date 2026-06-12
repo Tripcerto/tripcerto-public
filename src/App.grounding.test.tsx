@@ -31,7 +31,7 @@ const BANNED = [
   'PMS',
 ]
 
-const REQUIRED = ['Booking.com', 'Contentsquare', 'Deloitte', 'up to 391%', 'cart and checkout']
+const REQUIRED = ['Booking.com', 'Contentsquare', 'Deloitte', 'up to 391%', 'online customer journey']
 
 const SECTION_IDS = [
   'problem',
@@ -39,7 +39,6 @@ const SECTION_IDS = [
   'how',
   'data-control',
   'why-now',
-  'company',
   'faq',
   'pilot',
 ]

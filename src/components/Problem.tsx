@@ -34,7 +34,7 @@ export function Problem() {
           <StatCard
             theme="Friction"
             kpi="~70%"
-            gloss="Average cart and checkout abandonment — 18% leave because the process is too long or complicated."
+            gloss="Average online customer journey abandonment — 18% leave because the process is too long or complicated."
             src="Baymard Institute · 50 studies"
           />
           <StatCard

@@ -15,9 +15,12 @@ export function DelayStat() {
           </p>
         </div>
         <div className="delay-stat">
-          <span className="frame">Speed to lead</span>
-          <span className="bignum">391%</span>
-          <span className="lab">Leads answered within 1 minute can convert up to 391% more often.</span>
+          <p className="delay-lead">
+            Up to <span className="bignum">391%</span>{' '}
+            <span className="delay-lead-tail">
+              more conversions when a lead is answered within the first minute.
+            </span>
+          </p>
           <span className="src">Leads360 / HubSpot · speed-to-lead study</span>
         </div>
       </div>

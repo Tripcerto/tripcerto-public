@@ -1,12 +1,11 @@
 import { Threads } from './Threads'
 import { useTheme } from '../lib/theme'
 
-const MAILTO_CONTACT = 'mailto:hello@tripcerto.com'
 const CALENDAR_BOOKING = 'https://calendar.app.google/kQsnVUt2ABMxFwjw7'
-// Stable module-level colour arrays (same churn fix as Hero): dark gold on cream,
+// Stable module-level colour arrays (same churn fix as Hero): warm gold on cream,
 // brighter gold so the waves stay legible on the espresso dark bg.
-const THREADS_COLOR_PILOT_LIGHT: [number, number, number] = [0.55, 0.39, 0.18]
-const THREADS_COLOR_PILOT_DARK: [number, number, number] = [0.85, 0.62, 0.32]
+const THREADS_COLOR_PILOT_LIGHT: [number, number, number] = [0.66, 0.47, 0.16]
+const THREADS_COLOR_PILOT_DARK: [number, number, number] = [0.88, 0.65, 0.34]
 
 export function PilotCTA() {
   const { theme } = useTheme()
@@ -43,14 +42,6 @@ export function PilotCTA() {
               data-track-kind="cta"
             >
               Book a demo <span className="arrow">→</span>
-            </a>
-            <a
-              href={MAILTO_CONTACT}
-              className="btn btn-ghost btn-lg"
-              data-track="contact_us_pilot"
-              data-track-kind="cta"
-            >
-              Contact us
             </a>
           </div>
         </div>
