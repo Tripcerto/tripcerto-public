@@ -164,7 +164,11 @@ main > section.band-close { background: rgba(239, 228, 211, 0.34); }
 
 /* hero */
 .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 0; }
-.hero-bg { position: absolute; inset: 0; z-index: 0; opacity: 0.72; transform: translateY(-20%); }
+/* No vertical lift: the canvas must equal the hero box exactly so the whole
+   WebGL surface stays on-screen. Any translate shifts the canvas partly out of
+   the `overflow: hidden` hero, cutting the wave's downward swells flat against
+   the canvas edge and leaving a dead band before the bottom strip. */
+.hero-bg { position: absolute; inset: 0; z-index: 0; opacity: 0.72; }
 .hero-bg > .threads-container { pointer-events: auto; }
 .hero-grad { position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
@@ -186,9 +190,6 @@ main > section.band-close { background: rgba(239, 228, 211, 0.34); }
   color: var(--ink-muted); white-space: nowrap; }
 @media (max-width: 1040px) { .hero-title { font-size: clamp(32px, 6vw, 60px); } }
 @media (max-width: 720px) {
-  /* the -26% desktop lift sits too high on a tall phone hero; drop it back
-     behind the centred title here */
-  .hero-bg { transform: translateY(-6%); }
   .hero-shell { min-height: calc(100svh - 64px); padding: 84px 20px 92px; }
   .hero-title { line-height: 1.08; max-width: 100%; }
   .hero-tagline { font-size: 16px; }
@@ -318,6 +319,26 @@ main > section.band-close { background: rgba(239, 228, 211, 0.34); }
   .dgm-relay .relay-track .dgm-conn.h + .dgm-node::after { content: ""; position: absolute; top: -14px; left: 50%;
     transform: translateX(-50%); border-left: 4px solid transparent; border-right: 4px solid transparent;
     border-top: 5px solid var(--gold-soft); }
+}
+/* MOBILE: the ≤1100 form stacks both vertical lanes, so a phone gets one ~1400px
+   column of 12 cards. Instead lay the two lanes side by side as two simultaneous
+   streams — each lane is already its own vertical mini-funnel here, so the frame
+   just becomes a 2-col grid with the caption spanning both. Halves the height and
+   keeps the traditional-vs-Tripcerto comparison on screen at once. */
+@media (max-width: 640px) {
+  .dgm-relay .dgm-frame { display: grid; grid-template-columns: 1fr 1fr; column-gap: 0; align-items: start; }
+  .dgm-relay .relay-lane { padding: 12px 0 0; }
+  .dgm-relay .relay-lane + .relay-lane { border-top: none; }
+  /* hairline divider down the middle, balanced padding either side of it */
+  .dgm-relay .relay-lane:not(.is-pos) { border-right: 1px solid var(--line); padding-right: 13px; }
+  .dgm-relay .relay-lane.is-pos { padding-left: 13px; }
+  /* the tag went horizontal at ≤1100; re-stack it for the narrow column */
+  .dgm-relay .relay-tag { flex-direction: column; align-items: flex-start; gap: 3px; }
+  .dgm-relay .dgm-cap { grid-column: 1 / -1; margin-top: 22px; }
+  /* tighten the node chrome and inter-node arrow gap for the slimmer column */
+  .dgm-relay .relay-track .dgm-node { padding: 12px 11px; gap: 8px; }
+  .dgm-relay .relay-impact { font-size: 12px; }
+  .dgm-relay .relay-track .dgm-conn.h + .dgm-node { margin-top: 24px; }
 }
 
 /* LAYER */

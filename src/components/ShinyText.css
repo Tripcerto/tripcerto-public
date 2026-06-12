@@ -1,3 +1,10 @@
 .shiny-text {
   display: inline-block;
+  /* The text is painted as a `background-clip: text` gradient, so it can only
+     show where the element's box extends. With the hero's tight line-height,
+     deep italic-serif descenders (the "y" in "slowly") fall below the box and
+     get clipped. Extend the box downward to cover them; the negative margin
+     cancels the layout impact so nothing shifts. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
 }
