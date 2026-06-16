@@ -21,6 +21,7 @@ uniform vec3 uColor;
 uniform float uAmplitude;
 uniform float uDistance;
 uniform vec2 uMouse;
+uniform float uYOffset;
 
 #define PI 3.1415926538
 
@@ -71,7 +72,11 @@ float lineFn(vec2 st, float width, float perc, float offset, vec2 mouse, float t
         st.x * 0.3
     );
 
-    float y = 0.5 + (perc - 0.5) * distance + xnoise / 2.0 * finalAmplitude;
+    // uYOffset lifts the whole band up the canvas (uv origin is bottom-left, so
+    // positive = up). The shader fades high-perc lines to nothing, leaving the
+    // visible band low by default; this re-centres it without translating the
+    // canvas (which would clip the downward swells against the hero's overflow).
+    float y = 0.5 + uYOffset + (perc - 0.5) * distance + xnoise / 2.0 * finalAmplitude;
 
     float line_start = smoothstep(
         y + (width / 2.0) + (u_line_blur * pixel(1.0, iResolution.xy) * blur),
@@ -123,6 +128,9 @@ type ThreadsProps = {
   color?: [number, number, number]
   amplitude?: number
   distance?: number
+  /** Lifts the visible wave band up the canvas, in uv units (0 = library
+   *  default, which renders low; ~0.12 re-centres it behind the hero headline). */
+  yOffset?: number
   enableMouseInteraction?: boolean
   className?: string
   style?: React.CSSProperties
@@ -133,6 +141,7 @@ export function Threads({
   color = [1, 1, 1],
   amplitude = 1,
   distance = 0,
+  yOffset = 0,
   enableMouseInteraction = false,
   ...rest
 }: ThreadsProps) {
@@ -177,6 +186,7 @@ export function Threads({
         uColor: { value: new Color(...color) },
         uAmplitude: { value: amplitude },
         uDistance: { value: distance },
+        uYOffset: { value: yOffset },
         uMouse: { value: new Float32Array([0.5, 0.5]) },
       },
     })
@@ -251,7 +261,7 @@ export function Threads({
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas)
       gl.getExtension('WEBGL_lose_context')?.loseContext()
     }
-  }, [color, amplitude, distance, enableMouseInteraction])
+  }, [color, amplitude, distance, yOffset, enableMouseInteraction])
 
   return <div ref={containerRef} className="threads-container" {...rest} />
 }

@@ -20,6 +20,7 @@ export function Hero() {
           color={dark ? THREADS_COLOR_DARK : THREADS_COLOR_LIGHT}
           amplitude={3.0}
           distance={0.32}
+          yOffset={0.12}
           enableMouseInteraction
         />
       </div>
