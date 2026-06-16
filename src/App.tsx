@@ -1,3 +1,4 @@
+import { ConnectedJourneySection } from './components/ConnectedJourneySection'
 import { DataControlSection } from './components/DataControlSection'
 import { FAQ } from './components/FAQ'
 import { Footer } from './components/Footer'
@@ -31,6 +32,7 @@ export function App() {
         <Problem />
         <JourneySection />
         <HowItWorksSection />
+        <ConnectedJourneySection />
         <DataControlSection />
         <WhyNowSection />
         <FAQ />
