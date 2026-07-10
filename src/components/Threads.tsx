@@ -197,9 +197,15 @@ export function Threads({
       const { clientWidth, clientHeight } = container
       if (clientWidth === 0 || clientHeight === 0) return
       renderer.setSize(clientWidth, clientHeight)
-      program.uniforms.iResolution.value.r = clientWidth
-      program.uniforms.iResolution.value.g = clientHeight
-      program.uniforms.iResolution.value.b = clientWidth / clientHeight
+      // iResolution must be the WebGL drawing-buffer size, not CSS pixels. The
+      // shader computes uv = gl_FragCoord.xy / iResolution.xy, and gl_FragCoord
+      // spans the DPR-scaled buffer (clientWidth * dpr). Feeding CSS pixels makes
+      // uv span 0..dpr, so the wave band — authored for uv.y ≈ 0.5..0.8 — lands in
+      // the lower third on retina/desktop (dpr 2) while phones (dpr 1) looked fine.
+      const { drawingBufferWidth: bw, drawingBufferHeight: bh } = gl
+      program.uniforms.iResolution.value.r = bw
+      program.uniforms.iResolution.value.g = bh
+      program.uniforms.iResolution.value.b = bw / bh
     }
     window.addEventListener('resize', resize)
     // Observe the container itself — `window resize` misses layout shifts
