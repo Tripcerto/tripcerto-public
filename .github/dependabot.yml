@@ -1,0 +1,32 @@
+# Version updates only; security updates are a repo toggle (Settings → Code security).
+# Minor and patch updates arrive as one PR per group per week; a major arrives on its own PR.
+# Every PR runs the validate workflow.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/London
+    open-pull-requests-limit: 3
+    groups:
+      dev-tooling:
+        dependency-type: development
+        update-types: [minor, patch]
+      runtime:
+        dependency-type: production
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/London
+    open-pull-requests-limit: 2
+    groups:
+      actions:
+        patterns: ["*"]

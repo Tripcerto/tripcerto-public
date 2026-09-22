@@ -30,7 +30,10 @@ export default defineConfig({
   },
   /* One HTML entry per page, each with its own title and meta. */
   build: {
-    rollupOptions: {
+    /* Breakpoints ship as min-width queries: Safari and iOS before 16.4 do not
+       parse range syntax (width >= 40rem), and would lose every breakpoint. */
+    cssTarget: ['chrome107', 'edge107', 'firefox104', 'safari16'],
+    rolldownOptions: {
       input: {
         home: fileURLToPath(new URL('./index.html', import.meta.url)),
         engage: fileURLToPath(new URL('./engage/index.html', import.meta.url)),

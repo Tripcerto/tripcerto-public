@@ -1,0 +1,40 @@
+# The gate for every PR and every push to main: the four local gates plus a zero-advisory audit.
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Type-check
+        run: npx tsc -b --noEmit
+      - name: Lint
+        run: npm run lint
+      - name: Tests
+        run: npx vitest run
+      - name: Build
+        run: npm run build
+      - name: Every page built
+        run: |
+          for f in index.html engage/index.html workspace/index.html pilot/index.html trust/index.html; do
+            test -f "dist/$f" || { echo "missing dist/$f"; exit 1; }
+          done
+      - name: Audit
+        run: npm run audit
