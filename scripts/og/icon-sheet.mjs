@@ -57,9 +57,10 @@ const shot = async (g, s, pad = false) => {
   await tab.setViewport({ width: s, height: s, deviceScaleFactor: 2 })
   tab.on('pageerror', (e) => problems.push(`${g}@${s}: ${e}`))
   tab.on('console', (m) => m.type() === 'error' && problems.push(`${g}@${s}: ${m.text()}`))
-  await tab.goto(`http://127.0.0.1:${port}/scripts/og/icon-variants.html?g=${g}&s=${s}${pad ? '&pad=1' : ''}`, {
-    waitUntil: 'networkidle0',
-  })
+  await tab.goto(
+    `http://127.0.0.1:${port}/scripts/og/icon-variants.html?g=${g}&s=${s}&shape=square&mark=${pad ? 0.56 : 0.76}`,
+    { waitUntil: 'networkidle0' },
+  )
   await tab.evaluate(() => window.cardReady)
   const buf = await tab.screenshot({ type: 'png', encoding: 'base64' })
   await tab.close()
