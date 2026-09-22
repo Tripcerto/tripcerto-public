@@ -11,7 +11,7 @@ const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 /* The band hero on a calm ground: the Ember strip from the identity pack,
    pink through coral into peach, with two broad diagonal sheens crossing
    bottom-left to top-right on their own slow clocks. No lines. The
-   headline is multiplied into the colour; the phone overlaps Stella's pane
+   headline is solid ink; the phone overlaps Stella's pane
    of the glass Workspace window and the pair sits centred in its column,
    level with the copy. */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
@@ -111,7 +111,7 @@ export function HeroGlass() {
 
             <h1
               id="hero-title"
-              className="text-inked mix-blend-multiply mt-6 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] sm:text-[4rem] lg:text-[4.75rem] xl:text-[5rem]"
+              className="mt-6 max-w-[12ch] text-ink text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] sm:text-[4rem] lg:text-[4.75rem] xl:text-[5rem]"
             >
               {home.hero['H-1-A']}
             </h1>
@@ -139,10 +139,10 @@ export function HeroGlass() {
 
           <div className="min-w-0 lg:col-span-6">
             <div className="relative mx-auto h-[540px] max-w-[560px] sm:h-[600px] lg:h-[620px] lg:max-w-none">
-              <div className="absolute left-[14%] top-0 w-[130%] sm:w-[720px] lg:left-[12%] lg:w-[760px]">
+              <div className="absolute left-[10%] top-0 w-[130%] sm:w-[720px] lg:left-[6%] lg:w-[760px]">
                 <GlassWindow />
               </div>
-              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] sm:w-[230px] lg:w-[250px]">
+              <PhoneFrame className="absolute left-[4%] top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:left-[9%] lg:w-[250px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>
