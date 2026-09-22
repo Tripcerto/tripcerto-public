@@ -18,10 +18,11 @@ const FloatingLines = lazy(() =>
 
 /* The React Bits demo configuration, in our colours. Module-level so the
    shader is built once: the effect re-runs on any new reference. Counts map
-   to WAVES in order. Stops run primary-deep to peach across each wave. */
+   to WAVES in order, without the demo's middle wave. Stops run primary-deep
+   to peach across each wave. */
 const WAVE_COLOURS = ['#B9243D', '#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
-const WAVES: WaveName[] = ['top', 'bottom', 'middle']
-const WAVE_LINES = [10, 15, 20]
+const WAVES: WaveName[] = ['top', 'bottom']
+const WAVE_LINES = [10, 15]
 
 function Waves() {
   return (

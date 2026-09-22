@@ -23,6 +23,8 @@ export interface FlowFieldProps {
   opacity?: readonly [number, number]
   /* Stroke width in CSS px. */
   lineWidth?: number
+  /* Gaussian blur over the drawn field in CSS px; 0 is crisp. */
+  blur?: number
   lineCount?: number
   /* Lines under 768px. */
   mobileLineCount?: number
@@ -44,6 +46,7 @@ export function FlowField({
   colours = EMBER_RAMP,
   opacity = DEFAULT_OPACITY,
   lineWidth = 1.3,
+  blur = 0,
   lineCount = 120,
   mobileLineCount = 56,
   parallax = 8,
@@ -69,6 +72,7 @@ export function FlowField({
     canvas.style.top = `${-margin}px`
     canvas.style.left = `${-margin}px`
     canvas.style.display = 'block'
+    if (blur > 0) canvas.style.filter = `blur(${blur}px)`
     if (pointerActive) canvas.style.willChange = 'transform'
     container.appendChild(canvas)
 
@@ -178,7 +182,7 @@ export function FlowField({
       if (pointerActive) window.removeEventListener('pointermove', handlePointerMove)
       canvas.remove()
     }
-  }, [colours, opacity, lineWidth, lineCount, mobileLineCount, parallax, seed])
+  }, [colours, opacity, lineWidth, blur, lineCount, mobileLineCount, parallax, seed])
 
   return <div ref={containerRef} aria-hidden className={cn('pointer-events-none relative overflow-hidden', className)} />
 }

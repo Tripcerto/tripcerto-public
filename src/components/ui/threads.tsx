@@ -24,6 +24,7 @@ uniform vec3 lineGradient[8];
 uniform int lineGradientCount;
 uniform float lineWidth;
 uniform float lineWidthEnd;
+uniform float lineBlur;
 uniform float lineOpacity;
 uniform float lineOpacityEnd;
 
@@ -95,7 +96,7 @@ void main() {
     float d = abs(uv.y - y) * iResolution.y * inversesqrt(1.0 + slope * slope);
 
     float radius = mix(lineWidth, lineWidthEnd, t) * 0.5;
-    float a = (1.0 - smoothstep(radius - 0.5, radius + 0.5, d)) * mix(lineOpacity, lineOpacityEnd, t);
+    float a = (1.0 - smoothstep(radius - lineBlur, radius + lineBlur, d)) * mix(lineOpacity, lineOpacityEnd, t);
 
     vec3 c = rampColor(t);
     paint = paint * (1.0 - a) + c * a;
@@ -141,6 +142,8 @@ export interface ThreadsProps {
   /* Stroke width and opacity in CSS pixels and 0 to 1, first line to last. */
   lineWidth?: number
   lineWidthEnd?: number
+  /* Edge softness in CSS pixels each side of the stroke; 0.5 is a crisp antialias. */
+  lineBlur?: number
   lineOpacity?: number
   lineOpacityEnd?: number
 }
@@ -167,6 +170,7 @@ export function Threads({
   mouseDamping = 0.05,
   lineWidth = 1.5,
   lineWidthEnd = 1.5,
+  lineBlur = 0.5,
   lineOpacity = 0.85,
   lineOpacityEnd = 0.6,
 }: ThreadsProps) {
@@ -221,6 +225,7 @@ export function Threads({
       lineGradientCount: { value: stops.length },
       lineWidth: { value: lineWidth },
       lineWidthEnd: { value: lineWidthEnd },
+      lineBlur: { value: lineBlur },
       lineOpacity: { value: lineOpacity },
       lineOpacityEnd: { value: lineOpacityEnd },
     }
@@ -249,6 +254,7 @@ export function Threads({
       uniforms.center.value = mobile ? mobileCenter : center
       uniforms.lineWidth.value = lineWidth * dpr
       uniforms.lineWidthEnd.value = lineWidthEnd * dpr
+      uniforms.lineBlur.value = Math.max(lineBlur, 0.5) * dpr
       if (mobile) {
         targetPointer[0] = 0.5
         targetPointer[1] = 0.5
@@ -340,6 +346,7 @@ export function Threads({
     mouseDamping,
     lineWidth,
     lineWidthEnd,
+    lineBlur,
     lineOpacity,
     lineOpacityEnd,
   ])

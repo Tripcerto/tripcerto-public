@@ -18,12 +18,13 @@ export function HeroThreads() {
             lineCount={36}
             mobileLineCount={18}
             amplitude={1}
-            distance={0}
+            distance={0.3}
             center={0.5}
             mobileCenter={0.46}
             interactive
             lineWidth={1.75}
             lineWidthEnd={1.25}
+            lineBlur={4}
             lineOpacity={0.85}
             lineOpacityEnd={0.6}
           />
