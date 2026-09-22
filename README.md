@@ -172,8 +172,8 @@ This is the core product behavior behind Stella: conversation becomes reusable t
 The public site is intentionally minimal:
 
 - React 19 + TypeScript (strict)
-- Vite 7
-- No framework, no UI library, no Tailwind — design tokens live in `src/index.css` as CSS variables
+- Vite 8
+- Tailwind CSS 4, no framework or UI library; the Ember design tokens live in `src/index.css` (`@theme`)
 - Deployed on Vercel (auto-deploy on push to `main`)
 
 ## Project Structure

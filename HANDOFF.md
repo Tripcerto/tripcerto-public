@@ -10,15 +10,24 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 - Repo `Tripcerto/tripcerto-public`, branch `claude/landing-ember`. PR #1
   (the home page) was merged to `main` on Taylor's word on 22 Sep and is
   live at tripcerto.com; PR #2 (the Engage, Workspace and Pilot pages and
-  light-by-default) followed the same evening; PR #3 carries the Trust page
-  and the footer link to it. Vercel auto-deploys `main`; a merge happens only on
-  Taylor's explicit say-so for that PR.
+  light-by-default) followed the same evening; PR #3 the Trust page and the
+  footer link to it; PR #4 the icon set and social cards (a separate session);
+  PR #6 the dependency upgrade that cleared the 26 Dependabot alerts, the
+  `validate` workflow and the Dependabot config.
+  Vercel auto-deploys `main`. `main` takes changes by pull request only and
+  requires the `validate` check, current with `main`. A merge happens only on
+  Taylor's explicit say-so for that PR; security work carries his standing
+  go (22 Sep: "complete permission for everything to do with security").
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
 - Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (20 tests:
   the same four over each of the five pages, `src/site.test.tsx`),
-  `npm run build`. Run tsc from this repo or with its tsconfig path; a bare
-  `tsc -b` from the monorepo worktree emits thousands of stray `.js` files.
+  `npm run build`, `npm run audit` (zero advisories at every level).
+  `.github/workflows/validate.yml` runs the same five on every PR and push to
+  `main`, and checks the build emitted all five pages. `vite.config.ts` pins
+  `build.cssTarget` so breakpoints ship as `min-width` queries; Vite 8's
+  default target emits range syntax that Safari and iOS before 16.4 ignore. Run tsc from this repo or with its tsconfig path; a bare `tsc -b`
+  from the monorepo worktree emits thousands of stray `.js` files.
 
 ## What is built
 
@@ -220,10 +229,11 @@ without a new ask from him.
 ## The other pages (22 Sep, evening; Taylor: "no need for me to review this one")
 
 - Vite multi-page: `index.html`, `engage/index.html`, `workspace/index.html`,
-  `pilot/index.html` are the entries (`vite.config.ts` `build.rollupOptions.input`),
+  `pilot/index.html`, `trust/index.html` are the entries (`vite.config.ts`
+  `build.rolldownOptions.input`),
   each with its own title, description, canonical and og tags. `src/boot.tsx`
   mounts a page; `src/main.tsx`, `src/engage.tsx`, `src/workspace.tsx`,
-  `src/pilot.tsx` are the one-line entry files; the pages live in `src/pages/`.
+  `src/pilot.tsx`, `src/trust.tsx` are the one-line entry files; the pages live in `src/pages/`.
   `appType: 'mpa'` plus the `cleanUrls` plugin in `vite.config.ts` make the dev
   server answer `/engage` the way Vercel's `cleanUrls` does in production.
 - Copy: `src/content/engage.ts`, `workspace.ts`, `pilot.ts`, keyed by the
