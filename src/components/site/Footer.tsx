@@ -32,21 +32,21 @@ function Links({ links, className }: { links: ReadonlyArray<{ href: string; labe
 }
 
 /* On the page like the nav, cream by day and ink by night, under a
-   hairline: the wordmark, then the site's pages in order on the left and
-   the legal pages on the right, the address, the copyright. */
+   hairline: the wordmark and the address, then the site's pages in order
+   on the left and the legal pages on the right, then the copyright. */
 export function Footer() {
   return (
     <footer className="border-t border-line">
       <div className="shell py-10">
         <Wordmark tone="page" />
-        <div className="mt-8 flex flex-col gap-1 border-t border-line pt-5 md:flex-row md:items-center md:justify-between">
+        <a href={`mailto:${CONTACT_EMAIL}`} className={`${LINK} mt-3`}>
+          {CONTACT_EMAIL}
+        </a>
+        <div className="mt-6 flex flex-col gap-1 border-t border-line pt-5 md:flex-row md:items-center md:justify-between">
           <Links links={SITE} className="flex flex-wrap gap-x-6" />
           <Links links={LEGAL} className="flex flex-wrap gap-x-6" />
         </div>
-        <a href={`mailto:${CONTACT_EMAIL}`} className={LINK}>
-          {CONTACT_EMAIL}
-        </a>
-        <p className="mt-2 text-[13px] text-dim">© 2026 Tripcerto Ltd</p>
+        <p className="mt-4 text-[13px] text-dim">© 2026 Tripcerto Ltd</p>
       </div>
     </footer>
   )

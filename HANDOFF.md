@@ -219,7 +219,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 | 8 | Close headline "We find where our AI has the most effect in your business, then prove it there"; only the headline and two buttons (demo, pilot) | done |
 | 9 | Charlie's documents are guidelines for the register, not copy to lift | noted; no line is quoted from them |
 | 10 | Frames in the Engage and Workspace sections replay their choreography when scrolled into view (`Reveal`) | built alongside 4, not yet reviewed by Taylor |
-| 11 | Footer: the email under the links, above the copyright | done |
+| 11 | Footer: the email under the links, then (later) under the wordmark, above the line | done |
 | 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
 
 ## Still to do (from the original plan)
