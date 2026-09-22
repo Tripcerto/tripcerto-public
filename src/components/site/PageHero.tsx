@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import type { CloseLink } from '@/components/site/Close'
@@ -17,7 +17,8 @@ export function PageHero({
   visual,
   layout = 'phone',
 }: {
-  title: string
+  /* A list sets the headline's lines; a string wraps where it falls. */
+  title: string | readonly string[]
   lede: string
   primary: CloseLink
   secondary?: CloseLink
@@ -41,7 +42,16 @@ export function PageHero({
               id="hero-title"
               className="max-w-[18ch] text-[2.75rem] font-bold leading-[1.02] tracking-[-0.03em] text-paper sm:text-[3.5rem] lg:text-[3.75rem]"
             >
-              {title}
+              {typeof title === 'string'
+                ? title
+                : title.map((line, i) => (
+                    <Fragment key={line}>
+                      {i > 0 && ' '}
+                      {/* Each line stays whole on a narrow phone: the type
+                          steps down with the viewport rather than wrapping. */}
+                      <span className="block text-[length:min(1em,11.8vw)]">{line}</span>
+                    </Fragment>
+                  ))}
             </h1>
             <p className="mt-7 max-w-[34rem] text-lg leading-[1.55] text-paper/85 md:text-xl">{lede}</p>
             <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">

@@ -67,7 +67,7 @@ const SITE = [
   {
     name: 'trust',
     Page: TrustPage,
-    h1: trust.hero['T-1-A'],
+    h1: trust.hero['T-1-A'].join(' '),
     headings: [
       trust.moves['T-2-A'],
       trust.decides['T-3-A'],

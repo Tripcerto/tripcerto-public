@@ -104,7 +104,7 @@ export const pages = {
   },
   trust: {
     eyebrow: 'Trust',
-    head: 'Your expertise and your data, put to work by AI you control',
+    head: 'Your data, Your expertise, You’re in control.',
     sub: 'How information moves, what decides a recommendation, and who can reach what.',
   },
 }
