@@ -1,0 +1,63 @@
+import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
+
+export function Section({
+  id,
+  className,
+  children,
+  tone = 'paper',
+}: {
+  id?: string
+  className?: string
+  children: ReactNode
+  tone?: 'paper' | 'tint' | 'ink'
+}) {
+  return (
+    <section
+      id={id}
+      className={cn(
+        'scroll-mt-16 py-20 md:py-28',
+        tone === 'tint' && 'bg-tint',
+        tone === 'ink' && 'bg-ink text-paper',
+        className,
+      )}
+    >
+      <div className="shell">{children}</div>
+    </section>
+  )
+}
+
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <p className={cn('font-mono text-[13px] font-medium uppercase tracking-[0.08em] text-primary-deep', className)}>
+      {children}
+    </p>
+  )
+}
+
+export function Heading({
+  as: Tag = 'h2',
+  children,
+  className,
+}: {
+  as?: 'h1' | 'h2' | 'h3'
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <Tag
+      className={cn(
+        'text-balance font-semibold tracking-[-0.02em]',
+        Tag === 'h2' && 'text-[2rem] leading-[1.1] md:text-[2.75rem]',
+        Tag === 'h3' && 'text-[1.375rem] leading-[1.2] md:text-2xl',
+        className,
+      )}
+    >
+      {children}
+    </Tag>
+  )
+}
+
+export function Lede({ children, className }: { children: ReactNode; className?: string }) {
+  return <p className={cn('text-pretty text-[17px] leading-[1.55] text-muted md:text-lg', className)}>{children}</p>
+}

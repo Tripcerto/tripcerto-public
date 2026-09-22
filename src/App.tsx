@@ -1,42 +1,32 @@
-import { ConnectedJourneySection } from './components/ConnectedJourneySection'
-import { DataControlSection } from './components/DataControlSection'
-import { FAQ } from './components/FAQ'
-import { Footer } from './components/Footer'
-import { Hero } from './components/Hero'
-import { HowItWorksSection } from './components/HowItWorksSection'
-import { JourneySection } from './components/JourneySection'
-import { Nav } from './components/Nav'
-import { PilotCTA } from './components/PilotCTA'
-import { Problem } from './components/Problem'
-import { WhyNowSection } from './components/WhyNowSection'
-import { useReveal } from './hooks/useReveal'
-import {
-  useGlobalClickTracking,
-  useScrollDepth,
-  useSectionViews,
-  useTimeOnPage,
-} from './lib/analytics'
+import { Nav } from '@/components/site/Nav'
+import { Hero } from '@/components/site/Hero'
+import { Products } from '@/components/site/Products'
+import { Opportunity } from '@/components/site/Opportunity'
+import { EngageSection } from '@/components/site/EngageSection'
+import { WorkspaceSection } from '@/components/site/WorkspaceSection'
+import { Audience } from '@/components/site/Audience'
+import { Proof } from '@/components/site/Proof'
+import { Close } from '@/components/site/Close'
+import { Footer } from '@/components/site/Footer'
+import { useGlobalClickTracking, useScrollDepth, useSectionViews, useTimeOnPage } from '@/lib/analytics'
 
 export function App() {
-  useGlobalClickTracking()
   useScrollDepth()
   useSectionViews()
+  useGlobalClickTracking()
   useTimeOnPage()
-  useReveal()
-
   return (
     <>
       <Nav />
       <main>
         <Hero />
-        <Problem />
-        <JourneySection />
-        <HowItWorksSection />
-        <ConnectedJourneySection />
-        <DataControlSection />
-        <WhyNowSection />
-        <FAQ />
-        <PilotCTA />
+        <Products />
+        <Opportunity />
+        <EngageSection />
+        <WorkspaceSection />
+        <Audience />
+        <Proof />
+        <Close />
       </main>
       <Footer />
     </>
