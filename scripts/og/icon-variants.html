@@ -70,6 +70,9 @@
       const size = num('s', 512)
       const markWidth = num('mark', 0.76)
       const shader = { scale: num('scale', 4.7), warp: num('warp', 0.26), bias: num('bias', -0.06), time: num('time', 63) }
+      /* The hero rolls a seed on every load. An icon cannot, so one is picked
+         and pinned: ?seed=x,y names which piece of the field the tile shows. */
+      const seed = (q.get('seed') ?? '37.2,11.8').split(',').map(Number)
       const blurPx = num('blur', 0)
       const saturatePct = num('sat', 100)
 
@@ -110,12 +113,11 @@
 
       if (ground === 'mesh') {
         /* The shader cannot paint an SVG path, so it is drawn to a canvas and
-           read back as an image. The seed matches scripts/og/card.html, so the
-           icon and the social card show the same piece of band. */
+           read back as an image. */
         const stage = document.createElement('div')
         stage.style.cssText = `position:absolute;left:-9999px;width:${size}px;height:${size}px`
         document.body.appendChild(stage)
-        const drawn = drawBand(stage, { seed: [37.2, 11.8], ...shader, pixelRatio: 3 })
+        const drawn = drawBand(stage, { seed, ...shader, pixelRatio: 3 })
         const href = drawn ? stage.querySelector('canvas').toDataURL('image/png') : ''
         stage.remove()
         if (!drawn) throw new Error('icon-variants: the shader did not run, so the icon would be a flat fill')
