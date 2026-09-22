@@ -57,6 +57,8 @@ uniform vec3 lineGradient[8];
 uniform int lineGradientCount;
 uniform bool lightMode;
 uniform bool mirror;
+uniform float swirl;
+uniform bool sameDirection;
 uniform float lineWidth;
 uniform float lineBlur;
 uniform float lineOpacity;
@@ -172,7 +174,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float t = fi / max(float(bottomLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
 
-      float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
+      float angle = bottomWavePosition.z * mix(1.0, log(length(baseUv) + 1.0), swirl);
       vec2 ruv = baseUv * rotate(angle);
       float m = waveDelta(
         ruv + vec2(bottomLineDistance * fi + bottomWavePosition.x, bottomWavePosition.y),
@@ -197,7 +199,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float t = fi / max(float(middleLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
 
-      float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
+      float angle = middleWavePosition.z * mix(1.0, log(length(baseUv) + 1.0), swirl);
       vec2 ruv = baseUv * rotate(angle);
       float m = waveDelta(
         ruv + vec2(middleLineDistance * fi + middleWavePosition.x, middleWavePosition.y),
@@ -222,9 +224,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float t = fi / max(float(topLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
 
-      float angle = topWavePosition.z * log(length(baseUv) + 1.0);
+      float angle = topWavePosition.z * mix(1.0, log(length(baseUv) + 1.0), swirl);
       vec2 ruv = baseUv * rotate(angle);
-      ruv.x *= -1.0;
+      if (!sameDirection) {
+        ruv.x *= -1.0;
+      }
       float m = waveDelta(
         ruv + vec2(topLineDistance * fi + topWavePosition.x, topWavePosition.y),
         1.0 + 0.2 * fi,
@@ -301,6 +305,11 @@ export interface FloatingLinesProps {
   lightMode?: boolean
   /* Flip the field left to right; the pointer bend flips with it. */
   mirror?: boolean
+  /* How much a wave's rotation grows with distance from the centre: 1 is the
+     original's curl, 0 a straight tilt across the box. */
+  swirl?: number
+  /* The original runs the top wave against the other two; true runs all one way. */
+  sameDirection?: boolean
   /* Light mode only: stroke width and edge blur in CSS pixels, opacity 0 to 1. */
   lineWidth?: number
   lineBlur?: number
@@ -340,6 +349,8 @@ export function FloatingLines({
   mixBlendMode = 'screen',
   lightMode = false,
   mirror = false,
+  swirl = 1,
+  sameDirection = false,
   lineWidth = 2,
   lineBlur = 1,
   lineOpacity = 0.9,
@@ -425,6 +436,8 @@ export function FloatingLines({
       lineGradientCount: { value: 0 },
       lightMode: { value: lightMode },
       mirror: { value: mirror },
+      swirl: { value: swirl },
+      sameDirection: { value: sameDirection },
       lineWidth: { value: lineWidth * renderer.getPixelRatio() },
       lineBlur: { value: lineBlur * renderer.getPixelRatio() },
       lineOpacity: { value: lineOpacity },
@@ -551,6 +564,8 @@ export function FloatingLines({
     parallaxStrength,
     lightMode,
     mirror,
+    swirl,
+    sameDirection,
     lineWidth,
     lineBlur,
     lineOpacity,

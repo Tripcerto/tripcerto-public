@@ -16,13 +16,19 @@ const FloatingLines = lazy(() =>
   import('@/components/ui/floating-lines').then((m) => ({ default: m.FloatingLines })),
 )
 
-/* The React Bits demo configuration, in our colours. Module-level so the
-   shader is built once: the effect re-runs on any new reference. Counts map
-   to WAVES in order, without the demo's middle wave. Stops run primary-deep
-   to peach across each wave. */
+/* The React Bits demo's line counts and bend, in our colours, on our own path:
+   two straight bands with no swirl, both flowing left to right. The top band
+   enters at the left edge near the top and runs shallow across; the bottom
+   band enters at the top edge a third of the way in and runs steep down to
+   the right; they cross near the top-left. y is the band's height at the
+   centre (positive is up), rotate its tilt in radians (negative descends to
+   the right under mirror). Module-level so the shader is built once: the
+   effect re-runs on any new reference. Counts map to WAVES in order. */
 const WAVE_COLOURS = ['#B9243D', '#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
 const WAVES: WaveName[] = ['top', 'bottom']
 const WAVE_LINES = [10, 15]
+const TOP_WAVE = { x: 10, y: 0.5, rotate: -0.16 }
+const BOTTOM_WAVE = { x: 2, y: 0, rotate: -0.7 }
 
 function Waves() {
   return (
@@ -31,9 +37,13 @@ function Waves() {
         className="absolute inset-x-0 top-0 bottom-16 mask-b-from-85% md:bottom-28"
         lightMode
         mirror
+        swirl={0}
+        sameDirection
         linesGradient={WAVE_COLOURS}
         enabledWaves={WAVES}
         lineCount={WAVE_LINES}
+        topWavePosition={TOP_WAVE}
+        bottomWavePosition={BOTTOM_WAVE}
         lineDistance={17}
         bendRadius={5}
         bendStrength={-0.5}
