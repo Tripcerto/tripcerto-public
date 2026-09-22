@@ -1,5 +1,6 @@
 import { ArrowRight, Check, MessageCircle } from 'lucide-react'
 import { Heading, Lede, ProductBadge, Section } from '@/components/site/Section'
+import { Reveal } from '@/components/site/Reveal'
 import { Stage } from '@/components/site/Stage'
 import { PhoneScreen } from '@/components/site/frames/PhoneScreen'
 import { home } from '@/content/home'
@@ -32,9 +33,9 @@ export function EngageSection() {
           </p>
         </div>
         <Stage caption={home.engage.caption} className="max-lg:mb-8">
-          <div className="w-[min(64%,320px)]">
+          <Reveal className="w-[min(64%,320px)]">
             <PhoneScreen />
-          </div>
+          </Reveal>
         </Stage>
       </div>
     </Section>

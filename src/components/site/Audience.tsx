@@ -15,37 +15,38 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
   'The travel expert': Compass,
 }
 
-/* The buying roles as a ruled list beside the heading, each with the
-   number it is measured on; no cards. */
+const ROW = 'md:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,7fr)] md:gap-8'
+
+/* The buying roles as ruled rows across the page: the role, the number it
+   is measured on, and what changes for it. No cards. */
 export function Audience() {
   return (
-    <Section id={SECTION.audience} className="py-16 md:py-28">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[5fr_7fr] lg:gap-16">
-        <div>
-          <Heading>{home.audience['H-7-A']}</Heading>
-          <Lede className="mt-5 max-w-[40rem]">{home.audience['H-7-B']}</Lede>
-        </div>
-        <ul role="list" className="border-t border-line">
-          {home.audience.roles.map(({ role, measure, line }) => {
-            const Glyph = ROLE_GLYPH[role]
-            return (
-              <li
-                key={role}
-                className="grid grid-cols-1 gap-2 border-b border-line py-5 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-6"
-              >
-                <div className="flex items-start gap-3">
-                  <Glyph size={20} aria-hidden className="mt-[2px] shrink-0 text-link" />
-                  <div>
-                    <h3 className="text-[16px] font-semibold">{role}</h3>
-                    <p className="mt-0.5 text-[13px] text-dim">{measure}</p>
-                  </div>
-                </div>
-                <p className="text-[15px] leading-[1.55] text-body/80">{line}</p>
-              </li>
-            )
-          })}
-        </ul>
+    <Section id={SECTION.audience} className="py-20 md:py-28">
+      <div className="max-w-[44rem]">
+        <Heading>{home.audience['H-7-A']}</Heading>
+        <Lede className="mt-5">{home.audience['H-7-B']}</Lede>
       </div>
+
+      <div aria-hidden className={`mt-12 hidden pb-3 text-[13px] font-semibold text-dim md:mt-14 md:grid ${ROW}`}>
+        <span>Role</span>
+        <span>Measured on</span>
+        <span>What changes</span>
+      </div>
+      <ul role="list" className="mt-12 border-t border-line md:mt-0">
+        {home.audience.roles.map(({ role, measure, line }) => {
+          const Glyph = ROLE_GLYPH[role]
+          return (
+            <li key={role} className={`grid grid-cols-1 gap-2 border-b border-line py-6 ${ROW}`}>
+              <div className="flex items-center gap-3">
+                <Glyph size={22} aria-hidden className="shrink-0 text-link" />
+                <h3 className="text-[17px] font-semibold">{role}</h3>
+              </div>
+              <p className="text-[15px] text-dim md:pt-[3px]">{measure}</p>
+              <p className="text-[16px] leading-[1.55] text-body/80">{line}</p>
+            </li>
+          )
+        })}
+      </ul>
     </Section>
   )
 }

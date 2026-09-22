@@ -5,52 +5,47 @@ import { home } from '@/content/home'
 import { SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
 
-type DotLabel = (typeof home.opportunity.dots)[number]['label']
+type Stage = (typeof home.opportunity.stages)[number]['name']
 
-/* The journey as three dots and a tick: the two products stand in glass,
-   the outcome is the tick, solid green. Taylor chose this over a four-step
-   track and a drawn timeline (22 Sep). */
-const DOT: Record<DotLabel, { glyph: LucideIcon; pill: string; tone?: string }> = {
-  Engage: { glyph: MessageCircle, pill: 'glass', tone: 'text-link' },
-  Workspace: { glyph: LayoutPanelLeft, pill: 'glass', tone: 'text-link' },
-  Booked: { glyph: Check, pill: 'bg-up text-paper' },
+const GLYPH: Record<Stage, { icon: LucideIcon; tone: string }> = {
+  Engage: { icon: MessageCircle, tone: 'text-link' },
+  Workspace: { icon: LayoutPanelLeft, tone: 'text-link' },
+  Booked: { icon: Check, tone: 'text-up' },
 }
 
+/* The journey as three ruled columns of type: the product before the
+   inquiry, the product after it, the outcome. Taylor (22 Sep evening)
+   rejected pills, connecting lines and a choreographed reveal here ("too
+   big, too clunky … not clear enough"); this is the plain statement. */
 export function Opportunity() {
   return (
-    <Section id={SECTION.opportunity} tone="tint" className="py-16 md:py-28">
-      <Heading className="mx-auto max-w-[44rem] text-center">{home.opportunity['H-2-A']}</Heading>
+    <Section id={SECTION.opportunity} tone="tint" className="py-20 md:py-28">
+      <div className="mx-auto max-w-[44rem] text-center">
+        <Heading>{home.opportunity['H-2-A']}</Heading>
+        <Lede className="mx-auto mt-5 max-w-[40rem]">{home.opportunity['H-2-B']}</Lede>
+      </div>
 
-      {/* Each dot carries the hairline to the next one, so the list holds
-          only its items: a vertical rule below the text in the column, a
-          horizontal one from the pill's centre in the row. The gap is the
-          rule's length. */}
+      {/* Three pillars, centred and clear of the edges when the screen is
+          tight, widening with it: one pillar below md, three inside 52rem at
+          md, 62rem at lg, the whole shell from xl. */}
       <ol
         role="list"
-        className="mt-12 flex flex-col items-center gap-16 sm:flex-row sm:items-start sm:justify-center sm:gap-12 md:mt-14 md:gap-20"
+        className="mx-auto mt-14 grid w-full max-w-[26rem] grid-cols-1 md:mt-16 md:max-w-[52rem] md:grid-cols-3 md:gap-x-10 lg:max-w-[62rem] xl:max-w-none xl:gap-x-14"
       >
-        {home.opportunity.dots.map(({ label, line }, i) => {
-          const { glyph: Glyph, pill, tone } = DOT[label]
+        {home.opportunity.stages.map(({ when, name, line }) => {
+          const { icon: Glyph, tone } = GLYPH[name]
           return (
-            <li key={label} className="relative flex max-w-[16rem] flex-col items-center">
-              <h3 className={cn('inline-flex h-14 items-center gap-3 rounded-full px-6 text-[17px] font-semibold', pill)}>
-                <Glyph size={20} aria-hidden className={tone} />
-                {label}
+            <li key={name} className="border-t border-line pt-6 pb-8 md:pb-0">
+              <p className="text-[13px] font-semibold text-dim">{when}</p>
+              <h3 className="mt-3 flex items-center gap-2.5 text-[19px] font-semibold">
+                <Glyph size={22} aria-hidden className={cn('shrink-0', tone)} />
+                {name}
               </h3>
-              <p className="mt-4 text-center text-[15px] text-dim">{line}</p>
-              {i < home.opportunity.dots.length - 1 && (
-                <span
-                  aria-hidden
-                  className="absolute left-1/2 top-full mt-4 h-8 w-px bg-line sm:left-full sm:top-7 sm:mt-0 sm:h-px sm:w-12 md:w-20"
-                />
-              )}
+              <p className="mt-3 text-[16px] leading-[1.55] text-body/80">{line}</p>
             </li>
           )
         })}
       </ol>
-
-      <Lede className="mx-auto mt-14 max-w-[40rem] text-center">{home.opportunity['H-2-B']}</Lede>
-      <p className="mx-auto mt-5 max-w-[40rem] text-center text-[15px] text-dim">{home.opportunity.why}</p>
     </Section>
   )
 }

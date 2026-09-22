@@ -205,6 +205,23 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   that to twenty files on 22 Sep and they had to be restored from HEAD. Do
   not run prettier here; eslint is the only gate.
 
+## Ledger (Taylor's asks, 22 Sep evening, in order; keep this current)
+
+| # | Ask | State |
+|---|-----|-------|
+| 1 | Pick C for the lower half | done, `aa8ebfe` |
+| 2 | Footer follows the theme, not ink | done, `5b95a09` |
+| 3 | Opportunity and Audience "fill the screen better" | Audience: full-width ruled rows (role, measured on, what changes). Opportunity: rebuilt, see 6 |
+| 4 | Animate Engage → Workspace → Booked with the lines drawing and the tick popping, same pace as the frames | built, then rejected ("too big, too clunky"); removed with the pills |
+| 5 | Footer more compact, drop the tagline | done; then "squashed too much": pages left, legal right, email under the links, copyright last |
+| 6 | Opportunity rethought: no pills, no lines, no animation, clearer text | three ruled columns of type: before the inquiry / after the inquiry / the outcome |
+| 7 | Nav goes paper over the Close band as it does over the hero | done: `data-band` on both, the nav observes every band |
+| 8 | Close headline "We find where our AI has the most effect in your business, then prove it there"; only the headline and two buttons (demo, pilot) | done |
+| 9 | Charlie's documents are guidelines for the register, not copy to lift | noted; no line is quoted from them |
+| 10 | Frames in the Engage and Workspace sections replay their choreography when scrolled into view (`Reveal`) | built alongside 4, not yet reviewed by Taylor |
+| 11 | Footer: the email under the links, above the copyright | done |
+| 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
+
 ## Still to do (from the original plan)
 
 1. CSS scroll-driven reveals for the sections below the hero (offered, not

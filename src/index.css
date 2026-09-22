@@ -303,3 +303,13 @@
     animation: none;
   }
 }
+
+/* Choreography below the fold waits for its section to be seen: the same
+   one-shot animations, held on their first frame inside a Reveal until it
+   is in view. */
+.reveal :is(.animate-pop, .animate-flag) {
+  animation-play-state: paused;
+}
+.reveal.is-in :is(.animate-pop, .animate-flag) {
+  animation-play-state: running;
+}

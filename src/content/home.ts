@@ -14,15 +14,27 @@ export const home = {
   },
   opportunity: {
     'H-2-A': 'Customer context carries from the first question to the final quote', // changed
+    /* The opportunity and why it is one, in one breath (Guide §3, §4). */
     'H-2-B':
-      'A traveller explains what they want once. Engage records it, the inquiry arrives with it and Workspace builds from it. Nobody repeats the discovery, and the sale moves sooner.', // changed
-    /* Why it is an opportunity (Guide §3), kept apart from the opportunity itself. */
-    why: 'Travel sales usually lose momentum at two handoffs: into the sales team, and into the first quote. Those are the two Tripcerto carries.', // new
-    /* The journey as three dots and a tick, one per product and the outcome. */
-    dots: [
-      { label: 'Engage', line: 'The traveller asks on your website. The inquiry arrives with the brief.' },
-      { label: 'Workspace', line: 'The brief becomes an itemised trip, checked against your inventory.' },
-      { label: 'Booked', line: 'The expert approves the quote. It goes into the process you already run.' },
+      'A traveller explains what they want once. Engage records it, the inquiry arrives with it and Workspace builds from it. The two handoffs where travel sales lose momentum are the two Tripcerto carries.', // changed
+    /* The journey in three stages: the product before the inquiry, the
+       product after it, and the outcome (the Foundation's framing). */
+    stages: [
+      {
+        when: 'Before the inquiry',
+        name: 'Engage',
+        line: 'Engage answers the traveller from your expertise and your products, and records what they want as they research.',
+      },
+      {
+        when: 'After the inquiry',
+        name: 'Workspace',
+        line: 'Workspace opens the inquiry with that context intact, builds the itemised trip and shows what is still missing.',
+      },
+      {
+        when: 'The outcome',
+        name: 'Booked',
+        line: 'The expert approves the quote, and it goes into the booking process you already run.',
+      },
     ],
   },
   engage: {
@@ -86,22 +98,12 @@ export const home = {
       },
     ], // changed: roles, not sectors
   },
-  proof: {
-    /* No standalone section: the measures sit in the close (Guide §10). */
-    'H-8-A': 'What a pilot measures', // changed
-    measures: ['Visitor to inquiry', 'Inquiry quality', 'Inquiry to first quote', 'Handling time', 'Gaps found before send'],
-  },
+  /* No Proof section (Guide §10): the close is the call, with the pilot
+     page beside it. Taylor, 22 Sep: nothing stands between the headline
+     and the two buttons. */
   close: {
-    'H-9-A': 'We find where Tripcerto has the most effect in your business, then prove it there', // changed
-    'H-9-B':
-      'A short call is enough to find the workflow where a pilot would show the most. We define the measure with you.', // changed
+    'H-9-A': 'We find where our AI has the most effect in your business, then prove it there', // changed (Taylor, 22 Sep)
     'H-9-C': 'Book a demo',
     'H-9-D': 'How a pilot runs',
-  },
-  footer: {
-    /* The two products and their jobs in one line (the Foundation's "two
-       products for the work before and after the inquiry"), in place of
-       the hero headline repeated. */
-    tagline: 'Two products for travel sales: Engage before the inquiry, Workspace after it.', // new
   },
 } as const

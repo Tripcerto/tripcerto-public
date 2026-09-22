@@ -1,5 +1,6 @@
 import { ArrowRight, Check, LayoutPanelLeft } from 'lucide-react'
 import { Heading, Lede, ProductBadge, Section } from '@/components/site/Section'
+import { Reveal } from '@/components/site/Reveal'
 import { Stage } from '@/components/site/Stage'
 import { WorkspaceChat } from '@/components/site/frames/WorkspaceChat'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
@@ -35,9 +36,9 @@ export function WorkspaceSection() {
           </p>
         </div>
         <Stage caption={home.workspace.caption} className="max-lg:mb-8">
-          <div className="w-full max-w-[560px]">
+          <Reveal className="w-full max-w-[560px]">
             <WorkspaceScreen pane={<WorkspaceChat />} />
-          </div>
+          </Reveal>
         </Stage>
       </div>
     </Section>
