@@ -115,7 +115,6 @@ export function Nav() {
             Login
             <ChevronRight size={16} aria-hidden="true" />
           </a>
-          <PilotButton overBand={overBand} />
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
@@ -138,7 +137,7 @@ export function Nav() {
 
       {open && (
         <nav id={MENU_ID} className={cn('border-t md:hidden', overBand ? 'border-white/25' : 'border-line')}>
-          {[...NAV_LINKS, { href: PAGES.pilot, label: 'Pilot' }, { href: LOGIN_URL, label: 'Login' }].map((link) => (
+          {[...NAV_LINKS, { href: LOGIN_URL, label: 'Login' }].map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -155,24 +154,6 @@ export function Nav() {
         </nav>
       )}
     </header>
-  )
-}
-
-/* The pilot is the way in, so it stands apart from the pages as a button
-   beside Login: glass over the band, a glass pill on the page. */
-function PilotButton({ overBand }: { overBand: boolean }) {
-  return (
-    <a
-      href={PAGES.pilot}
-      className={cn(
-        'inline-flex h-9 items-center rounded-full border px-4 text-[14px] font-semibold transition-colors',
-        overBand
-          ? 'border-white/50 bg-white/15 text-paper backdrop-blur-md hover:bg-white/25'
-          : 'border-line bg-card text-body hover:border-body/30',
-      )}
-    >
-      Pilot
-    </a>
   )
 }
 

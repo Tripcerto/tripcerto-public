@@ -19,10 +19,11 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 ## What is built
 
 - `src/components/site/Nav.tsx`: a glass bar fixed from the top of the page
-  (`bg-glass backdrop-blur-2xl`), links Engage · Workspace · Trust, then a
-  moon/sun theme switch, Login and a Pilot pill on the right (Taylor, 22 Sep
-  pm: Pilot is the way in, not a page to browse, so it stands apart as a
-  button; he is unsure Trust belongs in the bar either). A drawer below md
+  (`bg-glass backdrop-blur-2xl`), links Engage · Workspace · Pilot, then a
+  moon/sun theme switch and Login on the right. Pilot was a pill beside
+  Login for an afternoon; Taylor (22 Sep evening) "really [didn't] like"
+  it there, so Pilot took Trust's place in the links and Trust went to the
+  footer beside Privacy and Terms, "potentially its own section" later. A drawer below md
   whose rows sit directly under the bar inside the same glass. Its copy is
   paper while the hero is still under the bar (an `IntersectionObserver` on
   `#hero` with the nav's height as the top root margin); once the hero has
@@ -222,6 +223,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 | 11 | Footer: the email under the links, then (later) under the wordmark, above the line | done |
 | 13 | Hero reloads "not different enough": the mesh now rolls a noise seed, a pink-or-peach lean (±0.2 of the ramp), the angle (±25°) and the warp per mount, not just the time phase | done |
 | 14 | The Close band looked wavier than the hero: the noise was sized from the band's height. Now sized from the longer side at the Close's density (scale 4.7), so both fold alike | done |
+| 15 | Pilot pill out of the bar; Pilot replaces Trust in the links; Trust beside Privacy and Terms in the footer | done |
 | 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
 
 ## Still to do (from the original plan)

@@ -12,12 +12,12 @@ export const PAGES = {
   trust: '/trust',
 } as const
 
-/* The pages in the bar. Pilot is not a page to browse to but the way in,
-   so it sits beside Login as a button. */
+/* The pages in the bar. Trust lives in the footer beside Privacy and Terms
+   (Taylor, 22 Sep evening; it may become its own section later). */
 export const NAV_LINKS = [
   { href: PAGES.engage, label: 'Engage' },
   { href: PAGES.workspace, label: 'Workspace' },
-  { href: PAGES.trust, label: 'Trust' },
+  { href: PAGES.pilot, label: 'Pilot' },
 ] as const
 
 export const SECTION = {

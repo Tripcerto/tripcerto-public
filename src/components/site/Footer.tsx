@@ -5,12 +5,13 @@ const SITE = [
   { href: PAGES.engage, label: 'Engage' },
   { href: PAGES.workspace, label: 'Workspace' },
   { href: PAGES.pilot, label: 'Pilot' },
-  { href: PAGES.trust, label: 'Trust' },
   { href: STATUS_URL, label: 'Status' },
   { href: LOGIN_URL, label: 'Login' },
 ] as const
 
+/* Trust sits with the legal pages for now (Taylor, 22 Sep). */
 const LEGAL = [
+  { href: PAGES.trust, label: 'Trust' },
   { href: '/legal/privacy/', label: 'Privacy' },
   { href: '/legal/terms/', label: 'Terms' },
 ] as const
