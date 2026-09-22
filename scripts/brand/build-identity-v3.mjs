@@ -63,6 +63,22 @@ const ratio = (a, b) => {
   const [x, y] = [luminance(a), luminance(b)].sort((m, n) => n - m)
   return (x + 0.05) / (y + 0.05)
 }
+const hsl = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const d = max - min
+  const l = (max + min) / 2
+  const sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1))
+  let h = 0
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d) % 6
+    else if (max === g) h = (b - r) / d + 2
+    else h = (r - g) / d + 4
+  }
+  return { h: Math.round(((h * 60) + 360) % 360), s: Math.round(sat * 100), l: Math.round(l * 100) }
+}
+
 const contrast = (fg, bg) => {
   const r = ratio(fg, bg)
   return { value: r.toFixed(2), body: r >= 4.5, large: r >= 3 }
@@ -157,8 +173,10 @@ section > p, h3 + p{color:var(--muted);margin-top:8px;max-width:680px}
 .sizes figure{margin:0}
 .sizes figcaption{font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--muted);margin-top:9px}
 .icons{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:16px}
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
-.duo>div{border-radius:10px;padding:26px;display:flex;align-items:center;justify-content:center}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.trio>div{border-radius:10px;padding:30px 22px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.trio>div>svg{width:100%;height:auto}
+.trio span{font:400 10px/1 'JetBrains Mono',monospace;color:rgb(255 255 255 / .6);letter-spacing:.08em}
 .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px;margin-top:16px}
 .sw{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper)}
 .sw span{display:block;height:44px;border-radius:5px}
@@ -176,7 +194,7 @@ li b, td b{color:var(--ink);font-weight:600}
 code.w{font:400 12.5px/1.4 'JetBrains Mono',monospace;background:var(--tint);padding:1px 5px;border-radius:4px}
 .pass{color:var(--up);font-weight:600}
 .fail{color:var(--pink);font-weight:600}
-@media(max-width:760px){.duo{grid-template-columns:1fr}td.k{width:auto;display:block;padding-bottom:0;border:0}td{display:block}}
+@media(max-width:760px){.trio{grid-template-columns:1fr}td.k{width:auto;display:block;padding-bottom:0;border:0}td{display:block}}
 </style>
 </head>
 <body><div class="wrap">
@@ -195,9 +213,10 @@ None of the three may be redrawn, restretched or recoloured beyond the two fills
 <h3>The wordmark</h3>
 <p>The primary identifier. Use it wherever there is room.</p>
 <div class="card">${use(wordmark, { fill: EMBER.ink, size: 880, className: 'lg' })}</div>
-<div class="duo">
-  <div style="background:var(--night)">${use(wordmark, { fill: WORKING.paper, size: 340 })}</div>
-  <div style="background:var(--band)">${use(wordmark, { fill: WORKING.paper, size: 340 })}</div>
+<div class="trio">
+  <div style="background:var(--ink)">${use(wordmark, { fill: WORKING.paper, size: 240 })}<span>ink ${EMBER.ink}</span></div>
+  <div style="background:var(--primary)">${use(wordmark, { fill: WORKING.paper, size: 240 })}<span>primary ${EMBER.primary}</span></div>
+  <div style="background:var(--band)">${use(wordmark, { fill: WORKING.paper, size: 240 })}<span>the band</span></div>
 </div>
 
 <h3>The monogram and the app icon</h3>
@@ -244,17 +263,24 @@ ${rows([
 <div class="bandbar"></div>
 <p style="margin-top:10px"><code class="w">linear-gradient(100deg, ${BAND[0]} 0%, ${BAND[1]} 50%, ${BAND[2]} 100%)</code></p>
 
+<h3>Two things about ink</h3>
+${rows([
+  ['It is a deep plum', `Measured: hue ${hsl(EMBER.ink).h}\u00b0, saturation ${hsl(EMBER.ink).s}%, lightness ${hsl(EMBER.ink).l}%. At that lightness beside cream it can read warm, but the hue is on the magenta side of the wheel and there is more blue in it than green. It is never black, and <code class="w">#000000</code> appears nowhere.`],
+  ['Accent is currently unused', `<code class="w">${EMBER.accent}</code> is declared in the site's theme and painted nowhere. Either give it a job or drop it to three colours and the band.`],
+])}
+
 <h3>The working set</h3>
-<p>The rest of what the site paints with, all derived from the four above.</p>
-<div class="swatches">
-  ${sw('paper', WORKING.paper, 'ink')}
-  ${sw('pink', WORKING.pink, 'white')}
-  ${sw('peach', WORKING.peach, 'ink')}
-  ${sw('muted', WORKING.muted, 'white')}
-  ${sw('rule', WORKING.rule, 'ink')}
-  ${sw('up', WORKING.up, 'white')}
-  ${sw('night', WORKING.night, 'white')}
-</div>
+<p>These are implementation values, not brand colours. The four above are the identity. Charlie needs
+these to build with; nothing else does.</p>
+${rows([
+  ['paper <code class="w">#FFFFFF</code>', 'Glass washes over the cream. Never a page background of its own.'],
+  ['pink <code class="w">' + WORKING.pink + '</code>', "The band's first stop, reused as the link and glyph colour."],
+  ['peach <code class="w">' + WORKING.peach + '</code>', "The band's last stop."],
+  ['muted <code class="w">' + WORKING.muted + '</code>', 'Secondary text on cream. Not a dark version of ink.'],
+  ['rule <code class="w">' + WORKING.rule + '</code>', 'Hairlines and table borders.'],
+  ['up <code class="w">' + WORKING.up + '</code>', 'The one state colour, for a confirmed or rising figure.'],
+  ['night <code class="w">' + WORKING.night + '</code>', '<b>The dark-mode page surface. This is NOT ink.</b> Ink is a brand colour and carries the marks; night is a background and carries nothing.'],
+])}
 
 <h3>What clears, and what does not</h3>
 <p>Computed from the hex values above, not quoted. 4.5:1 is the bar for body text, 3:1 for large text.</p>

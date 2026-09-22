@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <title>App icon variants</title>
+    <!--
+      The app icon tile on three grounds, so the choice is made by looking:
+
+        ?g=coral   the flat primary the set ships today
+        ?g=band    the Ember band, the same 100deg ramp the page uses
+        ?g=mesh    the band warped by the hero's own shader
+
+      The mark is the app icon path, one shape whose even-odd fill rule cuts
+      the tc out of the tile. The cut-out shows whatever is behind, which for
+      a PNG with no alpha is the white page, exactly as the shipped icons were
+      made.
+
+      ?s=<px> sizes the tile. ?pad=1 draws the maskable inset instead of the
+      full-bleed crop.
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #fff;
+        overflow: hidden;
+      }
+      #tile {
+        position: relative;
+        overflow: hidden;
+      }
+      #ground {
+        position: absolute;
+        inset: 0;
+      }
+      svg {
+        position: absolute;
+        inset: 0;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="tile"></div>
+    <script type="module">
+      import { drawBand } from './mesh.js'
+
+      const q = new URLSearchParams(location.search)
+      const ground = q.get('g') ?? 'coral'
+      const size = Number(q.get('s') ?? 512)
+      const padded = q.get('pad') === '1'
+
+      const CORAL = '#FF5C6C'
+      const BAND = ['#E8437E', '#FF5C6C', '#FF9B7A']
+
+      const res = await fetch('../../public/brand/appicon.svg')
+      const svgText = await res.text()
+      const d = svgText.match(/<path[^>]*\sd="([^"]+)"/)[1]
+      const [, , vw] = svgText.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number)
+
+      const tile = document.getElementById('tile')
+      /* A maskable icon insets the whole tile so the tile's own corners, not
+         just the mark, survive the launcher's circular crop. */
+      const scale = padded ? 0.78 : 1
+      const box = Math.round(size * scale)
+      const inset = Math.round((size - box) / 2)
+      document.documentElement.style.width = `${size}px`
+      document.documentElement.style.height = `${size}px`
+      tile.style.width = `${size}px`
+      tile.style.height = `${size}px`
+
+      /* The band as a still gradient, at the page's angle. For a square box a
+         CSS angle of 100deg puts the gradient line between these two points. */
+      const gradientStops = BAND.map((c, i) => `<stop offset="${i / (BAND.length - 1)}" stop-color="${c}"/>`).join('')
+
+      const clipId = 'cut'
+      const paint =
+        ground === 'coral'
+          ? CORAL
+          : ground === 'band'
+            ? 'url(#ramp)'
+            : null
+
+      if (paint) {
+        tile.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 ${vw} ${vw}" style="left:${inset}px;top:${inset}px;width:${box}px;height:${box}px">
+          <defs><linearGradient id="ramp" x1="-0.071" y1="0.399" x2="1.071" y2="0.601">${gradientStops}</linearGradient></defs>
+          <path d="${d}" fill="${paint}" fill-rule="evenodd"/>
+        </svg>`
+      } else {
+        /* The shader cannot paint an SVG path, so it is drawn to a canvas,
+           read out as an image and clipped by the same path. The seed matches
+           scripts/og/card.html so the icon and the social card show the same
+           piece of band. */
+        const stage = document.createElement('div')
+        stage.style.cssText = `position:absolute;left:-9999px;width:${box}px;height:${box}px`
+        document.body.appendChild(stage)
+        const drawn = drawBand(stage, { seed: [37.2, 11.8], bias: -0.06, time: 63, warp: 0.26, pixelRatio: 3 })
+        const href = drawn ? stage.querySelector('canvas').toDataURL('image/png') : ''
+        stage.remove()
+        if (!drawn) throw new Error('icon-variants: the shader did not run, so the mesh icon would be a flat fill')
+
+        tile.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 ${vw} ${vw}" style="left:${inset}px;top:${inset}px;width:${box}px;height:${box}px">
+          <defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><path d="${d}" clip-rule="evenodd"/></clipPath></defs>
+          <image href="${href}" x="0" y="0" width="${vw}" height="${vw}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})"/>
+        </svg>`
+      }
+
+      window.cardReady = Promise.all([
+        ...[...document.images].map((i) => (i.complete ? null : new Promise((r) => (i.onload = i.onerror = r)))),
+      ])
+    </script>
+  </body>
+</html>
