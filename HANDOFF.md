@@ -20,8 +20,9 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   go (22 Sep: "complete permission for everything to do with security").
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (20 tests:
-  the same four over each of the five pages, `src/site.test.tsx`),
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (31 tests:
+  the same four over each of the five pages in `src/site.test.tsx`, plus the
+  brand kit's assertions in `scripts/brand/brand.test.ts`),
   `npm run build`, `npm run audit` (zero advisories at every level).
   `.github/workflows/validate.yml` runs the same five on every PR and push to
   `main`, and checks the build emitted all five pages. `vite.config.ts` pins
@@ -147,7 +148,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
-  `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
+  `// changed`. H-1-A is "We make complex travel easier to plan and sell"
   (Taylor, 22 Sep; he reworded it four times that afternoon, so check the file
   rather than any quote in this doc). It is also the <title>, the og
   and twitter titles, the og:image:alt and the webmanifest description — change

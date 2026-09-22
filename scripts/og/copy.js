@@ -20,7 +20,7 @@ export const variants = {
     name: 'Band',
     note: 'The hero itself: the Ember band under the signed-off headline.',
     theme: 'band',
-    head: 'AI that makes complex travel easier to plan and sell',
+    head: 'We make complex travel easier to plan and sell',
     // signed: home.hero['H-1-A']
     sub: 'Engage before the inquiry. Workspace after it.',
     // from: home.opportunity['H-2-B']
@@ -81,7 +81,7 @@ export const variants = {
 export const pages = {
   home: {
     eyebrow: 'Engage · Workspace',
-    head: 'AI that makes complex travel easier to plan and sell',
+    head: 'We make complex travel easier to plan and sell',
     sub: 'Engage records what each website visitor wants. Workspace builds the quote structure from it.',
   },
   engage: {
