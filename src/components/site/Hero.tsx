@@ -112,7 +112,7 @@ export function Hero() {
 
             <h1
               id="hero-title"
-              className="mt-10 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] text-paper sm:text-[4rem] lg:text-[3.75rem] xl:text-[4.5rem] 2xl:text-[5rem]"
+              className="mt-10 max-w-[15ch] text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] text-paper sm:text-[4rem] lg:text-[3.75rem] xl:text-[4rem] 2xl:text-[5rem]"
             >
               {home.hero['H-1-A']}
             </h1>
