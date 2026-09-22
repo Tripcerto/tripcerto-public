@@ -61,6 +61,35 @@ describe('the brand kit', () => {
     }
   })
 
+  it('leads with the artwork, then the words', () => {
+    /* The order is the point of the document: a reader meets the logo, the
+       icon, the band and the colour before a paragraph of rules. */
+    const ids = [...kit.matchAll(/<section id="([a-z]+)"/g)].map((m) => m[1])
+    expect(ids).toEqual(['logo', 'band', 'colour', 'type', 'voice', 'files'])
+  })
+
+  it('shows the shader, not a still that approximates it', () => {
+    /* The three grounds in the logo section and the two band plates all sit
+       on a rendered frame. A CSS gradient there would be a different image
+       from the one the site paints. */
+    expect(kit).toMatch(/--bandshot:url\(data:image\/png/)
+    expect(kit).toMatch(/--bandtall:url\(data:image\/png/)
+    expect(kit).toContain('background-image:var(--bandtall)')
+  })
+
+  it('shows the app icon files, at the sizes they are met at', () => {
+    const shown = [...kit.matchAll(/<img src="data:image\/png[^"]+" width="(\d+)"/g)].map((m) => Number(m[1]))
+    for (const px of [104, 72, 48, 32, 16]) expect(shown).toContain(px)
+  })
+
+  it('names the same icon ground the shipped set is built from', () => {
+    /* The tiles in the document are the files in public/ only while these
+       agree. They are two places, so a test holds them together. */
+    const command = kit.match(/node scripts\/og\/build-icons\.mjs --ground mesh --scale [\d.]+ --seed [\d.,]+/)?.[0]
+    expect(command, 'the kit states no icon build command').toBeTruthy()
+    expect(read(join(ROOT, 'scripts/og/build-icons.mjs'))).toContain(command as string)
+  })
+
   it('carries no em dash, which is the rule it states', () => {
     /* The kit's own voice section bans them. A document that breaks its own
        rule in its own prose is not a rule. */

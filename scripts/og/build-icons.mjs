@@ -7,11 +7,14 @@
    Usage, from the repo root:
      node scripts/og/build-icons.mjs --ground coral
      node scripts/og/build-icons.mjs --ground band
-     node scripts/og/build-icons.mjs --ground mesh --scale 1.7
+     node scripts/og/build-icons.mjs --ground mesh --scale 1.7 --seed 41.1,87.9
 
-   That last line is what the served set is built from. Only scale is passed:
-   warp, bias, seed and time stay at the hero's own, and there is no blur,
-   because lowering the fold size is what settles the tile and a blur on top
+   That last line is what the served set is built from. Scale and seed are
+   passed: the fold size drops so a 16px tile still reads, and the seed names
+   which piece of the field the tile shows, because an icon cannot roll one
+   the way the hero does. Warp, bias and time stay at the hero's own, and
+   there is no blur, because lowering the fold size is what settles the tile
+   and a blur on top
    of it flattens the surface the band is there to show.
 
    Writes:
@@ -51,7 +54,7 @@ if (!['coral', 'band', 'mesh'].includes(ground)) throw new Error(`--ground must 
 
 /* Only meaningful for the mesh ground; harmless otherwise. */
 const tune = new URLSearchParams()
-for (const k of ['scale', 'warp', 'bias', 'time', 'blur', 'sat']) {
+for (const k of ['scale', 'warp', 'bias', 'time', 'blur', 'sat', 'seed']) {
   const v = flag(k, null)
   if (v !== null) tune.set(k, v)
 }

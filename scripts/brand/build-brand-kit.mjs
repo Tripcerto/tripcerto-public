@@ -127,12 +127,24 @@ const tile = (px, fill) => use(appicon, { fill, size: px })
 
 /* ---- The band and the icon, drawn by the real shader -------------------- */
 
-/* A fixed seed and time, so the kit shows the same band on every build. */
+/* A fixed seed and time, so the kit shows the same band on every build. The
+   live band rolls both on every load; a document cannot. */
 const STILL = { colours: meshStops, angle: live.angle, warp: live.warp, scale: live.scale, seed: [31.4, 15.9], bias: 0, time: 42 }
+
+/* The icon's own piece of the field, and the fold size it is drawn at. These
+   are the arguments build-icons.mjs ships with, so the tiles in this document
+   are the files in public/ and not a lookalike. */
+const ICON = { scale: '1.7', seed: '41.1,87.9' }
 
 const art = await renderAssets({
   band: { kind: 'band', width: 940, height: 140, scale: 1.25, options: STILL },
-  icon: { kind: 'icon', width: 220, shape: 'tile', transparent: true, scale: 2, options: { scale: '1.7' } },
+  bandTall: { kind: 'band', width: 300, height: 220, scale: 1.5, options: STILL },
+  icon256: { kind: 'icon', width: 256, shape: 'tile', transparent: true, scale: 2, options: ICON },
+  icon104: { kind: 'icon', width: 104, shape: 'tile', transparent: true, scale: 2, options: ICON },
+  icon72: { kind: 'icon', width: 72, shape: 'tile', transparent: true, scale: 2, options: ICON },
+  icon48: { kind: 'icon', width: 48, shape: 'tile', transparent: true, scale: 2, options: ICON },
+  icon32: { kind: 'icon', width: 32, shape: 'tile', transparent: true, scale: 2, options: ICON },
+  icon16: { kind: 'icon', width: 16, shape: 'tile', transparent: true, scale: 2, options: ICON },
 })
 
 /* ---- Small builders ------------------------------------------------------ */
@@ -170,6 +182,33 @@ const SCALE = [
   ['Frame chrome', 'Inside a product mockup', '11 / 12', '400', '1.5', ''],
 ]
 
+/* ---- Voice, as one idea: every rule is a swap --------------------------- */
+
+const SWAPS = [
+  ['Category language. <b class="no">the intelligence layer</b>, <b class="no">AI-powered</b>, <b class="no">seamless</b>, <b class="no">end-to-end</b>, <b class="no">unlock</b>, <b class="no">orchestrate</b>, <b class="no">transform travel</b>, <b class="no">chatbot</b>', 'What happens, and for whom. <i>Engage learns what each visitor wants, so your team can sell it sooner.</i>'],
+  ['Saying what a thing is not. <b class="no">Not a chatbot, a workflow.</b> <b class="no">X rather than Y.</b>', 'Say what it is, once, and move on.'],
+  ['An em dash or a bracket carrying a punchline', 'A comma, a full stop, or a second sentence.'],
+  ['A headline that instructs the buyer. <b class="no">Turn your website into…</b>', 'The software as the subject. <i>Workspace builds the quote-ready trip.</i>'],
+  ['A result no pilot has measured, or a third-party figure presented as ours', 'What the software does. Nothing about how well it does it.'],
+  ['A wall of text', 'Two or three sentences, then stop.'],
+  ['A menu of questions', 'One real question, or none.'],
+  ['Naming the machinery. Tools, identifiers, tags, <b class="no">(Noting: …)</b>', 'The trip, the work, the outcome. Never what is carrying it.'],
+]
+
+const MEASURED = [
+  ['Sentence length', 'Mean 10.9 words, median 9, across 268 sentences on the live site. Over 20 is an outlier.'],
+  ['Punctuation', 'No em dashes. No en dashes. No exclamation marks. No question marks. One semicolon on the whole site.'],
+  ['Person', `${w('you')} and ${w('your')} 104 times. ${w('we')} and ${w('our')} only where Tripcerto commits to something itself.`],
+  ['Tense', 'Present. One future tense exists on the site, and it is a promise about a certificate we do not hold.'],
+  ['Headlines', 'Two to sixteen words, median nine, opening with a concrete subject.'],
+]
+
+const REGISTERS = [
+  ['Default', 'Warm, curious, calm and clear, like a knowledgeable friend. Leans into substance and takes the room for it.'],
+  ['Guide', 'A good guidebook: practical, specific, grounded, never salesy. Where the knowledge base does not cover something she says so plainly rather than inventing an answer.'],
+  ['Consultant', 'Economical. A short precise reply is right far more often than a long one. She takes what she is told at face value and records it without restating it.'],
+]
+
 const html = `<!doctype html>
 <html lang="en-GB">
 <head>
@@ -182,59 +221,62 @@ const html = `<!doctype html>
 <style>
 :root{--ink:${INK};--primary:${PRIMARY};--accent:${ACCENT};--tint:${TINT};--paper:${PAPER};
       --pink:${PINK};--peach:${PEACH};--muted:${MUTED};--rule:${RULE};--up:${UP};--night:${NIGHT};
-      --band:${STRIP});--bandshot:url(${art.band})}
+      --band:${STRIP});--bandshot:url(${art.band});--bandtall:url(${art.bandTall})}
 *{box-sizing:border-box;margin:0}
 body{font:400 15px/1.55 'Instrument Sans',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 .wrap{max-width:940px;margin:0 auto;padding:56px 28px 96px}
-h1{font-size:30px;font-weight:600;letter-spacing:-.02em}
+h1{font-size:31px;font-weight:700;letter-spacing:-.025em}
 .lede{color:var(--muted);margin-top:10px;max-width:660px}
 .stamp{font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);background:var(--ink);border-radius:5px;padding:6px 10px;display:inline-block;margin-bottom:18px}
-nav{margin-top:26px;font:500 12px/2 'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.04em}
+nav{margin-top:24px;font:500 12px/2 'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.04em}
 nav a{color:var(--muted);text-decoration:none;margin-right:16px;white-space:nowrap}
-nav a:hover{color:var(--pink)}
-section{margin-top:54px;border-top:1px solid var(--rule);padding-top:26px;scroll-margin-top:20px}
+section{margin-top:52px;border-top:1px solid var(--rule);padding-top:24px;scroll-margin-top:20px}
 h2{font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
-h3{font-size:16px;font-weight:600;margin-top:28px}
+h3{font-size:15px;font-weight:600;margin-top:30px}
 section>p,h3+p{color:var(--muted);margin-top:8px;max-width:700px}
-.card{border:1px solid var(--rule);border-radius:10px;padding:26px;margin-top:16px;background:var(--tint)}
-.card.paper{background:var(--paper)}
+.card{border:1px solid var(--rule);border-radius:10px;padding:26px;margin-top:14px;background:var(--tint)}
 .lg{width:100%;height:auto;display:block}
-.sizes{display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-top:16px}
-.sizes figure{margin:0}
-.sizes figcaption{font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--muted);margin-top:9px}
-.icons{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:16px}
-.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
-.trio>div{border-radius:10px;padding:30px 22px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
-.trio>div>svg{width:100%;height:auto}
-.trio span{font:400 10px/1 'JetBrains Mono',monospace;color:rgb(255 255 255 / .6);letter-spacing:.08em}
-.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px;margin-top:16px}
-.sw{border:1px solid var(--rule);border-radius:8px;padding:10px;background:var(--paper)}
-.sw span{display:block;height:44px;border-radius:5px}
-.sw b{display:block;font-size:13px;font-weight:600;margin-top:9px}
-.sw code{display:block;font:400 12px/1.4 'JetBrains Mono',monospace;color:var(--muted)}
-.sw i{display:block;font:400 11px/1.4 'JetBrains Mono',monospace;color:var(--muted);font-style:normal}
-.strip{height:74px;border-radius:8px;background:var(--band);margin-top:10px}
-.bandshot{position:relative;border-radius:10px;margin-top:16px;height:140px;
-  background:var(--bandshot) center/cover no-repeat}
+.row{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-top:14px}
+.row figure{margin:0}
+figcaption{font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--muted);margin-top:9px;text-align:center}
+.grounds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.grounds>div{border-radius:10px;padding:30px 22px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background-size:cover;background-position:center}
+.grounds>div>svg{width:100%;height:auto}
+.grounds span{font:400 10px/1 'JetBrains Mono',monospace;color:rgb(255 255 255 / .7);letter-spacing:.08em}
+.roles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.role{border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.role .chip{height:92px;display:flex;align-items:flex-end;padding:12px 14px}
+.role .chip b{font:700 15px/1 'Instrument Sans',sans-serif}
+.role .body{padding:12px 14px 14px}
+.role .body strong{display:block;font-size:14.5px;font-weight:600}
+.role .body p{color:var(--muted);font-size:13.5px;margin-top:3px}
+.role .body code{display:block;font:500 12px/1.7 'JetBrains Mono',monospace;color:var(--muted);margin-top:6px}
+.ramp{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;border-radius:10px;overflow:hidden}
+.ramp div{height:78px;display:flex;align-items:flex-end;padding:9px 11px;font:500 11px/1.4 'JetBrains Mono',monospace;color:rgb(255 255 255 / .85)}
+.bandshot{position:relative;border-radius:10px;margin-top:14px;height:140px;background:var(--bandshot) center/cover no-repeat}
 .bandshot.dark::after{content:'';position:absolute;inset:0;border-radius:10px;background:rgb(40 17 49 / .55)}
 .bandshot b{position:absolute;left:18px;bottom:14px;z-index:1;color:var(--paper);font:600 15px/1 'Instrument Sans',sans-serif}
-table{border-collapse:collapse;width:100%;font-size:14px;margin-top:14px}
+.strip{height:64px;border-radius:10px;background:var(--band);margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin-top:12px}
 td,th{border-top:1px solid var(--rule);padding:9px 0;vertical-align:top;text-align:left}
 th{font:600 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:0;padding-top:0}
-td.k{width:236px;padding-right:22px;font-weight:600}
-td.num{font:400 13px/1.55 'JetBrains Mono',monospace;width:90px}
+td.k{width:224px;padding-right:22px;font-weight:600}
+td.num{font:400 13px/1.55 'JetBrains Mono',monospace;width:86px}
 td.dim,.dim{color:var(--muted)}
-.scale td,.scale th{padding-right:14px}
-.scale td:first-child{font-weight:600;width:150px}
+.vs td{width:50%;padding-right:22px}
+.vs td:first-child{color:var(--muted)}
+.vs i{font-style:italic;color:var(--muted)}
+.scale td,.scale th{padding-right:13px}
+.scale td:first-child{font-weight:600;width:146px}
 .scale .px{font:400 13px/1.55 'JetBrains Mono',monospace}
-ul{margin:12px 0 0;padding-left:20px;font-size:14px;color:var(--muted)}
+ul{margin:10px 0 0;padding-left:20px;font-size:14px;color:var(--muted)}
 li{margin:5px 0}
 li b,td b{color:var(--ink);font-weight:600}
 .no{color:var(--ink);font-weight:600}
-code.w{font:400 12.5px/1.4 'JetBrains Mono',monospace;background:var(--tint);padding:1px 5px;border-radius:4px;word-break:break-all}
-pre{font:400 12.5px/1.6 'JetBrains Mono',monospace;background:var(--tint);border-radius:8px;padding:14px 16px;margin-top:12px;overflow-x:auto}
+code.w{font:400 12.5px/1.4 'JetBrains Mono',monospace;background:var(--tint);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+pre{font:400 12.5px/1.6 'JetBrains Mono',monospace;background:var(--tint);border-radius:8px;padding:13px 15px;margin-top:10px;overflow-x:auto}
 .pass{color:var(--up)}.fail{color:var(--pink)}.warn{color:var(--accent)}
-@media(max-width:760px){.trio{grid-template-columns:1fr}td.k{width:auto;display:block;padding-bottom:0;border:0}td{display:block}.scale td:first-child{width:auto}}
+@media(max-width:760px){.grounds,.roles,.ramp{grid-template-columns:1fr}td.k{width:auto;display:block;padding-bottom:0;border:0}td{display:block}.vs td{width:auto}.scale td:first-child{width:auto}}
 </style>
 </head>
 <body><div class="wrap">
@@ -242,84 +284,135 @@ pre{font:400 12.5px/1.6 'JetBrains Mono',monospace;background:var(--tint);border
 <span class="stamp">Signed ${SIGNED}</span>
 <h1>tripcerto brand kit</h1>
 <p class="lede">Everything here is decided and in use on tripcerto.com. Implement from it.
-Every value in this file is read out of the site at build time, so the two cannot disagree.</p>
-<nav>
-<a href="#logo">01 Logo</a><a href="#colour">02 Colour</a><a href="#band">03 The band</a><a href="#type">04 Typography</a><a href="#icons">05 Icons</a><a href="#voice">06 Voice</a><a href="#pack">07 The pack</a>
-</nav>
+Every value is read out of the site at build time, so the two cannot disagree.</p>
+<nav><a href="#logo">01 Logo</a><a href="#band">02 Band</a><a href="#colour">03 Colour</a><a href="#type">04 Type</a><a href="#voice">05 Voice</a><a href="#files">06 Files</a></nav>
 
 <section id="logo">
 <h2>01 · Logo</h2>
 <p>Three pieces of drawn artwork. The wordmark is not type and cannot be set in any face.</p>
 
-<h3>Wordmark</h3>
 <div class="card">${use(wordmark, { fill: INK, size: 880, className: 'lg' })}</div>
-<div class="trio">
-  <div style="background:var(--ink)">${use(wordmark, { fill: PAPER, size: 240 })}<span>ink ${INK}</span></div>
-  <div style="background:var(--primary)">${use(wordmark, { fill: PAPER, size: 240 })}<span>primary ${PRIMARY}</span></div>
-  <div style="background:var(--band)">${use(wordmark, { fill: PAPER, size: 240 })}<span>the band</span></div>
+<div class="grounds">
+  <div style="background:var(--ink)">${use(wordmark, { fill: PAPER, size: 240 })}<span>on ink</span></div>
+  <div style="background:var(--primary)">${use(wordmark, { fill: PAPER, size: 240 })}<span>on primary</span></div>
+  <div style="background-image:var(--bandtall)">${use(wordmark, { fill: PAPER, size: 240 })}<span>on the band</span></div>
 </div>
 
 <h3>Monogram and app icon</h3>
 <p>The monogram is the wordmark's t and c locked together, for anywhere too tight for the wordmark.
-The app icon is that monogram cut out of a square tile.</p>
-<div class="card icons">
+The app icon is that monogram cut out of a tile, on the band.</p>
+<div class="card row">
   ${use(monogram, { fill: INK, height: 84 })}
+  <img src="${art.icon104}" width="104" height="104" alt="">
   ${tile(104, PRIMARY)}
   ${tile(104, INK)}
-  <img src="${art.icon}" width="104" height="104" alt="">
 </div>
 
-<h3>At small sizes</h3>
-<div class="card sizes">
-  ${[300, 170, 104, 72].map((px) => `<figure>${use(wordmark, { fill: INK, size: px })}<figcaption>${px}px</figcaption></figure>`).join('')}
+<h3>At the sizes they are met at</h3>
+<div class="card row">
+  ${[300, 170, 104, 72].map((px) => `<figure>${use(wordmark, { fill: INK, size: px })}<figcaption>${px}</figcaption></figure>`).join('')}
 </div>
-<div class="card sizes">
-  ${[72, 48, 32, 16].map((px) => `<figure>${tile(px, PRIMARY)}<figcaption>${px}px</figcaption></figure>`).join('')}
-  <figure>${use(monogram, { fill: INK, height: 44 })}<figcaption>44px</figcaption></figure>
-  <figure>${use(monogram, { fill: INK, height: 24 })}<figcaption>24px</figcaption></figure>
+<div class="card row">
+  ${[['icon72', 72], ['icon48', 48], ['icon32', 32], ['icon16', 16]].map(([k, px]) => `<figure><img src="${art[k]}" width="${px}" height="${px}" alt=""><figcaption>${px}</figcaption></figure>`).join('')}
+  <figure>${use(monogram, { fill: INK, height: 44 })}<figcaption>mono 44</figcaption></figure>
+  <figure>${use(monogram, { fill: INK, height: 24 })}<figcaption>mono 24</figcaption></figure>
 </div>
 
 <h3>Rules</h3>
 ${rows([
   ['Primary identifier', 'The wordmark. The monogram is for compact use only, never where the wordmark fits.'],
   ['Clear space', 'The diameter of the dot on the i, on all four sides.'],
-  ['Wordmark minimum', '120px wide. 72px is the floor for small use; below that, the monogram.'],
-  ['Monogram minimum', '16px.'],
-  ['Fills', `Ink ${w(INK)} on light grounds, white on ink, on coral and on the band. No third fill.`],
-  ['App icon corner radius', `${radius.toFixed(1)}% of the tile, carried in the artwork. Do not re-round it: iOS and Android apply their own mask on top.`],
-  ['One artwork per mark', 'There is no separate small-size drawing. The rows above are the same file at different widths.'],
+  ['Minimum size', 'Wordmark 120px wide, 72px at a push. Below that, the monogram, which floors at 16px.'],
+  ['Fills', `Ink ${w(INK)} on light grounds, white on ink, on primary and on the band. No third fill.`],
+  ['Corner radius', `${radius.toFixed(1)}% of the tile, carried in the artwork. Do not re-round it: iOS and Android mask on top.`],
+  ['One artwork per mark', 'No separate small-size drawing. The rows above are the same file at different widths.'],
 ])}
 
 <h3>Never</h3>
 ${bullets([
-  `Redraw, restretch, rotate or condense a mark. ${no('Scale only.')}`,
-  'Recolour beyond the two fills above. No gradient inside a mark, no outline, no drop shadow.',
+  'Redraw, restretch, rotate or condense a mark. Scale only.',
+  'Recolour beyond the two fills. No gradient inside a mark, no outline, no drop shadow.',
   'Set the wordmark in Instrument Sans or any other face.',
-  'Put a mark on a photograph, or on a ground that drops it under 3:1.',
-  'Lock the mark to a tagline, a strapline or a product name as fixed artwork.',
+  'Place a mark on a photograph, or on a ground that drops it under 3:1.',
+  'Lock a mark to a tagline or product name as fixed artwork.',
+])}
+</section>
+
+<section id="band">
+<h2>02 · The band</h2>
+<p>A brand element, not a decoration. The Ember ramp with the colour itself warped and folded by
+noise, so it moves. It carries the hero, the close and the app icon.</p>
+
+<div class="bandshot"></div>
+<div class="bandshot dark"><b>dark mode</b></div>
+
+<h3>Parameters</h3>
+${rows([
+  ['Stops', `${meshStops.map((c) => w(c)).join(' → ')}`],
+  ['Angle', `${live.angle}°, so the ramp runs left to right and a shade upward.`],
+  ['Warp', `${live.warp}. How far the noise pushes a point along the ramp, in ramp lengths.`],
+  ['Fold size', `${live.scale} across the box's longer side, so a wide band and a tall one fold at the same physical size. The app icon uses ${ICON.scale}, because a square tile takes more of the field.`],
+  ['Speed', `${live.speed}. It never rests on a frame.`],
+  ['Noise', 'Three octaves of 2D simplex warped into each other: a base at 0.9, a detail octave at 1.8 displaced by the base, and a slow fold at 0.6 displaced by the detail.'],
+])}
+
+<h3>What rolls, and what does not</h3>
+<p>Every load draws a different band. Reloads that showed the same folds in the same places read as
+a static image.</p>
+${rows([
+  ['Rolls', `Seed, anywhere in the field. Bias, up to a fifth of the ramp either way. Angle, ±25°. Warp, 0.85 to 1.15 of ${live.warp}.`],
+  ['Fixed', '<b>Stops, fold size and speed. These are the brand; the rest is weather.</b>'],
+  ['Pinned', `The app icon and this document cannot roll, so they name a seed: ${w(ICON.seed)}.`],
+])}
+
+<h3>Without the shader</h3>
+<p>The still strip underneath, which is also what renders with no WebGL and under reduced motion:</p>
+<pre>background: ${STRIP});</pre>
+<div class="strip"></div>
+<p>Three stops, not four. The still drops ${w(meshStops[2])}, which exists to give the shader a longer
+run through the coral before the peach.</p>
+
+<h3>Surfaces and rules</h3>
+${rows([
+  ['bg-band-frosted', 'White at 66% over the band, where a real backdrop filter would show another frame through.'],
+  ['bg-band-smoked', 'Ink at 76% over the band, the same for dark mode.'],
+  ['Dark mode', 'An ink wash at 55% over the live mesh, so the band sits with the dark page instead of glowing off it.'],
+  ['Copy on it', 'White, and nothing smaller than a lede. White on the band is 3.00:1.'],
+  ['Never', 'The band is a ground, not a fill. It does not go inside a mark, a letterform or a glyph. Do not restop it, add to it, or reverse it: the direction is pink to peach.'],
 ])}
 </section>
 
 <section id="colour">
-<h2>02 · Colour</h2>
-<p>Four brand colours. Everything else is a working value that serves the page, not the identity.</p>
+<h2>03 · Colour</h2>
+<p>Four colours carry the brand. Each has one job.</p>
 
-<div class="swatches">
-  ${swatch('Ink', INK, 'white')}
-  ${swatch('Primary', PRIMARY, 'white')}
-  ${swatch('Accent', ACCENT, 'ink')}
-  ${swatch('Tint', TINT, 'ink')}
+<div class="roles">
+  <div class="role"><div class="chip" style="background:${INK}"><b style="color:${PAPER}">Ink</b></div>
+    <div class="body"><strong>Everything you read</strong><p>All text on light grounds, and the dark page surface. The one colour that is never decorative.</p><code>${INK} · ${hsl(INK)}</code></div></div>
+  <div class="role"><div class="chip" style="background:${PRIMARY}"><b style="color:${PAPER}">Primary</b></div>
+    <div class="body"><strong>The brand coral</strong><p>The app icon, the filled button, the active state. Where the brand signs its name in colour.</p><code>${PRIMARY} · ${hsl(PRIMARY)}</code></div></div>
+  <div class="role"><div class="chip" style="background:${ACCENT}"><b style="color:${PAPER}">Accent</b></div>
+    <div class="body"><strong>The warm half of the band</strong><p>Its job is inside the ramp, holding the coral open before it reaches the peach. It is not a second brand colour and is not painted on its own.</p><code>${ACCENT} · ${hsl(ACCENT)}</code></div></div>
+  <div class="role"><div class="chip" style="background:${TINT}"><b style="color:${INK}">Tint</b></div>
+    <div class="body"><strong>The page</strong><p>The cream everything stands on in light mode. White is not a surface here; it only appears as a glass wash over this.</p><code>${TINT} · ${hsl(TINT)}</code></div></div>
 </div>
 
-<h3>The working set</h3>
+<h3>The band is those colours in order</h3>
+<div class="ramp">
+  <div style="background:${PINK}">Pink ${PINK}</div>
+  <div style="background:${PRIMARY}">Primary ${PRIMARY}</div>
+  <div style="background:${ACCENT}">Accent ${ACCENT}</div>
+  <div style="background:${PEACH};color:${INK}">Peach ${PEACH}</div>
+</div>
+<p>Pink and peach are the ramp's ends. They appear as flat colour in one place each: pink is the link
+and glyph colour on light grounds, peach only inside the band.</p>
+
+<h3>The rest</h3>
 ${rows([
-  ['Paper', `${w(PAPER)}, white. Not a page surface; it appears only as a glass wash over the tint.`],
-  ['Pink', `${w(PINK)}. The band's first stop, and the link and glyph colour on light grounds.`],
-  ['Peach', `${w(PEACH)}. The band's last stop.`],
   ['Muted', `${w(MUTED)}. Secondary text.`],
-  ['Rule', `${w(RULE)}. Hairlines.`],
+  ['Rule', `${w(RULE)}. Hairlines. It comes off the cream, not off ink, so it stays warm.`],
   ['Up', `${w(UP)}. The one positive-state colour.`],
-  ['Night', `${w(NIGHT)}. <b>The dark-mode page surface. This is not ink.</b> Ink is a brand colour and does not change; night is a surface and only exists in dark mode.`],
+  ['Night', `${w(NIGHT)}. <b>The dark-mode page surface, not ink.</b> Ink is a brand colour and does not change; night is a surface and exists only in dark mode.`],
 ])}
 
 <h3>Contrast, computed</h3>
@@ -329,78 +422,18 @@ ${pair('Muted', MUTED, 'tint', TINT, 'Secondary text, light')}
 ${pair('White', PAPER, 'night', NIGHT, 'Body copy, dark')}
 ${pair('White', PAPER, 'primary', PRIMARY, 'Copy on the band and on coral')}
 ${pair('Pink', PINK, 'tint', TINT, 'Links and glyphs, light')}
-${pair('Muted', MUTED, 'paper', PAPER, 'Secondary text on a glass wash')}
 </tbody></table>
-<p>White on the band sits at large-text only, which is why nothing smaller than a lede is ever set on it.
-Pink on tint is under the body bar and is used for links and glyphs alone, never for running text.</p>
-
-<h3>Accent has no job</h3>
-<p>${w(ACCENT)} is declared in the theme and painted nowhere on the site. It either gets a role or the
-palette is three colours and the band.</p>
-</section>
-
-<section id="band">
-<h2>03 · The band</h2>
-<p>The band is a brand element, not a decoration. It is the Ember strip, pink through coral into
-peach, with the colour itself warped and folded by noise so it moves.</p>
-
-<div class="bandshot" role="img" aria-label="The band"></div>
-<div class="bandshot dark" role="img" aria-label="The band in dark mode"><b>dark mode</b></div>
-
-<h3>Parameters</h3>
-${rows([
-  ['Stops', `${meshStops.map((c) => w(c)).join(' → ')}. Four in the shader.`],
-  ['Angle', `${live.angle}° in CSS convention, so the ramp runs left to right and a shade upward.`],
-  ['Warp', `${live.warp}. How far the noise pushes a point along the ramp, in ramp lengths.`],
-  ['Fold size', `${live.scale} folds across the box's longer side, so a short wide band and a tall one fold at the same physical size.`],
-  ['Speed', `${live.speed}. The band is always moving; it never rests on a frame.`],
-  ['Noise', 'Three octaves of 2D simplex, domain-warped into each other: a base at 0.9, a detail octave at 1.8 displaced by the base, and a slow fold at 0.6 displaced by the detail.'],
-])}
-
-<h3>What varies, and what does not</h3>
-<p>Every mount draws a different band, because reloads that showed the same folds in the same places
-read as a static image.</p>
-${rows([
-  ['Seed', 'Random. The noise starts somewhere else in its field.'],
-  ['Bias', 'Up to a fifth of the ramp either way, so a band leans pink or leans peach.'],
-  ['Angle', `±25° around ${live.angle}°.`],
-  ['Warp', `0.85 to 1.15 of ${live.warp}.`],
-  ['Stops, fold size and speed', '<b>Fixed. These are the brand; the rest is weather.</b>'],
-])}
-
-<h3>Reproducing it without the shader</h3>
-<p>The still strip underneath, which is also what renders with no WebGL:</p>
-<pre>background: ${STRIP});</pre>
-<div class="strip"></div>
-<p>Three stops, not four: the still drops ${w(meshStops[2])}, which only exists to give the shader a
-longer run through the coral before the peach.</p>
-
-<h3>Surfaces built on it</h3>
-${rows([
-  ['bg-band', 'The band itself.'],
-  ['bg-band-frosted', 'White at 66% over the band. An opaque stand-in for glass where a real backdrop filter would show another frame through.'],
-  ['bg-band-smoked', 'Ink at 76% over the band. The same, for dark mode.'],
-  ['Dark mode', 'An ink wash at 55% over the live mesh, so the band sits with the dark page instead of glowing off it.'],
-])}
-
-<h3>Rules</h3>
-${bullets([
-  'Copy on the band is white. It is the only fill that reads across the whole ramp.',
-  'Nothing smaller than a lede is set on the band.',
-  'The band is a ground, never a fill. It does not go inside a mark, a letterform or an icon glyph.',
-  `Do not restop it, do not add a colour to it, and do not reverse it. ${no('The direction is pink to peach.')}`,
-  'Respect reduced motion: the still strip stands in for the animation.',
-])}
+<p>White on the band clears large text only, which is why nothing smaller than a lede is set on it.
+Pink on cream is under the body bar and is used for links and glyphs alone, never for running text.</p>
 </section>
 
 <section id="type">
 <h2>04 · Typography</h2>
 <p>Two families, both from Google Fonts, both free to use and redistribute.</p>
-
 ${rows([
-  ['Sans', `<b>Instrument Sans</b>, weights 400, 500, 600 and 700. Everything the reader reads. Fallback ${w('system-ui, -apple-system, Segoe UI, sans-serif')}.`],
-  ['Mono', `<b>JetBrains Mono</b>, weights 400 and 500. Uppercase letter-spaced labels and eyebrows at 500, numerals and code at 400. Fallback ${w('ui-monospace, SFMono-Regular, monospace')}.`],
-  ['The request', `${w('family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap')}`],
+  ['Sans', `<b>Instrument Sans</b> 400, 500, 600, 700. Everything the reader reads. Fallback ${w('system-ui, -apple-system, Segoe UI, sans-serif')}.`],
+  ['Mono', `<b>JetBrains Mono</b> 400 and 500. Uppercase letter-spaced labels at 500, numerals and code at 400. Fallback ${w('ui-monospace, SFMono-Regular, monospace')}.`],
+  ['The request', w('family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap')],
 ])}
 
 <h3>The scale</h3>
@@ -411,108 +444,55 @@ ${SCALE.map(([role, where, size, weight, leading, tracking]) => `<tr><td>${role}
 
 <h3>Rules</h3>
 ${rows([
-  ['Negative tracking is for headlines only', 'Three values, all on display and heading type. Everything else runs at normal tracking.'],
+  ['Tracking is for headlines', 'Three negative values, all on display and heading type. Everything else runs at normal tracking.'],
   ['One reading leading', '1.55, on every lede and every paragraph. Tighter leading belongs to headlines.'],
-  ['No uppercase in the sans', 'Uppercase and letter-spacing are the mono’s job, never Instrument Sans’.'],
-  ['Numerals are tabular', 'Any price, total or step number sets in tabular figures so columns line up.'],
-  ['Headlines balance, ledes pretty', 'Headings wrap balanced; ledes avoid a single word on the last line.'],
+  ['No uppercase in the sans', 'Uppercase and letter-spacing belong to the mono. The sans is never set in caps.'],
+  ['Numerals are tabular', 'Any price, total or step number, so columns line up.'],
   ['Measure', 'A display line caps at 15 to 18 characters, a lede at about 34rem. Body text is never full width.'],
 ])}
 </section>
 
-<section id="icons">
-<h2>05 · Icons</h2>
-<p>Seven files, all generated from the marks by one command, so a favicon cannot drift apart from an
-app icon.</p>
-
-<div class="card icons">
-  <img src="${art.icon}" width="128" height="128" alt="">
-  ${tile(72, PRIMARY)}
-  ${tile(48, PRIMARY)}
-  ${tile(32, PRIMARY)}
-</div>
-
-${rows([
-  ['The ground', `The band warped by the site's own shader at a fixed seed, at a fold size of 1.7 against the hero's ${live.scale}. A square tile takes more of the field than a wide band and is then met at icon size, so the folds open up.`],
-  ['favicon.svg', `The app icon in ${w(PRIMARY)}, flat. A vector favicon carrying a raster of a shader is large and pointless at 16px.`],
-  ['favicon.ico', '48, 32 and 16px. The rounded tile, corners empty rather than white.'],
-  ['apple-touch-icon.png', '180px, full-bleed square. Not pre-rounded: iOS rounds it.'],
-  ['icon-192 / icon-512', 'Full-bleed square, tight crop, for anywhere that does not mask.'],
-  ['icon-maskable-192 / -512', 'A separate drawing for Android, which crops to a circle inside the tile. The ground reaches all four edges and the mark comes in to 56% so nothing is lost to the crop.'],
-  ['mask-icon.svg', 'The monogram alone, one colour, no ground, for a pinned Safari tab.'],
-  ['og-image.png', '1200 × 630, the social card. One per page.'],
-])}
-</section>
-
 <section id="voice">
-<h2>06 · Voice</h2>
-<p>Two voices. The site is written for a buyer; Stella talks to a traveller or a consultant. They
-share a floor and differ above it.</p>
+<h2>05 · Voice</h2>
+<p>One voice. The site talks to a buyer, Stella talks to a traveller or a consultant, and the rules
+below are the same for both. Name the work, the problem or the outcome. Never lead with a category.</p>
 
-<h3>How we write</h3>
-<p>Name the work, the problem or the outcome. Never lead with a category.</p>
-${rows([
-  ['Sentence length', 'Measured across the live site: 268 sentences, mean 10.9 words, median 9. A sentence over 20 words is an outlier, not a style.'],
-  ['Punctuation', 'Zero em dashes, zero en dashes, zero exclamation marks and zero question marks on the whole site. One semicolon.'],
-  ['Person', `${w('you')} and ${w('your')}, 104 times across the site. ${w('we')} and ${w('our')} only where Tripcerto commits to something itself.`],
-  ['Tense', 'Present. There is exactly one future tense on the site, and it is a promise about a certificate we do not yet hold.'],
-  ['Headlines', 'Two to sixteen words, median nine. They open with a concrete subject, never with a verb.'],
-])}
+<h3>Every rule is a swap</h3>
+<table class="vs"><thead><tr><th>Never</th><th>Instead</th></tr></thead><tbody>
+${SWAPS.map(([never, instead]) => `<tr><td>${never}</td><td>${instead}</td></tr>`).join('')}
+</tbody></table>
+<p>Two of these are enforced. A test fails the build if any banned word appears anywhere on a
+page, or if a heading opens with an instruction to the reader.</p>
 
-<h3>Never</h3>
-${bullets([
-  `${no('intelligence layer')}, ${no('seamless')}, ${no('AI-powered')}, ${no('chatbot')}, ${no('orchestrate')}, ${no('unlock')}, ${no('transform travel')}, ${no('end-to-end')}. A test fails the build on any of these in a headline.`,
-  'Creative, emotive, abstract or unnecessarily sophisticated language.',
-  `Defining a thing by what it is not. ${no('Not a chatbot, a workflow')}. ${no('X rather than Y')}. This is the single tic that makes a draft read as machine-written.`,
-  'A plain statement followed by an em dash or a bracket carrying a punchline.',
-  `Headlines that instruct the buyer. The software is the subject, so no opener of ${no('turn')}, ${no('answer')}, ${no('use')}, ${no('let')}, ${no('add')}, ${no('recommend')} or ${no('pass')}.`,
-  'Any result no pilot has measured, and any third-party statistic presented as ours.',
-])}
-
-<h3>Always</h3>
+<h3>What we always say</h3>
 ${bullets([
   'Two products, two jobs. Engage turns website research into qualified inquiries. Workspace turns a travel requirement into a quote structure.',
   'Works with the systems they already run, and never replaces them.',
   'The expert decides what reaches the customer.',
-  'Plain words for anything technical, in the same sentence, immediately.',
+  'Plain words for anything technical, in the same sentence.',
 ])}
 
-<h3>How Stella speaks</h3>
-<p>Stella is the conversational engine inside both products. These are not house style. They are
-hard rules in her system prompt, and the em dash ban alone is asserted in fifteen places in the test
-suite, because every paragraph of that prompt is an example she imitates.</p>
-${rows([
-  ['Never an em dash', 'Commas, full stops or semicolons.'],
-  ['Never the machinery', 'No tool syntax, no internal identifiers, no system tags, no process asides narrating her own work. She speaks about the trip, never about what is carrying it.'],
-  ['Never a menu', 'No funnel question that narrows an open exploration into invented categories. At most one follow-up per turn, and many good replies need none.'],
-  ['Never a template', 'No stock phrase, no form, no reading the gaps out. The wording varies every time.'],
-  ['Never a wall of text', 'Paragraphs of two or three sentences. Length follows substance: one sentence is often the right answer, a wall never is.'],
-  ['Never her own geography', 'She does not invent, broaden or narrow a stated place, and she never introduces a country, park, lodge or operator from her own knowledge. That is what a recommendation is for.'],
-  ['Never a person', 'Asked whether she is human, she says plainly that she is an AI assistant.'],
-  ['Open by reflecting', 'The first line answers what was actually said. No filler opener.'],
-  ['The cards are the list', 'She never repackages recommendation results into prose.'],
-])}
+<h3>The shape of it, measured on the live site</h3>
+${rows(MEASURED)}
 
-<h3>Her three registers</h3>
-${rows([
-  ['Default', 'Warm, curious, calm and clear, like a knowledgeable friend. Leans into substance and takes the room for it.'],
-  ['Guide', 'A good guidebook: practical, specific, grounded, never salesy. Where the knowledge base does not cover something she says so plainly rather than inventing an answer.'],
-  ['Consultant', 'Economical. A short precise reply is right far more often than a substantial one. She takes what she is told at face value and records it without restating it.'],
-])}
+<h3>Stella has three registers</h3>
+${rows(REGISTERS)}
+<p>Everything above still applies to her. The registers change how much she says, never what she is
+allowed to say.</p>
 </section>
 
-<section id="pack">
-<h2>07 · The pack</h2>
+<section id="files">
+<h2>06 · Files</h2>
 ${rows([
-  ['Marks', `${w('public/brand/')} holds the wordmark, monogram and app icon, each as SVG in ink and in white.`],
-  ['Icons', `${w('public/')} holds the eight files in section 05, all regenerated by one command from one ground.`],
-  ['Colour', `${w('src/index.css')} carries the four brand colours, the working set and the band, as CSS custom properties. That file is the source; this document reads it.`],
+  ['Marks', `${w('public/brand/')} carries the wordmark, monogram and app icon, each as SVG in ink and in white. One path per mark, cut by the even-odd fill rule. Drop that rule and the counters fill solid.`],
+  ['Icons', `${w('public/')} carries favicon.svg, favicon.ico at 48/32/16, apple-touch-icon at 180, icon-192, icon-512, two maskable icons for Android, mask-icon.svg for a pinned Safari tab, and og-image at 1200 × 630.`],
+  ['Icon ground', `All of them regenerate from one command, so a favicon cannot drift from an app icon: ${w(`node scripts/og/build-icons.mjs --ground mesh --scale ${ICON.scale} --seed ${ICON.seed}`)}`],
+  ['Colour', `${w('src/index.css')} declares the brand colours, the working set and the band, as CSS custom properties. That file is the source; this document reads it.`],
   ['The band', `${w('src/components/ui/gradient-mesh.tsx')} is the shader, about 6 kB of WebGL with no dependency. ${w('src/components/site/Band.tsx')} passes the live parameters.`],
   ['Type', 'Instrument Sans and JetBrains Mono, both from Google Fonts. Nothing to license.'],
 ])}
-<p>Every mark in this document is drawn from the path data in ${w('public/brand/')}, every colour from
-${w('src/index.css')}, and the band from the shader itself. Replace an artwork file and rebuild, and the
-whole document follows.</p>
+<p>Replace an artwork file, run ${w('node scripts/brand/build-brand-kit.mjs')}, and this whole document
+follows. A test fails the build if it stops matching the site.</p>
 </section>
 
 </div></body></html>
@@ -521,5 +501,5 @@ whole document follows.</p>
 await writeFile(OUT, html)
 console.log(`${OUT.replace(ROOT + '/', '')}  ${(html.length / 1024).toFixed(1)} kB`)
 console.log(`  corner radius measured from artwork: ${radius.toFixed(2)}%`)
-console.log(`  band read from Band.tsx: angle ${live.angle}, warp ${live.warp}, scale ${live.scale}, speed ${live.speed}`)
-console.log(`  ink on tint ${contrast(INK, TINT).value}:1 · white on band ${contrast(PAPER, PRIMARY).value}:1 · pink on tint ${contrast(PINK, TINT).value}:1`)
+console.log(`  band: angle ${live.angle}, warp ${live.warp}, scale ${live.scale} · icon scale ${ICON.scale} seed ${ICON.seed}`)
+console.log(`  ink ${INK} ${hsl(INK)} · on tint ${contrast(INK, TINT).value}:1`)
