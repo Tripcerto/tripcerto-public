@@ -256,6 +256,13 @@ without a new ask from him.
 
 ## The Trust page (22 Sep, late evening; Taylor: "start on the trust")
 
+- The hero headline is Taylor's, SIGNED OFF 22 Sep ("That looks fucking
+  beautiful… signing off"): three lines, "Your data, / Your expertise, /
+  You’re in control.", comma, comma, full stop, each line capitalised. He
+  chose it over three candidates that kept "Our AI". `T-1-A` holds the lines
+  as a list; `PageHero` sets a list line by line, and on phones narrower than
+  about 373px the type steps down with the viewport so no line wraps
+  (measured at 320, 360 and 390). Do not reword or rebreak it.
 - `trust/index.html`, `src/trust.tsx`, `src/pages/TrustPage.tsx`, copy in
   `src/content/trust.ts` by T-reference. The PDF's six sections were unsigned
   and led with "Your data stays yours"; Charlie's guide §13 reframes the page

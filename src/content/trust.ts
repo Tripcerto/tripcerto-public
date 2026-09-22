@@ -10,7 +10,8 @@
 
 export const trust = {
   hero: {
-    'T-1-A': 'Your expertise and your data, put to work by AI you control', // changed
+    // Three lines, as Taylor set them (22 Sep).
+    'T-1-A': ['Your data,', 'Your expertise,', 'You’re in control.'], // changed
     'T-1-B':
       'Tripcerto sits between your content, your systems and the model. It decides what the model may read, recommend and do, records each of them, keeps every customer’s data apart and leaves the commercial decisions with your experts.', // changed
     'T-1-C': 'Book a demo', // added
