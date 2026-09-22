@@ -26,7 +26,7 @@ export function Nav() {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b border-rule/70 bg-paper/80 backdrop-blur-2xl backdrop-saturate-150',
+        'fixed inset-x-0 top-0 z-50 border-b border-white/40 bg-white/30 backdrop-blur-2xl backdrop-saturate-150',
         open && 'bg-paper',
       )}
     >

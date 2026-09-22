@@ -11,9 +11,9 @@ const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 /* The band hero on a calm ground: the Ember strip from the identity pack,
    pink through coral into peach, with two broad diagonal sheens crossing
    bottom-left to top-right on their own slow clocks. No lines. The
-   headline is solid ink; the phone overlaps Stella's pane
-   of the glass Workspace window and the pair sits centred in its column,
-   level with the copy. */
+   headline is solid ink; the phone laps onto Stella's pane of the glass
+   Workspace window. Everything sits inside the shell, so the hero centres
+   as a whole on a wide screen and tightens toward the middle below it. */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
 const SHEEN = 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%)'
 
@@ -22,11 +22,11 @@ function Band() {
     <div aria-hidden className="absolute inset-0 overflow-hidden">
       <div className="absolute inset-0" style={{ background: BAND }} />
       <div
-        className="absolute -left-[30%] top-[-60%] h-[220%] w-[28%] -rotate-[35deg] animate-[drift-a_30s_ease-in-out_infinite_alternate] motion-reduce:animate-none"
+        className="absolute -left-[30%] top-[-60%] h-[220%] w-[28%] rotate-[35deg] animate-[drift-a_30s_ease-in-out_infinite_alternate] motion-reduce:animate-none"
         style={{ background: SHEEN }}
       />
       <div
-        className="absolute left-[25%] top-[-60%] h-[220%] w-[18%] -rotate-[35deg] animate-[drift-c_36s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none"
+        className="absolute left-[25%] top-[-60%] h-[220%] w-[18%] rotate-[35deg] animate-[drift-c_36s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none"
         style={{ background: SHEEN, opacity: 0.6 }}
       />
     </div>
@@ -95,8 +95,8 @@ export function HeroGlass() {
       <Band />
 
       <div className="shell relative z-10 pb-16 pt-28 md:pt-32 lg:pb-24 lg:pt-[calc(72px+6rem)]">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-8">
-          <div className="animate-rise min-w-0 lg:col-span-6">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-10">
+          <div className="animate-rise min-w-0 lg:col-span-5">
             <a
               href={PAGES.pilot}
               className="inline-flex h-9 items-center gap-2 rounded-full border border-white/60 bg-white/30 pl-4 pr-3 text-[14px] font-medium text-ink backdrop-blur-md transition-colors hover:bg-white/50"
@@ -111,7 +111,7 @@ export function HeroGlass() {
 
             <h1
               id="hero-title"
-              className="mt-6 max-w-[12ch] text-ink text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] sm:text-[4rem] lg:text-[4.75rem] xl:text-[5rem]"
+              className="mt-6 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] text-ink sm:text-[4rem] lg:text-[3.75rem] xl:text-[4rem]"
             >
               {home.hero['H-1-A']}
             </h1>
@@ -137,12 +137,12 @@ export function HeroGlass() {
             </div>
           </div>
 
-          <div className="min-w-0 lg:col-span-6">
+          <div className="min-w-0 lg:col-span-7">
             <div className="relative mx-auto h-[540px] max-w-[560px] sm:h-[600px] lg:h-[620px] lg:max-w-none">
-              <div className="absolute left-[16%] top-0 w-[130%] sm:w-[720px] lg:left-[16%] lg:w-[760px]">
+              <div className="absolute right-0 top-0 w-[86%]">
                 <GlassWindow />
               </div>
-              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:left-0 lg:w-[250px]">
+              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:w-[244px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>
