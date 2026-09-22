@@ -20,8 +20,9 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   go (22 Sep: "complete permission for everything to do with security").
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (20 tests:
-  the same four over each of the five pages, `src/site.test.tsx`),
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (31 tests:
+  the same four over each of the five pages in `src/site.test.tsx`, plus the
+  brand kit's assertions in `scripts/brand/brand.test.ts`),
   `npm run build`, `npm run audit` (zero advisories at every level).
   `.github/workflows/validate.yml` runs the same five on every PR and push to
   `main`, and checks the build emitted all five pages. `vite.config.ts` pins
@@ -147,7 +148,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
-  `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
+  `// changed`. H-1-A is "We make complex travel easier to plan and sell"
   (Taylor, 22 Sep; he reworded it four times that afternoon, so check the file
   rather than any quote in this doc). It is also the <title>, the og
   and twitter titles, the og:image:alt and the webmanifest description — change
@@ -293,10 +294,25 @@ without a new ask from him.
 - The footer's Trust link is back in `Footer.tsx` `LEGAL`, and
   `site.test.tsx` expects it on every page.
 
+## The social cards (22 Sep, late)
+
+- Five cards, one per page, generated from `scripts/og/` by the band variant:
+  `node scripts/og/shoot.mjs --pick a` writes `public/og-image.png` and
+  `og-engage`, `og-workspace`, `og-pilot`, `og-trust`. Each page points at its
+  own and its `og:image:alt` says what that card says. 2400x1260, declared at
+  that size.
+- Variant `a` is the site's own hero: the Ember band, the page's headline, its
+  sub line, the wordmark and tripcerto.com. `b` is the light page, `c` a dark
+  glass card, `d` the light page with the phone and quote-grid artwork, `e` a
+  split band over Engage and Workspace columns. To change the set, rerun the
+  command with a different letter, bump the `?v=` on every page's `og:image`
+  and `twitter:image`, and rewrite the alt lines to match.
+- What was there before: a black Harbour-era wordmark card reading "Agentic AI
+  for Travel Recommendations", which no page's alt text described.
+
 ## Still to do
 
-1. A new `public/og-image.png` in Ember (still the old cream one; every page
-   points at it), a rewritten README.
+1. A rewritten README.
 2. A review wave (copy against the Guide; code, mobile, a11y) on the five pages.
    There is NO pricing page and NO Ground page (Taylor, 22 Sep: "not right
    now"), whatever Charlie's documents ask for.
