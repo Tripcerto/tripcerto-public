@@ -220,6 +220,8 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 | 9 | Charlie's documents are guidelines for the register, not copy to lift | noted; no line is quoted from them |
 | 10 | Frames in the Engage and Workspace sections replay their choreography when scrolled into view (`Reveal`) | built alongside 4, not yet reviewed by Taylor |
 | 11 | Footer: the email under the links, then (later) under the wordmark, above the line | done |
+| 13 | Hero reloads "not different enough": the mesh now rolls a noise seed, a pink-or-peach lean (±0.2 of the ramp), the angle (±25°) and the warp per mount, not just the time phase | done |
+| 14 | The Close band looked wavier than the hero: the noise was sized from the band's height. Now sized from the longer side at the Close's density (scale 4.7), so both fold alike | done |
 | 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
 
 ## Still to do (from the original plan)

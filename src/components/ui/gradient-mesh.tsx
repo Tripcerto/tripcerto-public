@@ -33,6 +33,8 @@ uniform int stopCount;
 uniform float angle;
 uniform float warp;
 uniform float scale;
+uniform vec2 seed;
+uniform float bias;
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -78,7 +80,7 @@ vec3 ramp(float t) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  vec2 p = vec2(uv.x * iResolution.x / iResolution.y, uv.y) * scale;
+  vec2 p = gl_FragCoord.xy / max(iResolution.x, iResolution.y) * scale + seed;
   float t = iTime;
 
   vec2 dir = vec2(cos(angle), sin(angle));
@@ -88,7 +90,7 @@ void main() {
   float n2 = snoise(p * 1.8 + vec2(-t * 0.02, t * 0.05) + n1 * 0.6);
   float fold = snoise(p * 0.6 + vec2(t * 0.025, t * 0.015) + n2 * 0.4);
 
-  float coord = along + warp * (0.65 * n1 + 0.35 * n2) + 0.12 * fold;
+  float coord = along + bias + warp * (0.65 * n1 + 0.35 * n2) + 0.12 * fold;
   gl_FragColor = vec4(ramp(coord), 1.0);
 }
 `
@@ -127,13 +129,14 @@ export interface GradientMeshProps {
   angle?: number
   /* How far the noise pushes a point along the gradient, in gradient lengths. */
   warp?: number
-  /* Feature size: larger draws smaller folds. */
+  /* How many folds fit across the box's longer side, so a short wide band
+     and a tall one fold at the same size. Larger draws smaller folds. */
   scale?: number
   /* Time multiplier; 1 is slow. */
   speed?: number
 }
 
-export function GradientMesh({ className, colours, angle = 100, warp = 0.28, scale = 1.4, speed = 1 }: GradientMeshProps) {
+export function GradientMesh({ className, colours, angle = 100, warp = 0.28, scale = 4.7, speed = 1 }: GradientMeshProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -151,8 +154,18 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
        and `stopCount` decides how much of it the ramp spans. */
     const stopValues = new Float32Array(MAX_STOPS * 3)
     for (let i = 0; i < MAX_STOPS; i += 1) stopValues.set(stops[Math.min(i, stopCount - 1)] ?? [1, 1, 1], i * 3)
+    /* Every mount draws a different band (Taylor, 22 Sep: reloads looked
+       "not different enough", the same folds in the same places). The
+       noise starts somewhere else in its field, the ramp leans up to a
+       fifth of its length towards pink or towards peach, the direction
+       turns up to 25° either way and the warp varies a little. A restored
+       context redraws the same band. */
+    const seed: [number, number] = [Math.random() * 100, Math.random() * 100]
+    const bias = (Math.random() - 0.5) * 0.4
+    const turned = angle + (Math.random() - 0.5) * 50
+    const warped = warp * (0.85 + Math.random() * 0.3)
     /* CSS angle to the shader's: CSS 0deg points up and turns clockwise. */
-    const shaderAngle = ((angle - 90) * Math.PI) / 180
+    const shaderAngle = ((turned - 90) * Math.PI) / 180
 
     const canvas = document.createElement('canvas')
     canvas.style.width = '100%'
@@ -222,8 +235,10 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
       gl.uniform3fv(gl.getUniformLocation(program, 'stops'), stopValues)
       gl.uniform1i(gl.getUniformLocation(program, 'stopCount'), stopCount)
       gl.uniform1f(gl.getUniformLocation(program, 'angle'), shaderAngle)
-      gl.uniform1f(gl.getUniformLocation(program, 'warp'), warp)
+      gl.uniform1f(gl.getUniformLocation(program, 'warp'), warped)
       gl.uniform1f(gl.getUniformLocation(program, 'scale'), scale)
+      gl.uniform2f(gl.getUniformLocation(program, 'seed'), seed[0], seed[1])
+      gl.uniform1f(gl.getUniformLocation(program, 'bias'), bias)
       return true
     }
 
