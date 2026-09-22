@@ -1,4 +1,3 @@
-import { lazy, Suspense } from 'react'
 import { ArrowRight, ChevronRight, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { EngagePlaceholder } from '@/components/site/frames/EngagePlaceholder'
@@ -8,42 +7,28 @@ import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 
 const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 
-const FlowField = lazy(() => import('@/components/ui/flow-field').then((m) => ({ default: m.FlowField })))
 
-/* The band hero with a softer base and a different texture: Ember's peach
-   as the base colour, running Accent peach into the cream tint, and
-   the flow candidate's streamlines instead of the shader waves, running
-   from bottom-left to top-right as thick, near-opaque glassy strands with a
-   soft halo. Otherwise the band layout: the headline multiplied into the
-   colour, the glass Workspace window off the right edge, the phone in
-   front. Module-level so the field is composed once. */
-const BAND = 'linear-gradient(105deg, #ff7a5c 0%, #ff7a5c 12%, #fff1ea 100%)'
-const STRAND_COLOURS = ['#FFFFFF', '#FFF1EA', '#FFFFFF', '#FFF1EA']
-const STRAND_OPACITY: readonly [number, number] = [0.95, 0.7]
-const STRAND_ANGLE = -0.6
+/* The band hero on a calm ground: the Ember strip from the identity pack,
+   pink through coral into peach, with two broad diagonal sheens crossing
+   bottom-left to top-right on their own slow clocks. No lines. The
+   headline is multiplied into the colour; the phone overlaps Stella's pane
+   of the glass Workspace window and the pair sits centred in its column,
+   level with the copy. */
+const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
+const SHEEN = 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%)'
 
 function Band() {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
       <div className="absolute inset-0" style={{ background: BAND }} />
-      <div className="absolute -left-[20%] -top-[40%] h-[130%] w-[65%] bg-[radial-gradient(closest-side,rgba(255,122,92,0.4),transparent)] animate-[drift-a_26s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
-      <div className="absolute -right-[10%] -top-[30%] h-[130%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.8),transparent)] animate-[drift-b_28s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
-      <div className="absolute -bottom-[30%] left-[30%] h-[110%] w-[60%] bg-[radial-gradient(closest-side,rgba(255,241,234,0.6),transparent)] animate-[drift-c_32s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
-      <div className="absolute -bottom-[25%] -left-[5%] h-[80%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.55),transparent)] animate-[drift-a_18s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
-      <Suspense fallback={null}>
-        <FlowField
-          className="absolute inset-0"
-          colours={STRAND_COLOURS}
-          opacity={STRAND_OPACITY}
-          lineWidth={2.6}
-          glow={10}
-          glowOpacity={0.5}
-          lineCount={70}
-          mobileLineCount={36}
-          parallax={8}
-          angle={STRAND_ANGLE}
-        />
-      </Suspense>
+      <div
+        className="absolute -left-[30%] top-[-60%] h-[220%] w-[28%] -rotate-[35deg] animate-[drift-a_30s_ease-in-out_infinite_alternate] motion-reduce:animate-none"
+        style={{ background: SHEEN }}
+      />
+      <div
+        className="absolute left-[25%] top-[-60%] h-[220%] w-[18%] -rotate-[35deg] animate-[drift-c_36s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none"
+        style={{ background: SHEEN, opacity: 0.6 }}
+      />
     </div>
   )
 }
@@ -109,8 +94,8 @@ export function HeroGlass() {
     <section id="hero" aria-labelledby="hero-title" className="relative overflow-hidden bg-paper">
       <Band />
 
-      <div className="shell relative z-10 pb-16 pt-28 md:pt-36 lg:pb-32 lg:pt-44">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-8">
+      <div className="shell relative z-10 pb-16 pt-28 md:pt-32 lg:pb-24 lg:pt-[calc(72px+6rem)]">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-8">
           <div className="animate-rise min-w-0 lg:col-span-6">
             <a
               href={PAGES.pilot}
@@ -126,12 +111,12 @@ export function HeroGlass() {
 
             <h1
               id="hero-title"
-              className="text-inked mix-blend-multiply mt-10 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] sm:text-[4rem] lg:text-[4.75rem] xl:text-[5rem]"
+              className="text-inked mix-blend-multiply mt-6 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] sm:text-[4rem] lg:text-[4.75rem] xl:text-[5rem]"
             >
               {home.hero['H-1-A']}
             </h1>
 
-            <p className="mt-12 max-w-[34rem] text-lg leading-[1.55] text-ink/80 md:text-xl lg:mt-20">
+            <p className="mt-8 max-w-[34rem] text-lg leading-[1.55] text-ink/80 md:text-xl">
               {home.hero['H-1-B']}
             </p>
 
@@ -153,11 +138,11 @@ export function HeroGlass() {
           </div>
 
           <div className="min-w-0 lg:col-span-6">
-            <div className="relative h-[560px] sm:h-[640px] lg:h-[700px]">
-              <div className="absolute left-[26%] top-0 w-[760px] max-w-none sm:w-[880px] lg:-top-10 lg:left-[22%]">
+            <div className="relative mx-auto h-[540px] max-w-[560px] sm:h-[600px] lg:h-[620px] lg:max-w-none">
+              <div className="absolute left-[14%] top-0 w-[130%] sm:w-[720px] lg:left-[12%] lg:w-[760px]">
                 <GlassWindow />
               </div>
-              <PhoneFrame className="absolute left-0 top-20 z-10 w-[210px] sm:w-[240px] lg:top-24 lg:w-[264px]">
+              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] sm:w-[230px] lg:w-[250px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>

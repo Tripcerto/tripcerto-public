@@ -76,7 +76,12 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   pink is too brash", quoted from someone else) and the `flow` streamlines
   in place of the shader waves, rising bottom-left to top-right as thick,
   near-opaque white strands with a halo (`FlowField` gained an `angle` prop
-  for it). No tone switch; `band` is untouched.
+  for it). No tone switch; `band` is untouched. Taylor then went off the
+  strands ("too noisy") and the pink, and settled the ground on the Ember
+  strip itself, pink through coral into peach (`--band`), with two faint
+  diagonal sheens and no lines. Layout on his notes: phone overlapping
+  Stella's pane of the window, the pair centred in its column and level with
+  the copy, equal space above and below.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
