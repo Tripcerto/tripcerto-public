@@ -7,10 +7,12 @@
    Usage, from the repo root:
      node scripts/og/build-icons.mjs --ground coral
      node scripts/og/build-icons.mjs --ground band
-     node scripts/og/build-icons.mjs --ground mesh --scale 1.4 --warp 0.12 --blur 12
+     node scripts/og/build-icons.mjs --ground mesh --scale 1.7
 
-   That last line is what the served set is built from: the fold size Taylor
-   settled on, and the 12px the Close pill uses where it stands on the band.
+   That last line is what the served set is built from. Only scale is passed:
+   warp, bias, seed and time stay at the hero's own, and there is no blur,
+   because lowering the fold size is what settles the tile and a blur on top
+   of it flattens the surface the band is there to show.
 
    Writes:
      public/favicon.ico            48, 32, 16

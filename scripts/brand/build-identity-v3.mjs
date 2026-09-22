@@ -367,7 +367,7 @@ ${rows([
   ['icon-192 / icon-512', 'Full-bleed square, the tight crop, for contexts that do not mask.'],
   ['icon-maskable-192 / -512', 'A different drawing, not a smaller one: no tile shape, the ground to all four edges and the mark at 56%, so it survives Android cropping a manifest icon to a circle of 80%. The tight icon does not: its corners sit 241px out against a 205px safe radius.'],
   ['mask-icon.svg', 'The monogram alone, one colour, no ground, for a pinned Safari tab.'],
-  ['The ground under the mark', `The rasters carry the band warped by the site's own shader, at a fixed seed and one fold across the tile. <code class="w">favicon.svg</code> stays a flat <code class="w">${EMBER.primary}</code>: a vector favicon carrying a raster of a shader is large and pointless at 16px.`],
+  ['The ground under the mark', `The rasters carry the band warped by the site's own shader, at a fixed seed, at a fold size of 1.7 against the hero's 4.7. <code class="w">favicon.svg</code> stays a flat <code class="w">${EMBER.primary}</code>: a vector favicon carrying a raster of a shader is large and pointless at 16px.`],
   ['og-image.png', 'The social card, 1200 × 630. One per page.'],
 ])}
 </section>
