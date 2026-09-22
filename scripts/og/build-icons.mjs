@@ -7,10 +7,10 @@
    Usage, from the repo root:
      node scripts/og/build-icons.mjs --ground coral
      node scripts/og/build-icons.mjs --ground band
-     node scripts/og/build-icons.mjs --ground mesh --scale 1.0 --warp 0.12 --blur 12
+     node scripts/og/build-icons.mjs --ground mesh --scale 1.4 --warp 0.12 --blur 12
 
-   That last line is what the served set is built from: one fold across the
-   tile, and the 12px the Close pill uses where it stands on the band.
+   That last line is what the served set is built from: the fold size Taylor
+   settled on, and the 12px the Close pill uses where it stands on the band.
 
    Writes:
      public/favicon.ico            48, 32, 16

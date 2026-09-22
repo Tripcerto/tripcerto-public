@@ -21,26 +21,26 @@ const OUT = join(ROOT, 'scripts/og/out')
 
 const RECIPES = [
   {
-    id: 'shipped',
-    name: 'Fold scale, the lighter blur',
-    params: { scale: 1.0, warp: 0.12, bias: -0.06, time: 63, blur: 8, sat: 100 },
-    note: 'One fold across the tile, with just enough blur to clean the ramp.',
-  },
-  {
-    id: 'band-blur',
-    name: 'Fold scale at the band blur — the set that is built',
+    id: 'tight',
+    name: 'One fold across the tile',
     params: { scale: 1.0, warp: 0.12, bias: -0.06, time: 63, blur: 12, sat: 100 },
-    note: "12px is what the Close pill uses — the one element standing on the band.",
+    note: 'The calmest of them. At 32px it is a flat ramp.',
   },
   {
-    id: 'displacement',
-    name: 'Displacement — hold the ramp monotone',
-    params: { scale: 2.2, warp: 0.1, bias: 0, time: 63, blur: 16, sat: 110 },
-    note: 'More folds, but too little warp for any of them to fold back.',
+    id: 'built',
+    name: 'The set that is built',
+    params: { scale: 1.4, warp: 0.12, bias: -0.06, time: 63, blur: 12, sat: 100 },
+    note: 'A fold and a half, so the surface still moves at 64px.',
+  },
+  {
+    id: 'looser',
+    name: 'Looser again',
+    params: { scale: 2.0, warp: 0.12, bias: -0.06, time: 63, blur: 12, sat: 100 },
+    note: 'Two folds. The swirl starts to read as a shape rather than a sweep.',
   },
   {
     id: 'optical',
-    name: 'Optical — the hero field, blurred hard',
+    name: 'The hero field, blurred hard',
     params: { scale: 4.7, warp: 0.26, bias: -0.06, time: 63, blur: 32, sat: 115 },
     note: 'The hero untouched, with the frequencies taken out afterwards.',
   },
