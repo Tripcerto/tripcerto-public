@@ -7,6 +7,7 @@ import { EngagePlaceholder } from '@/components/site/frames/EngagePlaceholder'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { home } from '@/content/home'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
+import { cn } from '@/lib/utils'
 
 const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 
@@ -21,6 +22,10 @@ const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
    and visuals spread apart, and everything tightens toward the middle as
    the screen narrows. */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
+/* Review scaffolding: `?text=light` inverts the copy to paper on the band,
+   so Charlie can see a white version and a black version. */
+const LIGHT_TEXT = new URLSearchParams(window.location.search).get('text') === 'light'
+
 /* Module-level so the shader builds once. */
 const MESH_COLOURS = ['#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
 
@@ -93,18 +98,23 @@ function GlassWindow() {
 
 export function HeroGlass() {
   return (
-    <section id="hero" aria-labelledby="hero-title" className="relative overflow-hidden bg-paper">
+    <section id="hero" aria-labelledby="hero-title" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-paper">
       <Band />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-5 pb-16 pt-28 sm:px-8 md:pt-32 lg:pb-24 lg:pt-[calc(72px+6rem)] xl:max-w-[1480px] 2xl:max-w-[1680px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-1 flex-col justify-center px-5 pb-16 pt-28 sm:px-8 md:pt-32 lg:pb-20 lg:pt-[calc(72px+5rem)] xl:max-w-[1480px] 2xl:max-w-[1680px]">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-10 xl:gap-16">
           <div className="animate-rise min-w-0 lg:col-span-5">
             <a
               href={PAGES.pilot}
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-white/60 bg-white/30 pl-4 pr-3 text-[14px] font-medium text-ink backdrop-blur-md transition-colors hover:bg-white/50"
+              className={cn(
+                'inline-flex h-9 items-center gap-2 rounded-full border pl-4 pr-3 text-[14px] font-medium backdrop-blur-md transition-colors',
+                LIGHT_TEXT
+                  ? 'border-white/50 bg-white/15 text-paper hover:bg-white/25'
+                  : 'border-white/60 bg-white/30 text-ink hover:bg-white/50',
+              )}
             >
               Pilot
-              <span className="text-ink/40" aria-hidden>
+              <span className={LIGHT_TEXT ? 'text-paper/50' : 'text-ink/40'} aria-hidden>
                 ·
               </span>
               How a pilot runs
@@ -113,17 +123,20 @@ export function HeroGlass() {
 
             <h1
               id="hero-title"
-              className="mt-6 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] text-ink sm:text-[4rem] lg:text-[3.75rem] xl:text-[4.5rem] 2xl:text-[5rem]"
+              className={cn(
+                'mt-10 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] sm:text-[4rem] lg:text-[3.75rem] xl:text-[4.5rem] 2xl:text-[5rem]',
+                LIGHT_TEXT ? 'text-paper' : 'text-ink',
+              )}
             >
               {home.hero['H-1-A']}
             </h1>
 
-            <p className="mt-8 max-w-[34rem] text-lg leading-[1.55] text-ink/80 md:text-xl">
+            <p className={cn('mt-12 max-w-[34rem] text-lg leading-[1.55] md:text-xl', LIGHT_TEXT ? 'text-paper/85' : 'text-ink/80')}>
               {home.hero['H-1-B']}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Button asChild size="lg">
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Button asChild size="lg" variant={LIGHT_TEXT ? 'accent' : 'default'}>
                 <a href={DEMO_URL}>
                   {home.hero['H-1-C']}
                   <ArrowRight aria-hidden />
@@ -131,7 +144,7 @@ export function HeroGlass() {
               </Button>
               <a
                 href={HOW_IT_WORKS_HREF}
-                className="inline-flex min-h-11 items-center gap-1 font-semibold text-ink"
+                className={cn('inline-flex min-h-11 items-center gap-1 font-semibold', LIGHT_TEXT ? 'text-paper' : 'text-ink')}
               >
                 {home.hero['H-1-D']}
                 <ArrowRight size={16} aria-hidden />
@@ -140,11 +153,11 @@ export function HeroGlass() {
           </div>
 
           <div className="min-w-0 lg:col-span-7">
-            <div className="relative mx-auto max-w-[560px] lg:max-w-none">
+            <div className="relative mx-auto min-h-[520px] max-w-[560px] sm:min-h-[560px] lg:min-h-[590px] lg:max-w-none xl:min-h-[650px]">
               <div className="ml-[14%] xl:ml-[12%]">
                 <GlassWindow />
               </div>
-              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:w-[244px] xl:w-[270px] 2xl:w-[300px]">
+              <PhoneFrame className="absolute left-0 top-12 z-10 aspect-[9/18] w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:w-[244px] xl:w-[270px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>

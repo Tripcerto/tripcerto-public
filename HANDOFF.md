@@ -87,7 +87,15 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   rolls (still CSS strip beneath for no-WebGL); the headline is solid ink
   ("black glass" then "just solid"); the nav is glass (`bg-white/30`, all
   variants); the hero container runs wider than the shell at xl/2xl with a
-  16:9 window body so copy and visuals spread apart on desktop.
+  16:9 window body so copy and visuals spread apart on desktop. Later still:
+  the hero is one viewport tall (`min-h-[100svh]`, content centred); the
+  phone is back on PIXEL widths (190/230/244/270) with the composition given
+  a min-height so it never clips, and `aspect-[9/18]` so it is a touch
+  shorter; the notch is a Dynamic Island (`PhoneFrame`, shared); `?text=light`
+  inverts the copy to paper (pill, headline, lede, link, `accent` button) so
+  Charlie can compare a white and a black version. Taylor asked about
+  scroll-snap / orchestrated scrolling; the answer given was: no snap, a
+  viewport-tall hero and CSS scroll-driven reveals (see the chat).
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
