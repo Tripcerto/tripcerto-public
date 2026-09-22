@@ -100,6 +100,25 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   section opens with a `ProductBadge` (glyph and name in a glass pill)
   instead of a mono eyebrow, so the heading need not repeat the name; H-5-A
   was reworded for that.
+- The lower half, chosen by Taylor on 22 Sep (evening) from three live
+  candidates behind a `?lower=a|b|c` switch: A was a four-step track with the
+  product pills hung over the segments they carry, B a drawn timeline in the
+  frames' idiom beside the copy with six glass role cards and a measures
+  strip, C three dots. He picked C ("C looks good"); A, B and the switch are
+  deleted. `Opportunity.tsx` is the journey as three dots and a tick: Engage
+  and Workspace as glass pills with their glyphs, Booked solid green, hairlines
+  between them, then the lede and the "why it is an opportunity" line
+  (Charlie's guide §3 and §4: the journey, and the two handoffs where sales
+  lose momentum). `Audience.tsx` is the six buying roles as a ruled list
+  beside the heading, each with the number it is measured on (guide §8: roles
+  not sectors; the roles and measures come from the Foundation document's
+  stakeholder map; sectors are one supporting line in the lede).
+  `Close.tsx` stands on the hero's band (`Band.tsx`, the mesh extracted from
+  the hero; it pauses off-screen so two on a page cost nothing) with PAPER
+  copy like the hero, the hero's Pilot pill above the heading, the pilot's
+  five measures as one line, and the accent button. There is no Proof
+  section: guide §10 wants it "inquiry-related" and no pilot has measured
+  anything, so the measures ride in the close and the proof is the call.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
@@ -109,7 +128,10 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   rather than any quote in this doc). It is also the <title>, the og
   and twitter titles, the og:image:alt and the webmanifest description — change
   all five together.
-  The pill string was deleted at his request.
+  The pill string was deleted at his request. The lower half's copy is
+  `home.opportunity.dots` and `.why`, `home.audience.roles` (role, measure,
+  line), `home.proof.measures` and `home.close`; H-8-B and the four-step
+  `steps` went with the unpicked candidates.
 - Deleted once the hero was chosen: the four other candidates, `pick.ts` and
   the `?hero=` switch, the `?text=light` flag (`src/lib/review.ts`), the
   FloatingLines, FlowField, FlowPaths and Threads effects, the `ogl`
@@ -145,7 +167,12 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   fine but the eyebrow repeating the heading's first word was not; even
   rhythm between sections; the same glow top and bottom in light as in dark.
 - He does not want screenshots sent to him during tuning; he watches the
-  page and says what to change. He gives changes one at a time, fast.
+  page and says what to change. He gives changes one at a time, fast. To
+  choose between candidates he wants full-page captures of each, light and
+  dark, "stacked", and picks from those.
+- On the lower half: of A (track), B (drawn timeline, glass cards) and C
+  (three dots, ruled list) he picked C without notes. The footer is next: he
+  asked whether it should follow the theme rather than stay ink.
 
 ## Traps met
 
@@ -169,6 +196,13 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   not run prettier here; eslint is the only gate.
 
 ## Still to do (from the original plan)
+
+0. The footer: Taylor (22 Sep evening) asked what is "weird" with it and
+   whether it should be light. It is the one block fixed to ink in both
+   modes, so in dark mode it is LIGHTER than the page (#2b1220 on #1c0c15)
+   and in light mode it is a second heavy slab straight after the band; its
+   column headings are the mono uppercase eyebrow he removed everywhere else.
+   Rebuild on the page tokens with a hairline top and the page-toned wordmark.
 
 1. CSS scroll-driven reveals for the sections below the hero (offered, not
    built). No scroll-snap — Taylor asked, and the answer was a viewport-tall

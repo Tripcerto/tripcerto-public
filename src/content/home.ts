@@ -18,30 +18,7 @@ export const home = {
       'A traveller explains what they want once. Engage records it, the inquiry arrives with it and Workspace builds from it. Nobody repeats the discovery, and the sale moves sooner.', // changed
     /* Why it is an opportunity (Guide §3), kept apart from the opportunity itself. */
     why: 'Travel sales usually lose momentum at two handoffs: into the sales team, and into the first quote. Those are the two Tripcerto carries.', // new
-    /* The connected journey, three dots and a tick. */
-    steps: [
-      {
-        label: 'Research',
-        line: 'The traveller asks on your website. Engage answers from your expertise and your products.',
-        product: 'engage',
-      },
-      {
-        label: 'Inquiry',
-        line: 'The inquiry arrives with the transcript and a structured brief: needs, timing, preferences and the products considered.',
-        product: 'engage',
-      },
-      {
-        label: 'Quote',
-        line: 'Workspace builds the itemised trip from the brief, shows what is missing and resolves it against your inventory.',
-        product: 'workspace',
-      },
-      {
-        label: 'Booked',
-        line: 'The expert approves the quote, and it goes into the booking process you already run.',
-        product: 'outcome',
-      },
-    ],
-    /* The same journey as three dots, one per product and the outcome. */
+    /* The journey as three dots and a tick, one per product and the outcome. */
     dots: [
       { label: 'Engage', line: 'The traveller asks on your website. The inquiry arrives with the brief.' },
       { label: 'Workspace', line: 'The brief becomes an itemised trip, checked against your inventory.' },
@@ -110,9 +87,8 @@ export const home = {
     ], // changed: roles, not sectors
   },
   proof: {
+    /* No standalone section: the measures sit in the close (Guide §10). */
     'H-8-A': 'What a pilot measures', // changed
-    'H-8-B':
-      'One workflow, your own baseline, one primary measure and up to three supporting ones. Nothing is claimed until it has been measured.', // changed
     measures: ['Visitor to inquiry', 'Inquiry quality', 'Inquiry to first quote', 'Handling time', 'Gaps found before send'],
   },
   close: {

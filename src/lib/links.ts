@@ -25,6 +25,5 @@ export const SECTION = {
   engage: 'engage',
   workspace: 'workspace',
   audience: 'is-this-for-me',
-  proof: 'proof',
   close: 'close',
 } as const
