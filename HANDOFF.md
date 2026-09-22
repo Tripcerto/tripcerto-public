@@ -41,8 +41,13 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 - Hero wave config in `Hero.tsx`: `TOP_WAVE` and `BOTTOM_WAVE` (`y` height at
   centre, positive up; `rotate` tilt in radians, negative descends to the
   right under mirror), no middle wave, `swirl` 0, `mirror` on, `sameDirection`.
-  Current path: both bands enter from the left, one near the top running
-  shallow, one at the upper middle running 30 degrees through the phone's base.
+  Current path (22 Sep, late): both bands enter LOW on the left and rise to
+  the right, and the shader now weights every family equally in both modes
+  (the original's 0.85/0.75 light and 0.2/1/0.1 dark multipliers are gone);
+  `glowSpread` and `glowHaze` tune the dark-mode glow. Taylor asked for the
+  bottom-left-to-top-right sweep on EVERY candidate, so `lines` (angle now
+  negative), `flow` (baseAngle negative), `threads` (box tilted) and `band`
+  all rise the same way.
 - Four candidates behind `?hero=`, wired in
   `src/components/site/hero-variants/pick.ts`: `lines` (SVG, true parallel
   offsets of one master curve, seamless drift, geometry test),

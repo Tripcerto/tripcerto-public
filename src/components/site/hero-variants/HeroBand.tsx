@@ -52,7 +52,7 @@ function Band() {
       <div className="absolute -top-[20%] left-[35%] h-[60%] w-[35%] bg-[radial-gradient(closest-side,rgba(240,220,212,0.6),transparent)] animate-[drift-c_20s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
       <Suspense fallback={null}>
         <FloatingLines
-          className="absolute inset-0 opacity-70"
+          className="absolute inset-0 opacity-80"
           mixBlendMode="screen"
           swirl={0.25}
           sameDirection
@@ -63,6 +63,8 @@ function Band() {
           topWavePosition={TOP_WAVE}
           middleWavePosition={MIDDLE_WAVE}
           bottomWavePosition={BOTTOM_WAVE}
+          glowSpread={0.005}
+          glowHaze={0}
           bendRadius={6}
           bendStrength={-0.4}
           animationSpeed={0.6}

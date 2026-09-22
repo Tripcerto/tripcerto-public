@@ -29,7 +29,7 @@ export interface FlowLine {
 
 export const DESKTOP_FLOW: FlowPreset = {
   centre: [0.54, 0.44],
-  angle: (22 * Math.PI) / 180,
+  angle: (-22 * Math.PI) / 180,
   wavelength: 2000,
   amplitude: 80,
   step: 10,
@@ -38,7 +38,7 @@ export const DESKTOP_FLOW: FlowPreset = {
 
 export const MOBILE_FLOW: FlowPreset = {
   centre: [0.5, 0.66],
-  angle: (30 * Math.PI) / 180,
+  angle: (-30 * Math.PI) / 180,
   wavelength: 1100,
   amplitude: 30,
   step: 10,

@@ -13,7 +13,7 @@ export function HeroThreads() {
       background={
         <Suspense fallback={null}>
           <Threads
-            className="absolute inset-x-0 top-0 bottom-16 mask-b-from-85% md:bottom-28"
+            className="absolute -inset-x-[12%] top-0 bottom-16 origin-center -rotate-[10deg] scale-y-125 mask-b-from-85% md:bottom-28"
             linesGradient={THREAD_COLOURS}
             lineCount={36}
             mobileLineCount={18}

@@ -17,19 +17,16 @@ const FloatingLines = lazy(() =>
 )
 
 /* The React Bits demo's line counts and bend, in our colours, on our own path:
-   two straight bands with no swirl, both entering at the left edge and both
-   flowing left to right, descending gently. The top band enters near the top
-   and reaches the right edge a quarter of the way down; the bottom band
-   enters at the upper middle and runs at 30 degrees through the bottom of
-   the phone, leaving by the bottom edge. y is the band's height at the
-   centre (positive is up), rotate its tilt in radians (negative descends to
+   two straight bands with no swirl, both entering low at the left edge and
+   both rising to the right at the same strength. y is the band's height at
+   the centre (positive is up), rotate its tilt in radians (positive rises to
    the right under mirror). Module-level so the shader is built once: the
    effect re-runs on any new reference. Counts map to WAVES in order. */
 const WAVE_COLOURS = ['#B9243D', '#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
 const WAVES: WaveName[] = ['top', 'bottom']
 const WAVE_LINES = [10, 15]
-const TOP_WAVE = { x: 10, y: 0.55, rotate: -0.16 }
-const BOTTOM_WAVE = { x: 2, y: -0.6, rotate: -0.52 }
+const TOP_WAVE = { x: 10, y: -0.15, rotate: 0.2 }
+const BOTTOM_WAVE = { x: 2, y: -0.85, rotate: 0.38 }
 
 function Waves() {
   return (

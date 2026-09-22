@@ -62,6 +62,8 @@ uniform bool sameDirection;
 uniform float lineWidth;
 uniform float lineBlur;
 uniform float lineOpacity;
+uniform float glowSpread;
+uniform float glowHaze;
 
 const vec3 BLACK = vec3(0.0);
 const vec3 PINK  = vec3(233.0, 71.0, 245.0) / 255.0;
@@ -126,9 +128,10 @@ float waveDelta(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldB
   return uv.y - y;
 }
 
-/* Dark mode: the additive glow of the original. */
+/* Dark mode: additive glow, a bright core falling off over glowSpread uv
+   units with a constant haze of glowHaze everywhere. */
 float glow(float m) {
-  return 0.0175 / max(abs(m) + 0.01, 1e-3) + 0.01;
+  return 0.0175 / max(abs(m) + glowSpread, 1e-3) + glowHaze;
 }
 
 /* Light mode: a stroke lineWidth pixels wide whose edge softens over lineBlur
@@ -184,11 +187,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         interactive
       );
       if (lightMode) {
-        float a = ink(m) * 0.85;
+        float a = ink(m);
         paint = paint * (1.0 - a) + lineCol * a;
         alpha = alpha * (1.0 - a) + a;
       } else {
-        col += lineCol * darkScale * glow(m) * 0.2;
+        col += lineCol * darkScale * glow(m);
       }
     }
   }
@@ -237,11 +240,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         interactive
       );
       if (lightMode) {
-        float a = ink(m) * 0.75;
+        float a = ink(m);
         paint = paint * (1.0 - a) + lineCol * a;
         alpha = alpha * (1.0 - a) + a;
       } else {
-        col += lineCol * darkScale * glow(m) * 0.1;
+        col += lineCol * darkScale * glow(m);
       }
     }
   }
@@ -314,6 +317,10 @@ export interface FloatingLinesProps {
   lineWidth?: number
   lineBlur?: number
   lineOpacity?: number
+  /* Dark mode only: how far the glow falls off from a line in uv units
+     (smaller is tighter), and the constant haze added everywhere. */
+  glowSpread?: number
+  glowHaze?: number
 }
 
 function perWave(value: number | number[], waves: WaveName[], wave: WaveName, fallback: number) {
@@ -354,6 +361,8 @@ export function FloatingLines({
   lineWidth = 2,
   lineBlur = 1,
   lineOpacity = 0.9,
+  glowSpread = 0.01,
+  glowHaze = 0.01,
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -441,6 +450,8 @@ export function FloatingLines({
       lineWidth: { value: lineWidth * renderer.getPixelRatio() },
       lineBlur: { value: lineBlur * renderer.getPixelRatio() },
       lineOpacity: { value: lineOpacity },
+      glowSpread: { value: glowSpread },
+      glowHaze: { value: glowHaze },
     }
 
     if (linesGradient && linesGradient.length > 0) {

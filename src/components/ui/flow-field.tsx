@@ -147,7 +147,7 @@ export function FlowField({
         lengthRange: layout.lengthRange,
         minLength: Math.max(90, width * 0.12),
         seed,
-        field: { baseAngle: 0.26, spread: 0.8, scale: 1 / Math.max(340, width * 0.32), step: 3 },
+        field: { baseAngle: -0.26, spread: 0.8, scale: 1 / Math.max(340, width * 0.32), step: 3 },
         warp: { amplitude: layout.warp, scale: 1 / Math.max(400, width * 0.36) },
         colours,
         opacity,
