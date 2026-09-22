@@ -119,6 +119,16 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   five measures as one line, and the accent button. There is no Proof
   section: guide §10 wants it "inquiry-related" and no pilot has measured
   anything, so the measures ride in the close and the proof is the call.
+- `src/components/site/Footer.tsx` (rebuilt 22 Sep evening at Taylor's ask):
+  on the page tokens like the nav, cream by day and ink by night, under a
+  hairline, so the page ends quietly after the band. It had been fixed to
+  ink in both modes, which made it LIGHTER than the dark page and a second
+  slab after the band in light, with the mono uppercase headings he had
+  removed everywhere else. Now: the page-toned wordmark, one tagline
+  (`home.footer.tagline`, the two products and their jobs, not H-1-A
+  repeated), three columns under small semibold headings (Product; Company:
+  the email, Status, Login; Legal), the copyright under a second hairline.
+  `Section`'s `ink` tone went with it; the tones are `page` and `tint`.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
@@ -196,13 +206,6 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   not run prettier here; eslint is the only gate.
 
 ## Still to do (from the original plan)
-
-0. The footer: Taylor (22 Sep evening) asked what is "weird" with it and
-   whether it should be light. It is the one block fixed to ink in both
-   modes, so in dark mode it is LIGHTER than the page (#2b1220 on #1c0c15)
-   and in light mode it is a second heavy slab straight after the band; its
-   column headings are the mono uppercase eyebrow he removed everywhere else.
-   Rebuild on the page tokens with a hairline top and the page-toned wordmark.
 
 1. CSS scroll-driven reveals for the sections below the hero (offered, not
    built). No scroll-snap — Taylor asked, and the answer was a viewport-tall

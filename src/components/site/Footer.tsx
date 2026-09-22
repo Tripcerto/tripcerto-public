@@ -1,4 +1,3 @@
-import { Section } from '@/components/site/Section'
 import { Wordmark } from '@/components/site/Wordmark'
 import { home } from '@/content/home'
 import { CONTACT_EMAIL, LOGIN_URL, PAGES, STATUS_URL } from '@/lib/links'
@@ -27,8 +26,8 @@ const COLUMNS: readonly FooterColumn[] = [
     heading: 'Company',
     links: [
       { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
-      { href: LOGIN_URL, label: 'Login' },
       { href: STATUS_URL, label: 'Status' },
+      { href: LOGIN_URL, label: 'Login' },
     ],
   },
   {
@@ -40,35 +39,42 @@ const COLUMNS: readonly FooterColumn[] = [
   },
 ]
 
+/* The footer sits on the page like the nav does, cream by day and ink by
+   night, under a hairline, so the page ends quietly after the band instead
+   of on a second slab. The wordmark follows the theme with the text. */
 export function Footer() {
   return (
-    <footer>
-      <Section tone="ink" className="py-16 md:py-16">
-        <Wordmark tone="paper" className="h-7" />
-        <p className="mt-4 max-w-xs text-sm text-paper/60">{home.hero['H-1-A']}</p>
+    <footer className="border-t border-line">
+      <div className="shell py-14 md:py-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16">
+          <div>
+            <Wordmark tone="page" />
+            <p className="mt-4 max-w-[22rem] text-[15px] leading-[1.55] text-dim">{home.footer.tagline}</p>
+          </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-3">
-          {COLUMNS.map((column) => (
-            <div key={column.heading}>
-              <h2 className="font-mono text-xs font-medium uppercase tracking-wide text-paper/50">{column.heading}</h2>
-              <ul className="mt-3">
-                {column.links.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className="inline-flex min-h-11 items-center text-[15px] text-paper/80 transition-colors hover:text-paper"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            {COLUMNS.map((column) => (
+              <div key={column.heading}>
+                <h2 className="text-[13px] font-semibold text-dim">{column.heading}</h2>
+                <ul role="list" className="mt-2">
+                  {column.links.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className="inline-flex min-h-11 items-center text-[15px] text-body/80 transition-colors hover:text-body"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <p className="mt-12 border-t border-paper/10 pt-6 text-sm text-paper/50">© 2026 Tripcerto Ltd</p>
-      </Section>
+        <p className="mt-12 border-t border-line pt-6 text-[13px] text-dim">© 2026 Tripcerto Ltd</p>
+      </div>
     </footer>
   )
 }

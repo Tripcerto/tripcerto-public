@@ -98,4 +98,10 @@ export const home = {
     'H-9-C': 'Book a demo',
     'H-9-D': 'How a pilot runs',
   },
+  footer: {
+    /* The two products and their jobs in one line (the Foundation's "two
+       products for the work before and after the inquiry"), in place of
+       the hero headline repeated. */
+    tagline: 'Two products for travel sales: Engage before the inquiry, Workspace after it.', // new
+  },
 } as const

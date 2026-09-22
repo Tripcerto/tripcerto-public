@@ -6,12 +6,12 @@ export function Section({
   id,
   className,
   children,
-  tone = 'paper',
+  tone = 'page',
 }: {
   id?: string
   className?: string
   children: ReactNode
-  tone?: 'paper' | 'tint' | 'ink'
+  tone?: 'page' | 'tint'
 }) {
   return (
     <section
@@ -19,7 +19,6 @@ export function Section({
       className={cn(
         'scroll-mt-16 py-20 md:scroll-mt-[72px] md:py-28',
         tone === 'tint' && 'bg-soft',
-        tone === 'ink' && 'bg-ink text-paper',
         className,
       )}
     >
