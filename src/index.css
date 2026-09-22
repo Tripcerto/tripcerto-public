@@ -32,7 +32,6 @@
 
 :root {
   --band: linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%);
-  --text-gradient: linear-gradient(120deg, #2b1220 0%, #6e1f36 55%, #e8437e 100%);
   --shell: 1200px;
 }
 
@@ -90,56 +89,8 @@
   }
 }
 
-/* The gradient paints only inside the element's box, so a tight line-height
-   would cut the last line's descenders. The padding keeps them inside it. */
-@utility text-gradient {
-  background: var(--text-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding-bottom: 0.12em;
-}
-
 @utility bg-band {
   background: var(--band);
-}
-
-/* A headline inked into the band: near-solid at the top, thinning to a
-   translucent deep primary by the last line. Multiplied over the band it
-   reads as ink soaked through the colour; over the paper it is plain ink. */
-@utility text-inked {
-  background: linear-gradient(180deg, rgb(43 18 32 / 0.96) 0%, rgb(43 18 32 / 0.9) 40%, rgb(110 31 54 / 0.72) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding-bottom: 0.12em;
-}
-
-@keyframes drift-a {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(8%, 10%, 0);
-  }
-}
-
-@keyframes drift-b {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(-10%, 8%, 0) scale(1.12);
-  }
-}
-
-@keyframes drift-c {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-8%, -12%, 0);
-  }
 }
 
 @keyframes rise {

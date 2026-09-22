@@ -11,7 +11,6 @@ export const home = {
       'Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds the quote structure from that brief and shows what is still missing.', // changed
     'H-1-C': 'Book a demo',
     'H-1-D': 'See how it works',
-    caption: 'The conversation, and the brief it produced.',
   },
   opportunity: {
     'H-2-A': 'Customer context carries from the first question to the final quote', // changed
