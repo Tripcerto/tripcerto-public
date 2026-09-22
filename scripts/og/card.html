@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tripcerto social card</title>
+    <!--
+      One 1200x630 social card, rendered at whatever `?v=` asks for and shot by
+      shoot.mjs. It is deliberately NOT part of the Vite app: a card is a file
+      in public/, generated now and again, and wiring it into the build would
+      make every page load carry it.
+
+      It shares the page's substance rather than its code: the same @theme hex
+      values, the same fonts, the same band shader (scripts/og/mesh.js), the
+      same brand SVGs out of public/brand/. Change a token in src/index.css and
+      it must be changed here too; the cards are regenerated, not computed.
+
+      ?v=a|b|c|d|e   which design
+      ?page=home|engage|workspace|pilot|trust   whose copy (default: the
+                     variant's own home copy, which is what the five options
+                     are judged on)
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      /* Ember. Mirrors the @theme block in src/index.css. */
+      :root {
+        --ink: #2b1220;
+        --primary: #ff5c6c;
+        --accent: #ff7a5c;
+        --tint: #fff1ea;
+        --paper: #ffffff;
+        --pink: #e8437e;
+        --peach: #ff9b7a;
+        --muted: #6e5a60;
+        --rule: #f0dcd4;
+        --up: #1f9d63;
+        --night: #1c0c15;
+        --band: linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: 'Instrument Sans', system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        background: var(--tint);
+      }
+
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 68px 72px;
+      }
+
+      /* The still band under the shader, and the whole ground where the
+         shader cannot run. */
+      .ground {
+        position: absolute;
+        inset: 0;
+        background: var(--band);
+      }
+      .ground > div {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* The page's own fixed wash, at the card's scale. */
+      .wash-day {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(60% 55% at 88% 0%, rgb(255 155 122 / 0.5), transparent 70%),
+          radial-gradient(52% 50% at 2% 100%, rgb(232 67 126 / 0.18), transparent 70%);
+      }
+      .wash-night {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(62% 58% at 88% 0%, rgb(232 67 126 / 0.3), transparent 70%),
+          radial-gradient(52% 50% at 2% 100%, rgb(255 155 122 / 0.2), transparent 70%);
+      }
+
+      .layer {
+        position: relative;
+      }
+
+      /* Type. A card is read at thumbnail size, so the headline runs larger
+         and tighter than the page's h1 and the measure is held short. */
+      .head {
+        font-weight: 600;
+        letter-spacing: -0.028em;
+        line-height: 1.06;
+        text-wrap: balance;
+      }
+      .sub {
+        font-weight: 400;
+        line-height: 1.42;
+        letter-spacing: -0.005em;
+      }
+      .eyebrow {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .url {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-weight: 400;
+        font-size: 19px;
+        letter-spacing: 0.01em;
+      }
+
+      .wordmark {
+        display: block;
+        height: 42px;
+        width: auto;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      /* ---- A. Band ------------------------------------------------------ */
+      .v-a .head {
+        font-size: 72px;
+        max-width: 950px;
+        color: var(--paper);
+      }
+      .v-a .sub {
+        font-size: 27px;
+        color: rgb(255 255 255 / 0.88);
+        margin-top: 22px;
+      }
+      .v-a .url {
+        color: rgb(255 255 255 / 0.8);
+      }
+      .v-a .rule {
+        height: 1px;
+        background: rgb(255 255 255 / 0.35);
+        margin-bottom: 26px;
+      }
+
+      /* ---- B. Paper ----------------------------------------------------- */
+      .v-b {
+        background: var(--tint);
+        padding-bottom: 86px;
+      }
+      .v-b .head {
+        font-size: 68px;
+        max-width: 780px;
+        color: var(--ink);
+      }
+      .v-b .sub {
+        font-size: 25px;
+        max-width: 700px;
+        color: var(--muted);
+        margin-top: 26px;
+      }
+      .v-b .eyebrow {
+        color: var(--pink);
+        margin-bottom: 26px;
+      }
+      .v-b .url {
+        color: var(--muted);
+      }
+      /* The monogram as a ghost off the right edge: our own artwork standing
+         in for a photograph, at a weight that never competes with the type. */
+      .ghost {
+        position: absolute;
+        right: -118px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 560px;
+        opacity: 0.09;
+      }
+      /* The band held to a strip at the foot, the way the page ends on it. */
+      .strip {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 18px;
+        background: var(--band);
+      }
+
+      /* ---- C. Ink ------------------------------------------------------- */
+      .v-c {
+        background: var(--night);
+        padding: 52px;
+      }
+      .pane {
+        position: relative;
+        flex: 1;
+        border-radius: 28px;
+        background: rgb(255 255 255 / 0.06);
+        border: 1px solid rgb(255 255 255 / 0.12);
+        padding: 60px 64px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .v-c .head {
+        font-size: 62px;
+        max-width: 880px;
+        color: var(--paper);
+      }
+      .v-c .sub {
+        font-size: 25px;
+        color: rgb(255 255 255 / 0.66);
+        margin-top: 24px;
+      }
+      .v-c .eyebrow {
+        color: var(--primary);
+        margin-bottom: 24px;
+      }
+      .v-c .url {
+        color: rgb(255 255 255 / 0.55);
+      }
+
+      /* ---- D. Product --------------------------------------------------- */
+      .v-d {
+        background: var(--tint);
+        padding: 0;
+        display: grid;
+        grid-template-columns: 505px 695px;
+        align-items: center;
+      }
+      .v-d .copy {
+        position: relative;
+        padding: 68px 0 68px 72px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        align-items: flex-start;
+      }
+      .v-d .head {
+        font-size: 50px;
+        color: var(--ink);
+      }
+      .v-d .sub {
+        font-size: 21px;
+        color: var(--muted);
+      }
+      .v-d .url {
+        color: var(--muted);
+        font-size: 17px;
+        margin-top: 6px;
+      }
+      .v-d .stage {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+      /* The window and the phone hung off it are one object; centring the
+         wrapper rather than the window keeps the pair on the card's midline
+         instead of the window's. */
+      .v-d .cluster {
+        position: relative;
+        width: 100%;
+        height: 435px;
+      }
+      /* The pool of the band's light a frame stands in on the page. */
+      .glow {
+        position: absolute;
+        inset: -8% -14%;
+        background: radial-gradient(closest-side, rgb(255 92 108 / 0.3), rgb(255 155 122 / 0.12) 60%, transparent);
+      }
+
+      /* ---- E. Split ----------------------------------------------------- */
+      .v-e {
+        padding: 0;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 292px 338px;
+        justify-content: stretch;
+        background: var(--tint);
+      }
+      .v-e .top {
+        position: relative;
+        overflow: hidden;
+        padding: 54px 72px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .v-e .head {
+        font-size: 58px;
+        color: var(--paper);
+      }
+      .v-e .bottom {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1px 1fr;
+        padding: 46px 72px 44px;
+        gap: 52px;
+      }
+      .v-e .divider {
+        background: rgb(43 18 32 / 0.12);
+      }
+      .col-name {
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-top: 20px;
+      }
+      .col-when {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--pink);
+        margin-top: 10px;
+      }
+      .col-line {
+        font-size: 21px;
+        line-height: 1.42;
+        color: var(--muted);
+        margin-top: 16px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 999px;
+        background: rgb(255 255 255 / 0.66);
+        border: 1px solid rgb(43 18 32 / 0.1);
+        color: var(--pink);
+      }
+      .v-e .foot {
+        position: absolute;
+        right: 72px;
+        bottom: 40px;
+      }
+      .v-e .url {
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      /* ---- The frames --------------------------------------------------- */
+      /* The window and the phone in the site's idiom: bars stand for words,
+         glyphs carry meaning, and the only characters are the numerals. */
+      .window {
+        position: relative;
+        width: 500px;
+        border-radius: 20px;
+        background: rgb(255 255 255 / 0.72);
+        border: 1px solid rgb(43 18 32 / 0.1);
+        box-shadow:
+          0 2px 4px rgb(43 18 32 / 0.06),
+          0 30px 80px -20px rgb(43 18 32 / 0.3);
+        padding: 20px;
+        margin-left: 122px;
+      }
+      .win-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 2px 4px 16px;
+        border-bottom: 1px solid rgb(43 18 32 / 0.08);
+      }
+      .quote {
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+      .delta {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--up);
+      }
+      .ready {
+        margin-left: auto;
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .win-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 4px;
+        border-bottom: 1px solid rgb(43 18 32 / 0.06);
+      }
+      .win-row:last-child {
+        border-bottom: 0;
+      }
+      .kind {
+        color: var(--muted);
+        display: flex;
+      }
+      .bars {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .bar {
+        height: 7px;
+        border-radius: 4px;
+        background: rgb(43 18 32 / 0.15);
+      }
+      .bar.faint {
+        background: rgb(43 18 32 / 0.09);
+      }
+      .price {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 14px;
+        color: var(--ink);
+      }
+      .status {
+        width: 24px;
+        height: 24px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+      .status.confirmed,
+      .status.held {
+        background: rgb(31 157 99 / 0.15);
+        color: var(--up);
+      }
+      .status.pending {
+        background: rgb(43 18 32 / 0.06);
+        color: var(--muted);
+      }
+      .status.gap {
+        background: var(--primary);
+        color: var(--paper);
+      }
+      .win-row.gap .kind {
+        color: var(--primary);
+      }
+      .win-row.gap .bar {
+        background: rgb(255 92 108 / 0.3);
+      }
+
+      .phone {
+        position: absolute;
+        left: 34px;
+        bottom: -54px;
+        width: 186px;
+        border-radius: 26px;
+        padding: 8px;
+        background:
+          linear-gradient(rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.66)),
+          var(--band);
+        box-shadow:
+          0 2px 4px rgb(43 18 32 / 0.06),
+          0 30px 80px -20px rgb(43 18 32 / 0.34);
+      }
+      .screen {
+        border-radius: 19px;
+        background: rgb(255 255 255 / 0.88);
+        padding: 14px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .bubble {
+        border-radius: 12px;
+        padding: 9px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .bubble.them {
+        background: rgb(43 18 32 / 0.06);
+        margin-right: 30px;
+      }
+      .bubble.me {
+        background: var(--band);
+        margin-left: 44px;
+      }
+      .bubble.me .bar {
+        background: rgb(255 255 255 / 0.85);
+      }
+      .stella {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .stella .mark {
+        width: 16px;
+        height: 16px;
+        border-radius: 5px;
+        background: var(--band);
+        flex: none;
+      }
+      .act {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid rgb(43 18 32 / 0.08);
+        background: rgb(255 255 255 / 0.7);
+        padding: 7px 8px;
+      }
+      .act .thumb {
+        width: 30px;
+        height: 30px;
+        border-radius: 7px;
+        background: linear-gradient(160deg, #ff9b7a, #e8437e);
+        flex: none;
+      }
+      .act .price {
+        font-size: 11px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mount"></div>
+
+    <script type="module">
+      import { drawBand } from './mesh.js'
+      import { brand, variants, pages } from './copy.js'
+
+      const params = new URLSearchParams(location.search)
+      const id = params.get('v') ?? 'a'
+      const pageId = params.get('page')
+      const variant = variants[id]
+      if (!variant) throw new Error(`unknown variant "${id}"`)
+
+      /* The five options are judged on the home page's message, so the
+         variant's own copy wins unless a page is named for the rollout. */
+      const copy = pageId ? { ...variant, ...pages[pageId] } : variant
+
+      const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
+      /* Lucide at 24, stroke 2, drawn straight rather than imported: this
+         file is opened from disk with no bundler in front of it. */
+      const icon = (paths, size = 22, width = 2) =>
+        `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`
+
+      const GLYPH = {
+        stay: '<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/>',
+        transfer:
+          '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
+        flight:
+          '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+        activity: '<circle cx="12" cy="9" r="7"/><path d="M12 16v2"/><path d="M10 18h4l-.5 3h-3z"/><path d="M12 2c-3 3.5-3 10.5 0 14"/><path d="M12 2c3 3.5 3 10.5 0 14"/>',
+        gap: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+        check: '<path d="M20 6 9 17l-5-5"/>',
+        clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+        up: '<path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>',
+        plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+        engage: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+        workspace:
+          '<rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/>',
+      }
+
+      const STATUS_GLYPH = { confirmed: 'check', held: 'up', pending: 'clock', gap: 'plus' }
+
+      /* The same trip as src/components/site/frames/story.ts. */
+      const rows = [
+        { kind: 'stay', price: '£4,320', status: 'confirmed', bars: [86, 54] },
+        { kind: 'transfer', price: '£180', status: 'confirmed', bars: [66, 42] },
+        { kind: 'gap', price: '', status: 'gap', bars: [72] },
+        { kind: 'stay', price: '£5,120', status: 'pending', bars: [78, 48] },
+        { kind: 'activity', price: '£1,040', status: 'confirmed', bars: [60, 38] },
+        { kind: 'flight', price: '£580', status: 'held', bars: [70, 44] },
+      ]
+
+      const wordmark = (tone) =>
+        `<img class="wordmark" src="../../public/brand/wordmark${tone === 'paper' ? '-white' : ''}.svg" alt="Tripcerto" />`
+
+      const bars = (widths, faintFrom = 1) =>
+        `<div class="bars">${widths
+          .map((w, i) => `<div class="bar${i >= faintFrom ? ' faint' : ''}" style="width:${w}%"></div>`)
+          .join('')}</div>`
+
+      const windowFrame = () => `
+        <div class="window">
+          <div class="win-head">
+            <span class="quote">£11,240</span>
+            <span class="delta">+12%</span>
+            <span class="ready">86% ready</span>
+          </div>
+          ${rows
+            .map(
+              (r) => `
+            <div class="win-row${r.kind === 'gap' ? ' gap' : ''}">
+              <span class="kind">${icon(GLYPH[r.kind], 18, 1.9)}</span>
+              ${bars(r.bars)}
+              <span class="price">${r.price}</span>
+              <span class="status ${r.status}">${icon(GLYPH[STATUS_GLYPH[r.status]], 13, 2.6)}</span>
+            </div>`,
+            )
+            .join('')}
+        </div>`
+
+      const phoneFrame = () => `
+        <div class="phone">
+          <div class="screen">
+            <div class="bubble them">${bars([88, 52], 1)}</div>
+            <div class="bubble me">${bars([80, 58], 9)}</div>
+            <div class="stella"><span class="mark"></span>${bars([72], 9)}</div>
+            <div class="act"><span class="thumb"></span>${bars([74, 46])}<span class="price">£520</span></div>
+            <div class="act"><span class="thumb"></span>${bars([64, 40])}<span class="price">£180</span></div>
+          </div>
+        </div>`
+
+      const TEMPLATES = {
+        /* A. The hero: the band, the mark, the headline, nothing else. */
+        a: () => `
+          <div class="card v-a">
+            <div class="ground" id="band"><div></div></div>
+            <div class="layer row"><div>${wordmark('paper')}</div></div>
+            <div class="layer">
+              <h1 class="head">${esc(copy.head)}</h1>
+              ${copy.sub ? `<p class="sub">${esc(copy.sub)}</p>` : ''}
+            </div>
+            <div class="layer">
+              <div class="rule"></div>
+              <div class="row"><span class="url">${brand.site}</span></div>
+            </div>
+          </div>`,
+
+        /* B. The light page: type on cream, the band kept to the foot. */
+        b: () => `
+          <div class="card v-b">
+            <div class="wash-day"></div>
+            <img class="ghost" src="../../public/brand/monogram.svg" alt="" />
+            <div class="layer row">
+              ${wordmark('ink')}
+              <span class="url">${brand.site}</span>
+            </div>
+            <div class="layer">
+              ${copy.eyebrow ? `<p class="eyebrow">${esc(copy.eyebrow)}</p>` : ''}
+              <h1 class="head">${esc(copy.head)}</h1>
+              ${copy.sub ? `<p class="sub">${esc(copy.sub)}</p>` : ''}
+            </div>
+            <div class="strip"></div>
+          </div>`,
+
+        /* C. Dark mode: smoked glass on ink under a wash of the band. */
+        c: () => `
+          <div class="card v-c">
+            <div class="wash-night"></div>
+            <div class="pane">
+              <div class="row">${wordmark('paper')}</div>
+              <div>
+                ${copy.eyebrow ? `<p class="eyebrow">${esc(copy.eyebrow)}</p>` : ''}
+                <h1 class="head">${esc(copy.head)}</h1>
+                ${copy.sub ? `<p class="sub">${esc(copy.sub)}</p>` : ''}
+              </div>
+              <div class="row"><span class="url">${brand.site}</span></div>
+            </div>
+          </div>`,
+
+        /* D. The software itself, in the frames the site draws it with. */
+        d: () => `
+          <div class="card v-d">
+            <div class="wash-day"></div>
+            <div class="layer copy">
+              ${wordmark('ink')}
+              <h1 class="head">${esc(copy.head)}</h1>
+              ${copy.sub ? `<p class="sub">${esc(copy.sub)}</p>` : ''}
+              <span class="url">${brand.site}</span>
+            </div>
+            <div class="layer stage">
+              <div class="glow"></div>
+              <div class="layer cluster">${windowFrame()}${phoneFrame()}</div>
+            </div>
+          </div>`,
+
+        /* E. Two products, two jobs, as the whole card. */
+        e: () => `
+          <div class="card v-e">
+            <div class="top">
+              <div class="ground" id="band"><div></div></div>
+              <div class="layer row">${wordmark('paper')}</div>
+              <h1 class="layer head">${esc(copy.head)}</h1>
+            </div>
+            <div class="bottom">
+              <div class="wash-day"></div>
+              ${(copy.columns ?? [])
+                .map(
+                  (c, i) => `
+                  <div class="layer" style="grid-column:${i === 0 ? 1 : 3}">
+                    <span class="chip">${icon(GLYPH[i === 0 ? 'engage' : 'workspace'], 24, 2)}</span>
+                    <p class="col-name">${esc(c.name)}</p>
+                    <p class="col-when">${esc(c.when)}</p>
+                    <p class="col-line">${esc(c.line)}</p>
+                  </div>`,
+                )
+                .join('')}
+              <div class="layer divider" style="grid-column:2"></div>
+              <div class="layer foot"><span class="url">${brand.site}</span></div>
+            </div>
+          </div>`,
+      }
+
+      document.getElementById('mount').innerHTML = TEMPLATES[id]()
+
+      /* Fixed seed and phase: a file checked into public/ must come out the
+         same on every run. */
+      const band = document.getElementById('band')
+      if (band) drawBand(band.firstElementChild, { seed: [37.2, 11.8], bias: -0.06, time: 63, warp: 0.26 })
+
+      /* The shooter waits on this: fonts measured, artwork decoded, band drawn. */
+      window.cardReady = Promise.all([
+        document.fonts.ready,
+        ...[...document.images].map((img) => (img.complete ? null : new Promise((r) => (img.onload = img.onerror = r)))),
+      ])
+    </script>
+  </body>
+</html>
