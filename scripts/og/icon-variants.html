@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <title>App icon variants</title>
+    <!--
+      One app icon, drawn to order, for build-icons.mjs and the review sheets.
+
+      GROUND — ?g=
+        coral   the flat primary the set shipped before
+        band    the Ember ramp as a still gradient, at the page's 100deg
+        mesh    that ramp warped by the hero's own shader
+
+      SHAPE — ?shape=
+        square  the ground fills the whole canvas, corner to corner. This is
+                what every raster icon uses, because iOS and Android round and
+                mask their own way, and a pre-rounded tile is either rounded
+                twice or shows its corners against the OS background. It
+                matches the set that shipped, whose corner pixel is brand
+                colour rather than white.
+        tile    the artwork's own rounded tile, for the vector favicon and the
+                ICO, where nothing masks on our behalf. Pair it with a
+                transparent screenshot so the corners come out empty.
+
+      MARK — ?mark=<fraction of the canvas width>
+        0.76 is the tight crop the full-bleed icons use. 0.56 is the maskable
+        one: Android crops a manifest icon to a circle of 80% of the image, so
+        the monogram must sit inside that circle while the GROUND still reaches
+        all four edges.
+
+      SHADER — ?scale ?warp ?bias ?time, plus ?blur ?sat
+        The shader defaults are the HERO's. The noise coordinate is normalised
+        by the box's LONGER side, so scale counts folds across that side and
+        the count owes nothing to the pixel count. A square tile still takes
+        more of the field than a 16:9 band — 4.7 by 4.7 cells against 4.7 by
+        2.7 — and it is then met at 60px rather than 1400. Lowering scale is
+        the lever that settles it. blur and sat apply to the mesh BEFORE it is
+        clipped, so the icon's edge stays crisp while its contents soften.
+
+      ?s=<px> sizes the canvas.
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+      #tile {
+        position: relative;
+        overflow: hidden;
+      }
+      svg {
+        position: absolute;
+        inset: 0;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="tile"></div>
+    <script type="module">
+      import { drawBand } from './mesh.js'
+
+      const q = new URLSearchParams(location.search)
+      const num = (k, fallback) => (q.has(k) ? Number(q.get(k)) : fallback)
+
+      const ground = q.get('g') ?? 'coral'
+      const shape = q.get('shape') ?? 'square'
+      const size = num('s', 512)
+      const markWidth = num('mark', 0.76)
+      const shader = { scale: num('scale', 4.7), warp: num('warp', 0.26), bias: num('bias', -0.06), time: num('time', 63) }
+      const blurPx = num('blur', 0)
+      const saturatePct = num('sat', 100)
+
+      const CORAL = '#FF5C6C'
+      const BAND = ['#E8437E', '#FF5C6C', '#FF9B7A']
+      const PAPER = '#FFFFFF'
+
+      const load = async (file) => {
+        const text = await (await fetch(`../../public/brand/${file}`)).text()
+        const vb = text.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number)
+        return { d: text.match(/<path[^>]*\sd="([^"]+)"/)[1], vb, w: vb[2], h: vb[3] }
+      }
+      const appicon = await load('appicon.svg')
+      const monogram = await load('monogram.svg')
+      const vw = appicon.w
+
+      document.documentElement.style.width = `${size}px`
+      document.documentElement.style.height = `${size}px`
+      const host = document.getElementById('tile')
+      host.style.width = `${size}px`
+      host.style.height = `${size}px`
+
+      /* The monogram centred at a fraction of the canvas, in the app icon's
+         coordinate system. Its own viewBox has a negative origin, so the
+         translate cancels that before centring. */
+      const mark = (fill) => {
+        const mw = vw * markWidth
+        const mh = (mw / monogram.w) * monogram.h
+        const tx = (vw - mw) / 2 - (monogram.vb[0] * mw) / monogram.w
+        const ty = (vw - mh) / 2 - (monogram.vb[1] * mh) / monogram.h
+        return `<g transform="translate(${tx} ${ty}) scale(${mw / monogram.w})"><path d="${monogram.d}" fill="${fill}"/></g>`
+      }
+
+      const stops = BAND.map((c, i) => `<stop offset="${i / (BAND.length - 1)}" stop-color="${c}"/>`).join('')
+      /* A CSS angle of 100deg across a square box puts the gradient line here. */
+      const ramp = `<linearGradient id="ramp" x1="-0.071" y1="0.399" x2="1.071" y2="0.601">${stops}</linearGradient>`
+      const open = (defs) => `<svg width="${size}" height="${size}" viewBox="0 0 ${vw} ${vw}"><defs>${defs}</defs>`
+
+      if (ground === 'mesh') {
+        /* The shader cannot paint an SVG path, so it is drawn to a canvas and
+           read back as an image. The seed matches scripts/og/card.html, so the
+           icon and the social card show the same piece of band. */
+        const stage = document.createElement('div')
+        stage.style.cssText = `position:absolute;left:-9999px;width:${size}px;height:${size}px`
+        document.body.appendChild(stage)
+        const drawn = drawBand(stage, { seed: [37.2, 11.8], ...shader, pixelRatio: 3 })
+        const href = drawn ? stage.querySelector('canvas').toDataURL('image/png') : ''
+        stage.remove()
+        if (!drawn) throw new Error('icon-variants: the shader did not run, so the icon would be a flat fill')
+
+        /* SVG runs a filter before a clip-path, which is the order wanted: the
+           mesh softens, the icon's edge does not. The image is drawn oversize
+           so the blur pulls from real pixels rather than fading out at the
+           border. */
+        const blurUnits = (blurPx / 512) * vw
+        const bleed = blurUnits * 3
+        const softened = blurPx > 0 || saturatePct !== 100
+        const filterDef = softened
+          ? `<filter id="soft" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">${
+              blurPx > 0 ? `<feGaussianBlur stdDeviation="${blurUnits.toFixed(3)}"/>` : ''
+            }${saturatePct !== 100 ? `<feColorMatrix type="saturate" values="${(saturatePct / 100).toFixed(3)}"/>` : ''}</filter>`
+          : ''
+
+        const image = `<image href="${href}" x="${-bleed}" y="${-bleed}" width="${vw + bleed * 2}" height="${
+          vw + bleed * 2
+        }" preserveAspectRatio="xMidYMid slice"${softened ? ' filter="url(#soft)"' : ''}/>`
+
+        host.innerHTML =
+          shape === 'tile'
+            ? /* The tile path's even-odd rule IS the knockout: clipping to it
+                 leaves the tc empty, and the corners empty with it. */
+              `${open(
+                `${filterDef}<clipPath id="cut" clipPathUnits="userSpaceOnUse"><path d="${appicon.d}" clip-rule="evenodd"/></clipPath>`,
+              )}<g clip-path="url(#cut)">${image}</g></svg>`
+            : `${open(
+                `${filterDef}<clipPath id="sq" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="${vw}" height="${vw}"/></clipPath>`,
+              )}<g clip-path="url(#sq)">${image}</g>${mark(PAPER)}</svg>`
+      } else {
+        const paint = ground === 'coral' ? CORAL : 'url(#ramp)'
+        host.innerHTML =
+          shape === 'tile'
+            ? `${open(ramp)}<path d="${appicon.d}" fill="${paint}" fill-rule="evenodd"/></svg>`
+            : `${open(ramp)}<rect x="0" y="0" width="${vw}" height="${vw}" fill="${paint}"/>${mark(PAPER)}</svg>`
+      }
+
+      window.cardReady = Promise.all(
+        [...document.images].map((i) => (i.complete ? null : new Promise((r) => (i.onload = i.onerror = r)))),
+      )
+    </script>
+  </body>
+</html>
