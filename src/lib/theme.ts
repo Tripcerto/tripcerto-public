@@ -1,58 +1,50 @@
-import { useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 export type Theme = 'light' | 'dark'
 
-const STORAGE_KEY = 'tripcerto-theme'
-// Kept in sync with the cream/espresso --bg tokens in index.css so the browser
-// chrome (address bar / PWA splash) matches the active theme.
-const THEME_COLOR: Record<Theme, string> = { light: '#f4ecdf', dark: '#14110c' }
+const KEY = 'theme'
+const query = () => window.matchMedia('(prefers-color-scheme: dark)')
 
-function readInitial(): Theme {
-  // The pre-paint script in index.html has already resolved + stamped the theme
-  // onto <html data-theme>, so trust that first (it ran before React mounted).
-  if (typeof document !== 'undefined') {
-    const stamped = document.documentElement.dataset.theme
-    if (stamped === 'dark' || stamped === 'light') return stamped
-  }
-  return 'light'
+/* The system decides unless <html> carries a choice. index.html applies the
+   stored choice before first paint, so this only has to read it. */
+export function resolvedTheme(): Theme {
+  const root = document.documentElement.classList
+  if (root.contains('dark')) return 'dark'
+  if (root.contains('light')) return 'light'
+  return query().matches ? 'dark' : 'light'
 }
 
-let current: Theme = readInitial()
-const listeners = new Set<() => void>()
-
-function emit(): void {
-  for (const l of listeners) l()
-}
-
-export function setTheme(next: Theme): void {
-  current = next
-  if (typeof document !== 'undefined') {
-    document.documentElement.dataset.theme = next
-    const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', THEME_COLOR[next])
-  }
+function choose(theme: Theme) {
+  const root = document.documentElement.classList
+  root.remove('dark', 'light')
+  root.add(theme)
   try {
-    localStorage.setItem(STORAGE_KEY, next)
+    localStorage.setItem(KEY, theme)
   } catch {
-    // private mode / storage disabled — theme still applies for this session
+    /* Private mode or blocked storage: the choice lasts for the page. */
   }
-  emit()
 }
 
-export function toggleTheme(): void {
-  setTheme(current === 'dark' ? 'light' : 'dark')
-}
-
-function subscribe(cb: () => void): () => void {
-  listeners.add(cb)
-  return () => listeners.delete(cb)
-}
-
-function getSnapshot(): Theme {
-  return current
-}
-
-export function useTheme(): { theme: Theme; toggle: () => void; setTheme: (t: Theme) => void } {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, () => 'light' as Theme)
-  return { theme, toggle: toggleTheme, setTheme }
+/* Switching cross-fades the whole page where the browser can snapshot it
+   for a view transition; otherwise the colours simply change. */
+export function useTheme(): [Theme, () => void] {
+  const [theme, setTheme] = useState<Theme>(resolvedTheme)
+  useEffect(() => {
+    const media = query()
+    const onChange = () => setTheme(resolvedTheme())
+    media.addEventListener('change', onChange)
+    return () => media.removeEventListener('change', onChange)
+  }, [])
+  const toggle = useCallback(() => {
+    const next: Theme = resolvedTheme() === 'dark' ? 'light' : 'dark'
+    const apply = () => {
+      choose(next)
+      flushSync(() => setTheme(next))
+    }
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (still || typeof document.startViewTransition !== 'function') apply()
+    else document.startViewTransition(apply)
+  }, [])
+  return [theme, toggle]
 }
