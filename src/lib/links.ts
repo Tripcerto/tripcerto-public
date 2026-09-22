@@ -20,7 +20,6 @@ export const NAV_LINKS = [
 ] as const
 
 export const SECTION = {
-  products: 'products',
   opportunity: 'opportunity',
   engage: 'engage',
   workspace: 'workspace',

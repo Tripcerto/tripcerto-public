@@ -16,8 +16,9 @@ export function HeroFlow() {
             className="absolute inset-x-0 top-0 bottom-16 mask-b-from-85% md:bottom-28"
             colours={FLOW_COLOURS}
             opacity={FLOW_OPACITY}
-            lineWidth={1.8}
-            blur={2.5}
+            lineWidth={1.5}
+            glow={6}
+            glowOpacity={0.7}
             lineCount={120}
             mobileLineCount={56}
             parallax={8}

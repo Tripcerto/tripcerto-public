@@ -9,7 +9,7 @@ import { WorkspacePlaceholder } from '@/components/site/frames/WorkspacePlacehol
 import { home } from '@/content/home'
 import { DEMO_URL, SECTION } from '@/lib/links'
 
-const PRODUCTS_HREF = `#${SECTION.products}`
+const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 
 /* three.js is most of the bundle; the copy paints first and the waves follow. */
 const FloatingLines = lazy(() =>
@@ -98,7 +98,7 @@ export function Hero({ background = <Waves /> }: HeroProps) {
                 </a>
               </Button>
               <a
-                href={PRODUCTS_HREF}
+                href={HOW_IT_WORKS_HREF}
                 className="inline-flex min-h-11 items-center gap-1 font-semibold text-primary-deep"
               >
                 {home.hero['H-1-D']}

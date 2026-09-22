@@ -7,7 +7,7 @@ import { PAGES, SECTION } from '@/lib/links'
 
 export function EngageSection() {
   return (
-    <Section id={SECTION.engage}>
+    <Section id={SECTION.engage} className="pt-4 md:pt-8">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div>
           <Eyebrow>Engage</Eyebrow>

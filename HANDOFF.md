@@ -43,12 +43,25 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   right under mirror), no middle wave, `swirl` 0, `mirror` on, `sameDirection`.
   Current path: both bands enter from the left, one near the top running
   shallow, one at the upper middle running 30 degrees through the phone's base.
-- Three candidates behind `?hero=`, wired in
+- Four candidates behind `?hero=`, wired in
   `src/components/site/hero-variants/pick.ts`: `lines` (SVG, true parallel
   offsets of one master curve, seamless drift, geometry test),
-  `flow` (canvas streamlines of a seeded noise field, `blur` prop),
-  `threads` (React Bits Threads on ogl, transparent, `lineBlur` and `distance`).
-  Each is `<Hero background={...} />` plus a helper under `src/components/ui/`.
+  `flow` (canvas streamlines of a seeded noise field; `glow` and `glowOpacity`
+  draw an in-canvas halo under each line, because a CSS blur on the canvas
+  rasterised coarsely and Taylor read it as pixelated),
+  `threads` (React Bits Threads on ogl, transparent, `lineBlur` and `distance`),
+  `band` (`HeroBand.tsx`, its own layout: the whole hero is an Ember gradient
+  band, pink to cream to white, lit by drifting radial lights and the
+  FloatingLines shader in screen-blended glow mode; the headline is
+  `text-inked` multiplied into the band; the Workspace window is glass with a
+  translucent Stella pane and runs off the right edge, the phone in front).
+  The first three are `<Hero background={...} />` plus a helper under
+  `src/components/ui/`. On 22 Sep pm Taylor said of `band`: "This is getting
+  close. I like this." It was built to his Stripe-home reference; he asked
+  for the whole hero coloured (no diagonal), lighter, then no orange.
+- The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
+  Engage and Workspace sit straight under the hero, Opportunity follows them.
+  "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
   `// changed`. H-1-A is "Travel AI that turns research into bookings" (Taylor).
   The pill string was deleted at his request.

@@ -45,7 +45,7 @@ export function Footer() {
     <footer>
       <Section tone="ink" className="py-16 md:py-16">
         <Wordmark tone="paper" className="h-6" />
-        <p className="mt-4 max-w-xs text-sm text-paper/60">{home.products['H-3-A']}</p>
+        <p className="mt-4 max-w-xs text-sm text-paper/60">{home.hero['H-1-A']}</p>
 
         <div className="mt-12 grid gap-8 sm:grid-cols-3">
           {COLUMNS.map((column) => (

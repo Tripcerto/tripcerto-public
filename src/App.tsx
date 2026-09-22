@@ -1,6 +1,5 @@
 import { Nav } from '@/components/site/Nav'
 import { pickHero } from '@/components/site/hero-variants/pick'
-import { Products } from '@/components/site/Products'
 import { Opportunity } from '@/components/site/Opportunity'
 import { EngageSection } from '@/components/site/EngageSection'
 import { WorkspaceSection } from '@/components/site/WorkspaceSection'
@@ -22,10 +21,9 @@ export function App() {
       <Nav />
       <main>
         <Hero />
-        <Products />
-        <Opportunity />
         <EngageSection />
         <WorkspaceSection />
+        <Opportunity />
         <Audience />
         <Proof />
         <Close />

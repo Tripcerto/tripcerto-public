@@ -23,8 +23,10 @@ export interface FlowFieldProps {
   opacity?: readonly [number, number]
   /* Stroke width in CSS px. */
   lineWidth?: number
-  /* Gaussian blur over the drawn field in CSS px; 0 is crisp. */
-  blur?: number
+  /* Radius of the soft halo under each line in CSS px; 0 draws crisp lines only. */
+  glow?: number
+  /* Opacity of the halo relative to the line it sits under. */
+  glowOpacity?: number
   lineCount?: number
   /* Lines under 768px. */
   mobileLineCount?: number
@@ -36,17 +38,21 @@ export interface FlowFieldProps {
 /* Streamlines of a seeded simplex flow field, composed once per size on a 2D
    canvas and redrawn at most 24 times a second through a slow, low-frequency
    warp of the rest points, so the family drifts without ever losing the
-   spacing it was composed with. The pointer, read from the window because
-   the copy sits over the layer, eases the whole canvas a few pixels; the
-   canvas is drawn that much larger than its box so no edge shows. Reduced
-   motion gets one still frame, the loop runs only on screen, phones get no
-   pointer behaviour, and no 2D context means no canvas at all. */
+   spacing it was composed with. Each frame strokes the family crisp on a
+   scratch canvas and composites it twice: once through a Gaussian blur at
+   reduced alpha for the halo, then unfiltered on top for the line, so each
+   line glows at full raster resolution. The pointer, read from the
+   window because the copy sits over the layer, eases the whole canvas a few
+   pixels; the canvas is drawn that much larger than its box so no edge
+   shows. Reduced motion gets one still frame, the loop runs only on screen,
+   phones get no pointer behaviour, and no 2D context means no canvas at all. */
 export function FlowField({
   className,
   colours = EMBER_RAMP,
   opacity = DEFAULT_OPACITY,
   lineWidth = 1.3,
-  blur = 0,
+  glow = 0,
+  glowOpacity = 0.6,
   lineCount = 120,
   mobileLineCount = 56,
   parallax = 8,
@@ -61,7 +67,10 @@ export function FlowField({
 
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const scratch = document.createElement('canvas')
+    const scratchCtx = scratch.getContext('2d')
+    if (!ctx || !scratchCtx) return
+    const haloed = glow > 0 && 'filter' in ctx
 
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
     const finePointer = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches ?? false
@@ -72,7 +81,6 @@ export function FlowField({
     canvas.style.top = `${-margin}px`
     canvas.style.left = `${-margin}px`
     canvas.style.display = 'block'
-    if (blur > 0) canvas.style.filter = `blur(${blur}px)`
     if (pointerActive) canvas.style.willChange = 'transform'
     container.appendChild(canvas)
 
@@ -92,9 +100,20 @@ export function FlowField({
 
     const draw = (now: number) => {
       if (!composition) return
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, composition.width, composition.height)
-      paintField(ctx, composition, phase(now), lineWidth)
+      scratchCtx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      scratchCtx.clearRect(0, 0, composition.width, composition.height)
+      paintField(scratchCtx, composition, phase(now), lineWidth)
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      if (haloed) {
+        ctx.filter = `blur(${glow * dpr}px)`
+        ctx.globalAlpha = glowOpacity
+        ctx.drawImage(scratch, 0, 0)
+        ctx.filter = 'none'
+        ctx.globalAlpha = 1
+      }
+      ctx.drawImage(scratch, 0, 0)
     }
 
     const setSize = () => {
@@ -112,6 +131,8 @@ export function FlowField({
 
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
+      scratch.width = canvas.width
+      scratch.height = canvas.height
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
 
@@ -182,7 +203,7 @@ export function FlowField({
       if (pointerActive) window.removeEventListener('pointermove', handlePointerMove)
       canvas.remove()
     }
-  }, [colours, opacity, lineWidth, blur, lineCount, mobileLineCount, parallax, seed])
+  }, [colours, opacity, lineWidth, glow, glowOpacity, lineCount, mobileLineCount, parallax, seed])
 
   return <div ref={containerRef} aria-hidden className={cn('pointer-events-none relative overflow-hidden', className)} />
 }

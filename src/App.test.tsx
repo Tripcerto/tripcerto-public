@@ -64,7 +64,6 @@ describe('home page', () => {
   it('renders every section heading from the copy file', () => {
     render(<App />)
     for (const text of [
-      home.products['H-3-A'],
       home.opportunity['H-2-A'],
       home.engage['H-4-A'],
       home.workspace['H-5-A'],
@@ -82,7 +81,6 @@ describe('home page', () => {
     for (const re of BANNED) expect(text).not.toMatch(re)
     const headlines = [
       home.hero['H-1-A'],
-      home.products['H-3-A'],
       home.opportunity['H-2-A'],
       home.engage['H-4-A'],
       home.workspace['H-5-A'],

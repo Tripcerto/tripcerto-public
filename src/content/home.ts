@@ -13,21 +13,6 @@ export const home = {
     'H-1-D': 'See how it works',
     caption: 'The conversation, and the brief it produced.',
   },
-  products: {
-    'H-3-A': 'Two products for the work before and after the inquiry',
-    'H-3-B':
-      'Engage works on the website. Workspace works with the expert. Together they carry the customer’s context from one to the other.', // changed
-    engage: {
-      eyebrow: 'Engage · before the inquiry',
-      title: 'Deeper insight from every website visitor',
-      line: 'Engage answers travellers in your voice, from your products, and records what they want. Sales starts with the full brief instead of a thin form.',
-    },
-    workspace: {
-      eyebrow: 'Workspace · after the inquiry',
-      title: 'The quote, structured before your expert starts',
-      line: 'Workspace turns the customer’s requirements into an itemised trip, resolves it against your inventory and flags what is missing before anything goes out.',
-    },
-  },
   opportunity: {
     'H-2-A': 'Customer context carries from the first question to the final quote', // changed
     'H-2-B':
