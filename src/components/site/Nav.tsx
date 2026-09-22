@@ -8,7 +8,6 @@ import { useTheme } from '@/lib/theme'
 import { cn } from '@/lib/utils'
 
 const MENU_ID = 'site-menu'
-const NAV_HEIGHT = 72
 
 export function Nav() {
   const [open, setOpen] = useState(false)
@@ -19,23 +18,38 @@ export function Nav() {
   const [overBand, setOverBand] = useState(false)
   const [theme, toggleTheme] = useTheme()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const barRef = useRef<HTMLElement>(null)
 
+  /* Over a band means a band section is under the bar's midline: measured
+     against the bar on every scroll, not "somewhere in the viewport", which
+     is what an intersection observer answers. Switching at the midline
+     keeps the flip to the moment the seam passes the copy. */
   useEffect(() => {
-    const bands = document.querySelectorAll<HTMLElement>('[data-band]')
-    if (!bands.length) return
-    const under = new Set<Element>()
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) under.add(entry.target)
-          else under.delete(entry.target)
-        }
-        setOverBand(under.size > 0)
-      },
-      { rootMargin: `-${NAV_HEIGHT}px 0px 0px 0px` },
-    )
-    bands.forEach((band) => observer.observe(band))
-    return () => observer.disconnect()
+    const bands = Array.from(document.querySelectorAll<HTMLElement>('[data-band]'))
+    const bar = barRef.current
+    if (!bands.length || !bar) return
+    let frame = 0
+    const measure = () => {
+      frame = 0
+      const mid = bar.offsetHeight / 2
+      setOverBand(
+        bands.some((band) => {
+          const rect = band.getBoundingClientRect()
+          return rect.top <= mid && rect.bottom >= mid
+        }),
+      )
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure)
+    }
+    measure()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   useEffect(() => {
@@ -62,6 +76,7 @@ export function Nav() {
 
   return (
     <header
+      ref={barRef}
       className={cn(
         'fixed inset-x-0 top-0 z-50 border-b bg-glass backdrop-blur-2xl backdrop-saturate-150',
         overBand ? 'border-white/40' : 'border-line',

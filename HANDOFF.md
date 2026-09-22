@@ -215,7 +215,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 | 4 | Animate Engage → Workspace → Booked with the lines drawing and the tick popping, same pace as the frames | built, then rejected ("too big, too clunky"); removed with the pills |
 | 5 | Footer more compact, drop the tagline | done; then "squashed too much": pages left, legal right, email under the links, copyright last |
 | 6 | Opportunity rethought: no pills, no lines, no animation, clearer text | three ruled columns of type: before the inquiry / after the inquiry / the outcome |
-| 7 | Nav goes paper over the Close band as it does over the hero | done: `data-band` on both, the nav observes every band |
+| 7 | Nav goes paper over the Close band as it does over the hero | done: `data-band` on both. First cut used an IntersectionObserver, which flipped the bar as soon as the band was anywhere in the viewport ("completely illegible"); now measured against the bar's midline on scroll |
 | 8 | Close headline "We find where our AI has the most effect in your business, then prove it there"; only the headline and two buttons (demo, pilot) | done |
 | 9 | Charlie's documents are guidelines for the register, not copy to lift | noted; no line is quoted from them |
 | 10 | Frames in the Engage and Workspace sections replay their choreography when scrolled into view (`Reveal`) | built alongside 4, not yet reviewed by Taylor |
