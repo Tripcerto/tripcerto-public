@@ -302,20 +302,23 @@ without a new ask from him.
 
 ## The link-preview card (22 Sep, late; Taylor signed it off: "this is the one")
 
-- ONE card for the whole site: `public/og-image.png`, 1200x630, served by every
-  page. Taylor asked for exactly one and rejected a card per page: "I want the
-  one that says we make complex travel easier to plan and sell... that's the
-  only one I want."
-- `node scripts/og/shoot.mjs --pick a` writes it. Then bump the `?v=` on every
-  page's `og:image` and `twitter:image` so the networks refetch. The generator
-  can also write per-page cards; do not, unless Taylor asks.
-- The composition, his, after three passes: the Ember band, the wordmark, the
-  homepage headline at 55px on a 540px measure, its line under it at 23px, and
-  the monogram as a white ghost, 700px wide at 0.24, off the right edge by
-  24px. Do not enlarge the type or fade the mark without a new ask.
-- It is in the brand kit under 02 The band, as "The link preview", rendered at
-  build time from `scripts/og/card.html` so the document cannot drift from the
-  file. `scripts/brand/render.mjs` grew a `card` job for it.
+- ONE card for the whole site: `public/og-image.png`, a 1200x630 card shot at
+  2x (2400x1260 pixels), served by every page. Taylor asked for exactly one and
+  rejected a card per page: "I want the one that says we make complex travel
+  easier to plan and sell... that's the only one I want."
+- `node scripts/og/shoot.mjs --pick a` writes that one file and nothing else.
+  Then bump the `?v=` on every page's `og:image` and `twitter:image` so the
+  networks refetch (at `?v=12` since the centred card).
+- The composition, his, after four passes: the Ember band, the wordmark, the
+  homepage headline alone at 55px on a 540px measure, centred on the card's
+  height, and the monogram as a white ghost, 700px wide at 0.34, off the right
+  edge by 24px. The line under the headline went on his word (22 Sep, late:
+  "drop the subtext. centre the headline"). Do not enlarge the type, put a
+  line back under it or fade the mark without a new ask.
+- It is in the brand kit under 01 Logo, straight after the app icon at its
+  sizes, as "The link preview", rendered at build time from
+  `scripts/og/card.html` so the document cannot drift from the file.
+  `scripts/brand/render.mjs` grew a `card` job for it.
 - What it replaced: a black Harbour-era wordmark card reading "Agentic AI for
   Travel Recommendations" that every page shared and no alt text described.
 

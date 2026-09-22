@@ -319,6 +319,19 @@ The app icon is that monogram cut out of a tile, on the band.</p>
   <figure>${use(monogram, { fill: INK, height: 24 })}<figcaption>mono 24</figcaption></figure>
 </div>
 
+<h3>The link preview</h3>
+<p>The card every share of tripcerto.com shows, in a message, a post or a chat. One card for the
+whole site: the wordmark, the homepage headline alone and centred, and the monogram carrying it,
+all on the band. Rendered here from the same file the site serves.</p>
+<div class="card"><img src="${art.card}" width="1200" height="630" alt="" style="width:100%;height:auto;display:block;border-radius:6px"></div>
+${rows([
+  ['The file', `${w('public/og-image.png')}, a 1200 × 630 card shot at 2×, so 2400 × 1260 pixels, served to every page.`],
+  ['Rebuild it', `${w('node scripts/og/shoot.mjs --pick a')}, then bump the ${w('?v=')} on every page's og:image and twitter:image so the networks refetch it.`],
+  ['The type', 'The headline at 55px on a 540px measure, centred on the card’s height, and nothing under it. Short enough that the mark is never crowded.'],
+  ['The mark', 'The monogram, white at 0.34, 700px wide, off the right edge by 24px. It is the card; do not fade it back.'],
+  ['Never', 'A second card per page, a line of copy under the headline, a photograph behind the type, or a headline long enough to run into the mark.'],
+])}
+
 <h3>Rules</h3>
 ${rows([
   ['Primary identifier', 'The wordmark. The monogram is for compact use only, never where the wordmark fits.'],
@@ -380,19 +393,6 @@ ${rows([
   ['Dark mode', 'An ink wash at 55% over the live mesh, so the band sits with the dark page instead of glowing off it.'],
   ['Copy on it', 'White, and nothing smaller than a lede. White on the band is 3.00:1.'],
   ['Never', 'The band is a ground, not a fill. It does not go inside a mark, a letterform or a glyph. Do not restop it, add to it, or reverse it: the direction is pink to peach.'],
-])}
-
-<h3>The link preview</h3>
-<p>The card every share of tripcerto.com shows, in a message, a post or a chat. One card for the
-whole site, on the band, with the monogram carrying it and the homepage line held to a short
-column. Rendered here from the same file the site serves.</p>
-<div class="card"><img src="${art.card}" width="1200" height="630" alt="" style="width:100%;height:auto;display:block;border-radius:6px"></div>
-${rows([
-  ['The file', `${w('public/og-image.png')} at 1200 × 630, served to every page.`],
-  ['Rebuild it', `${w('node scripts/og/shoot.mjs --pick a')}, then bump the ${w('?v=')} on every page's og:image and twitter:image so the networks refetch it.`],
-  ['The type', 'The headline at 55px on a 540px measure, its line under it at 23px. Short enough that the mark is never crowded.'],
-  ['The mark', 'The monogram, white at 0.24, 700px wide, off the right edge by 24px. It is the card; do not fade it back.'],
-  ['Never', 'A second card per page, a photograph behind the type, or a headline long enough to run into the mark.'],
 ])}
 </section>
 

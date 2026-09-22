@@ -7,8 +7,8 @@
    the outcome, never the category. "The intelligence layer for travel" and
    its relatives are the thing this file exists to keep off the cards.
 
-   `variants` are the five designs. `pages` is the per-page copy the chosen
-   design is rendered with for all five entries. */
+   `variants` are the five designs. `pages` is each page's copy for the
+   preview sheet; the site serves one card, the home entry of variant a. */
 
 export const brand = {
   site: 'tripcerto.com',
@@ -21,9 +21,7 @@ export const variants = {
     note: 'The hero itself: the Ember band under the signed-off headline.',
     theme: 'band',
     head: 'We make complex travel easier to plan and sell',
-    // signed: home.hero['H-1-A']
-    sub: 'Engage before the inquiry. Workspace after it.',
-    // from: home.opportunity['H-2-B']
+    // signed: home.hero['H-1-A']. The headline stands alone; no sub.
   },
   b: {
     name: 'Paper',
@@ -76,13 +74,13 @@ export const variants = {
   },
 }
 
-/* Per-page copy for the rollout. Each entry's `head` is that page's own hero
-   string; `sub` is cut to card length. */
+/* Per-page copy for the preview sheet. Each entry's `head` is that page's own
+   hero string; `sub` is cut to card length. Only `home` ships, as
+   public/og-image.png, and it carries the headline alone. */
 export const pages = {
   home: {
     eyebrow: 'Engage · Workspace',
     head: 'We make complex travel easier to plan and sell',
-    sub: 'Engage records what each website visitor wants. Workspace builds the quote structure from it.',
   },
   engage: {
     eyebrow: 'Engage',
