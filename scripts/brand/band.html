@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Band strip</title>
+    <!--
+      Draws the band into a box of the asked size, for the brand kit's stills.
+
+      ?w ?h size the box. ?o is the drawBand options object as JSON, so a
+      still in the document can be reproduced exactly: the shader takes the
+      seed, bias, angle and time as arguments here rather than rolling them,
+      which is what lets the same picture come back on every build.
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+      #band {
+        position: absolute;
+        inset: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="band"></div>
+    <script type="module">
+      import { drawBand } from '../og/mesh.js'
+
+      const q = new URLSearchParams(location.search)
+      const w = Number(q.get('w') ?? 1200)
+      const h = Number(q.get('h') ?? 240)
+      const options = JSON.parse(q.get('o') ?? '{}')
+
+      document.documentElement.style.width = `${w}px`
+      document.documentElement.style.height = `${h}px`
+      document.body.style.width = `${w}px`
+      document.body.style.height = `${h}px`
+
+      const drawn = drawBand(document.getElementById('band'), options)
+      if (!drawn) throw new Error('band: the shader did not run, so this would be a blank box')
+
+      window.cardReady = Promise.resolve()
+    </script>
+  </body>
+</html>
