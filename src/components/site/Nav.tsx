@@ -24,12 +24,20 @@ export function Nav() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
+  /* The panel only renders below md; if the viewport crosses that line
+     while it is open, the state closes with it. */
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 48rem)')
+    const onChange = () => {
+      if (desktop.matches) setOpen(false)
+    }
+    desktop.addEventListener('change', onChange)
+    return () => desktop.removeEventListener('change', onChange)
+  }, [])
+
   return (
     <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b border-white/40 bg-white/30 backdrop-blur-2xl backdrop-saturate-150',
-        open && 'bg-paper',
-      )}
+      className="fixed inset-x-0 top-0 z-50 border-b border-white/40 bg-white/30 backdrop-blur-2xl backdrop-saturate-150"
     >
       <div className="shell flex h-16 items-center justify-between md:h-[72px]">
         <div className="flex items-center">
@@ -71,7 +79,7 @@ export function Nav() {
             type="button"
             variant="ghost"
             size="icon"
-            className={cn('size-11 [&_svg]:size-5', LIGHT_TEXT && !open && 'text-paper hover:bg-white/10')}
+            className={cn('size-11 [&_svg]:size-5', LIGHT_TEXT && 'text-paper hover:bg-white/10')}
             aria-label="Open menu"
             aria-expanded={open}
             aria-controls={MENU_ID}
@@ -83,25 +91,26 @@ export function Nav() {
       </div>
 
       {open && (
-        <nav id={MENU_ID} className="flex flex-col gap-1 border-b border-rule bg-paper p-4 md:hidden">
-          {NAV_LINKS.map((link) => (
+        <nav
+          id={MENU_ID}
+          className={cn('border-t md:hidden', LIGHT_TEXT ? 'border-white/25' : 'border-ink/[0.08]')}
+        >
+          {[...NAV_LINKS, { href: LOGIN_URL, label: 'Login' }].map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="flex h-12 items-center rounded-md px-3 text-[17px] font-medium text-ink transition-colors hover:bg-tint"
+              className={cn(
+                'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
+                LIGHT_TEXT
+                  ? 'border-white/25 text-paper hover:bg-white/10'
+                  : 'border-ink/[0.08] text-ink hover:bg-white/40',
+              )}
             >
               {link.label}
+              <ChevronRight size={16} aria-hidden="true" className={LIGHT_TEXT ? 'text-paper/60' : 'text-ink/40'} />
             </a>
           ))}
-          <a
-            href={LOGIN_URL}
-            onClick={() => setOpen(false)}
-            className="flex h-12 items-center gap-1 rounded-md px-3 text-[17px] font-medium text-ink transition-colors hover:bg-tint"
-          >
-            Login
-            <ChevronRight size={16} aria-hidden="true" />
-          </a>
         </nav>
       )}
     </header>
