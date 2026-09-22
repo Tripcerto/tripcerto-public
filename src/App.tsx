@@ -6,13 +6,12 @@ import { Opportunity } from '@/components/site/Opportunity'
 import { Audience } from '@/components/site/Audience'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
-import { useGlobalClickTracking, useScrollDepth, useSectionViews, useTimeOnPage } from '@/lib/analytics'
+import { home } from '@/content/home'
+import { usePageAnalytics } from '@/lib/analytics'
+import { DEMO_URL, PAGES } from '@/lib/links'
 
 export function App() {
-  useScrollDepth()
-  useSectionViews()
-  useGlobalClickTracking()
-  useTimeOnPage()
+  usePageAnalytics()
   return (
     <>
       <Nav />
@@ -22,7 +21,11 @@ export function App() {
         <WorkspaceSection />
         <Opportunity />
         <Audience />
-        <Close />
+        <Close
+          heading={home.close['H-9-A']}
+          primary={{ label: home.close['H-9-C'], href: DEMO_URL }}
+          secondary={{ label: home.close['H-9-D'], href: PAGES.pilot }}
+        />
       </main>
       <Footer />
     </>

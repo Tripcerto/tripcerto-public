@@ -148,3 +148,12 @@ export function useTimeOnPage() {
     }
   }, [])
 }
+
+/* What every page records: scroll depth, the sections seen, every click
+   and the time on the page. */
+export function usePageAnalytics() {
+  useScrollDepth()
+  useSectionViews()
+  useGlobalClickTracking()
+  useTimeOnPage()
+}

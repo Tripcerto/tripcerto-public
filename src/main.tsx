@@ -1,12 +1,4 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { Analytics } from '@vercel/analytics/react'
-import './index.css'
+import { mount } from './boot'
 import { App } from './App'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-    <Analytics />
-  </StrictMode>,
-)
+mount(<App />)

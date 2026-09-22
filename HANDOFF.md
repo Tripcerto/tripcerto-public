@@ -7,12 +7,15 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 
 ## Where things are
 
-- Repo `Tripcerto/tripcerto-public`, branch `claude/landing-ember`, pushed.
-  No PR yet. Vercel auto-deploys `main`; the merge is Taylor's action, never
-  the agent's.
+- Repo `Tripcerto/tripcerto-public`, branch `claude/landing-ember`. PR #1
+  (the home page) was merged to `main` on Taylor's word on 22 Sep and is
+  live at tripcerto.com; PR #2 carries the Engage, Workspace and Pilot pages
+  and light-by-default. Vercel auto-deploys `main`; a merge happens only on
+  Taylor's explicit say-so for that PR.
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (4 tests),
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (16 tests:
+  the same four over each of the four pages, `src/site.test.tsx`),
   `npm run build`. Run tsc from this repo or with its tsconfig path; a bare
   `tsc -b` from the monorepo worktree emits thousands of stray `.js` files.
 
@@ -213,19 +216,41 @@ page, all done, for now." Hero, Engage, Workspace, the journey, the roles,
 the close, the nav and the footer are all his choices; do not reopen them
 without a new ask from him.
 
-## Still to do (from the original plan)
+## The other pages (22 Sep, evening; Taylor: "no need for me to review this one")
 
-1. Reveals: done for the two product frames (`Reveal.tsx`, an in-view
-   hold on the frames' own choreography). No scroll-snap — Taylor asked,
-   and the answer was a viewport-tall hero and reveals instead.
-2. Wave 2: Engage, Workspace, Pilot, Trust pages from the PDF with the
-   Guide's changes applied, as Vite multi-page entries (own HTML and meta),
-   `vercel.json` already has `cleanUrls`; nav links go live. Engage and
-   Workspace first. There is NO pricing page and NO Ground page (Taylor,
-   22 Sep: "not right now"), whatever Charlie's documents ask for. Those
-   documents are guidelines for the register, never lines to lift (Taylor).
-3. A new `public/og-image.png` in Ember (still the old cream one), a
-   rewritten README. The frames are drawn, not captured, by decision; a
-   real photo can replace the drawn scene in the activity cards if wanted.
-4. Review wave (copy against the Guide; code, mobile, a11y), fixes, then ONE
-   PR against `main`. Taylor merges.
+- Vite multi-page: `index.html`, `engage/index.html`, `workspace/index.html`,
+  `pilot/index.html` are the entries (`vite.config.ts` `build.rollupOptions.input`),
+  each with its own title, description, canonical and og tags. `src/boot.tsx`
+  mounts a page; `src/main.tsx`, `src/engage.tsx`, `src/workspace.tsx`,
+  `src/pilot.tsx` are the one-line entry files; the pages live in `src/pages/`.
+  `appType: 'mpa'` plus the `cleanUrls` plugin in `vite.config.ts` make the dev
+  server answer `/engage` the way Vercel's `cleanUrls` does in production.
+- Copy: `src/content/engage.ts`, `workspace.ts`, `pilot.ts`, keyed by the
+  PDF's E-, W- and P-references, changed strings marked, as `home.ts`. Charlie's
+  guide applied: the software is the subject; the hero ends at the booking
+  (§5); what travellers get is told apart from how the business uses it (§6);
+  no problem section (§3); no sector cards (§8); the boundaries are said as
+  what stays where it is; the pilot measures ride in each product page's close.
+- Idioms reused from the home page and nothing new but two pieces:
+  `PageHero.tsx` (the band opening, a step smaller than the home hero, with a
+  `layout` of `phone` or `window` for the column split) and
+  `frames/BriefCard.tsx` (the brief that reaches sales, in the bars-and-glyphs
+  idiom). `Close.tsx` now takes its heading, an optional line and its links as
+  props; the home passes its own. The nav marks the current page with
+  `aria-current`.
+- Light is the default: `@custom-variant dark` is class-only, `theme.ts` no
+  longer consults `prefers-color-scheme`, and there is one `theme-color` meta
+  the theme switch updates (Taylor, 22 Sep evening: "light mode by default").
+- Trust: the footer link is out until the page exists (the PDF's Trust page
+  is unsigned and must claim no certificate). Put it back in `Footer.tsx`
+  `LEGAL` and in `site.test.tsx` when the page lands.
+
+## Still to do
+
+1. The Trust page (needs Taylor's sign-off on every security claim), then the
+   footer link returns.
+2. A new `public/og-image.png` in Ember (still the old cream one; every page
+   points at it), a rewritten README.
+3. A review wave (copy against the Guide; code, mobile, a11y) on the four pages.
+   There is NO pricing page and NO Ground page (Taylor, 22 Sep: "not right
+   now"), whatever Charlie's documents ask for.
