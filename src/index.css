@@ -17,6 +17,16 @@
   --color-rule: #f0dcd4;
   --color-up: #1f9d63;
 
+  /* The page surfaces. These switch in dark mode; the brand colours above do not. */
+  --color-page: #ffffff;
+  --color-body: #2b1220;
+  --color-dim: #6e5a60;
+  --color-soft: #fff1ea;
+  --color-line: #f0dcd4;
+  --color-card: #ffffff;
+  --color-link: #b9243d;
+  --color-glass: rgb(255 255 255 / 0.3);
+
   --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
@@ -48,6 +58,36 @@
   --shell: 1200px;
 }
 
+/* Dark: deep ink under a faint wash of the band, so glass panels have
+   something to blur. Follows the system unless <html> carries .light or .dark. */
+@layer base {
+  :root.dark,
+  :root:not(.light) {
+    @media (prefers-color-scheme: dark) {
+      color-scheme: dark;
+      --color-page: #1c0c15;
+      --color-body: #ffffff;
+      --color-dim: rgb(255 255 255 / 0.62);
+      --color-soft: rgb(255 255 255 / 0.05);
+      --color-line: rgb(255 255 255 / 0.1);
+      --color-card: rgb(255 255 255 / 0.06);
+      --color-link: #ff8a96;
+      --color-glass: rgb(43 18 32 / 0.3);
+    }
+  }
+  :root.dark {
+    color-scheme: dark;
+    --color-page: #1c0c15;
+    --color-body: #ffffff;
+    --color-dim: rgb(255 255 255 / 0.62);
+    --color-soft: rgb(255 255 255 / 0.05);
+    --color-line: rgb(255 255 255 / 0.1);
+    --color-card: rgb(255 255 255 / 0.06);
+    --color-link: #ff8a96;
+    --color-glass: rgb(43 18 32 / 0.3);
+  }
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -63,8 +103,8 @@
   }
   body {
     margin: 0;
-    background: var(--color-paper);
-    color: var(--color-ink);
+    background: var(--color-page);
+    color: var(--color-body);
     font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.5;
@@ -86,10 +126,38 @@
     font-family: inherit;
     cursor: pointer;
   }
+  .dark body::before,
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%),
+      radial-gradient(50% 45% at 5% 95%, rgb(255 155 122 / 0.16), transparent 70%);
+    opacity: 0;
+  }
+  :root.dark body::before {
+    opacity: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) body::before {
+      opacity: 1;
+    }
+  }
   :focus-visible {
-    outline: 2px solid var(--color-primary-deep);
+    outline: 2px solid var(--color-link);
     outline-offset: 3px;
   }
+}
+
+/* The theme switch: the browser cross-fades its snapshots of the old and
+   new page, so every colour eases at once. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
 }
 
 @utility shell {
@@ -100,6 +168,13 @@
   @media (width >= 40rem) {
     padding-inline: 32px;
   }
+}
+
+/* A panel in the site's glass: frosted by day, smoked in dark mode. */
+@utility glass {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(24px) saturate(150%);
 }
 
 @utility bg-band {

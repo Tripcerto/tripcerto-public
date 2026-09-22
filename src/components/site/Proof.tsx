@@ -12,7 +12,7 @@ export function Proof() {
         <p className="mt-6">
           <a
             href={PAGES.pilot}
-            className="group -my-2.5 inline-flex items-center gap-1 py-2.5 font-semibold text-primary-deep"
+            className="group -my-2.5 inline-flex items-center gap-1 py-2.5 font-semibold text-link"
           >
             How a pilot runs
             <ArrowRight size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5" />

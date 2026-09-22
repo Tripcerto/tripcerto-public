@@ -17,7 +17,7 @@ export function Section({
       id={id}
       className={cn(
         'scroll-mt-16 py-20 md:scroll-mt-[72px] md:py-28',
-        tone === 'tint' && 'bg-tint',
+        tone === 'tint' && 'bg-soft',
         tone === 'ink' && 'bg-ink text-paper',
         className,
       )}
@@ -29,7 +29,7 @@ export function Section({
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <p className={cn('font-mono text-[13px] font-medium uppercase tracking-[0.08em] text-primary-deep', className)}>
+    <p className={cn('font-mono text-[13px] font-medium uppercase tracking-[0.08em] text-link', className)}>
       {children}
     </p>
   )
@@ -59,5 +59,5 @@ export function Heading({
 }
 
 export function Lede({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn('text-pretty text-[17px] leading-[1.55] text-muted md:text-lg', className)}>{children}</p>
+  return <p className={cn('text-pretty text-[17px] leading-[1.55] text-dim md:text-lg', className)}>{children}</p>
 }

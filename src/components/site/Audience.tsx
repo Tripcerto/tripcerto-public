@@ -13,10 +13,10 @@ export function Audience() {
         {home.audience.cards.map(({ role, line }) => (
           <div
             key={role}
-            className="rounded-lg border border-rule bg-paper p-6 transition-colors hover:border-ink/15 md:p-7"
+            className="glass rounded-lg p-6 transition-colors hover:border-body/15 md:p-7"
           >
             <h3 className="text-[17px] font-semibold leading-snug">{role}</h3>
-            <p className="mt-2 text-[15px] text-muted">{line}</p>
+            <p className="mt-2 text-[15px] text-dim">{line}</p>
           </div>
         ))}
       </div>
