@@ -81,7 +81,13 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   strip itself, pink through coral into peach (`--band`), with two faint
   diagonal sheens and no lines. Layout on his notes: phone overlapping
   Stella's pane of the window, the pair centred in its column and level with
-  the copy, equal space above and below.
+  the copy, equal space above and below. Then (22 Sep, late): the sheens
+  read as "white lines", so the ground became `src/components/ui/gradient-mesh.tsx`,
+  a three.js shader that noise-warps the Ember stops so the gradient itself
+  rolls (still CSS strip beneath for no-WebGL); the headline is solid ink
+  ("black glass" then "just solid"); the nav is glass (`bg-white/30`, all
+  variants); the hero container runs wider than the shell at xl/2xl with a
+  16:9 window body so copy and visuals spread apart on desktop.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.

@@ -1,5 +1,8 @@
+import { lazy, Suspense } from 'react'
 import { ArrowRight, ChevronRight, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+
+const GradientMesh = lazy(() => import('@/components/ui/gradient-mesh').then((m) => ({ default: m.GradientMesh })))
 import { EngagePlaceholder } from '@/components/site/frames/EngagePlaceholder'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { home } from '@/content/home'
@@ -8,27 +11,26 @@ import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 
 
-/* The band hero on a calm ground: the Ember strip from the identity pack,
-   pink through coral into peach, with two broad diagonal sheens crossing
-   bottom-left to top-right on their own slow clocks. No lines. The
+/* The band hero on a moving ground: the Ember strip from the identity
+   pack, pink through coral into peach, rendered by a shader that warps the
+   gradient with slow noise so the colour itself rolls and folds. Nothing
+   white, no lines; the still CSS strip underneath is the no-WebGL case. The
    headline is solid ink; the phone laps onto Stella's pane of the glass
-   Workspace window. Everything sits inside the shell, so the hero centres
-   as a whole on a wide screen and tightens toward the middle below it. */
+   Workspace window, whose body is 16:9. The hero's container runs wider
+   than the nav's shell on large screens, so the window grows and the copy
+   and visuals spread apart, and everything tightens toward the middle as
+   the screen narrows. */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
-const SHEEN = 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%)'
+/* Module-level so the shader builds once. */
+const MESH_COLOURS = ['#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
 
 function Band() {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
       <div className="absolute inset-0" style={{ background: BAND }} />
-      <div
-        className="absolute -left-[30%] top-[-60%] h-[220%] w-[28%] rotate-[35deg] animate-[drift-a_30s_ease-in-out_infinite_alternate] motion-reduce:animate-none"
-        style={{ background: SHEEN }}
-      />
-      <div
-        className="absolute left-[25%] top-[-60%] h-[220%] w-[18%] rotate-[35deg] animate-[drift-c_36s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none"
-        style={{ background: SHEEN, opacity: 0.6 }}
-      />
+      <Suspense fallback={null}>
+        <GradientMesh className="absolute inset-0" colours={MESH_COLOURS} angle={100} warp={0.3} scale={1.3} speed={1} />
+      </Suspense>
     </div>
   )
 }
@@ -58,7 +60,7 @@ function GlassWindow() {
           Search
         </span>
       </div>
-      <div className="grid h-[420px] grid-cols-[34%_minmax(0,1fr)] lg:h-[480px]" aria-hidden>
+      <div className="grid aspect-[16/9] grid-cols-[34%_minmax(0,1fr)]" aria-hidden>
         <div className="flex flex-col gap-3 border-r border-white/50 bg-white/20 p-5">
           <span className="h-2.5 w-20 rounded bg-ink/25" />
           <span className="h-16 rounded-xl bg-white/50" />
@@ -94,8 +96,8 @@ export function HeroGlass() {
     <section id="hero" aria-labelledby="hero-title" className="relative overflow-hidden bg-paper">
       <Band />
 
-      <div className="shell relative z-10 pb-16 pt-28 md:pt-32 lg:pb-24 lg:pt-[calc(72px+6rem)]">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-10">
+      <div className="relative z-10 mx-auto w-full max-w-[1200px] px-5 pb-16 pt-28 sm:px-8 md:pt-32 lg:pb-24 lg:pt-[calc(72px+6rem)] xl:max-w-[1480px] 2xl:max-w-[1680px]">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-10 xl:gap-16">
           <div className="animate-rise min-w-0 lg:col-span-5">
             <a
               href={PAGES.pilot}
@@ -111,7 +113,7 @@ export function HeroGlass() {
 
             <h1
               id="hero-title"
-              className="mt-6 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] text-ink sm:text-[4rem] lg:text-[3.75rem] xl:text-[4rem]"
+              className="mt-6 max-w-[12ch] text-balance text-[3rem] font-bold leading-[0.98] tracking-[-0.035em] text-ink sm:text-[4rem] lg:text-[3.75rem] xl:text-[4.5rem] 2xl:text-[5rem]"
             >
               {home.hero['H-1-A']}
             </h1>
@@ -138,11 +140,11 @@ export function HeroGlass() {
           </div>
 
           <div className="min-w-0 lg:col-span-7">
-            <div className="relative mx-auto h-[540px] max-w-[560px] sm:h-[600px] lg:h-[620px] lg:max-w-none">
-              <div className="absolute right-0 top-0 w-[86%]">
+            <div className="relative mx-auto max-w-[560px] lg:max-w-none">
+              <div className="ml-[14%] xl:ml-[12%]">
                 <GlassWindow />
               </div>
-              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:w-[244px]">
+              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:w-[244px] xl:w-[270px] 2xl:w-[300px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>

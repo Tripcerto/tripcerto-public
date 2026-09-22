@@ -580,6 +580,8 @@ export function FloatingLines({
     lineWidth,
     lineBlur,
     lineOpacity,
+    glowSpread,
+    glowHaze,
   ])
 
   return (
