@@ -19,25 +19,34 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 ## What is built
 
 - `src/components/site/Nav.tsx`: a glass bar fixed from the top of the page
-  (`bg-glass backdrop-blur-2xl`), links Engage · Workspace · Pilot · Trust, a
-  moon/sun theme switch and Login on the right, a drawer below md whose rows
-  sit directly under the bar inside the same glass. Its copy is paper while
-  the hero is still under the bar or the page is dark, ink on a light page
-  once the hero has scrolled past — an `IntersectionObserver` on `#hero` with
-  the nav's height as the top root margin, and `useTheme`.
+  (`bg-glass backdrop-blur-2xl`), links Engage · Workspace · Trust, then a
+  moon/sun theme switch, Login and a Pilot pill on the right (Taylor, 22 Sep
+  pm: Pilot is the way in, not a page to browse, so it stands apart as a
+  button; he is unsure Trust belongs in the bar either). A drawer below md
+  whose rows sit directly under the bar inside the same glass. Its copy is
+  paper while the hero is still under the bar (an `IntersectionObserver` on
+  `#hero` with the nav's height as the top root margin); once the hero has
+  scrolled past, every colour in the bar comes from the page tokens, the
+  wordmark included (`<Wordmark tone="page">` draws both SVGs and CSS shows
+  one), so nothing in the bar can disagree with the theme. `useTheme` only
+  chooses the icon.
 - Dark mode (Taylor, 22 Sep: "that dark glassy look"). The page surfaces are
   seven tokens in `src/index.css` — `page`, `body`, `dim`, `soft`, `line`,
   `card`, `link`, plus `glass` for the nav — and only those switch in dark
-  mode; the brand colours (`ink`, `primary`, `tint`, `paper`…) never do, so
-  the hero and the frames, which name brand colours and carry their own
-  `dark:` classes, are untouched by the flip. Dark follows the system unless
-  `<html>` carries `.light` or `.dark`; `index.html` applies the stored
-  choice before first paint; `src/lib/theme.ts` reads and toggles it through
-  a view transition cross-fade (0.5s) where the browser supports one. Every
-  section uses the tokens (`bg-soft`, `text-dim`, `text-link`, the `glass`
-  utility for panels), so a new page inherits the look by using them. The
-  dark page is deep ink under a faint fixed wash of the band (`body::before`)
-  so glass panels have something to blur.
+  mode; the brand colours (`ink`, `primary`, `tint`, `paper`…) never do. The
+  light page is CREAM (`#fff1ea`), not white — Taylor: "I don't think white's
+  part of our theme" — and white only appears as a glass wash over it
+  (`card` and `soft` are white at 0.6 and 0.5). Dark follows the system
+  unless `<html>` carries `.light` or `.dark`; `index.html` applies the
+  stored choice before first paint; `src/lib/theme.ts` reads and toggles it
+  through a view transition cross-fade (0.5s) where the browser supports one.
+  Every section uses the tokens (`bg-soft`, `text-dim`, `text-link`, the
+  `glass` utility for panels), so a new page inherits the look by using
+  them. A fixed wash of the band sits behind the page in both modes
+  (`body::before`: peach by day, pink and peach by night) so glass has
+  something to blur. In dark mode the hero's band and the Close band are
+  smoked, an ink wash at 0.55 over the mesh, with the copy left paper; the
+  frames carry their own `dark:` classes.
 - `src/components/site/Hero.tsx`: the hero Taylor chose on 22 September out of
   five candidates, all of which are now deleted. One viewport tall
   (`min-h-[100svh]`, content centred). The ground is the Ember strip from the
@@ -77,7 +86,19 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   finished state. The phone's bezel and screen are PAINTED (`bg-band-frosted`
   / `bg-band-smoked`), not glass, because Taylor could see the window through
   them. In dark mode both frames are smoked ink glass. The same two screens
-  sit in the Engage and Workspace sections.
+  sit in the Engage and Workspace sections, with no box around them (Taylor
+  removed it) — `Stage.tsx` is a pool of the band's light (`bg-glow`) behind
+  the frame and the caption hung below it out of the flow. The phone stands
+  in a 5fr column to the side of the copy; the window takes the 7fr column
+  and runs past it to the shell's edge on large screens. There the window's
+  Stella pane shows the conversation (`WorkspaceChat.tsx`, passed in as
+  `pane`): the consultant drops the inquiry in as a file and a voice note,
+  Stella's reply carries a speaker, and the composer holds the clip and the
+  mic; the hero's window keeps the bare pane the phone covers. The phone has
+  the same voice note (`Voice.tsx`) and speaker, on the hero too. Each
+  section opens with a `ProductBadge` (glyph and name in a glass pill)
+  instead of a mono eyebrow, so the heading need not repeat the name; H-5-A
+  was reworded for that.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
@@ -118,6 +139,10 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 - On the theme switch he rejected the circular reveal from the button
   ("does nothing then pops", then "I don't like that one"); a plain
   cross-fade of the whole page is what stayed.
+- On the sections (22 Sep pm): the cream box around each frame "looks shit";
+  no box, the workspace bigger, the phone "sort of on the side"; the copy was
+  fine but the eyebrow repeating the heading's first word was not; even
+  rhythm between sections; the same glow top and bottom in light as in dark.
 - He does not want screenshots sent to him during tuning; he watches the
   page and says what to change. He gives changes one at a time, fast.
 
@@ -135,6 +160,12 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   checks after the Threads round were by console, DOM measurement and Taylor's
   own eyes. The next agent should look at the page itself at 1440 and 390
   before trusting the current wave angles.
+
+- There is NO prettier config in this repo and the code is single-quoted
+  with no semicolons. `npx prettier --write` applies prettier's defaults and
+  rewrites every file it touches into double quotes and semicolons; it did
+  that to twenty files on 22 Sep and they had to be restored from HEAD. Do
+  not run prettier here; eslint is the only gate.
 
 ## Still to do (from the original plan)
 

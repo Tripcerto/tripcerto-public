@@ -44,7 +44,7 @@ export function Footer() {
   return (
     <footer>
       <Section tone="ink" className="py-16 md:py-16">
-        <Wordmark tone="paper" className="h-6" />
+        <Wordmark tone="paper" className="h-7" />
         <p className="mt-4 max-w-xs text-sm text-paper/60">{home.hero['H-1-A']}</p>
 
         <div className="mt-12 grid gap-8 sm:grid-cols-3">

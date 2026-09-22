@@ -21,7 +21,7 @@ export const home = {
     'H-4-A': 'Every website visitor, understood before the first call', // changed
     'H-4-B':
       'Travellers research in their own way. Engage answers from your expertise and your products, keeps you in control of what is shown, and hands sales the questions, preferences and products considered.', // changed
-    caption: 'Engage running on a travel website.',
+    caption: 'Engage on a travel website, typed or spoken.',
     points: [
       'Answers in your voice, from the content and products you approve',
       'Records needs, timing, preferences and concerns as the conversation goes on',
@@ -29,10 +29,10 @@ export const home = {
     ],
   },
   workspace: {
-    'H-5-A': 'Workspace turns the customer’s requirements into a sellable trip', // changed
+    'H-5-A': 'The customer’s requirements, turned into a sellable trip', // changed
     'H-5-B':
       'Dates, places, travellers and services become an itemised trip, resolved against your inventory, with the missing pieces flagged before the quote goes out.', // changed
-    caption: 'The trip, itemised.',
+    caption: 'A dropped file, a voice note, and the trip itemised.',
     points: [
       'Builds the itemised service list from the inquiry, in order',
       'Shows the stays, transfers and dates that still need attention',

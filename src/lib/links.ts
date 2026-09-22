@@ -12,10 +12,11 @@ export const PAGES = {
   trust: '/trust',
 } as const
 
+/* The pages in the bar. Pilot is not a page to browse to but the way in,
+   so it sits beside Login as a button. */
 export const NAV_LINKS = [
   { href: PAGES.engage, label: 'Engage' },
   { href: PAGES.workspace, label: 'Workspace' },
-  { href: PAGES.pilot, label: 'Pilot' },
   { href: PAGES.trust, label: 'Trust' },
 ] as const
 

@@ -1,16 +1,17 @@
-import { ArrowRight, Check } from 'lucide-react'
-import { Eyebrow, Heading, Lede, Section } from '@/components/site/Section'
+import { ArrowRight, Check, MessageCircle } from 'lucide-react'
+import { Heading, Lede, ProductBadge, Section } from '@/components/site/Section'
+import { Stage } from '@/components/site/Stage'
 import { PhoneScreen } from '@/components/site/frames/PhoneScreen'
 import { home } from '@/content/home'
 import { PAGES, SECTION } from '@/lib/links'
 
 export function EngageSection() {
   return (
-    <Section id={SECTION.engage} className="pt-4 md:pt-8">
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        <div>
-          <Eyebrow>Engage</Eyebrow>
-          <Heading className="mt-3">{home.engage['H-4-A']}</Heading>
+    <Section id={SECTION.engage} className="py-16 md:py-28">
+      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-16">
+        <div className="lg:order-last">
+          <ProductBadge glyph={MessageCircle}>Engage</ProductBadge>
+          <Heading className="mt-5">{home.engage['H-4-A']}</Heading>
           <Lede className="mt-5 max-w-[40rem]">{home.engage['H-4-B']}</Lede>
           <ul role="list" className="mt-8 space-y-3">
             {home.engage.points.map((point) => (
@@ -30,14 +31,11 @@ export function EngageSection() {
             </a>
           </p>
         </div>
-        <figure className="lg:order-first">
-          <div className="flex justify-center rounded-xl bg-soft p-8 md:p-12">
-            <div className="w-[240px]">
-              <PhoneScreen />
-            </div>
+        <Stage caption={home.engage.caption} className="max-lg:mb-8">
+          <div className="w-[min(64%,320px)]">
+            <PhoneScreen />
           </div>
-          <figcaption className="mt-4 text-center text-[13px] text-dim">{home.engage.caption}</figcaption>
-        </figure>
+        </Stage>
       </div>
     </Section>
   )

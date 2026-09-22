@@ -7,12 +7,13 @@ import { DEMO_URL, SECTION } from '@/lib/links'
 
 export function Close() {
   return (
-    <section id={SECTION.close} className="scroll-mt-16 bg-band">
-      <div className="shell py-20 text-center md:py-28">
-        <Heading as="h2" className="mx-auto max-w-[40rem] text-ink">
+    <section id={SECTION.close} className="relative scroll-mt-16 bg-band">
+      <div aria-hidden className="absolute inset-0 hidden bg-ink/55 dark:block" />
+      <div className="shell relative py-20 text-center md:py-28">
+        <Heading as="h2" className="mx-auto max-w-[40rem] text-ink dark:text-paper">
           {home.close['H-9-A']}
         </Heading>
-        <Lede className="mx-auto mt-5 max-w-[40rem] text-ink/80">{home.close['H-9-B']}</Lede>
+        <Lede className="mx-auto mt-5 max-w-[40rem] text-ink/80 dark:text-paper/80">{home.close['H-9-B']}</Lede>
         <Button asChild variant="accent" size="lg" className="mt-10">
           <a href={DEMO_URL}>
             {home.close['H-9-C']}

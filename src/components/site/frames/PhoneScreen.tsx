@@ -1,18 +1,21 @@
 import type { ReactNode } from 'react'
-import { ChevronLeft, Sparkles, Sunrise } from 'lucide-react'
+import { ChevronLeft, Sparkles, Sunrise, Volume2 } from 'lucide-react'
 import type { Glyph } from '@/components/site/frames/glyphs'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { SafariScene, BalloonGlyph } from '@/components/site/frames/SafariScene'
 import { BAR } from '@/components/site/frames/glyphs'
 import { Bar, StellaLine } from '@/components/site/frames/StellaLine'
+import { VoiceNote } from '@/components/site/frames/Voice'
 import { delay } from '@/components/site/frames/motion'
 import { story } from '@/components/site/frames/story'
 import { cn } from '@/lib/utils'
 
-/* Engage on the phone: two traveller messages, Stella's line with two
-   activities she recommends and a word on them, and her next reply on its
-   way, sitting at the bottom of the screen as a conversation does. Bars stand for the words. Bezel and screen are painted, not glass, so the window behind
-   the phone does not show through either. */
+/* Engage on the phone: the traveller writes, Stella answers with two
+   activities she recommends and a word on them that can be heard as well
+   as read, the traveller answers by voice, and Stella's next reply is on
+   its way. It sits at the bottom of the screen as a conversation does.
+   Bars stand for the words. Bezel and screen are painted, not glass, so
+   the window behind the phone does not show through either. */
 
 const ACTIVITY = [
   { glyph: BalloonGlyph, crop: 'balloon' },
@@ -45,7 +48,7 @@ export function PhoneScreen() {
             <Sparkles className="size-[4.6cqw]" />
             <span className="absolute -bottom-[0.4cqw] -right-[0.4cqw] size-[3cqw] rounded-full border-[0.6cqw] border-white bg-up dark:border-ink" />
           </span>
-          <Bar className={cn('h-[1.8cqw] w-[16cqw]', BAR)} />
+          <Bar className={cn('h-[1.8cqw] w-[16cqw] self-end', BAR)} />
         </div>
 
         <div className="mt-auto flex flex-col gap-[4.4cqw] px-[4cqw] pb-[8cqw]">
@@ -84,11 +87,14 @@ export function PhoneScreen() {
             style={delay(1.8)}
           >
             <Bar className={cn('h-[2.2cqw] w-[44cqw]', BAR)} />
-            <Bar className={cn('h-[2.2cqw] w-[30cqw]', BAR)} />
+            <span className="flex items-end justify-between gap-[2.4cqw]">
+              <Bar className={cn('h-[2.2cqw] w-[30cqw]', BAR)} />
+              <Volume2 className="size-[3.4cqw] shrink-0 text-ink/45 dark:text-paper/60" />
+            </span>
           </div>
 
           <Traveller at={2.2}>
-            <Bar className={cn('h-[2.2cqw] w-[28cqw]', SAID)} />
+            <VoiceNote scale="phone" />
           </Traveller>
 
           <div

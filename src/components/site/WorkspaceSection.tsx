@@ -1,16 +1,20 @@
-import { ArrowRight, Check } from 'lucide-react'
-import { Eyebrow, Heading, Lede, Section } from '@/components/site/Section'
+import { ArrowRight, Check, LayoutPanelLeft } from 'lucide-react'
+import { Heading, Lede, ProductBadge, Section } from '@/components/site/Section'
+import { Stage } from '@/components/site/Stage'
+import { WorkspaceChat } from '@/components/site/frames/WorkspaceChat'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
 import { PAGES, SECTION } from '@/lib/links'
 
+/* The window runs past its column to the shell's edge on large screens,
+   so it reads at the size it is used at. */
 export function WorkspaceSection() {
   return (
-    <Section id={SECTION.workspace}>
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+    <Section id={SECTION.workspace} className="pt-0 pb-16 md:pt-0 md:pb-28">
+      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-12">
         <div>
-          <Eyebrow>Workspace</Eyebrow>
-          <Heading className="mt-3">{home.workspace['H-5-A']}</Heading>
+          <ProductBadge glyph={LayoutPanelLeft}>Workspace</ProductBadge>
+          <Heading className="mt-5">{home.workspace['H-5-A']}</Heading>
           <Lede className="mt-5 max-w-[40rem]">{home.workspace['H-5-B']}</Lede>
           <ul role="list" className="mt-8 space-y-3">
             {home.workspace.points.map((point) => (
@@ -30,12 +34,11 @@ export function WorkspaceSection() {
             </a>
           </p>
         </div>
-        <figure>
-          <div className="rounded-xl bg-soft p-6 md:p-10">
-            <WorkspaceScreen />
+        <Stage caption={home.workspace.caption} className="max-lg:mb-8 lg:-mr-[max(0px,calc((100vw-var(--shell))/2))]">
+          <div className="w-full">
+            <WorkspaceScreen pane={<WorkspaceChat />} />
           </div>
-          <figcaption className="mt-4 text-center text-[13px] text-dim">{home.workspace.caption}</figcaption>
-        </figure>
+        </Stage>
       </div>
     </Section>
   )

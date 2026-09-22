@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { TrendingUp } from 'lucide-react'
 import { WindowShell } from '@/components/site/frames/WindowShell'
 import { BAR, BAR_FAINT, KIND_GLYPH, STATUS_GLYPH, STATUS_TONE } from '@/components/site/frames/glyphs'
@@ -7,7 +8,8 @@ import { story } from '@/components/site/frames/story'
 import { cn } from '@/lib/utils'
 
 /* Workspace: Stella's pane on the left, the itemised list on the right,
-   two rows in coral, the rest confirmed or held. */
+   one row in coral, the rest confirmed or held. The pane shows Stella's
+   line alone where the phone covers it, or the conversation. */
 
 const ROW_BARS = [
   ['w-[82%]', 'w-[44%]'],
@@ -50,12 +52,12 @@ function Row({ index }: { index: number }) {
   )
 }
 
-export function WorkspaceScreen() {
+export function WorkspaceScreen({ pane = <StellaLine at={1.1} scale="window" /> }: { pane?: ReactNode }) {
   return (
     <WindowShell>
       <div aria-hidden className="grid h-full grid-cols-[34%_minmax(0,1fr)] text-[2.1cqw] leading-[1.35] text-ink dark:text-paper">
-        <div className="border-r border-white/50 bg-white/20 p-[2.6cqw] dark:border-white/10 dark:bg-white/[0.06]">
-          <StellaLine at={1.1} scale="window" />
+        <div className="flex min-w-0 flex-col border-r border-white/50 bg-white/20 p-[2.6cqw] dark:border-white/10 dark:bg-white/[0.06]">
+          {pane}
         </div>
 
         <div className="flex min-w-0 flex-col gap-[1.2cqw] bg-white/60 p-[2.6cqw] dark:bg-white/[0.04]">
