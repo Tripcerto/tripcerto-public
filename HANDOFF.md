@@ -29,9 +29,17 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   five candidates, all of which are now deleted. One viewport tall
   (`min-h-[100svh]`, content centred). The ground is the Ember strip from the
   identity pack — pink through coral into peach — warped by
-  `src/components/ui/gradient-mesh.tsx`, a three.js shader that domain-warps
-  the ramp with drifting simplex noise so the colour itself rolls and folds;
-  the still CSS strip underneath is the no-WebGL case. Copy is paper (pill,
+  `src/components/ui/gradient-mesh.tsx`, a shader that domain-warps the ramp
+  with drifting simplex noise so the colour itself rolls and folds; the still
+  CSS strip underneath is the no-WebGL case. It is hand-written WebGL 1, not
+  three.js: 5.97 kB instead of 518 kB. The context is created with
+  `alpha: true` ON PURPOSE — three hardcoded that regardless of the flag you
+  passed it, and an opaque canvas turns every undrawn frame (first paint, a
+  resize, a lost context) into a black hole over the CSS strip. Frames are
+  drawn synchronously inside the observer callbacks, which run before paint,
+  and the ResizeObserver always redraws because setting `canvas.width` clears
+  the buffer after that frame's draw. Context loss is handled here since the
+  library is no longer doing it. Copy is paper (pill,
   headline, lede, link, `accent` button). Right of it, the Workspace window is
   glass with a translucent Stella pane and a 16:9 body, and the phone laps onto
   that pane at fixed pixel widths (190/230/244/270) with a min-height on the
@@ -44,7 +52,10 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
-  `// changed`. H-1-A is "Travel AI that turns research into bookings" (Taylor).
+  `// changed`. H-1-A is "AI makes complex travel arrangements easy" (Taylor,
+  22 Sep, his third wording that afternoon). It is also the <title>, the og
+  and twitter titles, the og:image:alt and the webmanifest description — change
+  all five together.
   The pill string was deleted at his request.
 - Deleted once the hero was chosen: the four other candidates, `pick.ts` and
   the `?hero=` switch, the `?text=light` flag (`src/lib/review.ts`), the

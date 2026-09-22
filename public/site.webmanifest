@@ -1,7 +1,7 @@
 {
   "name": "Tripcerto",
   "short_name": "Tripcerto",
-  "description": "Travel sales software that turns research into bookings.",
+  "description": "AI makes complex travel arrangements easy.",
   "start_url": "/",
   "display": "browser",
   "background_color": "#fff1ea",

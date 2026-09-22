@@ -1,14 +1,19 @@
 import { useEffect, useRef } from 'react'
-import { Mesh, OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial, Timer, Vector2, Vector3, WebGLRenderer } from 'three'
 import { cn } from '@/lib/utils'
 
 const MAX_STOPS = 6
 
-const vertexShader = `
+/* A fullscreen quad in clip space; every pixel is decided by the fragment
+   shader, so there is nothing to transform. */
+const QUAD = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1])
+
+const VERTEX_SHADER = `
 precision highp float;
 
+attribute vec2 position;
+
 void main() {
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  gl_Position = vec4(position, 0.0, 1.0);
 }
 `
 
@@ -18,7 +23,7 @@ void main() {
    noise lifts and lowers the colour along the way so the surface reads as
    folds rather than stripes. Every fragment is a blend of the stops and
    nothing else. */
-const fragmentShader = `
+const FRAGMENT_SHADER = `
 precision highp float;
 
 uniform float iTime;
@@ -88,7 +93,7 @@ void main() {
 }
 `
 
-function hexToVec3(hex: string) {
+function hexToRgb(hex: string): [number, number, number] {
   const value = hex.trim().replace(/^#/, '')
   const [r, g, b] =
     value.length === 3
@@ -96,7 +101,20 @@ function hexToVec3(hex: string) {
       : value.length === 6
         ? [0, 2, 4].map((i) => parseInt(value.slice(i, i + 2), 16))
         : [255, 255, 255]
-  return new Vector3(r / 255, g / 255, b / 255)
+  return [r / 255, g / 255, b / 255]
+}
+
+function compileShader(gl: WebGLRenderingContext, type: number, source: string) {
+  const shader = gl.createShader(type)
+  if (!shader) return null
+  gl.shaderSource(shader, source)
+  gl.compileShader(shader)
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    console.error('GradientMesh: shader failed to compile.', gl.getShaderInfoLog(shader))
+    gl.deleteShader(shader)
+    return null
+  }
+  return shader
 }
 
 export interface GradientMeshProps {
@@ -122,76 +140,169 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
     const container = containerRef.current
     if (!container) return
     if (!('WebGLRenderingContext' in window)) return
-    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+
+    const motionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)') ?? null
+    const stillOnly = () => motionQuery?.matches ?? false
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5)
+
+    const stops = colours.slice(0, MAX_STOPS).map(hexToRgb)
+    const stopCount = stops.length
+    /* The shader reads a fixed-length array, so the last stop fills the tail
+       and `stopCount` decides how much of it the ramp spans. */
+    const stopValues = new Float32Array(MAX_STOPS * 3)
+    for (let i = 0; i < MAX_STOPS; i += 1) stopValues.set(stops[Math.min(i, stopCount - 1)] ?? [1, 1, 1], i * 3)
+    /* CSS angle to the shader's: CSS 0deg points up and turns clockwise. */
+    const shaderAngle = ((angle - 90) * Math.PI) / 180
+
+    const canvas = document.createElement('canvas')
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
+    canvas.style.display = 'block'
+
+    /* Transparent, so any frame the shader has not drawn yet — first paint, a
+       resize, a lost context — shows the still gradient underneath instead of
+       black. Every fragment writes alpha 1, so drawn pixels are unaffected. */
+    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, stencil: false })
+    if (!gl) return
+
     let active = true
     let visible = false
     let running = false
+    let ready = false
     let raf = 0
+    let program: WebGLProgram | null = null
+    let buffer: WebGLBuffer | null = null
+    let uTime: WebGLUniformLocation | null = null
+    let uResolution: WebGLUniformLocation | null = null
 
-    const scene = new Scene()
-    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
-    camera.position.z = 1
+    /* Everything the context owns, built here and again if the driver takes
+       the context away and hands it back. */
+    const build = () => {
+      const vertex = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER)
+      const fragment = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER)
+      if (!vertex || !fragment) {
+        if (vertex) gl.deleteShader(vertex)
+        if (fragment) gl.deleteShader(fragment)
+        return false
+      }
 
-    let renderer: WebGLRenderer
-    try {
-      renderer = new WebGLRenderer({ antialias: false, alpha: false })
-    } catch {
-      return
+      program = gl.createProgram()
+      if (!program) {
+        gl.deleteShader(vertex)
+        gl.deleteShader(fragment)
+        return false
+      }
+      gl.attachShader(program, vertex)
+      gl.attachShader(program, fragment)
+      gl.linkProgram(program)
+      gl.deleteShader(vertex)
+      gl.deleteShader(fragment)
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('GradientMesh: program failed to link.', gl.getProgramInfoLog(program))
+        gl.deleteProgram(program)
+        program = null
+        return false
+      }
+      gl.useProgram(program)
+
+      buffer = gl.createBuffer()
+      if (!buffer) {
+        gl.deleteProgram(program)
+        program = null
+        return false
+      }
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+      gl.bufferData(gl.ARRAY_BUFFER, QUAD, gl.STATIC_DRAW)
+      const position = gl.getAttribLocation(program, 'position')
+      gl.enableVertexAttribArray(position)
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
+
+      uTime = gl.getUniformLocation(program, 'iTime')
+      uResolution = gl.getUniformLocation(program, 'iResolution')
+      gl.uniform3fv(gl.getUniformLocation(program, 'stops'), stopValues)
+      gl.uniform1i(gl.getUniformLocation(program, 'stopCount'), stopCount)
+      gl.uniform1f(gl.getUniformLocation(program, 'angle'), shaderAngle)
+      gl.uniform1f(gl.getUniformLocation(program, 'warp'), warp)
+      gl.uniform1f(gl.getUniformLocation(program, 'scale'), scale)
+      return true
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5))
-    renderer.domElement.style.width = '100%'
-    renderer.domElement.style.height = '100%'
-    renderer.domElement.style.display = 'block'
-    container.appendChild(renderer.domElement)
-
-    const stops = colours.slice(0, MAX_STOPS).map(hexToVec3)
-    const uniforms = {
-      iTime: { value: 0 },
-      iResolution: { value: new Vector2(1, 1) },
-      stops: { value: Array.from({ length: MAX_STOPS }, (_, i) => stops[Math.min(i, stops.length - 1)]) },
-      stopCount: { value: stops.length },
-      /* CSS angle to the shader's: CSS 0deg points up and turns clockwise. */
-      angle: { value: ((angle - 90) * Math.PI) / 180 },
-      warp: { value: warp },
-      scale: { value: scale },
-    }
-    const material = new ShaderMaterial({ uniforms, vertexShader, fragmentShader })
-    const geometry = new PlaneGeometry(2, 2)
-    scene.add(new Mesh(geometry, material))
-    const timer = new Timer()
 
     const setSize = () => {
-      if (!active) return
-      renderer.setSize(container.clientWidth || 1, container.clientHeight || 1, false)
-      uniforms.iResolution.value.set(renderer.domElement.width, renderer.domElement.height)
+      if (!active || !ready) return
+      const width = Math.floor((container.clientWidth || 1) * pixelRatio)
+      const height = Math.floor((container.clientHeight || 1) * pixelRatio)
+      if (canvas.width !== width) canvas.width = width
+      if (canvas.height !== height) canvas.height = height
+      gl.viewport(0, 0, canvas.width, canvas.height)
+      gl.uniform2f(uResolution, canvas.width, canvas.height)
     }
+
+    const startedAt = performance.now()
     const renderFrame = () => {
-      timer.update()
-      uniforms.iTime.value = reducedMotion ? 0 : timer.getElapsed() * speed
-      renderer.render(scene, camera)
+      if (!ready) return
+      gl.uniform1f(uTime, stillOnly() ? 0 : ((performance.now() - startedAt) / 1000) * speed)
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
     }
     const renderLoop = () => {
-      if (!active || !visible) {
+      if (!active || !visible || !ready || stillOnly()) {
         running = false
         return
       }
       renderFrame()
       raf = requestAnimationFrame(renderLoop)
     }
+    /* Observer callbacks run after the frame's animation callbacks and before
+       paint, so the first frame is drawn here rather than scheduled: a canvas
+       that reaches the compositor undrawn is a hole in the hero. */
     const start = () => {
-      if (reducedMotion) {
-        renderFrame()
-        return
-      }
-      if (running) return
+      if (!ready) return
+      renderFrame()
+      if (stillOnly() || running) return
       running = true
       raf = requestAnimationFrame(renderLoop)
     }
 
+    /* A lost context is only restorable if the default is prevented. */
+    const onContextLost = (event: Event) => {
+      event.preventDefault()
+      ready = false
+      running = false
+      cancelAnimationFrame(raf)
+    }
+    const onContextRestored = () => {
+      if (!active) return
+      ready = build()
+      setSize()
+      if (visible) start()
+    }
+    /* Every exit path gives the context back; a mount that keeps one alive
+       counts against the browser's per-page limit until it is collected. */
+    const release = () => {
+      canvas.removeEventListener('webglcontextlost', onContextLost)
+      canvas.removeEventListener('webglcontextrestored', onContextRestored)
+      gl.deleteBuffer(buffer)
+      gl.deleteProgram(program)
+      gl.getExtension('WEBGL_lose_context')?.loseContext()
+      canvas.remove()
+    }
+
+    canvas.addEventListener('webglcontextlost', onContextLost)
+    canvas.addEventListener('webglcontextrestored', onContextRestored)
+
+    ready = build()
+    if (!ready) {
+      release()
+      return
+    }
+    container.appendChild(canvas)
     setSize()
+    renderFrame()
+
+    /* Sizing the canvas clears its buffer, and this runs after the frame's
+       draw, so the frame composites empty unless it is redrawn here. */
     const resizeObserver = new ResizeObserver(() => {
       setSize()
-      if (reducedMotion && visible) renderFrame()
+      renderFrame()
     })
     resizeObserver.observe(container)
     const intersectionObserver = new IntersectionObserver(([entry]) => {
@@ -200,16 +311,21 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
     })
     intersectionObserver.observe(container)
 
+    const onMotionChange = () => {
+      cancelAnimationFrame(raf)
+      running = false
+      if (visible) start()
+    }
+    motionQuery?.addEventListener('change', onMotionChange)
+
     return () => {
       active = false
+      ready = false
       cancelAnimationFrame(raf)
       resizeObserver.disconnect()
       intersectionObserver.disconnect()
-      geometry.dispose()
-      material.dispose()
-      renderer.dispose()
-      renderer.forceContextLoss()
-      renderer.domElement.remove()
+      motionQuery?.removeEventListener('change', onMotionChange)
+      release()
     }
   }, [colours, angle, warp, scale, speed])
 
