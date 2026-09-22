@@ -43,17 +43,8 @@
   --breakpoint-xs: 26rem;
 }
 
-/* Dark follows the system; the review page forces it with .dark or .light on <html>. */
-@custom-variant dark {
-  @media (prefers-color-scheme: dark) {
-    &:not(:where(.light, .light *)) {
-      @slot;
-    }
-  }
-  &:where(.dark, .dark *) {
-    @slot;
-  }
-}
+/* Light unless <html> carries .dark: the switch in the nav, kept in localStorage. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --band: linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%);
@@ -61,22 +52,8 @@
 }
 
 /* Dark: deep ink under a faint wash of the band, so glass panels have
-   something to blur. Follows the system unless <html> carries .light or .dark. */
+   something to blur. */
 @layer base {
-  :root.dark,
-  :root:not(.light) {
-    @media (prefers-color-scheme: dark) {
-      color-scheme: dark;
-      --color-page: #1c0c15;
-      --color-body: #ffffff;
-      --color-dim: rgb(255 255 255 / 0.62);
-      --color-soft: rgb(255 255 255 / 0.05);
-      --color-line: rgb(255 255 255 / 0.1);
-      --color-card: rgb(255 255 255 / 0.06);
-      --color-link: #ff5c6c;
-      --color-glass: rgb(43 18 32 / 0.3);
-    }
-  }
   :root.dark {
     color-scheme: dark;
     --color-page: #1c0c15;
@@ -144,13 +121,6 @@
     background:
       radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%),
       radial-gradient(50% 45% at 5% 95%, rgb(255 155 122 / 0.16), transparent 70%);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not(.light) body::before {
-      background:
-        radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%),
-        radial-gradient(50% 45% at 5% 95%, rgb(255 155 122 / 0.16), transparent 70%);
-    }
   }
   :focus-visible {
     outline: 2px solid var(--color-link);
