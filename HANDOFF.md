@@ -302,7 +302,13 @@ without a new ask from him.
   own and its `og:image:alt` says what that card says. 2400x1260, declared at
   that size.
 - Variant `a` is the site's own hero: the Ember band, the page's headline, its
-  sub line, the wordmark and tripcerto.com. `b` is the light page, `c` a dark
+  sub line, the wordmark and tripcerto.com, with the monogram as a large white
+  ghost off the right edge. Taylor set that composition on 22 Sep and signed
+  it off ("this is the one"): the headline is a compact left column (55px,
+  540px measure) and the mark is deliberately strong (700px, 0.24 opacity, off
+  the right edge by 24px). It carries the longest headline on the site, the
+  Pilot page's, in four lines with room left. Do not enlarge the type or fade
+  the mark without a new ask. `b` is the light page, `c` a dark
   glass card, `d` the light page with the phone and quote-grid artwork, `e` a
   split band over Engage and Workspace columns. To change the set, rerun the
   command with a different letter, bump the `?v=` on every page's `og:image`
