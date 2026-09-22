@@ -29,7 +29,7 @@ function Row({ index }: { index: number }) {
     <div className="animate-pop" style={delay(at)}>
       <div
         className={cn(
-          'grid h-[7.4cqw] grid-cols-[3.4cqw_minmax(0,1fr)_9cqw_3.4cqw] items-center gap-[2cqw] rounded-[1.4cqw] border pl-[3cqw] pr-[1.8cqw]',
+          'grid h-[7.4cqw] grid-cols-[2.6cqw_minmax(0,1fr)_9cqw_3.4cqw] items-center gap-[2.6cqw] rounded-[1.4cqw] border pl-[2.6cqw] pr-[1.8cqw]',
           gap
             ? 'animate-flag border-primary/40 bg-primary/10 dark:border-primary/60 dark:bg-primary/25'
             : 'border-ink/[0.06] bg-white/85 dark:border-white/10 dark:bg-white/[0.08]',
@@ -53,7 +53,7 @@ function Row({ index }: { index: number }) {
 export function WorkspaceScreen() {
   return (
     <WindowShell>
-      <div aria-hidden className="grid h-full grid-cols-[24%_minmax(0,1fr)] text-[2.1cqw] leading-[1.35] text-ink dark:text-paper">
+      <div aria-hidden className="grid h-full grid-cols-[34%_minmax(0,1fr)] text-[2.1cqw] leading-[1.35] text-ink dark:text-paper">
         <div className="border-r border-white/50 bg-white/20 p-[2.6cqw] dark:border-white/10 dark:bg-white/[0.06]">
           <StellaLine at={1.1} scale="window" />
         </div>

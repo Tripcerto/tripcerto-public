@@ -14,7 +14,7 @@ export function HeroVisuals({ window, phone }: { window: ReactNode; phone: React
       <div className="animate-pop mb-[20%] ml-[10%] sm:mb-[16%] lg:mb-[12%] lg:ml-[12%]" style={delay(0.15)}>
         {window}
       </div>
-      <div className="animate-pop absolute bottom-0 left-0 z-10 w-[42%] lg:w-[38%]" style={delay(0.15)}>
+      <div className="animate-pop absolute bottom-0 left-0 z-10 w-[40%] lg:w-[38%]" style={delay(0.15)}>
         <div className="animate-float" style={delay(1.6)}>
           {phone}
         </div>
