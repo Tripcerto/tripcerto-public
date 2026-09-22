@@ -1,5 +1,6 @@
-/* Renders the live band and the app icon tile for the brand kit, so the
-   document shows the shader rather than a still that approximates it.
+/* Renders the live band, the app icon tile and the link-preview card for the
+   brand kit, so the document shows the shader rather than a still that
+   approximates it, and the card the site actually serves.
 
    Both come out as PNG data URIs. The kit is one file that has to survive
    being emailed, so nothing it shows may be a link.
@@ -69,6 +70,9 @@ export async function renderAssets(jobs) {
     if (job.kind === 'band') {
       const qs = new URLSearchParams({ w: String(job.width), h: String(job.height), o: JSON.stringify(job.options) })
       await tab.goto(`http://127.0.0.1:${port}/scripts/brand/band.html?${qs}`, { waitUntil: 'networkidle0' })
+    } else if (job.kind === 'card') {
+      const qs = new URLSearchParams({ v: job.variant, page: job.page })
+      await tab.goto(`http://127.0.0.1:${port}/scripts/og/card.html?${qs}`, { waitUntil: 'networkidle0' })
     } else {
       const qs = new URLSearchParams({ g: 'mesh', shape: job.shape ?? 'tile', s: String(job.width), ...job.options })
       await tab.goto(`http://127.0.0.1:${port}/scripts/og/icon-variants.html?${qs}`, { waitUntil: 'networkidle0' })

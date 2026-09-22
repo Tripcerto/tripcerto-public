@@ -146,14 +146,26 @@
         gap: 24px;
       }
 
+      /* The monogram as a ghost off the right edge: our own artwork standing
+         in for a photograph, at a weight that never competes with the type.
+         Ink on the light card, white on the band; each variant sets which. */
+      .ghost {
+        position: absolute;
+        right: -118px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 560px;
+      }
+
       /* ---- A. Band ------------------------------------------------------ */
       .v-a .head {
-        font-size: 72px;
-        max-width: 950px;
+        font-size: 55px;
+        max-width: 540px;
         color: var(--paper);
       }
       .v-a .sub {
-        font-size: 27px;
+        font-size: 23px;
+        max-width: 540px;
         color: rgb(255 255 255 / 0.88);
         margin-top: 22px;
       }
@@ -164,6 +176,11 @@
         height: 1px;
         background: rgb(255 255 255 / 0.35);
         margin-bottom: 26px;
+      }
+      .v-a .ghost {
+        right: -24px;
+        width: 700px;
+        opacity: 0.34;
       }
 
       /* ---- B. Paper ----------------------------------------------------- */
@@ -189,14 +206,7 @@
       .v-b .url {
         color: var(--muted);
       }
-      /* The monogram as a ghost off the right edge: our own artwork standing
-         in for a photograph, at a weight that never competes with the type. */
-      .ghost {
-        position: absolute;
-        right: -118px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 560px;
+      .v-b .ghost {
         opacity: 0.09;
       }
       /* The band held to a strip at the foot, the way the page ends on it. */
@@ -639,6 +649,7 @@
         a: () => `
           <div class="card v-a">
             <div class="ground" id="band"><div></div></div>
+            <img class="ghost" src="../../public/brand/monogram-white.svg" alt="" />
             <div class="layer row"><div>${wordmark('paper')}</div></div>
             <div class="layer">
               <h1 class="head">${esc(copy.head)}</h1>

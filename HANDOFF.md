@@ -300,21 +300,24 @@ without a new ask from him.
 - The footer's Trust link is back in `Footer.tsx` `LEGAL`, and
   `site.test.tsx` expects it on every page.
 
-## The social cards (22 Sep, late)
+## The link-preview card (22 Sep, late; Taylor signed it off: "this is the one")
 
-- Five cards, one per page, generated from `scripts/og/` by the band variant:
-  `node scripts/og/shoot.mjs --pick a` writes `public/og-image.png` and
-  `og-engage`, `og-workspace`, `og-pilot`, `og-trust`. Each page points at its
-  own and its `og:image:alt` says what that card says. 2400x1260, declared at
-  that size.
-- Variant `a` is the site's own hero: the Ember band, the page's headline, its
-  sub line, the wordmark and tripcerto.com. `b` is the light page, `c` a dark
-  glass card, `d` the light page with the phone and quote-grid artwork, `e` a
-  split band over Engage and Workspace columns. To change the set, rerun the
-  command with a different letter, bump the `?v=` on every page's `og:image`
-  and `twitter:image`, and rewrite the alt lines to match.
-- What was there before: a black Harbour-era wordmark card reading "Agentic AI
-  for Travel Recommendations", which no page's alt text described.
+- ONE card for the whole site: `public/og-image.png`, 1200x630, served by every
+  page. Taylor asked for exactly one and rejected a card per page: "I want the
+  one that says we make complex travel easier to plan and sell... that's the
+  only one I want."
+- `node scripts/og/shoot.mjs --pick a` writes it. Then bump the `?v=` on every
+  page's `og:image` and `twitter:image` so the networks refetch. The generator
+  can also write per-page cards; do not, unless Taylor asks.
+- The composition, his, after three passes: the Ember band, the wordmark, the
+  homepage headline at 55px on a 540px measure, its line under it at 23px, and
+  the monogram as a white ghost, 700px wide at 0.24, off the right edge by
+  24px. Do not enlarge the type or fade the mark without a new ask.
+- It is in the brand kit under 02 The band, as "The link preview", rendered at
+  build time from `scripts/og/card.html` so the document cannot drift from the
+  file. `scripts/brand/render.mjs` grew a `card` job for it.
+- What it replaced: a black Harbour-era wordmark card reading "Agentic AI for
+  Travel Recommendations" that every page shared and no alt text described.
 
 ## Still to do
 
