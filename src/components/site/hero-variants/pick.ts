@@ -2,16 +2,18 @@ import type { ComponentType } from 'react'
 import { Hero } from '@/components/site/Hero'
 import { HeroBand } from '@/components/site/hero-variants/HeroBand'
 import { HeroFlow } from '@/components/site/hero-variants/HeroFlow'
+import { HeroGlass } from '@/components/site/hero-variants/HeroGlass'
 import { HeroLines } from '@/components/site/hero-variants/HeroLines'
 import { HeroThreads } from '@/components/site/hero-variants/HeroThreads'
 
-/* Review scaffolding: `?hero=lines|flow|threads|band` swaps the hero so the
+/* Review scaffolding: `?hero=lines|flow|threads|band|glass` swaps the hero so the
    candidates can be compared on one page. Removed once one is chosen. */
 const VARIANTS: Record<string, ComponentType> = {
   lines: HeroLines,
   flow: HeroFlow,
   threads: HeroThreads,
   band: HeroBand,
+  glass: HeroGlass,
 }
 
 export function pickHero(search: string): ComponentType {

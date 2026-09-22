@@ -71,6 +71,12 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   headline, `SHALLOW_WAVE` lower, rising ~21 degrees; layer opacity 0.55,
   `glowSpread` 0.003, no haze. He then said: stop updating the other
   candidates, `band` is the one being worked.
+- `glass` (`HeroGlass.tsx`, `?hero=glass`) is the ONE copy of `band` he then
+  asked for, combining two notes: Ember's peach as the base colour ("that
+  pink is too brash", quoted from someone else) and the `flow` streamlines
+  in place of the shader waves, rising bottom-left to top-right as thick,
+  near-opaque white strands with a halo (`FlowField` gained an `angle` prop
+  for it). No tone switch; `band` is untouched.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.

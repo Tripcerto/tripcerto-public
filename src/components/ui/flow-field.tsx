@@ -33,6 +33,9 @@ export interface FlowFieldProps {
   /* Pointer parallax reach in CSS px; 0 disables it. */
   parallax?: number
   seed?: number
+  /* Mean heading of the family in radians, canvas y down: 0 runs left to
+     right, negative rises to the right. */
+  angle?: number
 }
 
 /* Streamlines of a seeded simplex flow field, composed once per size on a 2D
@@ -57,6 +60,7 @@ export function FlowField({
   mobileLineCount = 56,
   parallax = 8,
   seed = 7,
+  angle = -0.26,
 }: FlowFieldProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -147,7 +151,7 @@ export function FlowField({
         lengthRange: layout.lengthRange,
         minLength: Math.max(90, width * 0.12),
         seed,
-        field: { baseAngle: -0.26, spread: 0.8, scale: 1 / Math.max(340, width * 0.32), step: 3 },
+        field: { baseAngle: angle, spread: 0.8, scale: 1 / Math.max(340, width * 0.32), step: 3 },
         warp: { amplitude: layout.warp, scale: 1 / Math.max(400, width * 0.36) },
         colours,
         opacity,
@@ -203,7 +207,7 @@ export function FlowField({
       if (pointerActive) window.removeEventListener('pointermove', handlePointerMove)
       canvas.remove()
     }
-  }, [colours, opacity, lineWidth, glow, glowOpacity, lineCount, mobileLineCount, parallax, seed])
+  }, [colours, opacity, lineWidth, glow, glowOpacity, lineCount, mobileLineCount, parallax, seed, angle])
 
   return <div ref={containerRef} aria-hidden className={cn('pointer-events-none relative overflow-hidden', className)} />
 }
