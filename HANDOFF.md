@@ -226,6 +226,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 | 15 | Pilot pill out of the bar; Pilot replaces Trust in the links; Trust beside Privacy and Terms in the footer | done |
 | 16 | Engage and Workspace "too close together" and their frames done animating before you reach them; the Workspace badge unnecessary | Workspace is its own full section on the soft band (the tint now alternates: Engage page, Workspace tint, journey page, roles tint), no badge, the lede names Workspace; Reveal waits for half the frame |
 | 17 | The hero's "Pilot · How a pilot runs" pill removed; the copy block re-centred as headline, lede, actions | done |
+| 18 | Waves "slightly less obvious": warp 0.3 → 0.25 | done |
 | 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
 
 ## Still to do (from the original plan)

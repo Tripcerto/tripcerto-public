@@ -11,7 +11,8 @@ const GradientMesh = lazy(() =>
    sits with the dark page; copy on it stays paper, the only ink that reads
    on the band. The hero and the close stand on the same band, and fold at
    the same size: the noise is scaled from the longer side, at the density
-   the short close band had when Taylor asked for the hero to match it. */
+   the short close band had when Taylor asked for the hero to match it, and
+   the warp a shade under that ("slightly less obvious", 22 Sep). */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
 /* Module-level so the shader builds once. */
 const MESH_COLOURS = ['#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
@@ -21,7 +22,7 @@ export function Band() {
     <div aria-hidden className="absolute inset-0 overflow-hidden">
       <div className="absolute inset-0" style={{ background: BAND }} />
       <Suspense fallback={null}>
-        <GradientMesh className="absolute inset-0" colours={MESH_COLOURS} angle={100} warp={0.3} scale={4.7} speed={1} />
+        <GradientMesh className="absolute inset-0" colours={MESH_COLOURS} angle={100} warp={0.25} scale={4.7} speed={1} />
       </Suspense>
       <div className="absolute inset-0 hidden bg-ink/55 dark:block" />
     </div>
