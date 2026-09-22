@@ -9,9 +9,9 @@ const SITE = [
   { href: LOGIN_URL, label: 'Login' },
 ] as const
 
-/* Trust sits with the legal pages (Taylor, 22 Sep) and joins them the day
-   the page exists; until then the site links nowhere it cannot answer. */
+/* Trust sits with the legal pages (Taylor, 22 Sep). */
 const LEGAL = [
+  { href: PAGES.trust, label: 'Trust' },
   { href: '/legal/privacy/', label: 'Privacy' },
   { href: '/legal/terms/', label: 'Terms' },
 ] as const

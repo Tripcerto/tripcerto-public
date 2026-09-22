@@ -9,13 +9,14 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 
 - Repo `Tripcerto/tripcerto-public`, branch `claude/landing-ember`. PR #1
   (the home page) was merged to `main` on Taylor's word on 22 Sep and is
-  live at tripcerto.com; PR #2 carries the Engage, Workspace and Pilot pages
-  and light-by-default. Vercel auto-deploys `main`; a merge happens only on
+  live at tripcerto.com; PR #2 (the Engage, Workspace and Pilot pages and
+  light-by-default) followed the same evening; PR #3 carries the Trust page
+  and the footer link to it. Vercel auto-deploys `main`; a merge happens only on
   Taylor's explicit say-so for that PR.
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (16 tests:
-  the same four over each of the four pages, `src/site.test.tsx`),
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (20 tests:
+  the same four over each of the five pages, `src/site.test.tsx`),
   `npm run build`. Run tsc from this repo or with its tsconfig path; a bare
   `tsc -b` from the monorepo worktree emits thousands of stray `.js` files.
 
@@ -241,16 +242,44 @@ without a new ask from him.
 - Light is the default: `@custom-variant dark` is class-only, `theme.ts` no
   longer consults `prefers-color-scheme`, and there is one `theme-color` meta
   the theme switch updates (Taylor, 22 Sep evening: "light mode by default").
-- Trust: the footer link is out until the page exists (the PDF's Trust page
-  is unsigned and must claim no certificate). Put it back in `Footer.tsx`
-  `LEGAL` and in `site.test.tsx` when the page lands.
+- Trust: built in the same wave, see the next section.
+
+## The Trust page (22 Sep, late evening; Taylor: "start on the trust")
+
+- `trust/index.html`, `src/trust.tsx`, `src/pages/TrustPage.tsx`, copy in
+  `src/content/trust.ts` by T-reference. The PDF's six sections were unsigned
+  and led with "Your data stays yours"; Charlie's guide §13 reframes the page
+  around what Tripcerto does that makes AI on a customer's data dependable, for
+  the technical buyer, in short sections with clear headings. So: how
+  information moves (four ruled rows: content, the conversation, customer
+  records, systems), what decides a recommendation (three columns: the system
+  chooses, the model writes, the expert decides), who can reach what (five
+  rows, added as T-7), the security programme (T-4, six rows), the legal
+  position (T-5, four rows, Privacy and Terms as links), live status (T-6) and
+  a close (T-8).
+- Every fact is drawn from the compliance set both directors approved on
+  21 Sep in the monorepo (`apps/internal/documents/`: `security-controls.md`,
+  `supplier-register.md`, `isms.md`, `certification-plan.md`, `dpia.md`).
+  Things the page deliberately does NOT say, because the documents say they
+  are not so: no certificate of any kind; no database rule beneath the
+  per-endpoint tenant check (R-06, so "a check on every request", never
+  "row-level security"); reads of customer data are not attributed (R-08, so
+  only changes are said to name who made them); the second model (OpenAI,
+  vectors) is not under zero data retention, so only the conversation model is
+  said to keep nothing; Cyber Essentials is not started, so it is "first" on
+  the route, not held.
+- One promise rather than a fact, marked `owned` in the copy file: processing
+  terms and the supplier list "available on request" (the register is
+  classified Internal). Taylor owns that line.
+- `Rows.tsx` is the one new primitive (name, note, line, optional href); the
+  Pilot measures use it too, its `product` key renamed `note`.
+- The footer's Trust link is back in `Footer.tsx` `LEGAL`, and
+  `site.test.tsx` expects it on every page.
 
 ## Still to do
 
-1. The Trust page (needs Taylor's sign-off on every security claim), then the
-   footer link returns.
-2. A new `public/og-image.png` in Ember (still the old cream one; every page
+1. A new `public/og-image.png` in Ember (still the old cream one; every page
    points at it), a rewritten README.
-3. A review wave (copy against the Guide; code, mobile, a11y) on the four pages.
+2. A review wave (copy against the Guide; code, mobile, a11y) on the five pages.
    There is NO pricing page and NO Ground page (Taylor, 22 Sep: "not right
    now"), whatever Charlie's documents ask for.
