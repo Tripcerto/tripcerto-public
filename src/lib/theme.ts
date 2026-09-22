@@ -4,7 +4,7 @@ import { flushSync } from 'react-dom'
 export type Theme = 'light' | 'dark'
 
 const KEY = 'theme'
-const BAR_COLOUR: Record<Theme, string> = { light: '#fff1ea', dark: '#1c0c15' }
+const BAR_COLOUR: Record<Theme, string> = { light: '#fff1ea', dark: '#1A0B20' }
 
 /* Light unless <html> carries .dark. index.html applies the stored choice
    before first paint, so this only has to read it. */

@@ -38,7 +38,7 @@ const SAID = 'bg-paper/35 dark:bg-ink/25'
 export function PhoneScreen() {
   return (
     <PhoneFrame
-      className="w-full border-white/80 bg-band-frosted shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.35),0_60px_120px_-30px_rgb(43_18_32/0.4)] dark:border-ink/85 dark:bg-band-smoked"
+      className="w-full border-white/80 bg-band-frosted shadow-[0_2px_4px_rgb(40_17_49/0.08),0_24px_48px_-12px_rgb(40_17_49/0.35),0_60px_120px_-30px_rgb(40_17_49/0.4)] dark:border-ink/85 dark:bg-band-smoked"
       islandClassName="bg-ink/80 dark:bg-ink"
     >
       <div aria-hidden className="flex h-full w-full flex-col bg-band-frosted text-[4.4cqw] leading-[1.35] text-ink dark:bg-band-smoked dark:text-paper">

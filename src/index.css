@@ -6,14 +6,14 @@
    Four brand colours plus the band's two outer stops, and nothing outside
    the pack (Taylor, 22 Sep: a darkened coral for text "is not our theme"). */
 @theme {
-  --color-ink: #2b1220;
+  --color-ink: #281131;
   --color-primary: #ff5c6c;
   --color-accent: #ff7a5c;
   --color-tint: #fff1ea;
   --color-paper: #ffffff;
   --color-pink: #e8437e;
   --color-peach: #ff9b7a;
-  --color-muted: #6e5a60;
+  --color-muted: #685A6E;
   --color-rule: #f0dcd4;
   --color-up: #1f9d63;
 
@@ -21,10 +21,10 @@
      mode; the brand colours above do not. White is not a surface; it only
      ever appears as a glass wash over the cream. */
   --color-page: #fff1ea;
-  --color-body: #2b1220;
-  --color-dim: #6e5a60;
+  --color-body: #281131;
+  --color-dim: #685A6E;
   --color-soft: rgb(255 255 255 / 0.5);
-  --color-line: rgb(43 18 32 / 0.1);
+  --color-line: rgb(40 17 49 / 0.1);
   --color-card: rgb(255 255 255 / 0.6);
   /* The accent for links and glyphs: the pack's pink on cream (3.5:1), the
      coral itself on ink (5.8:1). */
@@ -39,8 +39,8 @@
   --radius-lg: 20px;
   --radius-xl: 28px;
 
-  --shadow-card: 0 1px 2px rgb(43 18 32 / 0.06), 0 12px 40px -12px rgb(43 18 32 / 0.18);
-  --shadow-frame: 0 2px 4px rgb(43 18 32 / 0.06), 0 30px 80px -20px rgb(43 18 32 / 0.28);
+  --shadow-card: 0 1px 2px rgb(40 17 49 / 0.06), 0 12px 40px -12px rgb(40 17 49 / 0.18);
+  --shadow-frame: 0 2px 4px rgb(40 17 49 / 0.06), 0 30px 80px -20px rgb(40 17 49 / 0.28);
 
   --breakpoint-xs: 26rem;
 }
@@ -58,14 +58,14 @@
 @layer base {
   :root.dark {
     color-scheme: dark;
-    --color-page: #1c0c15;
+    --color-page: #1A0B20;
     --color-body: #ffffff;
     --color-dim: rgb(255 255 255 / 0.62);
     --color-soft: rgb(255 255 255 / 0.05);
     --color-line: rgb(255 255 255 / 0.1);
     --color-card: rgb(255 255 255 / 0.06);
     --color-link: #ff5c6c;
-    --color-glass: rgb(43 18 32 / 0.3);
+    --color-glass: rgb(40 17 49 / 0.3);
   }
 }
 
@@ -169,7 +169,7 @@
 
 @utility bg-band-smoked {
   background:
-    linear-gradient(rgb(43 18 32 / 0.76), rgb(43 18 32 / 0.76)),
+    linear-gradient(rgb(40 17 49 / 0.76), rgb(40 17 49 / 0.76)),
     var(--band);
 }
 

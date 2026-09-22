@@ -30,12 +30,12 @@ export function SafariScene({ className, crop = 'all' }: { className?: string; c
       <g transform="translate(46 30)">
         <Balloon panel="#ff5c6c" />
       </g>
-      <path d="M0 76 C 30 72, 60 80, 90 76 S 140 72, 160 76 L160 100 L0 100 Z" fill="#2b1220" />
-      <g fill="#2b1220" stroke="#2b1220" strokeLinecap="round">
+      <path d="M0 76 C 30 72, 60 80, 90 76 S 140 72, 160 76 L160 100 L0 100 Z" fill="#281131" />
+      <g fill="#281131" stroke="#281131" strokeLinecap="round">
         <path d="M22 76 L23 61" strokeWidth="1.8" />
         <path d="M9 62 Q 23 48 39 62 Z" stroke="none" />
       </g>
-      <g transform="translate(122 49)" fill="#2b1220" stroke="#2b1220" strokeLinecap="round">
+      <g transform="translate(122 49)" fill="#281131" stroke="#281131" strokeLinecap="round">
         <rect x="4" y="12" width="16" height="7.5" rx="3" stroke="none" />
         <path d="M6.5 13.5 L-0.5 -3" strokeWidth="2.4" />
         <rect x="-4.2" y="-6.2" width="6" height="3.2" rx="1.5" stroke="none" />
@@ -53,8 +53,8 @@ function Balloon({ panel }: { panel: string }) {
     <g>
       <path d="M0 0 C 7 0, 11 5, 11 11 C 11 17, 6 21, 3 25 L -3 25 C -6 21, -11 17, -11 11 C -11 5, -7 0, 0 0 Z" fill="#ffffff" fillOpacity="0.96" />
       <path d="M0 0 C 2.6 0, 4 5, 4 11 C 4 17, 2 21, 1 25 L -1 25 C -2 21, -4 17, -4 11 C -4 5, -2.6 0, 0 0 Z" fill={panel} />
-      <path d="M-3 25 L-3.6 30 M3 25 L3.6 30" stroke="#2b1220" strokeWidth="0.6" />
-      <rect x="-4.2" y="30" width="8.4" height="4.6" rx="1.2" fill="#2b1220" />
+      <path d="M-3 25 L-3.6 30 M3 25 L3.6 30" stroke="#281131" strokeWidth="0.6" />
+      <rect x="-4.2" y="30" width="8.4" height="4.6" rx="1.2" fill="#281131" />
     </g>
   )
 }

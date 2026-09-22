@@ -80,16 +80,16 @@ const sheet = `<!doctype html><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0}
-body{width:1000px;font:400 15px/1.5 'Instrument Sans',sans-serif;color:#2B1220;background:#fff;padding:40px 44px 48px}
-h1{font-size:26px;font-weight:600;letter-spacing:-.02em;padding-bottom:16px;border-bottom:2px solid #2B1220}
+body{width:1000px;font:400 15px/1.5 'Instrument Sans',sans-serif;color:#281131;background:#fff;padding:40px 44px 48px}
+h1{font-size:26px;font-weight:600;letter-spacing:-.02em;padding-bottom:16px;border-bottom:2px solid #281131}
 .row{margin-top:34px;padding-top:22px;border-top:1px solid #F0DCD4}
 .row:first-of-type{border-top:0}
 h2{font-size:19px;font-weight:600}
-.note{color:#6E5A60;font-size:14px;margin-top:3px}
+.note{color:#685A6E;font-size:14px;margin-top:3px}
 .line{display:flex;align-items:flex-end;gap:30px;margin-top:18px;flex-wrap:wrap}
 figure{margin:0;text-align:center}
 figure img{display:block;image-rendering:auto}
-figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#6E5A60;margin-top:8px}
+figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#685A6E;margin-top:8px}
 .mask{margin-left:16px;padding-left:30px;border-left:1px solid #F0DCD4}
 .crop{position:relative;width:120px;height:120px}
 .crop img{width:120px;height:120px;border-radius:50%}

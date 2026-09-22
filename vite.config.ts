@@ -48,5 +48,8 @@ export default defineConfig({
     globals: false,
     setupFiles: './src/test/setup.ts',
     css: false,
+    /* The brand gate sits beside the generator it checks rather than in src,
+       because it reads files off disk and src is a browser-only project. */
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'scripts/**/*.{test,spec}.ts'],
   },
 })

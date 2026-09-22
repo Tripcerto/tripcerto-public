@@ -42,7 +42,7 @@ const RULE = token('rule')
 const UP = token('up')
 
 /* The dark page surface. It is not a brand colour and the kit says so. */
-const NIGHT = css.match(/:root\.dark[^}]*--color-page:\s*(#[0-9a-fA-F]{6})/s)?.[1]?.toUpperCase() ?? '#1C0C15'
+const NIGHT = css.match(/:root\.dark[^}]*--color-page:\s*(#[0-9a-fA-F]{6})/s)?.[1]?.toUpperCase() ?? '#1A0B20'
 
 /* The still strip, exactly as the site declares it. */
 const STRIP = css.match(/--band:\s*(linear-gradient\([^;]+)\);/)?.[1]
@@ -97,8 +97,14 @@ async function mark(file) {
   const viewBox = svg.match(/viewBox="([^"]+)"/)?.[1]
   const d = svg.match(/<path[^>]*\sd="([^"]+)"/)?.[1]
   if (!viewBox || !d) throw new Error(`${file}: no viewBox or path`)
+  /* Every mark is ONE path whose counters are cut by the even-odd rule. Drop
+     the rule and the p, the e, the o and the monogram's c fill solid, which
+     reads as a heavier weight rather than as an error. Read it off the file;
+     never assume it, never hardcode it, never emit a path without it. */
+  const fillRule = svg.match(/fill-rule="([^"]+)"/)?.[1]
+  if (!fillRule) throw new Error(`${file}: declares no fill-rule, so its counters cannot be trusted`)
   const [, , w, h] = viewBox.split(/\s+/).map(Number)
-  return { viewBox, d, aspect: w / h, width: w }
+  return { viewBox, d, fillRule, aspect: w / h, width: w }
 }
 
 const wordmark = await mark('wordmark.svg')
@@ -114,10 +120,10 @@ const radius = (arc / appicon.width) * 100
 const use = (m, { fill, size, height, className = '' }) => {
   const w = size ?? Math.round((height ?? 100) * m.aspect)
   const h = height ?? Math.round((size ?? 100) / m.aspect)
-  return `<svg class="${className}" viewBox="${m.viewBox}" width="${w}" height="${h}" role="img" aria-label="tripcerto"><path d="${m.d}" fill="${fill}"/></svg>`
+  return `<svg class="${className}" viewBox="${m.viewBox}" width="${w}" height="${h}" role="img" aria-label="tripcerto"><path d="${m.d}" fill="${fill}" fill-rule="${m.fillRule}"/></svg>`
 }
-const tile = (px, fill) =>
-  `<svg viewBox="${appicon.viewBox}" width="${px}" height="${px}" role="img" aria-label="tripcerto"><path d="${appicon.d}" fill="${fill}" fill-rule="evenodd"/></svg>`
+/* One drawing function, so the tile cannot carry a rule the wordmark lost. */
+const tile = (px, fill) => use(appicon, { fill, size: px })
 
 /* ---- The band and the icon, drawn by the real shader -------------------- */
 
@@ -153,15 +159,15 @@ const SCALE = [
   ['Hero display', 'Home hero only', '48 / 64 / 60 / 64 / 80', '700', '0.98', '−0.035em'],
   ['Page display', 'Engage, Workspace, Pilot, Trust', '44 / 56 / 60', '700', '1.02', '−0.03em'],
   ['Section heading', 'Every section, every page', '32 / 44', '600', '1.1', '−0.02em'],
-  ['Hero lede', 'Under a display line', '18 / 20', '400', '1.55', '—'],
-  ['Section lede', 'Under a section heading', '17 / 18', '400', '1.55', '—'],
-  ['Column heading', 'Cards and columns', '19', '600', '1.5', '—'],
-  ['Row title', 'Ruled rows', '17', '600', '1.4', '—'],
-  ['Body', 'Everything read in paragraphs', '16', '400', '1.55', '—'],
-  ['Secondary note', 'Under a row title', '14', '400', '1.5', '—'],
-  ['Small print', 'Eyebrows, captions, legal', '13', '600 or 400', '1.5', '—'],
-  ['UI', 'Nav, buttons, footer links', '15', '500 or 600', '1.5', '—'],
-  ['Frame chrome', 'Inside a product mockup', '11 / 12', '400', '1.5', '—'],
+  ['Hero lede', 'Under a display line', '18 / 20', '400', '1.55', ''],
+  ['Section lede', 'Under a section heading', '17 / 18', '400', '1.55', ''],
+  ['Column heading', 'Cards and columns', '19', '600', '1.5', ''],
+  ['Row title', 'Ruled rows', '17', '600', '1.4', ''],
+  ['Body', 'Everything read in paragraphs', '16', '400', '1.55', ''],
+  ['Secondary note', 'Under a row title', '14', '400', '1.5', ''],
+  ['Small print', 'Eyebrows, captions, legal', '13', '600 or 400', '1.5', ''],
+  ['UI', 'Nav, buttons, footer links', '15', '500 or 600', '1.5', ''],
+  ['Frame chrome', 'Inside a product mockup', '11 / 12', '400', '1.5', ''],
 ]
 
 const html = `<!doctype html>
@@ -210,7 +216,7 @@ section>p,h3+p{color:var(--muted);margin-top:8px;max-width:700px}
 .strip{height:74px;border-radius:8px;background:var(--band);margin-top:10px}
 .bandshot{position:relative;border-radius:10px;margin-top:16px;height:140px;
   background:var(--bandshot) center/cover no-repeat}
-.bandshot.dark::after{content:'';position:absolute;inset:0;border-radius:10px;background:rgb(43 18 32 / .55)}
+.bandshot.dark::after{content:'';position:absolute;inset:0;border-radius:10px;background:rgb(40 17 49 / .55)}
 .bandshot b{position:absolute;left:18px;bottom:14px;z-index:1;color:var(--paper);font:600 15px/1 'Instrument Sans',sans-serif}
 table{border-collapse:collapse;width:100%;font-size:14px;margin-top:14px}
 td,th{border-top:1px solid var(--rule);padding:9px 0;vertical-align:top;text-align:left}
