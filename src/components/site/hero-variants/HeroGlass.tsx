@@ -11,13 +11,13 @@ const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 const FlowField = lazy(() => import('@/components/ui/flow-field').then((m) => ({ default: m.FlowField })))
 
 /* The band hero with a softer base and a different texture: Ember's peach
-   as the base colour, running Accent peach into Primary pink, and
+   as the base colour, running Accent peach into the cream tint, and
    the flow candidate's streamlines instead of the shader waves, running
    from bottom-left to top-right as thick, near-opaque glassy strands with a
    soft halo. Otherwise the band layout: the headline multiplied into the
    colour, the glass Workspace window off the right edge, the phone in
    front. Module-level so the field is composed once. */
-const BAND = 'linear-gradient(105deg, #ff7a5c 0%, #ff7a5c 12%, #ff5c6c 100%)'
+const BAND = 'linear-gradient(105deg, #ff7a5c 0%, #ff7a5c 12%, #fff1ea 100%)'
 const STRAND_COLOURS = ['#FFFFFF', '#FFF1EA', '#FFFFFF', '#FFF1EA']
 const STRAND_OPACITY: readonly [number, number] = [0.95, 0.7]
 const STRAND_ANGLE = -0.6
@@ -28,7 +28,7 @@ function Band() {
       <div className="absolute inset-0" style={{ background: BAND }} />
       <div className="absolute -left-[20%] -top-[40%] h-[130%] w-[65%] bg-[radial-gradient(closest-side,rgba(255,122,92,0.4),transparent)] animate-[drift-a_26s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
       <div className="absolute -right-[10%] -top-[30%] h-[130%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.8),transparent)] animate-[drift-b_28s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
-      <div className="absolute -bottom-[30%] left-[30%] h-[110%] w-[60%] bg-[radial-gradient(closest-side,rgba(255,92,108,0.5),transparent)] animate-[drift-c_32s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
+      <div className="absolute -bottom-[30%] left-[30%] h-[110%] w-[60%] bg-[radial-gradient(closest-side,rgba(255,241,234,0.6),transparent)] animate-[drift-c_32s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
       <div className="absolute -bottom-[25%] -left-[5%] h-[80%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.55),transparent)] animate-[drift-a_18s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
       <Suspense fallback={null}>
         <FlowField
