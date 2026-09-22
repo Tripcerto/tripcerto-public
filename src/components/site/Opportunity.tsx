@@ -19,7 +19,7 @@ const GLYPH: Record<Stage, { icon: LucideIcon; tone: string }> = {
    big, too clunky … not clear enough"); this is the plain statement. */
 export function Opportunity() {
   return (
-    <Section id={SECTION.opportunity} tone="tint" className="py-20 md:py-28">
+    <Section id={SECTION.opportunity} className="py-20 md:py-28">
       <div className="mx-auto max-w-[44rem] text-center">
         <Heading>{home.opportunity['H-2-A']}</Heading>
         <Lede className="mx-auto mt-5 max-w-[40rem]">{home.opportunity['H-2-B']}</Lede>

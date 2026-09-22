@@ -51,7 +51,7 @@ export const home = {
   workspace: {
     'H-5-A': 'The customer’s requirements, turned into a sellable trip', // changed
     'H-5-B':
-      'Dates, places, travellers and services become an itemised trip, resolved against your inventory, with the missing pieces flagged before the quote goes out.', // changed
+      'Workspace turns the dates, places, travellers and services in an inquiry into an itemised trip, resolved against your inventory, with the missing pieces flagged before the quote goes out.', // changed (names the product; the section has no badge)
     caption: 'A dropped file, a voice note, and the trip itemised.',
     points: [
       'Builds the itemised service list from the inquiry, in order',

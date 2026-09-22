@@ -1,5 +1,5 @@
-import { ArrowRight, Check, LayoutPanelLeft } from 'lucide-react'
-import { Heading, Lede, ProductBadge, Section } from '@/components/site/Section'
+import { ArrowRight, Check } from 'lucide-react'
+import { Heading, Lede, Section } from '@/components/site/Section'
 import { Reveal } from '@/components/site/Reveal'
 import { Stage } from '@/components/site/Stage'
 import { WorkspaceChat } from '@/components/site/frames/WorkspaceChat'
@@ -8,14 +8,15 @@ import { home } from '@/content/home'
 import { PAGES, SECTION } from '@/lib/links'
 
 /* The window is capped so it stands at the phone's scale, not the
-   column's. */
+   column's. Its own section on the soft band, a full step below Engage
+   (Taylor, 22 Sep evening: the two were "too close together"); no badge,
+   the lede names the product. */
 export function WorkspaceSection() {
   return (
-    <Section id={SECTION.workspace} className="pt-0 pb-16 md:pt-0 md:pb-28">
+    <Section id={SECTION.workspace} tone="tint" className="py-16 md:py-28">
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-12">
         <div>
-          <ProductBadge glyph={LayoutPanelLeft}>Workspace</ProductBadge>
-          <Heading className="mt-5">{home.workspace['H-5-A']}</Heading>
+          <Heading>{home.workspace['H-5-A']}</Heading>
           <Lede className="mt-5 max-w-[40rem]">{home.workspace['H-5-B']}</Lede>
           <ul role="list" className="mt-8 space-y-3">
             {home.workspace.points.map((point) => (

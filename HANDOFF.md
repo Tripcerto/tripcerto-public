@@ -224,6 +224,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 | 13 | Hero reloads "not different enough": the mesh now rolls a noise seed, a pink-or-peach lean (±0.2 of the ramp), the angle (±25°) and the warp per mount, not just the time phase | done |
 | 14 | The Close band looked wavier than the hero: the noise was sized from the band's height. Now sized from the longer side at the Close's density (scale 4.7), so both fold alike | done |
 | 15 | Pilot pill out of the bar; Pilot replaces Trust in the links; Trust beside Privacy and Terms in the footer | done |
+| 16 | Engage and Workspace "too close together" and their frames done animating before you reach them; the Workspace badge unnecessary | Workspace is its own full section on the soft band (the tint now alternates: Engage page, Workspace tint, journey page, roles tint), no badge, the lede names Workspace; Reveal waits for half the frame |
 | 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
 
 ## Still to do (from the original plan)

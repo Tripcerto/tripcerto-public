@@ -21,7 +21,7 @@ const ROW = 'md:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,7fr)] md:gap-8'
    is measured on, and what changes for it. No cards. */
 export function Audience() {
   return (
-    <Section id={SECTION.audience} className="py-20 md:py-28">
+    <Section id={SECTION.audience} tone="tint" className="py-20 md:py-28">
       <div className="max-w-[44rem]">
         <Heading>{home.audience['H-7-A']}</Heading>
         <Lede className="mt-5">{home.audience['H-7-B']}</Lede>
