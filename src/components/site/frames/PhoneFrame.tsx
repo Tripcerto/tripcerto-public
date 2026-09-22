@@ -16,7 +16,7 @@ export function PhoneFrame({
   return (
     <div
       className={cn(
-        'relative aspect-[9/19] w-[260px] cursor-default select-none overflow-hidden rounded-[2.4rem] border-[6px] border-ink bg-paper shadow-frame max-sm:rounded-[1.8rem]',
+        'relative aspect-[9/18.4] w-[260px] cursor-default select-none overflow-hidden rounded-[2.4rem] border-[6px] border-ink bg-paper shadow-frame max-sm:rounded-[1.8rem]',
         className,
       )}
     >

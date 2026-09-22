@@ -2,45 +2,22 @@ import type { ReactNode } from 'react'
 import { Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const TONE = {
-  light: {
-    shell: 'border-white/60 bg-white/25 text-ink',
-    chrome: 'border-white/50',
-    dot: 'bg-ink/20',
-    title: 'text-ink/70',
-    search: 'border-white/70 bg-white/50 text-ink/60',
-  },
-  dark: {
-    shell: 'border-white/15 bg-ink/70 text-paper',
-    chrome: 'border-white/10',
-    dot: 'bg-white/25',
-    title: 'text-paper/70',
-    search: 'border-white/15 bg-white/10 text-paper/60',
-  },
-} as const
-
-/* A glass browser window with a 4:3 body. The body is a size container, so
-   what is drawn inside sizes itself in cqw and scales with the window. */
-export function WindowShell({
-  children,
-  className,
-  tone = 'light',
-  title = 'Workspace',
-}: {
-  children: ReactNode
-  className?: string
-  tone?: keyof typeof TONE
-  title?: string
-}) {
-  const t = TONE[tone]
+/* A glass browser window with a 4:3 body. Frosted by day, smoked in dark
+   mode. The body is a size container, so what is drawn inside sizes itself
+   in cqw and scales with the window. */
+export function WindowShell({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn('cursor-default select-none overflow-hidden rounded-2xl border shadow-frame backdrop-blur-2xl backdrop-saturate-150', t.shell, className)}>
-      <div className={cn('flex h-9 items-center gap-1.5 border-b px-3 sm:h-11 sm:gap-2 sm:px-4', t.chrome)}>
-        <span className={cn('size-2 rounded-full sm:size-2.5', t.dot)} aria-hidden />
-        <span className={cn('size-2 rounded-full sm:size-2.5', t.dot)} aria-hidden />
-        <span className={cn('size-2 rounded-full sm:size-2.5', t.dot)} aria-hidden />
-        <span className={cn('ml-2 font-mono text-[10px] font-medium uppercase tracking-[0.08em] sm:ml-3 sm:text-[11px]', t.title)}>{title}</span>
-        <span className={cn('ml-auto flex h-6 w-28 items-center gap-1.5 rounded-md border px-2 text-[11px] sm:h-7 sm:w-44 sm:text-[12px]', t.search)}>
+    <div
+      className={cn(
+        'cursor-default select-none overflow-hidden rounded-2xl border border-white/60 bg-white/25 text-ink shadow-frame backdrop-blur-2xl backdrop-saturate-150 dark:border-white/15 dark:bg-ink/70 dark:text-paper',
+        className,
+      )}
+    >
+      <div className="flex h-9 items-center gap-1.5 border-b border-white/50 px-3 sm:h-11 sm:gap-2 sm:px-4 dark:border-white/10">
+        <span className="size-2 rounded-full bg-ink/20 sm:size-2.5 dark:bg-white/25" aria-hidden />
+        <span className="size-2 rounded-full bg-ink/20 sm:size-2.5 dark:bg-white/25" aria-hidden />
+        <span className="size-2 rounded-full bg-ink/20 sm:size-2.5 dark:bg-white/25" aria-hidden />
+        <span className="ml-auto flex h-6 w-28 items-center gap-1.5 rounded-md border border-white/70 bg-white/50 px-2 text-[11px] text-ink/60 sm:h-7 sm:w-44 sm:text-[12px] dark:border-white/15 dark:bg-white/10 dark:text-paper/60">
           <Search className="size-3" aria-hidden />
           Search
         </span>

@@ -31,6 +31,18 @@
   --breakpoint-xs: 26rem;
 }
 
+/* Dark follows the system; the review page forces it with .dark or .light on <html>. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:not(:where(.light, .light *)) {
+      @slot;
+    }
+  }
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+}
+
 :root {
   --band: linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%);
   --shell: 1200px;
@@ -92,6 +104,20 @@
 
 @utility bg-band {
   background: var(--band);
+}
+
+/* The band with a frosted or smoked pane painted over it: an opaque stand-in
+   for glass where the real backdrop would show another frame through. */
+@utility bg-band-frosted {
+  background:
+    linear-gradient(rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.66)),
+    var(--band);
+}
+
+@utility bg-band-smoked {
+  background:
+    linear-gradient(rgb(43 18 32 / 0.76), rgb(43 18 32 / 0.76)),
+    var(--band);
 }
 
 @keyframes rise {

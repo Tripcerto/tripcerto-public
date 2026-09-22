@@ -1,9 +1,9 @@
-import { lazy, Suspense, type ReactNode } from 'react'
-import { ArrowRight, ChevronRight, Search } from 'lucide-react'
+import { lazy, Suspense } from 'react'
+import { ArrowRight, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { EngagePlaceholder } from '@/components/site/frames/EngagePlaceholder'
 import { HeroVisuals } from '@/components/site/frames/HeroVisuals'
-import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
+import { PhoneScreen } from '@/components/site/frames/PhoneScreen'
+import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 
@@ -16,10 +16,9 @@ const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
 /* The Ember strip from the identity pack, pink through coral into peach,
    rendered by a shader that warps the gradient with slow noise so the colour
    itself rolls and folds. The still CSS strip underneath is the no-WebGL
-   case. The phone laps onto Stella's pane of the glass Workspace window,
-   whose body is 16:9. The container runs wider than the nav's shell on large
-   screens, so the window grows and the copy and visuals spread apart, and
-   everything tightens toward the middle as the screen narrows. */
+   case. The container runs wider than the nav's shell on large screens, so
+   the frames grow and the copy and visuals spread apart, and everything
+   tightens toward the middle as the screen narrows. */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
 /* Module-level so the shader builds once. */
 const MESH_COLOURS = ['#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
@@ -35,63 +34,7 @@ function Band() {
   )
 }
 
-const ROWS = [
-  { a: 70, b: 45, gap: false },
-  { a: 55, b: 60, gap: false },
-  { a: 80, b: 40, gap: true },
-  { a: 60, b: 55, gap: false },
-  { a: 45, b: 65, gap: true },
-  { a: 75, b: 50, gap: false },
-  { a: 65, b: 40, gap: false },
-] as const
-
-/* Workspace as glass: the chrome and Stella's pane let the band through;
-   the itemised list sits on near-solid paper so the rows stay legible. */
-function GlassWindow() {
-  return (
-    <div className="cursor-default select-none overflow-hidden rounded-2xl border border-white/60 bg-white/25 shadow-frame backdrop-blur-2xl backdrop-saturate-150">
-      <div className="flex h-12 items-center gap-2 border-b border-white/50 px-5">
-        <span className="size-2.5 rounded-full bg-ink/20" aria-hidden />
-        <span className="size-2.5 rounded-full bg-ink/20" aria-hidden />
-        <span className="size-2.5 rounded-full bg-ink/20" aria-hidden />
-        <span className="ml-3 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink/70">Workspace</span>
-        <span className="ml-auto flex h-7 w-48 items-center gap-2 rounded-md border border-white/70 bg-white/50 px-2 text-[12px] text-ink/60">
-          <Search size={13} aria-hidden />
-          Search
-        </span>
-      </div>
-      <div className="grid aspect-[16/9] grid-cols-[34%_minmax(0,1fr)]" aria-hidden>
-        <div className="flex flex-col gap-3 border-r border-white/50 bg-white/20 p-5">
-          <span className="h-2.5 w-20 rounded bg-ink/25" />
-          <span className="h-16 rounded-xl bg-white/50" />
-          <span className="h-2 w-[90%] rounded bg-ink/15" />
-          <span className="h-2 w-[70%] rounded bg-ink/15" />
-          <span className="h-2 w-[80%] rounded bg-ink/15" />
-          <span className="mt-auto h-9 rounded-full border border-ink/15 bg-white/40" />
-        </div>
-        <div className="flex min-w-0 flex-col gap-2 bg-paper/90 p-5">
-          <div className="mb-1 flex items-center justify-between">
-            <span className="h-2.5 w-28 rounded bg-ink/15" />
-            <span className="h-5 w-16 rounded-full bg-ink/[0.07]" />
-          </div>
-          {ROWS.map((r, i) => (
-            <div
-              key={i}
-              className="grid h-9 min-w-0 grid-cols-[44px_minmax(0,1fr)_minmax(0,1fr)_56px] items-center gap-2 rounded-lg border border-ink/[0.07] px-3"
-            >
-              <span className="h-2 w-10 rounded bg-ink/15" />
-              <span className="h-2 rounded bg-ink/10" style={{ width: `${r.a}%` }} />
-              <span className="h-2 rounded bg-ink/10" style={{ width: `${r.b}%` }} />
-              <span className={`h-4 w-full rounded-full ${r.gap ? 'bg-primary/25' : 'bg-ink/[0.07]'}`} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function Hero({ visuals }: { visuals?: ReactNode }) {
+export function Hero() {
   return (
     <section id="hero" aria-labelledby="hero-title" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-paper">
       <Band />
@@ -135,16 +78,7 @@ export function Hero({ visuals }: { visuals?: ReactNode }) {
           </div>
 
           <div className="min-w-0 lg:col-span-7">
-            {visuals ?? (
-              <HeroVisuals
-                window={<GlassWindow />}
-                phone={
-                  <PhoneFrame className="w-full shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)]">
-                    <EngagePlaceholder />
-                  </PhoneFrame>
-                }
-              />
-            )}
+            <HeroVisuals window={<WorkspaceScreen />} phone={<PhoneScreen />} />
           </div>
         </div>
       </div>
