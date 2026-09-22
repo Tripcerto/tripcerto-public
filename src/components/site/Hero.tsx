@@ -30,6 +30,7 @@ function Waves() {
       <FloatingLines
         className="absolute inset-x-0 top-0 bottom-16 mask-b-from-85% md:bottom-28"
         lightMode
+        mirror
         linesGradient={WAVE_COLOURS}
         enabledWaves={WAVES}
         lineCount={WAVE_LINES}
