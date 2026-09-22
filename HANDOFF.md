@@ -206,7 +206,14 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   that to twenty files on 22 Sep and they had to be restored from HEAD. Do
   not run prettier here; eslint is the only gate.
 
-## Ledger (Taylor's asks, 22 Sep evening, in order; keep this current)
+## The home page is signed off
+
+Taylor, 22 Sep, late evening: "Let's sign off this version. This is the home
+page, all done, for now." Hero, Engage, Workspace, the journey, the roles,
+the close, the nav and the footer are all his choices; do not reopen them
+without a new ask from him. The ledger below is closed.
+
+## Ledger (Taylor's asks, 22 Sep evening, in order; closed at sign-off)
 
 | # | Ask | State |
 |---|-----|-------|
@@ -231,12 +238,16 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 
 ## Still to do (from the original plan)
 
-1. CSS scroll-driven reveals for the sections below the hero (offered, not
-   built). No scroll-snap — Taylor asked, and the answer was a viewport-tall
-   hero and reveals instead.
+1. Reveals: done for the two product frames (`Reveal.tsx`, an in-view
+   hold on the frames' own choreography). No scroll-snap — Taylor asked,
+   and the answer was a viewport-tall hero and reveals instead.
 2. Wave 2: Engage, Workspace, Pilot, Trust pages from the PDF with the
    Guide's changes applied, as Vite multi-page entries (own HTML and meta),
-   `vercel.json` already has `cleanUrls`; nav links go live.
+   `vercel.json` already has `cleanUrls`; nav links go live. Charlie's guide
+   also asks for pricing pages (Engage, Workspace, Ground) and a Ground
+   destination; the Foundation states the prices. Taylor has not decided
+   the structure; ask before building those. Charlie's documents are
+   guidelines for the register, never lines to lift (Taylor).
 3. A new `public/og-image.png` in Ember (still the old cream one), a
    rewritten README. The frames are drawn, not captured, by decision; a
    real photo can replace the drawn scene in the activity cards if wanted.
