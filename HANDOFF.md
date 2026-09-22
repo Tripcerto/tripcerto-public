@@ -12,7 +12,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   live at tripcerto.com; PR #2 (the Engage, Workspace and Pilot pages and
   light-by-default) followed the same evening; PR #3 the Trust page and the
   footer link to it; PR #4 the icon set and social cards (a separate session);
-  PR #5 the dependency upgrade that cleared the 26 Dependabot alerts, the
+  PR #6 the dependency upgrade that cleared the 26 Dependabot alerts, the
   `validate` workflow and the Dependabot config.
   Vercel auto-deploys `main`. `main` takes changes by pull request only and
   requires the `validate` check, current with `main`. A merge happens only on
