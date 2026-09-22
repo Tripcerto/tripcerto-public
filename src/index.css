@@ -1,13 +1,11 @@
 @import 'tailwindcss';
 
 /* Ember — the identity pack's chosen set (tripcerto-identity-v2, 21 Sep 2026).
-   Four brand colours plus the band's two outer stops. primary-deep is primary
-   pulled down in lightness so it clears 4.5:1 as TEXT on tint and paper;
-   primary itself is a fill colour and sits at 2.7:1 on tint. */
+   Four brand colours plus the band's two outer stops, and nothing outside
+   the pack (Taylor, 22 Sep: a darkened coral for text "is not our theme"). */
 @theme {
   --color-ink: #2b1220;
   --color-primary: #ff5c6c;
-  --color-primary-deep: #b9243d;
   --color-accent: #ff7a5c;
   --color-tint: #fff1ea;
   --color-paper: #ffffff;
@@ -26,7 +24,9 @@
   --color-soft: rgb(255 255 255 / 0.5);
   --color-line: rgb(43 18 32 / 0.1);
   --color-card: rgb(255 255 255 / 0.6);
-  --color-link: #b9243d;
+  /* The accent for links and glyphs: the pack's pink on cream (3.5:1), the
+     coral itself on ink (5.8:1). */
+  --color-link: #e8437e;
   --color-glass: rgb(255 255 255 / 0.3);
 
   --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -73,7 +73,7 @@
       --color-soft: rgb(255 255 255 / 0.05);
       --color-line: rgb(255 255 255 / 0.1);
       --color-card: rgb(255 255 255 / 0.06);
-      --color-link: #ff8a96;
+      --color-link: #ff5c6c;
       --color-glass: rgb(43 18 32 / 0.3);
     }
   }
@@ -85,7 +85,7 @@
     --color-soft: rgb(255 255 255 / 0.05);
     --color-line: rgb(255 255 255 / 0.1);
     --color-card: rgb(255 255 255 / 0.06);
-    --color-link: #ff8a96;
+    --color-link: #ff5c6c;
     --color-glass: rgb(43 18 32 / 0.3);
   }
 }

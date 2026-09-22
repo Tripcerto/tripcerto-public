@@ -38,7 +38,7 @@ function Row({ index }: { index: number }) {
         )}
         style={gap ? delay(at + 0.6) : undefined}
       >
-        <KindGlyph className={cn('size-[2.6cqw]', gap ? 'text-primary-deep dark:text-primary' : 'text-ink/70 dark:text-paper/80')} />
+        <KindGlyph className={cn('size-[2.6cqw]', gap ? 'text-pink dark:text-primary' : 'text-ink/70 dark:text-paper/80')} />
         <div className="flex min-w-0 flex-col gap-[0.9cqw]">
           <Bar className={cn('h-[1.2cqw]', place, gap ? 'bg-primary/40' : BAR)} />
           {detail && <Bar className={cn('h-[0.9cqw]', BAR_FAINT, detail)} />}

@@ -28,14 +28,6 @@ export function Section({
   )
 }
 
-export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
-  return (
-    <p className={cn('font-mono text-[13px] font-medium uppercase tracking-[0.08em] text-link', className)}>
-      {children}
-    </p>
-  )
-}
-
 /* A product's name as a small glass pill with its glyph, in place of an
    eyebrow, so the heading under it can say what the product does without
    naming it again. */
