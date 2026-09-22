@@ -18,6 +18,10 @@ updates:
       runtime:
         dependency-type: production
         update-types: [minor, patch]
+    ignore:
+      # The site builds and runs on Node 24 (validate.yml, Vercel); its types stay on 24.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
