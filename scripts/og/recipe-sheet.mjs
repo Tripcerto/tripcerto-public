@@ -20,33 +20,14 @@ const ROOT = resolve(fileURLToPath(new URL('../../', import.meta.url)))
 const OUT = join(ROOT, 'scripts/og/out')
 
 const RECIPES = [
-  {
-    id: 'tight',
-    name: 'One fold across the tile',
-    params: { scale: 1.0, warp: 0.12, bias: -0.06, time: 63, blur: 12, sat: 100 },
-    note: 'The calmest of them. At 32px it is a flat ramp.',
-  },
-  {
-    id: 'built',
-    name: 'The set that is built',
-    params: { scale: 1.4, warp: 0.12, bias: -0.06, time: 63, blur: 12, sat: 100 },
-    note: 'A fold and a half, so the surface still moves at 64px.',
-  },
-  {
-    id: 'looser',
-    name: 'Looser again',
-    params: { scale: 2.0, warp: 0.12, bias: -0.06, time: 63, blur: 12, sat: 100 },
-    note: 'Two folds. The swirl starts to read as a shape rather than a sweep.',
-  },
-  {
-    id: 'optical',
-    name: 'The hero field, blurred hard',
-    params: { scale: 4.7, warp: 0.26, bias: -0.06, time: 63, blur: 32, sat: 115 },
-    note: 'The hero untouched, with the frequencies taken out afterwards.',
-  },
+  { id: 's16', name: 'scale 1.6', params: { scale: 1.6 } },
+  { id: 's17', name: 'scale 1.7', params: { scale: 1.7 } },
+  { id: 's18', name: 'scale 1.8', params: { scale: 1.8 } },
+  { id: 's20', name: 'scale 2.0', params: { scale: 2.0 } },
+  { id: 's14', name: 'scale 1.4', params: { scale: 1.4 }, note: 'The lower end of the range, for reference.' },
 ]
 
-const SIZES = [512, 180, 64, 32]
+const SIZES = [180, 120, 64, 32]
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' }
 
 function serve(root) {
@@ -82,10 +63,10 @@ const shot = async (recipe, size) => {
   await tab.setViewport({ width: size, height: size, deviceScaleFactor: 2 })
   tab.on('pageerror', (e) => problems.push(`${recipe.id}@${size}: ${e}`))
   tab.on('console', (m) => m.type() === 'error' && problems.push(`${recipe.id}@${size}: ${m.text()}`))
-  const qs = new URLSearchParams({ g: 'mesh', s: String(size), shape: 'square', mark: '0.76', ...Object.fromEntries(Object.entries(recipe.params).map(([k, v]) => [k, String(v)])) })
+  const qs = new URLSearchParams({ g: 'mesh', s: String(size), shape: 'tile', ...Object.fromEntries(Object.entries(recipe.params).map(([k, v]) => [k, String(v)])) })
   await tab.goto(`http://127.0.0.1:${port}/scripts/og/icon-variants.html?${qs}`, { waitUntil: 'networkidle0' })
   await tab.evaluate(() => window.cardReady)
-  const buf = await tab.screenshot({ type: 'png', encoding: 'base64' })
+  const buf = await tab.screenshot({ type: 'png', encoding: 'base64', omitBackground: true })
   await tab.close()
   return `data:image/png;base64,${buf}`
 }
@@ -97,7 +78,7 @@ for (const r of RECIPES) {
   console.log(`  ${r.id}: ${SIZES.length} renders`)
 }
 
-const params = (p) => `scale ${p.scale} · warp ${p.warp} · bias ${p.bias} · blur ${p.blur} · sat ${p.sat}`
+const params = (p) => Object.entries(p).map(([k, v]) => `${k}=${v}`).join('&')
 
 const sheet = `<!doctype html><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,13 +101,13 @@ figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#6E5A60;margin-top
 .springboard img{width:76px;height:76px;border-radius:17px}
 .springboard figcaption{color:#C9B6BC;margin-top:7px}
 </style>
-<h1>The warped app icon — four recipes</h1>
-<p class="lede">The same tile, the same seed and the same mark. Only the shader field changes. Right-hand plate is the icon at home-screen size on the dark page colour, with iOS's own rounding applied.</p>
+<h1>The fold, between 1.4 and 2.0</h1>
+<p class="lede">The sweep's own parameters, only scale moving: warp 0.26, bias -0.06, seed and time fixed, no blur. Drawn as the artwork's rounded tile to match the sweep. The files that ship stay square, because iOS and Android round them themselves.</p>
 ${RECIPES.map(
   (r) => `<div class="row">
   <h2>${r.name}</h2>
   <p class="params">${params(r.params)}</p>
-  <p class="note">${r.note}</p>
+  ${r.note ? `<p class="note">${r.note}</p>` : ''}
   <div class="line">
     ${SIZES.map((s) => `<figure><img src="${images[r.id][s]}" width="${s > 180 ? 168 : s}" height="${s > 180 ? 168 : s}"><figcaption>${s}px</figcaption></figure>`).join('')}
     <div class="home"><figure class="springboard"><img src="${images[r.id][180]}"><figcaption>home screen</figcaption></figure></div>
