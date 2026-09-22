@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { ArrowRight, ChevronRight } from 'lucide-react'
+import { lazy, Suspense, type ReactNode } from 'react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { WaveName } from '@/components/ui/floating-lines'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
@@ -23,53 +23,56 @@ const WAVE_COLOURS = ['#B9243D', '#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
 const WAVES: WaveName[] = ['top', 'bottom', 'middle']
 const WAVE_LINES = [10, 15, 20]
 
+function Waves() {
+  return (
+    <Suspense fallback={null}>
+      <FloatingLines
+        className="absolute inset-x-0 top-0 bottom-16 mask-b-from-85% md:bottom-28"
+        lightMode
+        linesGradient={WAVE_COLOURS}
+        enabledWaves={WAVES}
+        lineCount={WAVE_LINES}
+        lineDistance={17}
+        bendRadius={5}
+        bendStrength={-0.5}
+        interactive
+        parallax
+        lineWidth={2}
+        lineBlur={8}
+        lineOpacity={0.85}
+      />
+    </Suspense>
+  )
+}
+
 function Title({ text }: { text: string }) {
   return (
     <h1
       id="hero-title"
-      className="text-gradient mt-6 max-w-[12ch] text-balance text-[2.75rem] font-bold leading-[1.02] tracking-[-0.03em] sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[5rem]"
+      className="text-gradient max-w-[12ch] text-balance text-[2.75rem] font-bold leading-[1.02] tracking-[-0.03em] sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[5rem]"
     >
       {text}
     </h1>
   )
 }
 
-export function Hero() {
+export interface HeroProps {
+  /* The full-bleed layer behind the copy; the waves unless a variant passes its own. */
+  background?: ReactNode
+}
+
+export function Hero({ background = <Waves /> }: HeroProps) {
   return (
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-paper pb-16 pt-28 md:pb-24 md:pt-36"
+      className="relative overflow-hidden bg-paper pb-16 pt-28 md:pb-28 md:pt-40"
     >
-      <Suspense fallback={null}>
-        <FloatingLines
-          className="absolute inset-x-0 top-0 bottom-16 mask-b-from-85% md:bottom-24"
-          lightMode
-          linesGradient={WAVE_COLOURS}
-          enabledWaves={WAVES}
-          lineCount={WAVE_LINES}
-          lineDistance={17}
-          bendRadius={5}
-          bendStrength={-0.5}
-          interactive
-          parallax
-          lineWidth={2}
-          lineBlur={8}
-          lineOpacity={0.85}
-        />
-      </Suspense>
+      {background}
 
       <div className="shell relative z-10">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="animate-rise lg:col-span-7">
-            <a
-              href={PRODUCTS_HREF}
-              className="relative inline-flex items-center gap-1 rounded-full bg-tint py-1.5 pl-3.5 pr-2.5 text-[13px] font-medium text-ink before:absolute before:inset-x-0 before:-inset-y-1.5 before:content-['']"
-            >
-              {home.hero.pill}
-              <ChevronRight size={14} aria-hidden />
-            </a>
-
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:items-center lg:gap-8">
+          <div className="animate-rise min-w-0 lg:col-span-6">
             <Title text={home.hero['H-1-A']} />
 
             <p className="mt-4 max-w-[36rem] text-lg leading-[1.5] text-muted md:text-xl">{home.hero['H-1-B']}</p>
@@ -91,16 +94,16 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="mt-10 lg:col-span-5 lg:mt-0">
-            <div className="relative min-h-[400px] lg:min-h-[560px]">
-              <div className="absolute right-0 top-8 w-[82%] sm:w-[92%] lg:-right-16 lg:w-[440px] xl:-right-24 xl:w-[560px]">
+          <div className="min-w-0 lg:col-span-6">
+            <div className="relative min-h-[430px] sm:min-h-[520px] lg:min-h-[600px]">
+              <div className="absolute right-0 top-0 w-[84%] rotate-[4deg] sm:w-[88%] lg:-right-10 lg:w-[460px] xl:-right-20 xl:w-[540px]">
                 <WindowFrame title="Workspace">
                   <div className="h-[340px] lg:h-[400px]">
                     <WorkspacePlaceholder />
                   </div>
                 </WindowFrame>
               </div>
-              <PhoneFrame className="absolute left-0 top-0 z-10 w-[44%] sm:w-[210px] lg:-left-6 lg:w-[260px]">
+              <PhoneFrame className="absolute bottom-0 left-0 z-10 w-[42%] sm:w-[200px] lg:w-[250px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>
