@@ -16,6 +16,37 @@ export const home = {
     'H-2-A': 'Customer context carries from the first question to the final quote', // changed
     'H-2-B':
       'A traveller explains what they want once. Engage records it, the inquiry arrives with it and Workspace builds from it. Nobody repeats the discovery, and the sale moves sooner.', // changed
+    /* Why it is an opportunity (Guide §3), kept apart from the opportunity itself. */
+    why: 'Travel sales usually lose momentum at two handoffs: into the sales team, and into the first quote. Those are the two Tripcerto carries.', // new
+    /* The connected journey, three dots and a tick. */
+    steps: [
+      {
+        label: 'Research',
+        line: 'The traveller asks on your website. Engage answers from your expertise and your products.',
+        product: 'engage',
+      },
+      {
+        label: 'Inquiry',
+        line: 'The inquiry arrives with the transcript and a structured brief: needs, timing, preferences and the products considered.',
+        product: 'engage',
+      },
+      {
+        label: 'Quote',
+        line: 'Workspace builds the itemised trip from the brief, shows what is missing and resolves it against your inventory.',
+        product: 'workspace',
+      },
+      {
+        label: 'Booked',
+        line: 'The expert approves the quote, and it goes into the booking process you already run.',
+        product: 'outcome',
+      },
+    ],
+    /* The same journey as three dots, one per product and the outcome. */
+    dots: [
+      { label: 'Engage', line: 'The traveller asks on your website. The inquiry arrives with the brief.' },
+      { label: 'Workspace', line: 'The brief becomes an itemised trip, checked against your inventory.' },
+      { label: 'Booked', line: 'The expert approves the quote. It goes into the process you already run.' },
+    ],
   },
   engage: {
     'H-4-A': 'Every website visitor, understood before the first call', // changed
@@ -40,25 +71,55 @@ export const home = {
     ],
   },
   audience: {
-    'H-7-A': 'Built for complex travel sales',
+    'H-7-A': 'Built for the people who sell complex travel', // changed
     'H-7-B':
-      'Tripcerto makes complex, multi-day travel faster and easier to sell, across bespoke tour operations, DMC quoting and digitally connected ground transportation.', // changed
-    cards: [
-      { role: 'Revenue', line: 'More of the pipeline converts, with a faster and better-informed first response.' },
-      { role: 'Marketing', line: 'More return from the traffic you already pay for, and a record of what each visitor wanted.' },
-      { role: 'Operations', line: 'Quotes prepared completely, with the gaps visible before send and fewer corrections after.' },
-      { role: 'Technology', line: 'Works with the systems you already run. Customer data stays separated by tenant.' },
+      'Tripcerto takes the manual steps out of selling multi-day, multi-supplier trips at bespoke tour operators, DMCs and digitally connected ground transportation. Each role sees it in the number it is measured on.', // changed
+    /* Buying roles and what they are measured on (Guide §8; the Foundation's
+       stakeholder map). Sectors support the explanation, they do not lead it. */
+    roles: [
+      {
+        role: 'Sales',
+        measure: 'Conversion, response time, booking value',
+        line: 'Every inquiry arrives with the questions asked, the preferences given and the products considered, so the first reply is faster and better informed.',
+      },
+      {
+        role: 'Marketing',
+        measure: 'Inquiry rate, cost per qualified inquiry',
+        line: 'More of the visitors you already pay for reach a useful conversation, and each inquiry carries a record of what the visitor wanted.',
+      },
+      {
+        role: 'Operations',
+        measure: 'Quote time, completeness, handling time',
+        line: 'Quotes are itemised and checked before they go out, with the gaps visible before send rather than corrected after.',
+      },
+      {
+        role: 'Technology',
+        measure: 'Security, data ownership, integration',
+        line: 'Works with the systems you already run. Customer data stays separated by tenant, your approved sources stay authoritative and every recommendation is governed.',
+      },
+      {
+        role: 'Finance',
+        measure: 'Total cost, payback, contract exposure',
+        line: 'Subscription, usage and implementation are priced separately, and the pilot measures are agreed before anything expands.',
+      },
+      {
+        role: 'The travel expert',
+        measure: 'Time on expert work, fewer corrections',
+        line: 'Tripcerto prepares the work and shows what is missing. The expert decides what goes to the customer.',
+      },
     ], // changed: roles, not sectors
   },
   proof: {
-    'H-8-A': 'Measure the point that matters',
+    'H-8-A': 'What a pilot measures', // changed
     'H-8-B':
-      'A controlled pilot measures conversion, lead quality, quote time, handling time or completeness against your own baseline.', // changed
+      'One workflow, your own baseline, one primary measure and up to three supporting ones. Nothing is claimed until it has been measured.', // changed
+    measures: ['Visitor to inquiry', 'Inquiry quality', 'Inquiry to first quote', 'Handling time', 'Gaps found before send'],
   },
   close: {
     'H-9-A': 'We find where Tripcerto has the most effect in your business, then prove it there', // changed
     'H-9-B':
       'A short call is enough to find the workflow where a pilot would show the most. We define the measure with you.', // changed
     'H-9-C': 'Book a demo',
+    'H-9-D': 'How a pilot runs',
   },
 } as const

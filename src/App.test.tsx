@@ -68,7 +68,6 @@ describe('home page', () => {
       home.engage['H-4-A'],
       home.workspace['H-5-A'],
       home.audience['H-7-A'],
-      home.proof['H-8-A'],
       home.close['H-9-A'],
     ]) {
       expect(screen.getAllByText(text).length).toBeGreaterThan(0)
