@@ -1,10 +1,11 @@
+import type { CSSProperties } from 'react'
 import { Sparkles } from 'lucide-react'
 import { BAR } from '@/components/site/frames/glyphs'
 import { delay } from '@/components/site/frames/motion'
 import { cn } from '@/lib/utils'
 
-export function Bar({ className }: { className: string }) {
-  return <span className={cn('block rounded-full', className)} />
+export function Bar({ className, style }: { className: string; style?: CSSProperties }) {
+  return <span className={cn('block rounded-full', className)} style={style} />
 }
 
 const STELLA = {

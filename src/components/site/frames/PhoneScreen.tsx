@@ -1,81 +1,103 @@
-import { Binoculars, Sunrise } from 'lucide-react'
+import type { ReactNode } from 'react'
+import { ChevronLeft, Sparkles, Sunrise } from 'lucide-react'
+import type { Glyph } from '@/components/site/frames/glyphs'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { SafariScene, BalloonGlyph } from '@/components/site/frames/SafariScene'
-import { BAR, KIND_GLYPH, STATUS_GLYPH, STATUS_TONE } from '@/components/site/frames/glyphs'
+import { BAR } from '@/components/site/frames/glyphs'
 import { Bar, StellaLine } from '@/components/site/frames/StellaLine'
 import { delay } from '@/components/site/frames/motion'
 import { story } from '@/components/site/frames/story'
 import { cn } from '@/lib/utils'
 
-/* The same trip, loaded on the phone: Stella's line, the trip card and the
-   list. No conversation is drawn; the phone laps the Workspace pane where
-   it would be. The screen is painted, not glass, so the window behind it
-   does not show through. */
+/* Engage on the phone: two traveller messages, Stella's line with two
+   activities she recommends and a word on them, and her next reply on its
+   way, sitting at the bottom of the screen as a conversation does. Bars stand for the words. Bezel and screen are painted, not glass, so the window behind
+   the phone does not show through either. */
 
-const CARD_PRICE = story.card.price.match(/£[\d,]+/)?.[0] ?? ''
-const PHONE_BARS = ['w-[70%]', 'w-[58%]', 'w-[84%]', 'w-[64%]', 'w-[76%]', 'w-[62%]'] as const
+const ACTIVITY = [
+  { glyph: BalloonGlyph, crop: 'balloon' },
+  { glyph: Sunrise, crop: 'giraffe' },
+] as const satisfies ReadonlyArray<{ glyph: Glyph; crop: 'balloon' | 'giraffe' }>
+
+function Traveller({ children, at }: { children: ReactNode; at: number }) {
+  return (
+    <div
+      className="animate-pop flex max-w-[78%] flex-col gap-[2.2cqw] self-end rounded-[4cqw] rounded-br-[1.2cqw] bg-ink/85 p-[3.6cqw] dark:bg-white/90"
+      style={delay(at)}
+    >
+      {children}
+    </div>
+  )
+}
+
+const SAID = 'bg-paper/35 dark:bg-ink/25'
 
 export function PhoneScreen() {
   return (
     <PhoneFrame
-      className="w-full border-white/60 bg-white/20 shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.35),0_60px_120px_-30px_rgb(43_18_32/0.4)] backdrop-blur-3xl backdrop-saturate-150 dark:border-ink/90 dark:bg-ink/70"
+      className="w-full border-white/80 bg-band-frosted shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.35),0_60px_120px_-30px_rgb(43_18_32/0.4)] dark:border-ink/85 dark:bg-band-smoked"
       islandClassName="bg-ink/80 dark:bg-ink"
     >
       <div aria-hidden className="flex h-full w-full flex-col bg-band-frosted text-[4.4cqw] leading-[1.35] text-ink dark:bg-band-smoked dark:text-paper">
-        <div className="animate-pop flex items-center justify-end gap-[1.8cqw] px-[5cqw] pb-[2cqw] pt-[14cqw]" style={delay(0.8)}>
-          <span className="size-[2.4cqw] rounded-full bg-up" />
-          <Bar className={cn('h-[1.8cqw] w-[9cqw]', BAR)} />
+        <div className="animate-pop flex items-center gap-[3cqw] px-[4cqw] pb-[3cqw] pt-[13cqw]" style={delay(0.7)}>
+          <ChevronLeft className="size-[5cqw] text-ink/70 dark:text-paper/70" />
+          <span className="relative flex size-[9cqw] items-center justify-center rounded-full bg-ink text-paper dark:bg-paper dark:text-ink">
+            <Sparkles className="size-[4.6cqw]" />
+            <span className="absolute -bottom-[0.4cqw] -right-[0.4cqw] size-[3cqw] rounded-full border-[0.6cqw] border-white bg-up dark:border-ink" />
+          </span>
+          <Bar className={cn('h-[1.8cqw] w-[16cqw]', BAR)} />
         </div>
 
-        <div className="flex flex-col gap-[3cqw] px-[4cqw]">
-          <StellaLine at={1.0} scale="phone" className="px-[1cqw]" />
+        <div className="mt-auto flex flex-col gap-[4.4cqw] px-[4cqw] pb-[8cqw]">
+          <Traveller at={0.9}>
+            <Bar className={cn('h-[2.2cqw] w-[36cqw]', SAID)} />
+            <Bar className={cn('h-[2.2cqw] w-[24cqw]', SAID)} />
+          </Traveller>
 
-          <div className="animate-pop overflow-hidden rounded-[4cqw] bg-white/85 shadow-card dark:bg-white/10" style={delay(1.5)}>
-            <div className="aspect-[16/10] w-full">
-              <SafariScene />
-            </div>
-            <div className="p-[3.5cqw]">
-              <div className="flex items-center justify-between gap-[2cqw]">
-                <Bar className={cn('h-[2.2cqw] w-[30cqw]', BAR)} />
-                <span className="font-semibold tabular-nums">{CARD_PRICE}</span>
-              </div>
-              <div className="mt-[2.8cqw] flex gap-[1.5cqw]">
-                {[BalloonGlyph, Sunrise, Binoculars].map((Glyph, i) => (
-                  <span key={i} className="flex size-[8cqw] items-center justify-center rounded-full bg-tint text-ink dark:bg-white/15 dark:text-paper">
-                    <Glyph className="size-[4.2cqw]" />
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+          <StellaLine at={1.2} scale="phone" className="px-[1cqw]" />
 
-          <div className="flex flex-col gap-[2cqw]">
-            {story.rows.map((row, i) => {
-              const KindGlyph = KIND_GLYPH[row.kind]
-              const StatusGlyph = STATUS_GLYPH[row.status]
-              const gap = row.status === 'gap'
-              const at = 2.1 + i * 0.16
+          <div className="animate-pop flex gap-[4%]" style={delay(1.5)}>
+            {story.activities.map((activity, i) => {
+              const { glyph: ActivityGlyph, crop } = ACTIVITY[i]
               return (
-                <div key={i} className="animate-pop" style={delay(at)}>
-                  <div
-                    className={cn(
-                      'grid h-[12cqw] grid-cols-[8cqw_5.5cqw_minmax(0,1fr)_6cqw] items-center gap-[2.4cqw] rounded-[2.8cqw] border px-[3.2cqw]',
-                      gap
-                        ? 'animate-flag border-primary/40 bg-primary/10 dark:border-primary/60 dark:bg-primary/25'
-                        : 'border-ink/[0.06] bg-white/85 dark:border-white/10 dark:bg-white/[0.08]',
-                    )}
-                    style={gap ? delay(at + 0.6) : undefined}
-                  >
-                    <span className="font-mono text-[3.2cqw] text-muted dark:text-paper/50">{row.days}</span>
-                    <KindGlyph className={cn('size-[4.4cqw]', gap ? 'text-primary-deep dark:text-primary' : 'text-ink/70 dark:text-paper/80')} />
-                    <Bar className={cn('h-[2cqw]', PHONE_BARS[i], gap ? 'bg-primary/40' : BAR)} />
-                    <span className={cn('flex size-[6cqw] items-center justify-center rounded-full', STATUS_TONE[row.status])}>
-                      <StatusGlyph className="size-[3.4cqw]" />
+                <div key={activity.name} className="w-[48%] shrink-0 overflow-hidden rounded-[3.5cqw] bg-white/85 shadow-card dark:bg-white/10">
+                  <div className="relative aspect-[4/3] w-full">
+                    <SafariScene crop={crop} />
+                    <span className="absolute left-[2.4cqw] top-[2.4cqw] flex size-[7cqw] items-center justify-center rounded-full bg-white/90 text-ink">
+                      <ActivityGlyph className="size-[3.8cqw]" />
                     </span>
+                  </div>
+                  <div className="flex flex-col gap-[1.8cqw] p-[2.8cqw]">
+                    <Bar className={cn('h-[2cqw] w-[72%]', BAR)} />
+                    <div className="flex items-center justify-between gap-[1.5cqw]">
+                      <Bar className={cn('h-[1.6cqw] w-[38%]', BAR)} />
+                      <span className="text-[3.8cqw] font-semibold tabular-nums">{activity.price}</span>
+                    </div>
                   </div>
                 </div>
               )
             })}
+          </div>
+
+          <div
+            className="animate-pop flex max-w-[82%] flex-col gap-[2.2cqw] self-start rounded-[4cqw] rounded-bl-[1.2cqw] bg-white/80 p-[3.6cqw] dark:bg-white/12"
+            style={delay(1.8)}
+          >
+            <Bar className={cn('h-[2.2cqw] w-[44cqw]', BAR)} />
+            <Bar className={cn('h-[2.2cqw] w-[30cqw]', BAR)} />
+          </div>
+
+          <Traveller at={2.2}>
+            <Bar className={cn('h-[2.2cqw] w-[28cqw]', SAID)} />
+          </Traveller>
+
+          <div
+            className="animate-pop flex items-center gap-[1.4cqw] self-start rounded-[4cqw] rounded-bl-[1.2cqw] bg-white/80 px-[3.6cqw] py-[3cqw] dark:bg-white/12"
+            style={delay(2.6)}
+          >
+            {[0, 0.2, 0.4].map((d) => (
+              <span key={d} className="animate-blink size-[2cqw] rounded-full bg-ink/50 dark:bg-paper" style={delay(d)} />
+            ))}
           </div>
         </div>
       </div>

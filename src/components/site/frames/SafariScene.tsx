@@ -1,13 +1,20 @@
 import { useId } from 'react'
 import { cn } from '@/lib/utils'
 
-/* The recommendation card's cover: a sunrise in the band's colours, two
-   balloons, an acacia and a giraffe cut in ink. A depiction, not a
-   photograph; the slot takes a real image later. */
-export function SafariScene({ className }: { className?: string }) {
+/* A sunrise in the band's colours, two balloons, an acacia and a giraffe
+   cut in ink. A depiction, not a photograph; the slot takes a real image
+   later. A crop centres one subject of the scene, so two cards can share it
+   and read as two pictures. */
+const CROP = {
+  all: '0 0 160 100',
+  balloon: '16 24 60 45',
+  giraffe: '100 36 60 45',
+} as const
+
+export function SafariScene({ className, crop = 'all' }: { className?: string; crop?: keyof typeof CROP }) {
   const sky = useId()
   return (
-    <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" className={cn('block h-full w-full', className)} aria-hidden>
+    <svg viewBox={CROP[crop]} preserveAspectRatio="xMidYMid slice" className={cn('block h-full w-full', className)} aria-hidden>
       <defs>
         <linearGradient id={sky} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#e8437e" />

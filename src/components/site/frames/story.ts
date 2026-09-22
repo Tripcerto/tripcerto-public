@@ -17,6 +17,10 @@ export const story = {
     { from: 'typing' },
   ] as const,
   card: { title: 'Mara & Serengeti', nights: '9 nights', line: 'Balloon safari on day 7', price: 'from £5,600pp', action: 'See the trip' },
+  activities: [
+    { name: 'Balloon safari', price: '£520' },
+    { name: 'Sunrise game drive', price: '£180' },
+  ],
   composer: 'Message…',
   handoff: 'Brief sent to your consultant',
 

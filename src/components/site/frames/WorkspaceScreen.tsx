@@ -24,19 +24,18 @@ function Row({ index }: { index: number }) {
   const KindGlyph = KIND_GLYPH[row.kind]
   const StatusGlyph = STATUS_GLYPH[row.status]
   const gap = row.status === 'gap'
-  const at = 1.1 + index * 0.14
+  const at = 1.0 + index * 0.14
   return (
     <div className="animate-pop" style={delay(at)}>
       <div
         className={cn(
-          'grid h-[7.4cqw] grid-cols-[5.5cqw_3.4cqw_minmax(0,1fr)_9cqw_3.4cqw] items-center gap-[1.6cqw] rounded-[1.4cqw] border px-[1.8cqw]',
+          'grid h-[7.4cqw] grid-cols-[3.4cqw_minmax(0,1fr)_9cqw_3.4cqw] items-center gap-[2cqw] rounded-[1.4cqw] border pl-[3cqw] pr-[1.8cqw]',
           gap
             ? 'animate-flag border-primary/40 bg-primary/10 dark:border-primary/60 dark:bg-primary/25'
             : 'border-ink/[0.06] bg-white/85 dark:border-white/10 dark:bg-white/[0.08]',
         )}
         style={gap ? delay(at + 0.6) : undefined}
       >
-        <span className="font-mono text-[1.8cqw] text-muted dark:text-paper/50">{row.days}</span>
         <KindGlyph className={cn('size-[2.6cqw]', gap ? 'text-primary-deep dark:text-primary' : 'text-ink/70 dark:text-paper/80')} />
         <div className="flex min-w-0 flex-col gap-[0.9cqw]">
           <Bar className={cn('h-[1.2cqw]', place, gap ? 'bg-primary/40' : BAR)} />
@@ -54,9 +53,9 @@ function Row({ index }: { index: number }) {
 export function WorkspaceScreen() {
   return (
     <WindowShell>
-      <div aria-hidden className="grid h-full grid-cols-[34%_minmax(0,1fr)] text-[2.1cqw] leading-[1.35] text-ink dark:text-paper">
+      <div aria-hidden className="grid h-full grid-cols-[24%_minmax(0,1fr)] text-[2.1cqw] leading-[1.35] text-ink dark:text-paper">
         <div className="border-r border-white/50 bg-white/20 p-[2.6cqw] dark:border-white/10 dark:bg-white/[0.06]">
-          <StellaLine at={1.2} scale="window" />
+          <StellaLine at={1.1} scale="window" />
         </div>
 
         <div className="flex min-w-0 flex-col gap-[1.2cqw] bg-white/60 p-[2.6cqw] dark:bg-white/[0.04]">
