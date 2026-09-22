@@ -7,9 +7,9 @@
    Usage, from the repo root:
      node scripts/og/shoot.mjs                  every variant, home copy
      node scripts/og/shoot.mjs --variant c      one variant
-     node scripts/og/shoot.mjs --pick c         write public/og-image.png and
-                                                the four per-page cards from
-                                                variant c
+     node scripts/og/shoot.mjs --pick c         write public/og-image.png, the
+                                                one card every page serves,
+                                                from variant c's home copy
 */
 
 import { createServer } from 'node:http'
@@ -28,7 +28,6 @@ const OUT = join(ROOT, 'scripts/og/out')
 const PUBLIC = join(ROOT, 'public')
 
 const VARIANTS = ['a', 'b', 'c', 'd', 'e']
-const PAGES = ['home', 'engage', 'workspace', 'pilot', 'trust']
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -123,11 +122,10 @@ const failures = []
 
 if (pick) {
   if (!VARIANTS.includes(pick)) throw new Error(`--pick must be one of ${VARIANTS.join(', ')}`)
-  console.log(`Writing public/ cards from variant ${pick}:`)
-  for (const page of PAGES) {
-    const out = join(PUBLIC, page === 'home' ? 'og-image.png' : `og-${page}.png`)
-    failures.push(...(await shoot(`http://127.0.0.1:${port}/scripts/og/card.html?v=${pick}&page=${page}`, out)))
-  }
+  console.log(`Writing public/og-image.png from variant ${pick}:`)
+  failures.push(
+    ...(await shoot(`http://127.0.0.1:${port}/scripts/og/card.html?v=${pick}&page=home`, join(PUBLIC, 'og-image.png'))),
+  )
 } else {
   const list = only ? [only] : VARIANTS
   console.log('Rendering card options:')
