@@ -7,6 +7,7 @@ import { EngagePlaceholder } from '@/components/site/frames/EngagePlaceholder'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { home } from '@/content/home'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
+import { LIGHT_TEXT } from '@/lib/review'
 import { cn } from '@/lib/utils'
 
 const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
@@ -22,10 +23,6 @@ const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
    and visuals spread apart, and everything tightens toward the middle as
    the screen narrows. */
 const BAND = 'linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%)'
-/* Review scaffolding: `?text=light` inverts the copy to paper on the band,
-   so Charlie can see a white version and a black version. */
-const LIGHT_TEXT = new URLSearchParams(window.location.search).get('text') === 'light'
-
 /* Module-level so the shader builds once. */
 const MESH_COLOURS = ['#E8437E', '#FF5C6C', '#FF7A5C', '#FF9B7A']
 

@@ -4,6 +4,7 @@ import { ChevronRight, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Wordmark } from '@/components/site/Wordmark'
 import { LOGIN_URL, NAV_LINKS, PAGES } from '@/lib/links'
+import { LIGHT_TEXT } from '@/lib/review'
 import { cn } from '@/lib/utils'
 
 const MENU_ID = 'site-menu'
@@ -33,14 +34,17 @@ export function Nav() {
       <div className="shell flex h-16 items-center justify-between md:h-[72px]">
         <div className="flex items-center">
           <a href={PAGES.home} aria-label="tripcerto home" className="inline-flex h-11 items-center">
-            <Wordmark />
+            <Wordmark tone={LIGHT_TEXT ? 'paper' : undefined} />
           </a>
           <nav className="ml-10 hidden gap-8 md:flex">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="inline-flex h-11 items-center text-[15px] font-medium text-ink/75 transition-colors hover:text-ink"
+                className={cn(
+                  'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
+                  LIGHT_TEXT ? 'text-paper/80 hover:text-paper' : 'text-ink/75 hover:text-ink',
+                )}
               >
                 {link.label}
               </a>
@@ -51,7 +55,10 @@ export function Nav() {
         <div className="hidden items-center md:flex">
           <a
             href={LOGIN_URL}
-            className="inline-flex h-11 items-center gap-1 text-[15px] font-medium text-ink/85 transition-colors hover:text-ink"
+            className={cn(
+              'inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors',
+              LIGHT_TEXT ? 'text-paper/90 hover:text-paper' : 'text-ink/85 hover:text-ink',
+            )}
           >
             Login
             <ChevronRight size={16} aria-hidden="true" />
@@ -64,7 +71,7 @@ export function Nav() {
             type="button"
             variant="ghost"
             size="icon"
-            className="size-11 [&_svg]:size-5"
+            className={cn('size-11 [&_svg]:size-5', LIGHT_TEXT && !open && 'text-paper hover:bg-white/10')}
             aria-label="Open menu"
             aria-expanded={open}
             aria-controls={MENU_ID}
