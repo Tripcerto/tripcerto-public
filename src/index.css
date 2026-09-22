@@ -90,11 +90,14 @@
   }
 }
 
+/* The gradient paints only inside the element's box, so a tight line-height
+   would cut the last line's descenders. The padding keeps them inside it. */
 @utility text-gradient {
   background: var(--text-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  padding-bottom: 0.12em;
 }
 
 @utility bg-band {

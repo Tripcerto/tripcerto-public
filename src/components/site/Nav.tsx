@@ -9,15 +9,8 @@ import { cn } from '@/lib/utils'
 const MENU_ID = 'site-menu'
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(() => window.scrollY > 8)
   const [open, setOpen] = useState(false)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -30,13 +23,11 @@ export function Nav() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
-  const solid = scrolled || open
-
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-200',
-        solid ? 'border-b border-rule bg-paper/85 backdrop-blur' : 'border-b border-transparent bg-transparent',
+        'fixed inset-x-0 top-0 z-50 border-b border-rule/70 bg-paper/80 backdrop-blur-2xl backdrop-saturate-150',
+        open && 'bg-paper',
       )}
     >
       <div className="shell flex h-16 items-center justify-between md:h-[72px]">
@@ -57,7 +48,7 @@ export function Nav() {
           </nav>
         </div>
 
-        <div className="hidden items-center gap-5 md:flex">
+        <div className="hidden items-center md:flex">
           <a
             href={LOGIN_URL}
             className="inline-flex h-11 items-center gap-1 text-[15px] font-medium text-ink/85 transition-colors hover:text-ink"
@@ -65,21 +56,9 @@ export function Nav() {
             Login
             <ChevronRight size={16} aria-hidden="true" />
           </a>
-          <Button asChild variant="accent" size="sm">
-            <a href={PAGES.pilot}>
-              Pilot
-              <ChevronRight aria-hidden="true" />
-            </a>
-          </Button>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <Button asChild variant="accent">
-            <a href={PAGES.pilot}>
-              Pilot
-              <ChevronRight aria-hidden="true" />
-            </a>
-          </Button>
+        <div className="flex items-center md:hidden">
           <Button
             ref={menuButtonRef}
             type="button"

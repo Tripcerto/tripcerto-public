@@ -15,6 +15,7 @@ export const PAGES = {
 export const NAV_LINKS = [
   { href: PAGES.engage, label: 'Engage' },
   { href: PAGES.workspace, label: 'Workspace' },
+  { href: PAGES.pilot, label: 'Pilot' },
   { href: PAGES.trust, label: 'Trust' },
 ] as const
 

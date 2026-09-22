@@ -6,7 +6,7 @@
 
 export const home = {
   hero: {
-    'H-1-A': 'Travel sales software that turns research into bookings', // changed
+    'H-1-A': 'Travel AI that turns research into bookings', // changed
     'H-1-B':
       'Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds the quote structure from that brief and shows what is still missing.', // changed
     'H-1-C': 'Book a demo',
