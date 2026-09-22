@@ -211,30 +211,7 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
 Taylor, 22 Sep, late evening: "Let's sign off this version. This is the home
 page, all done, for now." Hero, Engage, Workspace, the journey, the roles,
 the close, the nav and the footer are all his choices; do not reopen them
-without a new ask from him. The ledger below is closed.
-
-## Ledger (Taylor's asks, 22 Sep evening, in order; closed at sign-off)
-
-| # | Ask | State |
-|---|-----|-------|
-| 1 | Pick C for the lower half | done, `aa8ebfe` |
-| 2 | Footer follows the theme, not ink | done, `5b95a09` |
-| 3 | Opportunity and Audience "fill the screen better" | Audience: full-width ruled rows (role, measured on, what changes). Opportunity: rebuilt, see 6 |
-| 4 | Animate Engage → Workspace → Booked with the lines drawing and the tick popping, same pace as the frames | built, then rejected ("too big, too clunky"); removed with the pills |
-| 5 | Footer more compact, drop the tagline | done; then "squashed too much": pages left, legal right, email under the links, copyright last |
-| 6 | Opportunity rethought: no pills, no lines, no animation, clearer text | three ruled columns of type: before the inquiry / after the inquiry / the outcome |
-| 7 | Nav goes paper over the Close band as it does over the hero | done: `data-band` on both. First cut used an IntersectionObserver, which flipped the bar as soon as the band was anywhere in the viewport ("completely illegible"); now measured against the bar's midline on scroll |
-| 8 | Close headline "We find where our AI has the most effect in your business, then prove it there"; only the headline and two buttons (demo, pilot) | done |
-| 9 | Charlie's documents are guidelines for the register, not copy to lift | noted; no line is quoted from them |
-| 10 | Frames in the Engage and Workspace sections replay their choreography when scrolled into view (`Reveal`) | built alongside 4, not yet reviewed by Taylor |
-| 11 | Footer: the email under the links, then (later) under the wordmark, above the line | done |
-| 13 | Hero reloads "not different enough": the mesh now rolls a noise seed, a pink-or-peach lean (±0.2 of the ramp), the angle (±25°) and the warp per mount, not just the time phase | done |
-| 14 | The Close band looked wavier than the hero: the noise was sized from the band's height. Now sized from the longer side at the Close's density (scale 4.7), so both fold alike | done |
-| 15 | Pilot pill out of the bar; Pilot replaces Trust in the links; Trust beside Privacy and Terms in the footer | done |
-| 16 | Engage and Workspace "too close together" and their frames done animating before you reach them; the Workspace badge unnecessary | Workspace is its own full section on the soft band (the tint now alternates: Engage page, Workspace tint, journey page, roles tint), no badge, the lede names Workspace; Reveal waits for half the frame |
-| 17 | The hero's "Pilot · How a pilot runs" pill removed; the copy block re-centred as headline, lede, actions | done |
-| 18 | Waves "slightly less obvious": warp 0.3 → 0.25 | done |
-| 12 | Opportunity columns "squished" at the pane's width: three pillars centred and off the edges when tight, expanding as the screen grows | done: capped at 26rem / 52rem / 62rem / the shell |
+without a new ask from him.
 
 ## Still to do (from the original plan)
 
