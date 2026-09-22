@@ -112,7 +112,7 @@ const use = (m, { fill, size, height, className = '' }) => {
   return `<svg class="${className}" viewBox="${m.viewBox}" width="${w}" height="${h}" role="img" aria-label="tripcerto"><path d="${m.d}" fill="${fill}"${m.evenodd ? ' fill-rule="evenodd"' : ''}/></svg>`
 }
 
-/* The app icon rendered as a tile: the mark knocked out of a coral square,
+/* The app icon rendered as a tile: the mark knocked out of a square,
    with the radius the artwork itself carries. */
 const tile = (px, fill = EMBER.primary) =>
   `<svg viewBox="${appicon.viewBox}" width="${px}" height="${px}" role="img" aria-label="tripcerto"><path d="${appicon.d}" fill="${fill}" fill-rule="evenodd"/></svg>`
@@ -365,8 +365,9 @@ ${rows([
   ['favicon.ico', '48, 32 and 16px, for browsers that still ask.'],
   ['apple-touch-icon.png', '180px, full-bleed square. Deliberately not pre-rounded: iOS rounds it.'],
   ['icon-192 / icon-512', 'Full-bleed square, the tight crop, for contexts that do not mask.'],
-  ['icon-maskable-192 / -512', 'The same mark drawn at 60% of the tile so it survives Android cropping a manifest icon to a circle of 80%. The tight icon does not: its corners sit 241px out against a 205px safe radius.'],
+  ['icon-maskable-192 / -512', 'A different drawing, not a smaller one: no tile shape, the ground to all four edges and the mark at 56%, so it survives Android cropping a manifest icon to a circle of 80%. The tight icon does not: its corners sit 241px out against a 205px safe radius.'],
   ['mask-icon.svg', 'The monogram alone, one colour, no ground, for a pinned Safari tab.'],
+  ['The ground under the mark', `The rasters carry the band warped by the site's own shader, at a fixed seed and one fold across the tile. <code class="w">favicon.svg</code> stays a flat <code class="w">${EMBER.primary}</code>: a vector favicon carrying a raster of a shader is large and pointless at 16px.`],
   ['og-image.png', 'The social card, 1200 × 630. One per page.'],
 ])}
 </section>

@@ -29,11 +29,13 @@
         all four edges.
 
       SHADER — ?scale ?warp ?bias ?time, plus ?blur ?sat
-        The shader defaults are the HERO's. scale is folds-per-box, so 4.7
-        across a viewport and 4.7 across a 260-unit tile are not the same
-        picture: the tile gets roughly five times the fold density, which is
-        what reads as smoky and watery. blur and sat apply to the mesh BEFORE
-        it is clipped, so the icon's edge stays crisp while its contents soften.
+        The shader defaults are the HERO's. The noise coordinate is normalised
+        by the box's LONGER side, so scale counts folds across that side and
+        the count owes nothing to the pixel count. A square tile still takes
+        more of the field than a 16:9 band — 4.7 by 4.7 cells against 4.7 by
+        2.7 — and it is then met at 60px rather than 1400. Lowering scale is
+        the lever that settles it. blur and sat apply to the mesh BEFORE it is
+        clipped, so the icon's edge stays crisp while its contents soften.
 
       ?s=<px> sizes the canvas.
     -->
@@ -126,7 +128,7 @@
         const bleed = blurUnits * 3
         const softened = blurPx > 0 || saturatePct !== 100
         const filterDef = softened
-          ? `<filter id="soft" x="-25%" y="-25%" width="150%" height="150%">${
+          ? `<filter id="soft" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">${
               blurPx > 0 ? `<feGaussianBlur stdDeviation="${blurUnits.toFixed(3)}"/>` : ''
             }${saturatePct !== 100 ? `<feColorMatrix type="saturate" values="${(saturatePct / 100).toFixed(3)}"/>` : ''}</filter>`
           : ''
