@@ -20,23 +20,36 @@ const FloatingLines = lazy(() =>
    screen-blended glow mode sweep across it and brighten whatever they
    cross, over five soft lights drifting on their own clocks. Module-level
    so the shader builds once. */
-const WAVE_COLOURS = ['#FFF1EA', '#F0DCD4', '#FF9B7A', '#FF5C6C', '#E8437E']
+const WAVE_COLOURS = ['#FFFFFF', '#F0DCD4', '#FF5C6C', '#E8437E', '#B9243D']
 const WAVES: WaveName[] = ['top', 'middle', 'bottom']
 const WAVE_LINES = [5, 7, 6]
 const WAVE_DISTANCE = [13, 11, 13]
-const TOP_WAVE = { x: 4, y: 0.7, rotate: 0.18 }
-const MIDDLE_WAVE = { x: 0, y: 0.05, rotate: 0.18 }
-const BOTTOM_WAVE = { x: 3, y: -0.55, rotate: 0.18 }
+/* All three families enter low on the left and rise to the right. */
+const TOP_WAVE = { x: 4, y: -0.15, rotate: -0.28 }
+const MIDDLE_WAVE = { x: 0, y: -0.5, rotate: -0.22 }
+const BOTTOM_WAVE = { x: 3, y: -0.9, rotate: -0.3 }
+
+/* Review scaffolding: `?tone=rose|blush|deep` picks the band's gradient.
+   Every stop is a palette colour; none of them is peach or the cream tint. */
+const TONES = {
+  rose: 'linear-gradient(105deg, #e8437e 0%, #ff5c6c 30%, #f0dcd4 68%, #ffffff 100%)',
+  blush: 'linear-gradient(105deg, #ff5c6c 0%, #f0dcd4 45%, #ffffff 85%)',
+  deep: 'linear-gradient(105deg, #b9243d 0%, #e8437e 28%, #ff5c6c 55%, #f0dcd4 100%)',
+} as const
+type Tone = keyof typeof TONES
+const TONE: Tone = ((key) => (key && key in TONES ? (key as Tone) : 'rose'))(
+  new URLSearchParams(window.location.search).get('tone'),
+)
 
 function Band() {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-band-deep" />
-      <div className="absolute -left-[20%] -top-[40%] h-[130%] w-[65%] bg-[radial-gradient(closest-side,rgba(232,67,126,0.5),transparent)] animate-[drift-a_26s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
+      <div className="absolute inset-0" style={{ background: TONES[TONE] }} />
+      <div className="absolute -left-[20%] -top-[40%] h-[130%] w-[65%] bg-[radial-gradient(closest-side,rgba(232,67,126,0.55),transparent)] animate-[drift-a_26s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
       <div className="absolute -right-[10%] -top-[30%] h-[130%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.8),transparent)] animate-[drift-b_28s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
-      <div className="absolute -bottom-[30%] left-[30%] h-[110%] w-[60%] bg-[radial-gradient(closest-side,rgba(255,155,122,0.55),transparent)] animate-[drift-c_32s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
-      <div className="absolute -bottom-[25%] -left-[5%] h-[80%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,241,234,0.9),transparent)] animate-[drift-a_18s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
-      <div className="absolute -top-[20%] left-[35%] h-[60%] w-[35%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.4),transparent)] animate-[drift-c_20s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
+      <div className="absolute -bottom-[30%] left-[30%] h-[110%] w-[60%] bg-[radial-gradient(closest-side,rgba(255,92,108,0.5),transparent)] animate-[drift-c_32s_ease-in-out_infinite_alternate] motion-reduce:animate-none" />
+      <div className="absolute -bottom-[25%] -left-[5%] h-[80%] w-[55%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.6),transparent)] animate-[drift-a_18s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
+      <div className="absolute -top-[20%] left-[35%] h-[60%] w-[35%] bg-[radial-gradient(closest-side,rgba(240,220,212,0.6),transparent)] animate-[drift-c_20s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
       <Suspense fallback={null}>
         <FloatingLines
           className="absolute inset-0 opacity-70"

@@ -32,7 +32,6 @@
 
 :root {
   --band: linear-gradient(100deg, #e8437e 0%, #ff5c6c 50%, #ff9b7a 100%);
-  --band-deep: linear-gradient(105deg, #e8437e 0%, #ff5c6c 24%, #ff9b7a 48%, #fff1ea 76%, #ffffff 100%);
   --text-gradient: linear-gradient(120deg, #2b1220 0%, #6e1f36 55%, #e8437e 100%);
   --shell: 1200px;
 }
@@ -103,10 +102,6 @@
 
 @utility bg-band {
   background: var(--band);
-}
-
-@utility bg-band-deep {
-  background: var(--band-deep);
 }
 
 /* A headline inked into the band: near-solid at the top, thinning to a
