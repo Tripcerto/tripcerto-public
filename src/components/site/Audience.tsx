@@ -18,10 +18,12 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
 const ROW = 'md:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,7fr)] md:gap-8'
 
 /* The buying roles as ruled rows across the page: the role, the number it
-   is measured on, and what changes for it. No cards. */
+   is measured on, and what changes for it. No cards. The last hairline sits
+   the same 40px above the closing band as the footer's hairline sits below
+   it; md:pb-10 is what outranks the Section's md:py-28. */
 export function Audience() {
   return (
-    <Section id={SECTION.audience} tone="tint" className="py-20 md:py-28">
+    <Section id={SECTION.audience} tone="tint" className="pb-10 md:pb-10">
       <div className="max-w-[44rem]">
         <Heading>{home.audience['H-7-A']}</Heading>
         <Lede className="mt-5">{home.audience['H-7-B']}</Lede>
