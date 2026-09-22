@@ -139,10 +139,10 @@ export function HeroGlass() {
 
           <div className="min-w-0 lg:col-span-6">
             <div className="relative mx-auto h-[540px] max-w-[560px] sm:h-[600px] lg:h-[620px] lg:max-w-none">
-              <div className="absolute left-[10%] top-0 w-[130%] sm:w-[720px] lg:left-[6%] lg:w-[760px]">
+              <div className="absolute left-[16%] top-0 w-[130%] sm:w-[720px] lg:left-[16%] lg:w-[760px]">
                 <GlassWindow />
               </div>
-              <PhoneFrame className="absolute left-[4%] top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:left-[9%] lg:w-[250px]">
+              <PhoneFrame className="absolute left-0 top-[12%] z-10 w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:left-0 lg:w-[250px]">
                 <EngagePlaceholder />
               </PhoneFrame>
             </div>
