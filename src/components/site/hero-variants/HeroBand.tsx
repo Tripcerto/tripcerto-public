@@ -20,24 +20,26 @@ const FloatingLines = lazy(() =>
    screen-blended glow mode sweep across it and brighten whatever they
    cross, over five soft lights drifting on their own clocks. Module-level
    so the shader builds once. */
-const WAVE_COLOURS = ['#FFFFFF', '#F0DCD4', '#FF5C6C', '#E8437E', '#B9243D']
-const WAVES: WaveName[] = ['top', 'middle', 'bottom']
-const WAVE_LINES = [5, 7, 6]
-const WAVE_DISTANCE = [13, 11, 13]
-/* All three families enter low on the left and rise to the right. */
-const TOP_WAVE = { x: 4, y: -0.15, rotate: -0.28 }
-const MIDDLE_WAVE = { x: 0, y: -0.5, rotate: -0.22 }
-const BOTTOM_WAVE = { x: 3, y: -0.9, rotate: -0.3 }
+const WAVE_COLOURS = ['#FFFFFF', '#F0DCD4', '#FF5C6C', '#E8437E']
+const WAVES: WaveName[] = ['middle', 'bottom']
+const WAVE_LINES = [6, 6]
+const WAVE_DISTANCE = [10, 10]
+/* Two families on Taylor's two drawn lines (22 Sep): one steep, entering
+   at the bottom-left corner and rising at about 36 degrees through the
+   headline; one shallow and lower, rising at about 21 degrees. */
+const STEEP_WAVE = { x: 0, y: 0.35, rotate: -0.63 }
+const SHALLOW_WAVE = { x: 2, y: -0.4, rotate: -0.37 }
 
-/* Review scaffolding: `?tone=rose|blush|deep` picks the band's gradient.
+/* Review scaffolding: `?tone=coral|rose|wine|mist` picks the band's gradient.
    Every stop is a palette colour; none of them is peach or the cream tint. */
 const TONES = {
+  coral: 'linear-gradient(105deg, #ff5c6c 0%, #ff5c6c 18%, #f0dcd4 62%, #ffffff 100%)',
   rose: 'linear-gradient(105deg, #e8437e 0%, #ff5c6c 30%, #f0dcd4 68%, #ffffff 100%)',
-  blush: 'linear-gradient(105deg, #ff5c6c 0%, #f0dcd4 45%, #ffffff 85%)',
-  deep: 'linear-gradient(105deg, #b9243d 0%, #e8437e 28%, #ff5c6c 55%, #f0dcd4 100%)',
+  wine: 'linear-gradient(105deg, #b9243d 0%, #e8437e 26%, #f0dcd4 70%, #ffffff 100%)',
+  mist: 'linear-gradient(105deg, #ff5c6c 0%, #f0dcd4 34%, #ffffff 70%)',
 } as const
 type Tone = keyof typeof TONES
-const TONE: Tone = ((key) => (key && key in TONES ? (key as Tone) : 'rose'))(
+const TONE: Tone = ((key) => (key && key in TONES ? (key as Tone) : 'coral'))(
   new URLSearchParams(window.location.search).get('tone'),
 )
 
@@ -52,18 +54,17 @@ function Band() {
       <div className="absolute -top-[20%] left-[35%] h-[60%] w-[35%] bg-[radial-gradient(closest-side,rgba(240,220,212,0.6),transparent)] animate-[drift-c_20s_ease-in-out_infinite_alternate-reverse] motion-reduce:animate-none" />
       <Suspense fallback={null}>
         <FloatingLines
-          className="absolute inset-0 opacity-80"
+          className="absolute inset-0 opacity-55"
           mixBlendMode="screen"
-          swirl={0.25}
+          swirl={0}
           sameDirection
           linesGradient={WAVE_COLOURS}
           enabledWaves={WAVES}
           lineCount={WAVE_LINES}
           lineDistance={WAVE_DISTANCE}
-          topWavePosition={TOP_WAVE}
-          middleWavePosition={MIDDLE_WAVE}
-          bottomWavePosition={BOTTOM_WAVE}
-          glowSpread={0.005}
+          middleWavePosition={STEEP_WAVE}
+          bottomWavePosition={SHALLOW_WAVE}
+          glowSpread={0.003}
           glowHaze={0}
           bendRadius={6}
           bendStrength={-0.4}

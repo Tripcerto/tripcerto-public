@@ -64,9 +64,13 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   `src/components/ui/`. On 22 Sep pm Taylor said of `band`: "This is getting
   close. I like this." It was built to his Stripe-home reference; he asked
   for the whole hero coloured (no diagonal), lighter, then no orange, then no
-  peach or cream at all. `?tone=rose|blush|deep` (in `HeroBand.tsx`) offers
-  three peach-free gradients from the palette; all three wave families rise
-  from bottom-left to top-right at his request.
+  peach or cream at all. `?tone=coral|rose|wine|mist` (in `HeroBand.tsx`)
+  offers four peach-free gradients from the palette, coral the default. The
+  band's waves are TWO families on the two lines Taylor drew (22 Sep, late):
+  `STEEP_WAVE` rising ~36 degrees from the bottom-left corner through the
+  headline, `SHALLOW_WAVE` lower, rising ~21 degrees; layer opacity 0.55,
+  `glowSpread` 0.003, no haze. He then said: stop updating the other
+  candidates, `band` is the one being worked.
 - The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
