@@ -52,8 +52,9 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   Engage and Workspace sit straight under the hero, Opportunity follows them.
   "See how it works" scrolls to `#engage`; the footer tagline is H-1-A.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
-  `// changed`. H-1-A is "AI makes complex travel arrangements easy" (Taylor,
-  22 Sep, his third wording that afternoon). It is also the <title>, the og
+  `// changed`. H-1-A is "AI that makes complex travel sales easier to plan and book"
+  (Taylor, 22 Sep; he reworded it four times that afternoon, so check the file
+  rather than any quote in this doc). It is also the <title>, the og
   and twitter titles, the og:image:alt and the webmanifest description — change
   all five together.
   The pill string was deleted at his request.

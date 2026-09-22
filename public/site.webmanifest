@@ -1,7 +1,7 @@
 {
   "name": "Tripcerto",
   "short_name": "Tripcerto",
-  "description": "AI makes complex travel arrangements easy.",
+  "description": "AI that makes complex travel sales easier to plan and book.",
   "start_url": "/",
   "display": "browser",
   "background_color": "#fff1ea",
