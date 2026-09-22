@@ -220,11 +220,10 @@ without a new ask from him.
    and the answer was a viewport-tall hero and reveals instead.
 2. Wave 2: Engage, Workspace, Pilot, Trust pages from the PDF with the
    Guide's changes applied, as Vite multi-page entries (own HTML and meta),
-   `vercel.json` already has `cleanUrls`; nav links go live. Charlie's guide
-   also asks for pricing pages (Engage, Workspace, Ground) and a Ground
-   destination; the Foundation states the prices. Taylor has not decided
-   the structure; ask before building those. Charlie's documents are
-   guidelines for the register, never lines to lift (Taylor).
+   `vercel.json` already has `cleanUrls`; nav links go live. Engage and
+   Workspace first. There is NO pricing page and NO Ground page (Taylor,
+   22 Sep: "not right now"), whatever Charlie's documents ask for. Those
+   documents are guidelines for the register, never lines to lift (Taylor).
 3. A new `public/og-image.png` in Ember (still the old cream one), a
    rewritten README. The frames are drawn, not captured, by decision; a
    real photo can replace the drawn scene in the activity cards if wanted.
