@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @source not '../.github';
+@source not '../scripts';
 
 /* Ember — the identity pack's chosen set (tripcerto-identity-v2, 21 Sep 2026).
    Four brand colours plus the band's two outer stops, and nothing outside
