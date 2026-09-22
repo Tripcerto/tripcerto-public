@@ -9,6 +9,12 @@ import { cn } from '@/lib/utils'
 
 const MENU_ID = 'site-menu'
 
+/* The page the bar is on, by path; the clean URL and the dev server's
+   trailing slash both count. */
+function isCurrent(href: string) {
+  return window.location.pathname.replace(/\/+$/, '') === href
+}
+
 export function Nav() {
   const [open, setOpen] = useState(false)
   /* The bar is glass over the band and over the page. Over a band section
@@ -88,18 +94,28 @@ export function Nav() {
             <Wordmark tone={overBand ? 'paper' : 'page'} />
           </a>
           <nav className="ml-10 hidden gap-8 md:flex">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
-                  overBand ? 'text-paper/80 hover:text-paper' : 'text-body/75 hover:text-body',
-                )}
-              >
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const current = isCurrent(link.href)
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  aria-current={current ? 'page' : undefined}
+                  className={cn(
+                    'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
+                    overBand
+                      ? current
+                        ? 'text-paper'
+                        : 'text-paper/80 hover:text-paper'
+                      : current
+                        ? 'text-body'
+                        : 'text-body/75 hover:text-body',
+                  )}
+                >
+                  {link.label}
+                </a>
+              )
+            })}
           </nav>
         </div>
 
@@ -141,6 +157,7 @@ export function Nav() {
             <a
               key={link.href}
               href={link.href}
+              aria-current={isCurrent(link.href) ? 'page' : undefined}
               onClick={() => setOpen(false)}
               className={cn(
                 'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
