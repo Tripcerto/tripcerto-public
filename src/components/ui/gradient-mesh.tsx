@@ -237,7 +237,9 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
       gl.uniform2f(uResolution, canvas.width, canvas.height)
     }
 
-    const startedAt = performance.now()
+    /* A random phase, so the band is somewhere else in its roll on every load.
+       Capped at two minutes to keep the noise inputs small on mediump GPUs. */
+    const startedAt = performance.now() - Math.random() * 120_000
     const renderFrame = () => {
       if (!ready) return
       gl.uniform1f(uTime, stillOnly() ? 0 : ((performance.now() - startedAt) / 1000) * speed)

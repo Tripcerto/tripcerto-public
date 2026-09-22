@@ -12,7 +12,7 @@ export function WindowFrame({
   title?: string
 }) {
   return (
-    <div className={cn('overflow-hidden rounded-xl border border-ink/10 bg-paper shadow-frame', className)}>
+    <div className={cn('cursor-default select-none overflow-hidden rounded-xl border border-ink/10 bg-paper shadow-frame', className)}>
       <div className="flex h-9 items-center gap-2 border-b border-ink/10 bg-tint/60 px-3">
         <span className="size-2.5 rounded-full bg-ink/15" aria-hidden />
         <span className="size-2.5 rounded-full bg-ink/15" aria-hidden />

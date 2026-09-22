@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, type ReactNode } from 'react'
 import { ArrowRight, ChevronRight, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { EngagePlaceholder } from '@/components/site/frames/EngagePlaceholder'
+import { HeroVisuals } from '@/components/site/frames/HeroVisuals'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { home } from '@/content/home'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
@@ -48,7 +49,7 @@ const ROWS = [
    the itemised list sits on near-solid paper so the rows stay legible. */
 function GlassWindow() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/60 bg-white/25 shadow-frame backdrop-blur-2xl backdrop-saturate-150">
+    <div className="cursor-default select-none overflow-hidden rounded-2xl border border-white/60 bg-white/25 shadow-frame backdrop-blur-2xl backdrop-saturate-150">
       <div className="flex h-12 items-center gap-2 border-b border-white/50 px-5">
         <span className="size-2.5 rounded-full bg-ink/20" aria-hidden />
         <span className="size-2.5 rounded-full bg-ink/20" aria-hidden />
@@ -90,7 +91,7 @@ function GlassWindow() {
   )
 }
 
-export function Hero() {
+export function Hero({ visuals }: { visuals?: ReactNode }) {
   return (
     <section id="hero" aria-labelledby="hero-title" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-paper">
       <Band />
@@ -134,14 +135,16 @@ export function Hero() {
           </div>
 
           <div className="min-w-0 lg:col-span-7">
-            <div className="relative mx-auto min-h-[520px] max-w-[560px] sm:min-h-[560px] lg:min-h-[590px] lg:max-w-none xl:min-h-[650px]">
-              <div className="ml-[14%] xl:ml-[12%]">
-                <GlassWindow />
-              </div>
-              <PhoneFrame className="absolute left-0 top-12 z-10 aspect-[9/18] w-[190px] shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)] sm:w-[230px] lg:w-[244px] xl:w-[270px]">
-                <EngagePlaceholder />
-              </PhoneFrame>
-            </div>
+            {visuals ?? (
+              <HeroVisuals
+                window={<GlassWindow />}
+                phone={
+                  <PhoneFrame className="w-full shadow-[0_2px_4px_rgb(43_18_32/0.08),0_24px_48px_-12px_rgb(43_18_32/0.45),0_60px_120px_-30px_rgb(43_18_32/0.5)]">
+                    <EngagePlaceholder />
+                  </PhoneFrame>
+                }
+              />
+            )}
           </div>
         </div>
       </div>
