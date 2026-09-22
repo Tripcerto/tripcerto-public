@@ -2,6 +2,7 @@ import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
+import { Rows } from '@/components/site/Rows'
 import { Heading, Lede, Section } from '@/components/site/Section'
 import { pilot } from '@/content/pilot'
 import { usePageAnalytics } from '@/lib/analytics'
@@ -52,17 +53,7 @@ export function PilotPage() {
             <Heading>{pilot.measures['P-3-A']}</Heading>
             <Lede className="mt-5">{pilot.measures['P-3-B']}</Lede>
           </div>
-          <ul role="list" className="mt-12 divide-y divide-line md:mt-14">
-            {pilot.measures.rows.map(({ name, product, line }) => (
-              <li key={name} className="grid grid-cols-1 gap-2 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-x-12 md:gap-y-0">
-                <div>
-                  <h3 className="text-[17px] leading-[1.4] font-semibold">{name}</h3>
-                  <p className="mt-1 text-[14px] leading-[1.5] text-dim">{product}</p>
-                </div>
-                <p className="text-[16px] leading-[1.55] text-body/80">{line}</p>
-              </li>
-            ))}
-          </ul>
+          <Rows rows={pilot.measures.rows} />
         </Section>
 
         <Section id={ID.needs}>

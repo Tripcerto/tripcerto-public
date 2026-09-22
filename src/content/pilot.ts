@@ -37,27 +37,27 @@ export const pilot = {
     rows: [
       {
         name: 'Conversion',
-        product: 'Engage',
+        note: 'Engage',
         line: 'Engaged website visitors who become inquiries, against the rate the site had before.',
       },
       {
         name: 'Lead quality',
-        product: 'Engage',
+        note: 'Engage',
         line: 'How complete each brief is when it reaches sales, and how your salespeople rate it against what the form used to bring.',
       },
       {
         name: 'Quote time',
-        product: 'Workspace',
+        note: 'Workspace',
         line: 'Time from the inquiry arriving to the quote going out, for the workflow the pilot covers.',
       },
       {
         name: 'Handling time',
-        product: 'Workspace',
+        note: 'Workspace',
         line: 'Expert time spent per inquiry: the searching, rekeying and checking, before and after.',
       },
       {
         name: 'Completeness',
-        product: 'Workspace',
+        note: 'Workspace',
         line: 'Quotes that go out with nothing missing, and the corrections that come back afterwards.',
       },
     ], // added: the five measures, each with its product and its definition

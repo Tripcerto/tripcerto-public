@@ -4,10 +4,12 @@ import { App } from './App'
 import { EngagePage } from './pages/EngagePage'
 import { WorkspacePage } from './pages/WorkspacePage'
 import { PilotPage } from './pages/PilotPage'
+import { TrustPage } from './pages/TrustPage'
 import { home } from '@/content/home'
 import { engage } from '@/content/engage'
 import { workspace } from '@/content/workspace'
 import { pilot } from '@/content/pilot'
+import { trust } from '@/content/trust'
 import { DEMO_URL, LOGIN_URL, PAGES } from '@/lib/links'
 
 /* Language Charlie's guide bans from headlines, and the category phrases the
@@ -62,6 +64,20 @@ const SITE = [
     h1: pilot.hero['P-1-A'],
     headings: [pilot.runs['P-2-A'], pilot.measures['P-3-A'], pilot.needs['P-4-A'], pilot.after['P-5-A'], pilot.close['P-6-A']],
   },
+  {
+    name: 'trust',
+    Page: TrustPage,
+    h1: trust.hero['T-1-A'],
+    headings: [
+      trust.moves['T-2-A'],
+      trust.decides['T-3-A'],
+      trust.access['T-7-A'],
+      trust.programme['T-4-A'],
+      trust.legal['T-5-A'],
+      trust.status['T-6-A'],
+      trust.close['T-8-A'],
+    ],
+  },
 ] as const
 
 beforeAll(() => {
@@ -102,8 +118,7 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
     const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'))
     expect(hrefs).toContain(DEMO_URL)
     expect(hrefs).toContain(LOGIN_URL)
-    for (const p of [PAGES.engage, PAGES.workspace, PAGES.pilot]) expect(hrefs).toContain(p)
-    expect(hrefs).not.toContain(PAGES.trust)
+    for (const p of [PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.trust]) expect(hrefs).toContain(p)
     expect(hrefs).toContain('/legal/privacy/')
     expect(hrefs).toContain('/legal/terms/')
   })
