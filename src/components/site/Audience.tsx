@@ -15,11 +15,10 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
   'The travel expert': Compass,
 }
 
-const ROW = 'md:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,7fr)] md:gap-8'
-
-/* The buying roles as ruled rows across the page: the role, the number it
-   is measured on, and what changes for it. No cards. The last hairline sits
-   the same 40px above the closing band as the footer's hairline sits below
+/* The buying roles as ruled rows: the role with the number it is measured
+   on stacked under it, and what changes for it alongside, both read from
+   the top of the row. Rules sit only between rows, so the list opens onto
+   the band 40px below the last one, the distance the footer keeps under
    it; md:pb-10 is what outranks the Section's md:py-28. */
 export function Audience() {
   return (
@@ -29,22 +28,22 @@ export function Audience() {
         <Lede className="mt-5">{home.audience['H-7-B']}</Lede>
       </div>
 
-      <div aria-hidden className={`mt-12 hidden pb-3 text-[13px] font-semibold text-dim md:mt-14 md:grid ${ROW}`}>
-        <span>Role</span>
-        <span>Measured on</span>
-        <span>What changes</span>
-      </div>
-      <ul role="list" className="mt-12 border-t border-line md:mt-0">
+      <ul role="list" className="mt-12 divide-y divide-line md:mt-14">
         {home.audience.roles.map(({ role, measure, line }) => {
           const Glyph = ROLE_GLYPH[role]
           return (
-            <li key={role} className={`grid grid-cols-1 gap-2 border-b border-line py-6 ${ROW}`}>
-              <div className="flex items-center gap-3">
-                <Glyph size={22} aria-hidden className="shrink-0 text-link" />
-                <h3 className="text-[17px] font-semibold">{role}</h3>
+            <li
+              key={role}
+              className="grid grid-cols-1 gap-2 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-x-12 md:gap-y-0"
+            >
+              <div className="flex items-start gap-3">
+                <Glyph size={22} aria-hidden className="mt-px shrink-0 text-link" />
+                <div>
+                  <h3 className="text-[17px] leading-[1.4] font-semibold">{role}</h3>
+                  <p className="mt-1 text-[14px] leading-[1.5] text-dim">{measure}</p>
+                </div>
               </div>
-              <p className="text-[15px] text-dim md:pt-[3px]">{measure}</p>
-              <p className="text-[16px] leading-[1.55] text-body/80">{line}</p>
+              <p className="pl-[34px] text-[16px] leading-[1.55] text-body/80 md:pl-0">{line}</p>
             </li>
           )
         })}
