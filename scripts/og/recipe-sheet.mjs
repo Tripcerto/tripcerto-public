@@ -85,19 +85,19 @@ const sheet = `<!doctype html><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0}
-body{width:1080px;font:400 15px/1.5 'Instrument Sans',sans-serif;color:#2B1220;background:#fff;padding:40px 44px 48px}
-h1{font-size:27px;font-weight:700;letter-spacing:-.02em;padding-bottom:16px;border-bottom:2px solid #2B1220}
-.lede{color:#6E5A60;font-size:15px;margin-top:14px;max-width:760px}
+body{width:1080px;font:400 15px/1.5 'Instrument Sans',sans-serif;color:#281131;background:#fff;padding:40px 44px 48px}
+h1{font-size:27px;font-weight:700;letter-spacing:-.02em;padding-bottom:16px;border-bottom:2px solid #281131}
+.lede{color:#685A6E;font-size:15px;margin-top:14px;max-width:760px}
 .row{margin-top:30px;padding-top:22px;border-top:1px solid #F0DCD4}
 h2{font-size:19px;font-weight:600}
 .params{font:500 12px/1.4 'JetBrains Mono',monospace;color:#FF5C6C;margin-top:5px}
-.note{color:#6E5A60;font-size:14px;margin-top:5px}
+.note{color:#685A6E;font-size:14px;margin-top:5px}
 .line{display:flex;align-items:flex-end;gap:28px;margin-top:18px}
 figure{margin:0;text-align:center}
 figure img{display:block;border-radius:0}
-figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#6E5A60;margin-top:8px}
+figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#685A6E;margin-top:8px}
 .home{margin-left:8px;padding-left:28px;border-left:1px solid #F0DCD4;display:flex;gap:20px;align-items:flex-end}
-.springboard{background:#1C0C15;padding:14px;border-radius:18px}
+.springboard{background:#1A0B20;padding:14px;border-radius:18px}
 .springboard img{width:76px;height:76px;border-radius:17px}
 .springboard figcaption{color:#C9B6BC;margin-top:7px}
 </style>

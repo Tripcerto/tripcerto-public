@@ -65,17 +65,17 @@ const sheet = `<!doctype html><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0}
-body{width:1080px;font:400 15px/1.5 'Instrument Sans',sans-serif;color:#2B1220;background:#fff;padding:40px 44px 48px}
-h1{font-size:27px;font-weight:700;letter-spacing:-.02em;padding-bottom:16px;border-bottom:2px solid #2B1220}
+body{width:1080px;font:400 15px/1.5 'Instrument Sans',sans-serif;color:#281131;background:#fff;padding:40px 44px 48px}
+h1{font-size:27px;font-weight:700;letter-spacing:-.02em;padding-bottom:16px;border-bottom:2px solid #281131}
 .row{margin-top:32px}
 h2{font-size:19px;font-weight:600}
-.note{color:#6E5A60;font-size:14px;margin-top:4px;max-width:820px}
+.note{color:#685A6E;font-size:14px;margin-top:4px;max-width:820px}
 .line{display:flex;align-items:flex-end;gap:30px;margin-top:18px;flex-wrap:wrap}
 figure{margin:0;text-align:center}
 figure img{display:block}
-figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#6E5A60;margin-top:8px}
+figcaption{font:400 10px/1.3 'JetBrains Mono',monospace;color:#685A6E;margin-top:8px}
 .crop img{border-radius:50%}
-.plate{margin-top:20px;background:#1C0C15;border-radius:20px;padding:26px 30px}
+.plate{margin-top:20px;background:#1A0B20;border-radius:20px;padding:26px 30px}
 .plate figcaption{color:#C9B6BC}
 .plate .line{margin-top:0}
 .ios img{border-radius:22.5%}

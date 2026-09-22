@@ -5,8 +5,8 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-body text-page hover:bg-body/90 shadow-[0_1px_2px_rgb(43_18_32/0.2)]',
-        accent: 'bg-paper text-pink hover:bg-tint shadow-[0_1px_2px_rgb(43_18_32/0.12)]',
+        default: 'bg-body text-page hover:bg-body/90 shadow-[0_1px_2px_rgb(40_17_49/0.2)]',
+        accent: 'bg-paper text-pink hover:bg-tint shadow-[0_1px_2px_rgb(40_17_49/0.12)]',
         outline: 'border border-body/15 bg-transparent text-body hover:border-body/30 hover:bg-body/[0.04]',
         ghost: 'bg-transparent text-body hover:bg-body/[0.05]',
         link: 'rounded-none px-0 text-link underline-offset-4 hover:underline',
