@@ -89,8 +89,9 @@ reference) and Charlie's Positioning and Messaging Guide before touching copy.
   sit in the Engage and Workspace sections, with no box around them (Taylor
   removed it) — `Stage.tsx` is a pool of the band's light (`bg-glow`) behind
   the frame and the caption hung below it out of the flow. The phone stands
-  in a 5fr column to the side of the copy; the window takes the 7fr column
-  and runs past it to the shell's edge on large screens. There the window's
+  in a 5fr column to the side of the copy; the window sits in the 7fr
+  column capped at 560px, so the two frames stand at a similar scale (Taylor:
+  "vastly different… shrink it a little bit"). There the window's
   Stella pane shows the conversation (`WorkspaceChat.tsx`, passed in as
   `pane`): the consultant drops the inquiry in as a file and a voice note,
   Stella's reply carries a speaker, and the composer holds the clip and the

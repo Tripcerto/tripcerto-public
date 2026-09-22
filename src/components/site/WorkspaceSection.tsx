@@ -6,8 +6,8 @@ import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
 import { PAGES, SECTION } from '@/lib/links'
 
-/* The window runs past its column to the shell's edge on large screens,
-   so it reads at the size it is used at. */
+/* The window is capped so it stands at the phone's scale, not the
+   column's. */
 export function WorkspaceSection() {
   return (
     <Section id={SECTION.workspace} className="pt-0 pb-16 md:pt-0 md:pb-28">
@@ -34,8 +34,8 @@ export function WorkspaceSection() {
             </a>
           </p>
         </div>
-        <Stage caption={home.workspace.caption} className="max-lg:mb-8 lg:-mr-[max(0px,calc((100vw-var(--shell))/2))]">
-          <div className="w-full">
+        <Stage caption={home.workspace.caption} className="max-lg:mb-8">
+          <div className="w-full max-w-[560px]">
             <WorkspaceScreen pane={<WorkspaceChat />} />
           </div>
         </Stage>
