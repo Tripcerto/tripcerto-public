@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ChevronRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { ChevronRight, Moon, Sun } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Wordmark } from '@/components/site/Wordmark'
@@ -81,96 +81,140 @@ export function Nav() {
   }, [])
 
   return (
-    <header
-      ref={barRef}
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b bg-glass backdrop-blur-2xl backdrop-saturate-150',
-        overBand ? 'border-white/40' : 'border-line',
-      )}
-    >
-      <div className="shell flex h-16 items-center justify-between md:h-[72px]">
-        <div className="flex items-center">
-          <a href={PAGES.home} aria-label="tripcerto home" className="inline-flex h-11 items-center">
-            <Wordmark tone={overBand ? 'paper' : 'page'} />
-          </a>
-          <nav className="ml-10 hidden gap-8 md:flex">
-            {NAV_LINKS.map((link) => {
-              const current = isCurrent(link.href)
-              return (
+    <>
+      <header
+        ref={barRef}
+        className={cn(
+          'fixed inset-x-0 top-0 z-50 border-b bg-glass backdrop-blur-2xl backdrop-saturate-150 transition-shadow duration-300 ease-site',
+          overBand ? 'border-white/40' : 'border-line',
+          open && 'shadow-[0_28px_48px_-20px_rgb(40_17_49/0.45)] dark:shadow-[0_28px_48px_-16px_rgb(0_0_0/0.7)]',
+        )}
+      >
+        <div className="shell flex h-16 items-center justify-between md:h-[72px]">
+          <div className="flex items-center">
+            <a href={PAGES.home} aria-label="tripcerto home" className="inline-flex h-11 items-center">
+              <Wordmark tone={overBand ? 'paper' : 'page'} />
+            </a>
+            <nav className="ml-10 hidden gap-8 md:flex">
+              {NAV_LINKS.map((link) => {
+                const current = isCurrent(link.href)
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    aria-current={current ? 'page' : undefined}
+                    className={cn(
+                      'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
+                      overBand
+                        ? current
+                          ? 'text-paper'
+                          : 'text-paper/80 hover:text-paper'
+                        : current
+                          ? 'text-body'
+                          : 'text-body/75 hover:text-body',
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                )
+              })}
+            </nav>
+          </div>
+
+          <div className="hidden items-center gap-3 md:flex">
+            <ThemeButton theme={theme} overBand={overBand} onClick={toggleTheme} />
+            <a
+              href={LOGIN_URL}
+              className={cn(
+                'inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors',
+                overBand ? 'text-paper/90 hover:text-paper' : 'text-body/85 hover:text-body',
+              )}
+            >
+              Login
+              <ChevronRight size={16} aria-hidden="true" />
+            </a>
+          </div>
+
+          <div className="flex items-center gap-1 md:hidden">
+            <ThemeButton theme={theme} overBand={overBand} onClick={toggleTheme} />
+            <Button
+              ref={menuButtonRef}
+              type="button"
+              variant="ghost"
+              size="icon"
+              className={cn('size-11 [&_svg]:size-5', overBand && 'text-paper hover:bg-white/10')}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls={MENU_ID}
+              onClick={() => setOpen((value) => !value)}
+            >
+              <MenuIcon open={open} />
+            </Button>
+          </div>
+        </div>
+
+        {/* The menu stays mounted so it can open and close on the site's curve:
+            its row grows from nothing while the links slide down into place.
+            Closed, it is inert, so nothing in it can be focused or clicked. */}
+        <div
+          className={cn(
+            'grid transition-[grid-template-rows] duration-300 ease-site motion-reduce:transition-none md:hidden',
+            open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+          )}
+        >
+          <nav id={MENU_ID} inert={!open} className="min-h-0 overflow-hidden">
+            <div
+              className={cn(
+                'border-t transition-[opacity,translate] duration-300 ease-site motion-reduce:transition-none',
+                overBand ? 'border-white/25' : 'border-line',
+                open ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
+              )}
+            >
+              {[...NAV_LINKS, { href: LOGIN_URL, label: 'Login' }].map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  aria-current={current ? 'page' : undefined}
+                  aria-current={isCurrent(link.href) ? 'page' : undefined}
+                  onClick={() => setOpen(false)}
                   className={cn(
-                    'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
-                    overBand
-                      ? current
-                        ? 'text-paper'
-                        : 'text-paper/80 hover:text-paper'
-                      : current
-                        ? 'text-body'
-                        : 'text-body/75 hover:text-body',
+                    'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
+                    overBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
                   )}
                 >
                   {link.label}
+                  <ChevronRight size={16} aria-hidden="true" className={overBand ? 'text-paper/60' : 'text-body/40'} />
                 </a>
-              )
-            })}
+              ))}
+            </div>
           </nav>
         </div>
+      </header>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <ThemeButton theme={theme} overBand={overBand} onClick={toggleTheme} />
-          <a
-            href={LOGIN_URL}
-            className={cn(
-              'inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors',
-              overBand ? 'text-paper/90 hover:text-paper' : 'text-body/85 hover:text-body',
-            )}
-          >
-            Login
-            <ChevronRight size={16} aria-hidden="true" />
-          </a>
-        </div>
+      {/* Under the open menu the page dims, so the panel reads as a layer
+          above it; a tap on the page closes the menu. */}
+      <div
+        aria-hidden="true"
+        onClick={() => setOpen(false)}
+        className={cn(
+          'fixed inset-0 z-40 bg-ink/25 transition-opacity duration-300 ease-site motion-reduce:transition-none md:hidden dark:bg-black/45',
+          open ? 'opacity-100' : 'pointer-events-none opacity-0',
+        )}
+      />
+    </>
+  )
+}
 
-        <div className="flex items-center gap-1 md:hidden">
-          <ThemeButton theme={theme} overBand={overBand} onClick={toggleTheme} />
-          <Button
-            ref={menuButtonRef}
-            type="button"
-            variant="ghost"
-            size="icon"
-            className={cn('size-11 [&_svg]:size-5', overBand && 'text-paper hover:bg-white/10')}
-            aria-label="Open menu"
-            aria-expanded={open}
-            aria-controls={MENU_ID}
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-          </Button>
-        </div>
-      </div>
-
-      {open && (
-        <nav id={MENU_ID} className={cn('border-t md:hidden', overBand ? 'border-white/25' : 'border-line')}>
-          {[...NAV_LINKS, { href: LOGIN_URL, label: 'Login' }].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              aria-current={isCurrent(link.href) ? 'page' : undefined}
-              onClick={() => setOpen(false)}
-              className={cn(
-                'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
-                overBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
-              )}
-            >
-              {link.label}
-              <ChevronRight size={16} aria-hidden="true" className={overBand ? 'text-paper/60' : 'text-body/40'} />
-            </a>
-          ))}
-        </nav>
-      )}
-    </header>
+/* Three lines that fold into an X: the outer two meet at the centre and
+   turn, the middle one fades. Drawn at Lucide's proportions so it sits with
+   the theme icon beside it. */
+function MenuIcon({ open }: { open: boolean }) {
+  const line = 'absolute inset-x-[3.33px] h-[1.67px] rounded-full bg-current transition-[translate,rotate,opacity] duration-300 ease-site motion-reduce:transition-none'
+  return (
+    <span aria-hidden="true" className="relative block size-5">
+      <span className={cn(line, 'top-[4.17px]', open && 'translate-y-[5px] rotate-45')} />
+      <span className={cn(line, 'top-[9.17px]', open && 'opacity-0')} />
+      <span className={cn(line, 'top-[14.17px]', open && '-translate-y-[5px] -rotate-45')} />
+    </span>
   )
 }
 

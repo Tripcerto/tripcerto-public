@@ -6,6 +6,10 @@
    Four brand colours plus the band's two outer stops, and nothing outside
    the pack (Taylor, 22 Sep: a darkened coral for text "is not our theme"). */
 @theme {
+  /* The site's one motion curve: quick off the mark, long settle. Entrances,
+     the menu and the icon that opens it all move on it. */
+  --ease-site: cubic-bezier(0.2, 0.7, 0.2, 1);
+
   --color-ink: #281131;
   --color-primary: #ff5c6c;
   --color-accent: #ff7a5c;
@@ -194,7 +198,7 @@
 }
 
 @utility animate-rise {
-  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.7s var(--ease-site) both;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
@@ -245,7 +249,7 @@
 }
 
 @utility animate-pop {
-  animation: pop 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: pop 0.55s var(--ease-site) both;
   animation-delay: var(--d, 0s);
   @media (prefers-reduced-motion: reduce) {
     animation: none;
