@@ -20,7 +20,7 @@ export function Close({
   secondary?: CloseLink
 }) {
   return (
-    <section id={SECTION.close} data-band className="relative scroll-mt-16 overflow-hidden">
+    <section id={SECTION.close} data-band className="relative overflow-hidden">
       <Band />
       <div className="shell relative py-24 text-center md:py-32">
         <Heading className="mx-auto max-w-[44rem] text-paper">{heading}</Heading>

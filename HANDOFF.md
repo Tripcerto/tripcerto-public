@@ -31,9 +31,13 @@ They are guidelines for the register, never lines to lift.
   site work as a whole; it covered that evening and is over.)
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (39 tests:
-  the same four over each of the five pages in `src/site.test.tsx`, three
-  over the product cards and one over the roles grid, plus the
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (56 tests:
+  the same five over each of the five pages in `src/site.test.tsx`, three
+  over the product cards, one over the roles grid and one over each legal
+  page's nav and footer; the theme button and the menu across Back and
+  other tabs, and the nav's tone under a pull past the top, in
+  `src/components/site/Nav.test.tsx`; the boot contract in
+  `src/boot.test.tsx`; plus the
   brand kit's assertions in `scripts/brand/brand.test.ts`, which hold the
   document to the site: the palette, the even-odd fill rule on every mark,
   the section order, and that the icon build command it prints is the one
@@ -75,8 +79,11 @@ They are guidelines for the register, never lines to lift.
   (`card` and `soft` are white at 0.6 and 0.5). Light is the default.
   `index.html` adds `.dark` before first paint when that is the stored choice;
   `src/lib/theme.ts` reads and toggles the class and updates the one
-  `theme-color` meta, through a 0.5s view-transition cross-fade where the
-  browser supports one. Every section uses the tokens (`bg-soft`, `text-dim`,
+  `theme-color` meta. The colours change at once and the toggle's moon and
+  sun carry the motion (23 Sep: the view-transition cross-fade swallowed
+  every click for its half second; see the design sync below). A page the
+  back-forward cache restores, or one open in another tab, takes up the
+  choice on `pageshow` and `storage`. Every section uses the tokens (`bg-soft`, `text-dim`,
   `text-link`, the `glass` utility for panels), so a new page inherits the
   look by using them. A fixed wash of the band sits behind the page in both
   modes (`body::before`: peach by day, pink and peach by night) so glass has
@@ -196,16 +203,19 @@ They are guidelines for the register, never lines to lift.
   follows them. "See how it works" scrolls to `#products`, and a test holds
   the link and the id together.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
-  `// changed`. H-1-A is "We make complex travel easier to plan and sell"
-  (Taylor, 22 Sep; he reworded it four times that afternoon, so check the file
-  rather than any quote in this doc). It is also the home page's <title>,
-  og:title and twitter:title, the og:image:alt on all five pages, the
+  `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
+  (Taylor, 23 Sep, after the design sync moved the site off "we" statements;
+  it has been reworded often, so check the file rather than any quote in this
+  doc). It is also the home page's <title>, the og:image:alt on all five
+  pages, the
   webmanifest description, and the headline on the link-preview card
   (`scripts/og/copy.js`, `variants.a.head` and `pages.home.head`, baked into
   `public/og-image.png`): change all of them together and re-shoot the card.
+  The home page's og:title and twitter:title are "Tripcerto" alone: the card
+  above them already carries the headline (Taylor, 23 Sep, option D).
   The pill string was deleted at his request. The lower half's copy is
   `home.opportunity` (H-2-A, H-2-B and `stages`: when, name, line),
-  `home.audience` (H-7-A, H-7-B and `roles`: role, measure, line) and
+  `home.audience` (H-7-A and `roles`: role, measures) and
   `home.close` (H-9-A, H-9-C, H-9-D); H-8-B and the four-step `steps` went
   with the unpicked candidates.
 - Deleted once the hero was chosen: the four other candidates, `pick.ts` and
@@ -356,9 +366,9 @@ review below changed strings around them, never those.
   easier to plan and sell... that's the only one I want."
 - `node scripts/og/shoot.mjs --pick a` writes that one file and nothing else.
   Then bump the `?v=` on every page's `og:image` and `twitter:image` so the
-  networks refetch (at `?v=12` since the centred card).
+  networks refetch (at `?v=13` since the "AI that makes" headline).
 - The composition, his, after four passes: the Ember band, the wordmark, the
-  homepage headline alone at 55px on a 540px measure, centred on the card's
+  homepage headline alone at 55px on a 400px measure, centred on the card's
   height, and the monogram as a white ghost, 700px wide at 0.34, off the right
   edge by 24px. The line under the headline went on his word (22 Sep, late:
   "drop the subtext. centre the headline"). Do not enlarge the type, put a
@@ -431,7 +441,7 @@ reference in the PR; Taylor and Charlie reply by reference.
   that no longer exist and led with the category language the guide bans);
   this document corrected where the tree had moved on under it.
 - Not changed, on purpose, each Taylor's call:
-  - `public/legal/privacy/index.html` and `terms/` are the May 2026 documents
+  - `src/content/legal/privacy.html` and `terms.html` are the May 2026 documents
     for the earlier consumer product: the privacy notice covers "planning,
     research, review, social, and messaging features", accounts, profiles and
     follows. The Trust page links to them as the published notice and terms.
@@ -454,4 +464,120 @@ reference in the PR; Taylor and Charlie reply by reference.
 ## Still to do
 
 1. The legal documents (above).
-2. The nav contrast decision (above).
+2. The nav contrast decision (above). The 23 Sep measure, light theme, over
+   the pixels under the text: nav links 1.84 to 2.51, hero and close ledes
+   2.0 to 2.7, "See how it works" 2.5 to 3.2, the close's pilot pill 2.4,
+   "Book a demo" pink on white 3.79; white can reach at most 3.79 on the
+   band's pinkest stop and 2.05 on its peach one. Dark passes everywhere
+   (the smoke). PageSpeed's accessibility 96 is this and nothing else.
+
+## The design sync (23 Sep; Charlie, Taylor and Jack, plus Ryan's notes)
+
+Charlie's rule from the call: the home page navigates, a product page shows
+the product, and a section that half-does both goes ("too many words").
+Taylor's go was "1-7".
+
+- H-1-A is "AI that makes complex travel easier to plan and sell" everywhere
+  it is carried; the card was re-shot on a 400px measure with `text-wrap:
+  wrap` so the longer line clears the monogram and breaks as the hero does.
+- The home preview's og:title and twitter:title are "Tripcerto" alone.
+- The product cards are a size smaller on desktop and compact on a phone.
+- The roles: the travel expert folded into Sales (Charlie: "the travel expert
+  is sales"), five roles under the heading alone, one row of five from md.
+- Engage, Workspace and Pilot are each the hero, the one section that shows
+  the product (the brief, the itemised trip, the five measures) and the
+  close. The cut sections took the Workspace page's claims of CRM write-back
+  and supplier-feed pricing with them; Taylor said in the call there are no
+  CRM integrations until a first customer. "We agree the baseline first,
+  then measure the change" is off both product closes.
+- The legal pages are Vite entries: `legal/privacy/index.html` and
+  `legal/terms/index.html` mount `LegalPage`, which sets the document in
+  `src/content/legal/*.html` inside the site's nav and footer. They were
+  static files with no link back to the site. Their text is unchanged and
+  still waits on Taylor (above).
+- The hero names who it is for above the headline, "For tour operators and
+  DMCs", and H-1-B is "Tripcerto answers travellers on your website, then
+  turns each enquiry into an itemised trip your team can check and quote."
+  Taylor chose it over a lede opening "Software for…", a word he rejected.
+  Charlie's Guide §8 has company type support the explanation rather
+  than lead it; this leads with it, on Taylor's call.
+- The mobile menu opens and closes on the site curve (`--ease-site`,
+  300ms): the row grows from nothing, the links slide into place, the page
+  dims under it and the bar casts a shadow on it. The three lines fold into
+  an X and back, and the moon and sun trade places on the same curve.
+- The favicon's tc is paper, not a hole: on a dark tab bar the cut showed
+  the bar through it as a black tc. `icon-variants.html` and
+  `build-icons.mjs` draw the tile's outline at 80% in white under the cut,
+  inside the edge so 16px shows no pale rim; only `favicon.svg` and
+  `favicon.ico` changed (the square icons already carry a white tc), and
+  their `?v=` is 10. `brand.test.ts` holds the SVG to it.
+- `robots.txt` and `sitemap.xml` (the seven canonical URLs) are in
+  `public/`; live answered 404 for both.
+- `vite preview` answers clean URLs as Vercel does, so a local build serves
+  `/engage` and the legal routes.
+
+What the 23 Sep bug hunt found (five agents, live and branch, real Chrome)
+and what fixed it; each is measured before and after:
+- Every click was ignored for about half a second after the theme toggle,
+  and a second press inside that window was lost: the view transition sends
+  all input to `<html>` while it runs (`pointer-events: none` on it does not
+  help). The switch is instant now; whether the cross-fade comes back, with
+  that dead half second, is Taylor's call.
+- Back or Forward after a toggle showed the old theme, and another tab
+  never followed: the back-forward cache restores a page without rerunning
+  the pre-paint script. `useTheme` re-reads on `pageshow` and `storage`.
+- A menu left open by leaving through the wordmark or a footer link came
+  back open after Back. It closes on a restored `pageshow`.
+- Reload lost the scroll position about half the time (5 of 28 kept it) and
+  a shared `/#section` link never landed (0 of 12): React committed after
+  the load event, when Chrome had already given up restoring against an
+  empty page. `mount` renders synchronously now (28 of 28, 12 of 12, also at
+  4× CPU). Smooth scrolling waits until after load (`html.loaded`), or the
+  restore and the jump glide from the top.
+- Shift+Tab could leave focus under the fixed bar (the Trust page's status
+  link). The bar's height is `scroll-padding-top` on `<html>`, which also
+  places the in-page jumps, so the per-section `scroll-mt` went.
+- The mock window's "Search" was read out by screen readers; the whole
+  window is `aria-hidden`, as the phone is. The theme button no longer
+  carries `aria-pressed` beside a label that already flips.
+- PageSpeed mobile's 23.9s of blocking time was the band shader drawn in
+  software on its GPU-less test phone, 200 to 280ms a frame. The context
+  asks `failIfMajorPerformanceCaveat`, so software rendering keeps the still
+  gradient; a real GPU still animates (both measured).
+- Pulling the page down past its top (Safari's rubber band; Chrome's
+  pull-to-refresh only just reaches it) turned the nav's logo and links ink
+  over the band: the band was measured from the window, and Safari reports
+  the pull as a negative scroll with the bar moving with the page. The
+  midline is now placed on the page and held inside it, before paint. A
+  unit test drags the page 160px; real-Chrome seams match the old build
+  32 of 32. Not reproduced in Safari here (no automation).
+- Hashed assets were revalidated on every page view; `vercel.json` caches
+  `/assets/*` for a year, immutable.
+Not changed, measured: the band's own contrast (Still to do); the typing
+dots and the phone's float loop forever and, under the nav's and window's
+40px blurs, keep a desktop GPU compositing at about 22% of a core; no
+security headers beyond HSTS (no CSP, nosniff, referrer policy or frame
+policy); the pages render only in the browser, so their HTML is empty
+without JavaScript.
+
+Open, for Charlie's wording pass (new words, his to write):
+- H-2-A "Customer context carries from the first question to the final
+  quote", H-2-B and the stage lines: the Engage-first story he called
+  legacy messaging.
+- H-9-A "We find where our AI has the most effect…", P-1-B "We work with
+  you…" and the Pilot meta description: "we" makes it read as an agency.
+- A short tagline under each role, and the booking label (demo, call or
+  discovery call; all go to one calendar, whose own description still uses
+  the banned words).
+- Whether W-1-B's "resolves prices and availability through the systems
+  you already run" and W-3's "come from your systems" hold today.
+
+Later: content pages under each product (what, who for, how, FAQs) for
+search and AI answers; a page per role; downloadable PDFs; the pilot page's
+detail; Tripcerto Ground as its own site or route; Google Analytics on
+Jack's ticket (Vercel Analytics already records views, scroll depth,
+sections, clicks and time; GA adds cookies and a consent banner); the Trust
+page shorter, with an ISO 27001 target date only Taylor can give. Taylor's to reopen, since they reverse his 22 Sep calls:
+real content in the frames instead of bars (Ryan; Taylor also wants a
+fuller Engage picture) and following the system theme. All the video ideas
+are parked until the videos exist.

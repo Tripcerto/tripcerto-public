@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
-import { BadgePoundSterling, ClipboardCheck, Compass, Handshake, Megaphone, ServerCog } from 'lucide-react'
-import { Heading, Lede, Section } from '@/components/site/Section'
+import { BadgePoundSterling, ClipboardCheck, Handshake, Megaphone, ServerCog } from 'lucide-react'
+import { Heading, Section } from '@/components/site/Section'
 import { home } from '@/content/home'
 import { SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
@@ -13,33 +13,31 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
   Operations: ClipboardCheck,
   Technology: ServerCog,
   Finance: BadgePoundSterling,
-  'The travel expert': Compass,
 }
 
-/* The buying roles as a ruled grid: each cell the role's glyph, its name
-   and the measures it is held to, one to a line. Two columns on a phone,
-   three from md; rules run between the cells and across the top and foot,
-   never up the outer sides, so the grid opens onto the page. The foot rule
-   sits 40px above the band, the distance the footer keeps under it;
-   md:pb-10 is what outranks the Section's md:py-28. */
+/* The buying roles as a ruled grid under the heading: each cell the role's
+   glyph, its name and the measures it is held to, one to a line. Two
+   columns on a phone, the fifth role across both; one row of five from md.
+   Rules run between the cells and across the top and foot, never up the
+   outer sides, so the grid opens onto the page. The foot rule sits 40px
+   above the band, the distance the footer keeps under it; md:pb-10 is what
+   outranks the Section's md:py-28. */
 export function Audience() {
   return (
     <Section id={SECTION.audience} tone="tint" className="pb-10 md:pb-10">
-      <div className="max-w-[44rem]">
-        <Heading>{home.audience['H-7-A']}</Heading>
-        <Lede className="mt-5">{home.audience['H-7-B']}</Lede>
-      </div>
+      <Heading className="max-w-[44rem]">{home.audience['H-7-A']}</Heading>
 
-      <ul role="list" className="mt-12 grid grid-cols-2 border-t border-line md:mt-14 md:grid-cols-3">
+      <ul role="list" className="mt-10 grid grid-cols-2 border-t border-line md:mt-12 md:grid-cols-5">
         {home.audience.roles.map(({ role, measures }, i) => {
           const Glyph = ROLE_GLYPH[role]
           return (
             <li
               key={role}
               className={cn(
-                'border-b border-line py-7 pr-4 md:py-9 md:pr-8',
+                'border-b border-line py-6 pr-4 md:py-8 lg:pr-6',
                 i % 2 ? 'border-l pl-5' : 'pl-0',
-                i % 3 ? 'md:border-l md:pl-8' : 'md:border-l-0 md:pl-0',
+                i === home.audience.roles.length - 1 && i % 2 === 0 && 'col-span-2 md:col-span-1',
+                i ? 'md:border-l md:pl-5 lg:pl-6' : 'md:pl-0',
               )}
             >
               <Glyph size={22} aria-hidden className="text-link" />

@@ -20,7 +20,11 @@
                 colour rather than white.
         tile    the artwork's own rounded tile, for the vector favicon and the
                 ICO, where nothing masks on our behalf. Pair it with a
-                transparent screenshot so the corners come out empty.
+                transparent screenshot so the corners come out empty. The tc
+                is paper: a paper copy of the tile, drawn at 80% underneath,
+                shows through the cut and nowhere else, so a dark tab bar
+                does not show through as a black tc. It stops short of the
+                tile's edge, so no pale rim appears at 16px.
 
       MARK — ?mark=<fraction of the canvas width>
         0.76 is the tight crop the full-bleed icons use. 0.56 is the maskable
@@ -88,6 +92,10 @@
       const appicon = await load('appicon.svg')
       const monogram = await load('monogram.svg')
       const vw = appicon.w
+      /* The tile's outline is the path's first subpath; the rest are the cut. */
+      const outline = appicon.d.slice(0, appicon.d.indexOf('Z') + 1)
+      const PAPER_INSET = 0.8
+      const paperBehind = `<g transform="translate(${(vw * (1 - PAPER_INSET)) / 2} ${(vw * (1 - PAPER_INSET)) / 2}) scale(${PAPER_INSET})"><path d="${outline}" fill="${PAPER}"/></g>`
 
       document.documentElement.style.width = `${size}px`
       document.documentElement.style.height = `${size}px`
@@ -141,11 +149,11 @@
 
         host.innerHTML =
           shape === 'tile'
-            ? /* The tile path's even-odd rule IS the knockout: clipping to it
-                 leaves the tc empty, and the corners empty with it. */
+            ? /* The tile path's even-odd rule IS the cut: clipping to it leaves
+                 the tc open onto the paper beneath, and the corners empty. */
               `${open(
                 `${filterDef}<clipPath id="cut" clipPathUnits="userSpaceOnUse"><path d="${appicon.d}" clip-rule="evenodd"/></clipPath>`,
-              )}<g clip-path="url(#cut)">${image}</g></svg>`
+              )}${paperBehind}<g clip-path="url(#cut)">${image}</g></svg>`
             : `${open(
                 `${filterDef}<clipPath id="sq" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="${vw}" height="${vw}"/></clipPath>`,
               )}<g clip-path="url(#sq)">${image}</g>${mark(PAPER)}</svg>`
@@ -153,7 +161,7 @@
         const paint = ground === 'coral' ? CORAL : 'url(#ramp)'
         host.innerHTML =
           shape === 'tile'
-            ? `${open(ramp)}<path d="${appicon.d}" fill="${paint}" fill-rule="evenodd"/></svg>`
+            ? `${open(ramp)}${paperBehind}<path d="${appicon.d}" fill="${paint}" fill-rule="evenodd"/></svg>`
             : `${open(ramp)}<rect x="0" y="0" width="${vw}" height="${vw}" fill="${paint}"/>${mark(PAPER)}</svg>`
       }
 

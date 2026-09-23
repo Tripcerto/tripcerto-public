@@ -327,7 +327,7 @@ all on the band. Rendered here from ${w('scripts/og/card.html')}, the source of 
 ${rows([
   ['The file', `${w('public/og-image.png')}, a 1200 × 630 card shot at 2×, so 2400 × 1260 pixels, served to every page.`],
   ['Rebuild it', `${w('node scripts/og/shoot.mjs --pick a')}, then bump the ${w('?v=')} on every page's og:image and twitter:image so the networks refetch it.`],
-  ['The type', 'The headline at 55px on a 540px measure, centred on the card’s height, and nothing under it. Short enough that the mark is never crowded.'],
+  ['The type', 'The headline at 55px on a 400px measure, centred on the card’s height, and nothing under it. Short enough that the mark is never crowded.'],
   ['The mark', 'The monogram, white at 0.34, 700px wide, off the right edge by 24px. It is the card; do not fade it back.'],
   ['Never', 'A second card per page, a line of copy under the headline, a photograph behind the type, or a headline long enough to run into the mark.'],
 ])}
@@ -499,7 +499,7 @@ allowed to say.</p>
 <h2>06 · Files</h2>
 ${rows([
   ['Marks', `${w('public/brand/')} carries the wordmark, monogram and app icon, each as SVG in ink and in white. One path per mark, cut by the even-odd fill rule. Drop that rule and the counters fill solid.`],
-  ['Icons', `${w('public/')} carries favicon.svg, favicon.ico at 48/32/16, apple-touch-icon at 180, icon-192, icon-512, two maskable icons for Android, mask-icon.svg for a pinned Safari tab, and og-image at 1200 × 630.`],
+  ['Icons', `${w('public/')} carries favicon.svg, favicon.ico at 48/32/16, apple-touch-icon at 180, icon-192, icon-512, two maskable icons for Android, mask-icon.svg for a pinned Safari tab, and og-image at 1200 × 630. The favicon's tc is paper, not open: a dark tab bar would otherwise show through it as a black tc.`],
   ['Icon ground', `All of them regenerate from one command, so a favicon cannot drift from an app icon: ${w(`node scripts/og/build-icons.mjs --ground mesh --scale ${ICON.scale} --seed ${ICON.seed}`)}`],
   ['Colour', `${w('src/index.css')} declares the brand colours, the working set and the band, as CSS custom properties. That file is the source; this document reads it.`],
   ['The band', `${w('src/components/ui/gradient-mesh.tsx')} is the shader, about 6 kB of WebGL with no dependency. ${w('src/components/site/Band.tsx')} passes the live parameters.`],

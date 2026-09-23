@@ -35,6 +35,21 @@ describe('the marks', () => {
   })
 })
 
+describe('the favicon', () => {
+  it('fills the cut tc with paper, drawn under the tile and inside its edge', () => {
+    /* The artwork's tc is a hole. In a browser tab a hole shows the tab bar,
+       so on a dark one the tc read black (23 Sep). */
+    const svg = read(join(ROOT, 'public/favicon.svg'))
+    const tile = read(join(BRAND, 'appicon.svg')).match(/\sd="([^"]+)"/)?.[1] ?? ''
+    const outline = tile.slice(0, tile.indexOf('Z') + 1)
+    const paper = svg.match(/<g transform="translate\(([\d.]+) \1\) scale\((0\.\d+)\)"><path d="([^"]+)" fill="#FFFFFF"\/><\/g>/)
+    expect(paper, 'no paper under the tile').toBeTruthy()
+    expect(paper?.[3]).toBe(outline)
+    expect(svg.indexOf(paper?.[0] ?? '')).toBeLessThan(svg.indexOf(`d="${tile}"`))
+    expect(Number(paper?.[2])).toBeLessThan(1)
+  })
+})
+
 describe('the brand kit', () => {
   const kit = read(KIT)
 

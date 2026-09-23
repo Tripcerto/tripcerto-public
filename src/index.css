@@ -6,6 +6,10 @@
    Four brand colours plus the band's two outer stops, and nothing outside
    the pack (Taylor, 22 Sep: a darkened coral for text "is not our theme"). */
 @theme {
+  /* The site's one motion curve: quick off the mark, long settle. Entrances,
+     the menu and the icon that opens it all move on it. */
+  --ease-site: cubic-bezier(0.2, 0.7, 0.2, 1);
+
   --color-ink: #281131;
   --color-primary: #ff5c6c;
   --color-accent: #ff7a5c;
@@ -73,13 +77,22 @@
   * {
     box-sizing: border-box;
   }
+  /* The fixed bar's height, so an anchor jump or a focused element never
+     lands under it. */
   html {
-    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
     -webkit-text-size-adjust: 100%;
+    @media (width >= 48rem) {
+      scroll-padding-top: 72px;
+    }
   }
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
+  /* Smooth once the page has loaded (boot.tsx adds .loaded), so an in-page
+     link glides to its section while a reload's restored position and a
+     shared #section link land straight there instead of gliding from the
+     top. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.loaded {
+      scroll-behavior: smooth;
     }
   }
   body {
@@ -128,14 +141,6 @@
     outline: 2px solid var(--color-link);
     outline-offset: 3px;
   }
-}
-
-/* The theme switch: the browser cross-fades its snapshots of the old and
-   new page, so every colour eases at once. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
 }
 
 @utility shell {
@@ -194,7 +199,7 @@
 }
 
 @utility animate-rise {
-  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.7s var(--ease-site) both;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
@@ -245,7 +250,7 @@
 }
 
 @utility animate-pop {
-  animation: pop 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: pop 0.55s var(--ease-site) both;
   animation-delay: var(--d, 0s);
   @media (prefers-reduced-motion: reduce) {
     animation: none;
@@ -284,4 +289,64 @@
 }
 .reveal.is-in :is(.animate-pop, .animate-flag) {
   animation-play-state: running;
+}
+
+/* The legal documents: long-form text set in the page's type and tokens.
+   The documents are HTML as written, so the styling reaches their tags. */
+@layer components {
+  .legal {
+    max-width: 44rem;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-body);
+  }
+  .legal h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .legal h2 {
+    margin-top: 2.5rem;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .legal h3 {
+    margin-top: 1.75rem;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .legal p {
+    margin-top: 0.75rem;
+  }
+  .legal h1 + p {
+    margin-top: 1rem;
+    font-size: 14px;
+    color: var(--color-dim);
+  }
+  .legal ul {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .legal li {
+    margin-top: 0.35rem;
+  }
+  .legal li::marker {
+    color: var(--color-dim);
+  }
+  .legal code {
+    font: inherit;
+  }
+  .legal a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal hr {
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
 }

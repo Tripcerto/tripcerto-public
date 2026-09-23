@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { BadgeCheck, Boxes, Flag, ListOrdered, Send, UserRoundCheck, Users } from 'lucide-react'
+import { BadgeCheck, Flag, ListOrdered } from 'lucide-react'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
@@ -13,12 +13,9 @@ import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
   trip: 'the-itemised-trip',
-  systems: 'how-it-works',
-  boundaries: 'what-stays',
 } as const
 
 type Column = (typeof workspace.trip.columns)[number]['name']
-type Row = (typeof workspace.systems.rows)[number]['name']
 
 const COLUMN_GLYPH: Record<Column, LucideIcon> = {
   'Structured, in order': ListOrdered,
@@ -26,16 +23,9 @@ const COLUMN_GLYPH: Record<Column, LucideIcon> = {
   'Resolved, then approved': BadgeCheck,
 }
 
-const ROW_GLYPH: Record<Row, LucideIcon> = {
-  'Your inventory and suppliers': Boxes,
-  'Your CRM and inquiry channels': Users,
-  'Your proposal and booking process': Send,
-  'Your experts, in control': UserRoundCheck,
-}
-
 /* The Workspace page: the opening on the band with the window and Stella's
-   pane, the itemised trip as three ruled columns, the systems it connects
-   to as ruled rows, what stays where it is, and the close. */
+   pane, the itemised trip as three ruled columns, and the close. Every
+   section shows the product or leads somewhere (23 Sep sync). */
 export function WorkspacePage() {
   usePageAnalytics()
   return (
@@ -74,37 +64,6 @@ export function WorkspacePage() {
               )
             })}
           </ul>
-        </Section>
-
-        <Section id={ID.systems} tone="tint">
-          <div className="max-w-[44rem]">
-            <Heading>{workspace.systems['W-4-A']}</Heading>
-            <Lede className="mt-5">{workspace.systems['W-4-B']}</Lede>
-          </div>
-          <ul role="list" className="mt-12 divide-y divide-line md:mt-14">
-            {workspace.systems.rows.map(({ name, detail, line }) => {
-              const Glyph = ROW_GLYPH[name]
-              return (
-                <li key={name} className="grid grid-cols-1 gap-2 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-x-12 md:gap-y-0">
-                  <div className="flex items-start gap-3">
-                    <Glyph size={22} aria-hidden className="mt-px shrink-0 text-link" />
-                    <div>
-                      <h3 className="text-[17px] leading-[1.4] font-semibold">{name}</h3>
-                      <p className="mt-1 text-[14px] leading-[1.5] text-dim">{detail}</p>
-                    </div>
-                  </div>
-                  <p className="pl-[34px] text-[16px] leading-[1.55] text-body/80 md:pl-0">{line}</p>
-                </li>
-              )
-            })}
-          </ul>
-        </Section>
-
-        <Section id={ID.boundaries}>
-          <div className="max-w-[44rem]">
-            <Heading>{workspace.boundaries['W-6-A']}</Heading>
-            <Lede className="mt-5">{workspace.boundaries['W-6-B']}</Lede>
-          </div>
         </Section>
 
         <Close

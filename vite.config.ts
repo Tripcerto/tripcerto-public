@@ -1,23 +1,32 @@
 import { existsSync } from 'node:fs'
-import { extname, join } from 'node:path'
+import { extname, join, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
+import type { Connect } from 'vite'
 import { defineConfig, type Plugin } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-/* The dev server answers the clean URLs Vercel serves in production
-   (vercel.json: cleanUrls), so /engage is engage/index.html here too. */
+/* The dev server and `vite preview` answer the clean URLs Vercel serves in
+   production (vercel.json: cleanUrls), so /engage is engage/index.html
+   here too: from the source root in dev, from the build in preview. */
+function rewriteCleanUrls(dir: string): Connect.NextHandleFunction {
+  return (req, _res, next) => {
+    const path = (req.url ?? '').split('?')[0]
+    if (path !== '/' && !extname(path) && existsSync(join(dir, path, 'index.html'))) {
+      req.url = `${path.replace(/\/$/, '')}/index.html${req.url?.slice(path.length) ?? ''}`
+    }
+    next()
+  }
+}
+
 function cleanUrls(): Plugin {
   return {
     name: 'clean-urls',
     configureServer(server) {
-      server.middlewares.use((req, _res, next) => {
-        const path = (req.url ?? '').split('?')[0]
-        if (path !== '/' && !extname(path) && existsSync(join(server.config.root, path, 'index.html'))) {
-          req.url = `${path.replace(/\/$/, '')}/index.html${req.url?.slice(path.length) ?? ''}`
-        }
-        next()
-      })
+      server.middlewares.use(rewriteCleanUrls(server.config.root))
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(rewriteCleanUrls(resolve(server.config.root, server.config.build.outDir)))
     },
   }
 }
@@ -40,6 +49,8 @@ export default defineConfig({
         workspace: fileURLToPath(new URL('./workspace/index.html', import.meta.url)),
         pilot: fileURLToPath(new URL('./pilot/index.html', import.meta.url)),
         trust: fileURLToPath(new URL('./trust/index.html', import.meta.url)),
+        privacy: fileURLToPath(new URL('./legal/privacy/index.html', import.meta.url)),
+        terms: fileURLToPath(new URL('./legal/terms/index.html', import.meta.url)),
       },
     },
   },
