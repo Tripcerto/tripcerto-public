@@ -28,7 +28,15 @@ it('reads every entry, one for each page the sitemap lists', () => {
   expect(ENTRIES).toHaveLength(read(join(ROOT, 'public/sitemap.xml')).match(/<loc>/g)?.length ?? 0)
 })
 
-describe.each(ENTRIES)('the $name head', ({ html, url }) => {
+/* The pages that describe the company and its two products in structured
+   data; the others carry none. */
+const STRUCTURED = ['home', 'engage', 'workspace']
+
+/* The inline script at the top of each head: it sets the stored theme and
+   marks the page as scripted before the first paint. */
+const prePaint = (html: string) => html.match(/<script>([\s\S]*?)<\/script>/)?.[1]
+
+describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
   it('describes the page and names its address', () => {
     expect(description(html)?.length ?? 0).toBeGreaterThan(40)
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1]
@@ -36,10 +44,16 @@ describe.each(ENTRIES)('the $name head', ({ html, url }) => {
   })
 
   it('carries structured data that says what the description says', () => {
-    for (const data of structured(html)) {
-      const nodes = data['@graph'] ?? [data]
-      for (const node of nodes) if (node.description) expect(node.description).toContain(description(html))
-    }
+    const described = structured(html)
+      .flatMap((data) => data['@graph'] ?? [data])
+      .filter((node) => node.description)
+    expect(described.length > 0).toBe(STRUCTURED.includes(name))
+    for (const node of described) expect(node.description).toContain(description(html))
+  })
+
+  it('runs the same pre-paint script as the home page', () => {
+    expect(prePaint(html)).toContain("classList.add('js')")
+    expect(prePaint(html)).toBe(prePaint(ENTRIES.find((entry) => entry.name === 'home')?.html ?? ''))
   })
 })
 

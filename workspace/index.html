@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fff1ea" />
     <script>
+      document.documentElement.classList.add('js')
       try {
         if (localStorage.getItem('theme') === 'dark') {
           document.documentElement.classList.add('dark')
@@ -47,12 +48,10 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
+        "@type": "Service",
         "name": "Tripcerto Workspace",
         "url": "https://www.tripcerto.com/workspace",
         "description": "Workspace turns an enquiry into an itemised, quote-ready trip, resolves prices and availability through the systems you already run, and shows what still needs an expert before the quote goes out.",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
         "audience": {
           "@type": "BusinessAudience",
           "audienceType": "Tour operators and DMCs"

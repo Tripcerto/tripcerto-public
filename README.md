@@ -75,7 +75,7 @@ npm run preview    # serve dist/ locally
 
 ## Search engines and AI assistants
 
-- `robots.txt` lets every crawler in and names the sitemap; `sitemap.xml` lists the seven pages; `llms.txt` describes the site for AI assistants, one line per page. Home, Engage and Workspace carry JSON-LD (the organisation and website on home, a software application on each product page).
+- `robots.txt` lets every crawler in and names the sitemap; `sitemap.xml` lists the seven pages; `llms.txt` describes the site for AI assistants, one line per page. Home, Engage and Workspace carry JSON-LD (the organisation and website on home, a service on each product page: Google's software-app type wants prices and ratings the site does not have).
 - `scripts/head.test.ts` holds these to the pages: every build entry is in the sitemap, and every JSON-LD description and every `llms.txt` line is the page's own meta description. Change a description in the page's `<head>` and the test names each place that has to follow.
 - Adding a page takes five things: the HTML entry, its line in the `input` block of `vite.config.ts` (the test reads that block as written), an entry file that exports `mount(ThePage)`, a `<loc>` in the sitemap and a line in `llms.txt`.
 - Google Search Console holds `tripcerto.com` as a domain property, verified by a TXT record in the domain's DNS at IONOS; removing that record loses the property. Bing Webmaster Tools imported it from Search Console.
