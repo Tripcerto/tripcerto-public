@@ -97,7 +97,25 @@ beforeAll(() => {
   })
 })
 
+/* A page's own entrance runs as it loads; every other animation belongs to
+   a frame, and a frame plays only once it is wholly on screen (inside a
+   Reveal) or stands still at its end. */
+const ENTRANCE = new Set(['animate-rise', 'animate-fade-in'])
+const choreographed = (el: Element) =>
+  (el.getAttribute('class') ?? '')
+    .split(/\s+/)
+    .some((name) => (name.startsWith('animate-') && !ENTRANCE.has(name)) || name === 'text-shimmer')
+
 describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
+  it('holds every frame animation until the frame is wholly on screen', () => {
+    const { container } = render(<Page />)
+    const loose = [...container.querySelectorAll('*')]
+      .filter(choreographed)
+      .filter((el) => !el.closest('.reveal, .still'))
+      .map((el) => el.getAttribute('class'))
+    expect(loose).toEqual([])
+  })
+
   it('renders one h1 carrying the hero headline', () => {
     render(<Page />)
     const h1s = screen.getAllByRole('heading', { level: 1 })
