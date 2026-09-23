@@ -3,6 +3,7 @@ import { BadgePoundSterling, ClipboardCheck, Compass, Handshake, Megaphone, Serv
 import { Heading, Lede, Section } from '@/components/site/Section'
 import { home } from '@/content/home'
 import { SECTION } from '@/lib/links'
+import { cn } from '@/lib/utils'
 
 type Role = (typeof home.audience.roles)[number]['role']
 
@@ -15,11 +16,12 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
   'The travel expert': Compass,
 }
 
-/* The buying roles as ruled rows: the role with the number it is measured
-   on stacked under it, and what changes for it alongside, both read from
-   the top of the row. Rules sit only between rows, so the list opens onto
-   the band 40px below the last one, the distance the footer keeps under
-   it; md:pb-10 is what outranks the Section's md:py-28. */
+/* The buying roles as a ruled grid: each cell the role's glyph, its name
+   and the measures it is held to, one to a line. Two columns on a phone,
+   three from md; rules run between the cells and across the top and foot,
+   never up the outer sides, so the grid opens onto the page. The foot rule
+   sits 40px above the band, the distance the footer keeps under it;
+   md:pb-10 is what outranks the Section's md:py-28. */
 export function Audience() {
   return (
     <Section id={SECTION.audience} tone="tint" className="pb-10 md:pb-10">
@@ -28,22 +30,25 @@ export function Audience() {
         <Lede className="mt-5">{home.audience['H-7-B']}</Lede>
       </div>
 
-      <ul role="list" className="mt-12 divide-y divide-line md:mt-14">
-        {home.audience.roles.map(({ role, measure, line }) => {
+      <ul role="list" className="mt-12 grid grid-cols-2 border-t border-line md:mt-14 md:grid-cols-3">
+        {home.audience.roles.map(({ role, measures }, i) => {
           const Glyph = ROLE_GLYPH[role]
           return (
             <li
               key={role}
-              className="grid grid-cols-1 gap-2 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-x-12 md:gap-y-0"
+              className={cn(
+                'border-b border-line py-7 pr-4 md:py-9 md:pr-8',
+                i % 2 ? 'border-l pl-5' : 'pl-0',
+                i % 3 ? 'md:border-l md:pl-8' : 'md:border-l-0 md:pl-0',
+              )}
             >
-              <div className="flex items-start gap-3">
-                <Glyph size={22} aria-hidden className="mt-px shrink-0 text-link" />
-                <div>
-                  <h3 className="text-[17px] leading-[1.4] font-semibold">{role}</h3>
-                  <p className="mt-1 text-[14px] leading-[1.5] text-dim">{measure}</p>
-                </div>
-              </div>
-              <p className="pl-[34px] text-[16px] leading-[1.55] text-body/80 md:pl-0">{line}</p>
+              <Glyph size={22} aria-hidden className="text-link" />
+              <h3 className="mt-4 text-[17px] leading-[1.3] font-semibold md:text-[19px]">{role}</h3>
+              <ul role="list" className="mt-3 space-y-1.5 text-[14px] leading-[1.4] text-dim md:text-[15px]">
+                {measures.map((measure) => (
+                  <li key={measure}>{measure}</li>
+                ))}
+              </ul>
             </li>
           )
         })}

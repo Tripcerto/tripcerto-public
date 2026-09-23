@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeAll } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { App } from './App'
 import { EngagePage } from './pages/EngagePage'
 import { WorkspacePage } from './pages/WorkspacePage'
@@ -10,7 +10,7 @@ import { engage } from '@/content/engage'
 import { workspace } from '@/content/workspace'
 import { pilot } from '@/content/pilot'
 import { trust } from '@/content/trust'
-import { DEMO_URL, LOGIN_URL, PAGES } from '@/lib/links'
+import { DEMO_URL, LOGIN_URL, PAGES, SECTION } from '@/lib/links'
 
 /* Language Charlie's guide bans from headlines, and the category phrases the
    messaging foundation refuses to lead with. */
@@ -33,7 +33,7 @@ const SITE = [
     name: 'home',
     Page: App,
     h1: home.hero['H-1-A'],
-    headings: [home.opportunity['H-2-A'], home.engage['H-4-A'], home.workspace['H-5-A'], home.audience['H-7-A'], home.close['H-9-A']],
+    headings: [home.opportunity['H-2-A'], home.products['H-3-A'], home.audience['H-7-A'], home.close['H-9-A']],
   },
   {
     name: 'engage',
@@ -133,5 +133,37 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
     const text = container.textContent ?? ''
     for (const re of BANNED) expect(text).not.toMatch(re)
     for (const h of [h1, ...headings]) expect(h).not.toMatch(IMPERATIVE_OPENERS)
+  })
+})
+
+describe('home products section', () => {
+  it('is where "See how it works" lands', () => {
+    render(<App />)
+    const link = screen.getByRole('link', { name: home.hero['H-1-D'] })
+    expect(link.getAttribute('href')).toBe(`#${SECTION.products}`)
+    expect(document.getElementById(SECTION.products)).not.toBeNull()
+  })
+
+  it.each([
+    { name: 'Engage', line: home.engage['H-4-A'], body: home.engage['H-4-B'], link: home.engage.link, href: PAGES.engage },
+    { name: 'Workspace', line: home.workspace['H-5-A'], body: home.workspace['H-5-B'], link: home.workspace.link, href: PAGES.workspace },
+  ])('gives $name a card that opens its page', ({ name, line, body, link, href }) => {
+    render(<App />)
+    const section = within(document.getElementById(SECTION.products)!)
+    const card = within(section.getByRole('heading', { level: 3, name }).closest('article')!)
+    card.getByText(line)
+    card.getByText(body)
+    expect(card.getByRole('link', { name: link }).getAttribute('href')).toBe(href)
+  })
+})
+
+describe('home roles grid', () => {
+  it('gives every buying role a cell with its measures', () => {
+    render(<App />)
+    const section = within(document.getElementById(SECTION.audience)!)
+    for (const { role, measures } of home.audience.roles) {
+      const cell = within(section.getByRole('heading', { level: 3, name: role }).closest('li')!)
+      for (const measure of measures) cell.getByText(measure)
+    }
   })
 })

@@ -7,7 +7,7 @@ import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
 import { DEMO_URL, SECTION } from '@/lib/links'
 
-const HOW_IT_WORKS_HREF = `#${SECTION.engage}`
+const HOW_IT_WORKS_HREF = `#${SECTION.products}`
 
 /* The hero: paper copy on the band (headline, lede, the two actions, one
    centred group; the Pilot pill above it went on Taylor's ask, 22 Sep

@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
-import { BedDouble, Car, Check, Clock, Plane, Plus, TrendingUp, TriangleAlert } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { BedDouble, Car, Check, Clock, LayoutPanelLeft, MessageCircle, Plane, Plus, TrendingUp, TriangleAlert } from 'lucide-react'
 import { BalloonGlyph } from '@/components/site/frames/SafariScene'
 import type { Kind, Status } from '@/components/site/frames/story'
 
@@ -8,6 +9,12 @@ import type { Kind, Status } from '@/components/site/frames/story'
    Every class here has its smoked counterpart for dark mode. */
 
 export type Glyph = ComponentType<{ className?: string }>
+
+/* Each product's glyph, wherever the page names it. */
+export const PRODUCT_GLYPH = {
+  Engage: MessageCircle,
+  Workspace: LayoutPanelLeft,
+} as const satisfies Record<string, LucideIcon>
 
 export const KIND_GLYPH: Record<Kind, Glyph> = {
   stay: BedDouble,

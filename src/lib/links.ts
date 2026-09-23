@@ -21,9 +21,8 @@ export const NAV_LINKS = [
 ] as const
 
 export const SECTION = {
+  products: 'products',
   opportunity: 'opportunity',
-  engage: 'engage',
-  workspace: 'workspace',
   audience: 'is-this-for-me',
   close: 'close',
 } as const

@@ -1,8 +1,9 @@
 /* Home page strings, keyed by the reference in "Website copy for review" (21 Sep 2026).
    Strings marked `changed` depart from that document on the direction in Charlie's
    Positioning and Messaging Guide (22 Sep 2026): the software is the subject, the framing
-   is the opportunity, the hero covers both products, section 6 is removed. Reply with the
-   reference and the change. */
+   is the opportunity, the hero covers both products, section 6 is removed. Sections 3 to 5
+   are the 23 Sep 2026 design's, word for word. Reply with the reference
+   and the change. */
 
 export const home = {
   hero: {
@@ -37,66 +38,42 @@ export const home = {
       },
     ],
   },
+  /* Sections 3, 4 and 5 as one: the two products side by side, a card
+     each, word for word from the 23 Sep 2026 design. The label, the name
+     and the link sit on the card; H-4-A and H-5-A are the line under the
+     product's name, H-4-B and H-5-B the sentence under that. */
+  products: {
+    eyebrow: 'Our solutions', // changed (23 Sep design)
+    'H-3-A': 'Two products. Built for your travel business.', // changed (23 Sep design)
+    'H-3-B': 'Explore the right solution for your customers and your team.', // changed (23 Sep design)
+  },
   engage: {
-    'H-4-A': 'Every website visitor, understood before the first call', // changed
-    'H-4-B':
-      'Travellers research in their own way. Engage answers from your expertise and your products, keeps you in control of what is shown, and hands your sales team the questions, preferences and products considered, so the team can reply sooner and sell the traveller what they want.', // changed
-    caption: 'Engage on a travel website, typed or spoken.',
-    points: [
-      'Answers in your voice, from the content and products you approve',
-      'Records needs, timing, preferences and concerns as the conversation goes on',
-      'Passes the transcript and the structured brief into your sales process',
-    ],
+    label: 'Customer conversations', // changed (23 Sep design)
+    'H-4-A': 'Understand every visitor. Before the first call.', // changed (23 Sep design)
+    'H-4-B': 'Answer from your expertise and turn conversations into sales-ready briefs.', // changed (23 Sep design)
+    link: 'Explore Engage', // changed (23 Sep design)
   },
   workspace: {
-    'H-5-A': 'Workspace turns the customer’s requirements into a sellable trip the moment they arrive', // changed
-    'H-5-B':
-      'From the dates, places, travellers and services in an inquiry, Workspace builds the itemised trip, resolves it against your own or your suppliers’ inventory, and flags the missing pieces before the quote goes out.', // changed (names the product; the section has no badge)
-    caption: 'A dropped file, a voice note, and the trip itemised.',
-    points: [
-      'Builds the itemised service list from the inquiry, in order',
-      'Shows the stays, transfers and dates that still need attention',
-      'Resolves prices and availability through the systems you already run',
-    ],
+    label: 'Trip planning & sales', // changed (23 Sep design)
+    'H-5-A': 'Turn every enquiry into a sellable trip.', // changed (23 Sep design)
+    'H-5-B': 'Build itemised trips from customer needs, with gaps flagged before you quote.', // changed (23 Sep design)
+    link: 'Explore Workspace', // changed (23 Sep design)
   },
   audience: {
     'H-7-A': 'Built for the people who sell complex travel', // changed
     'H-7-B':
       'Tripcerto takes the manual steps out of selling multi-day, multi-supplier trips at bespoke tour operators, DMCs and digitally connected ground transportation. Each role sees it in the number it is measured on.', // changed
     /* Buying roles and what they are measured on (Guide §8; the Foundation's
-       stakeholder map). Sectors support the explanation, they do not lead it. */
+       stakeholder map). Sectors support the explanation, they do not lead it.
+       Each role is its name and its measures, nothing more (23 Sep). */
     roles: [
-      {
-        role: 'Sales',
-        measure: 'Conversion, response time, booking value',
-        line: 'Every inquiry arrives with the questions asked, the preferences given and the products considered, so the first reply can be faster and better informed.',
-      },
-      {
-        role: 'Marketing',
-        measure: 'Inquiry rate, cost per qualified inquiry',
-        line: 'Engage helps more of the visitors you already pay for reach a useful conversation, and each inquiry carries a record of what the visitor wanted.',
-      },
-      {
-        role: 'Operations',
-        measure: 'Quote time, completeness, handling time',
-        line: 'Workspace itemises and checks every quote, with the gaps visible before it goes out.',
-      },
-      {
-        role: 'Technology',
-        measure: 'Security, data ownership, integration',
-        line: 'Works with the systems you already run. Customer data stays separated by tenant, your approved sources stay authoritative and every recommendation is governed.',
-      },
-      {
-        role: 'Finance',
-        measure: 'Total cost, payback, contract exposure',
-        line: 'Subscription, usage and implementation are priced separately, and the pilot measures are agreed before anything expands.',
-      },
-      {
-        role: 'The travel expert',
-        measure: 'Time on expert work, fewer corrections',
-        line: 'Tripcerto prepares the work and shows what is missing. The expert decides what goes to the customer.',
-      },
-    ], // changed: roles, not sectors
+      { role: 'Sales', measures: ['Conversion', 'Response time', 'Booking value'] },
+      { role: 'Marketing', measures: ['Inquiry rate', 'Cost per qualified inquiry'] },
+      { role: 'Operations', measures: ['Quote time', 'Completeness', 'Handling time'] },
+      { role: 'Technology', measures: ['Security', 'Data ownership', 'Integration'] },
+      { role: 'Finance', measures: ['Total cost', 'Payback', 'Contract exposure'] },
+      { role: 'The travel expert', measures: ['Time on expert work', 'Fewer corrections'] },
+    ], // changed: roles, not sectors; the measures as a list and the sentences dropped (23 Sep)
   },
   /* No Proof section (Guide §10): the close is the call, with the pilot
      page beside it. Taylor, 22 Sep: nothing stands between the headline

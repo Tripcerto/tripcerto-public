@@ -31,8 +31,9 @@ They are guidelines for the register, never lines to lift.
   site work as a whole; it covered that evening and is over.)
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (35 tests:
-  the same four over each of the five pages in `src/site.test.tsx`, plus the
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (39 tests:
+  the same four over each of the five pages in `src/site.test.tsx`, three
+  over the product cards and one over the roles grid, plus the
   brand kit's assertions in `scripts/brand/brand.test.ts`, which hold the
   document to the site: the palette, the even-odd fill rule on every mark,
   the section order, and that the icon build command it prints is the one
@@ -121,23 +122,41 @@ They are guidelines for the register, never lines to lift.
   finished state. The phone's bezel and screen are PAINTED (`bg-band-frosted`
   / `bg-band-smoked`), not glass, because Taylor could see the window through
   them. In dark mode both frames are smoked ink glass. The same two screens
-  sit in the Engage and Workspace sections, with no box around them (Taylor
-  removed it); `Stage.tsx` is a pool of the band's light (`bg-glow`) behind
-  the frame and the caption hung below it out of the flow. The phone stands
-  in a 5fr column to the side of the copy; the window sits in the 7fr
-  column capped at 560px, so the two frames stand at a similar scale (Taylor:
-  "vastly different… shrink it a little bit"). There the window's
+  stand in the product cards under the hero (`Products.tsx`, below), and
+  `Stage.tsx` is a pool of the band's light (`bg-glow`) behind a frame with
+  an optional caption hung below it out of the flow. There the window's
   Stella pane shows the conversation (`WorkspaceChat.tsx`, passed in as
   `pane`): the consultant drops the inquiry in as a file and a voice note,
   Stella's reply carries a speaker, and the composer holds the clip and the
   mic; the hero's window keeps the bare pane the phone covers. The phone has
-  the same voice note (`Voice.tsx`) and speaker, on the hero too. The Engage
-  section opens with a `ProductBadge` (glyph and name in a glass pill)
-  instead of a mono eyebrow, so its heading need not repeat the name. The
-  Workspace section has no badge; its heading H-5-A and lede H-5-B name the
-  product. The numerals in the window frame (`story.ts`: the quote, 86%,
-  a green +12%) are frame chrome, aria-hidden, Taylor's choice ("a green
-  delta and a coral gap say it"), not a performance claim.
+  the same voice note (`Voice.tsx`) and speaker, on the hero too. The
+  numerals in the window frame (`story.ts`: the quote, 86%, a green +12%)
+  are frame chrome, aria-hidden, Taylor's choice ("a green delta and a coral
+  gap say it"), not a performance claim.
+- `src/components/site/Products.tsx` (23 Sep, Charlie's design, built at
+  Taylor's ask from `~/Downloads/ChatGPT Image Sep 23, 2026, 08_10_07 AM.png`):
+  the two products as one section under the hero, in place of the separate
+  Engage and Workspace sections. A centred eyebrow, H-3-A and H-3-B, then a
+  glass card per product: glyph and label, the product's name as the h3,
+  H-4-A or H-5-A under it, the B line, the product's frame, and a bar across
+  the foot that is the link to its page. Every string is Charlie's, word for
+  word (Taylor: "use his words not your words"), keyed H-3 to H-5 because the
+  section merges the PDF's sections 3, 4 and 5. The card is a size container:
+  its type is set in `cqw` with a clamp and the frame moves beside the copy
+  once the card is 36rem wide, so the same rules hold on a phone and at 1536,
+  where the card matches the image. Two cards to a row from xl, in the
+  hero's width (`Section wide`); one to a row below that, capped at 52rem.
+  The product glyphs live once, `PRODUCT_GLYPH` in `frames/glyphs.ts`, which
+  `Opportunity.tsx` reads too, so Workspace carries our panel glyph rather
+  than the image's document icon.
+  Three things in Charlie's words depart from the copy review wave below, BY
+  DECISION, not by oversight, so the next review must not revert them
+  without asking: "enquiry" where the wave settled on "inquiry"; H-5-A and
+  H-4-B open on an instruction to the reader ("Turn every enquiry…",
+  "Answer from your expertise…"), which the guide keeps out of headlines;
+  and "every visitor", "every enquiry" are unqualified. The test's
+  imperative rule does not see H-4-A or H-5-A because they are set as the
+  line under the h3, not as headings: an exception, not compliance.
 - The lower half, chosen by Taylor on 22 Sep (evening) from three live
   candidates behind a `?lower=a|b|c` switch: A was a four-step track with the
   product pills hung over the segments they carry, B a drawn timeline in the
@@ -148,10 +167,14 @@ They are guidelines for the register, never lines to lift.
   why it is one; Charlie's guide §3 and §4): Before the inquiry, Engage; After
   the inquiry, Workspace; The outcome, Booked, each with its glyph and a line.
   Taylor rejected pills, connecting lines and a reveal here. `Audience.tsx` is
-  the six buying roles as a ruled list beside the heading, each with the
-  number it is measured on (guide §8: roles not sectors; the roles and
-  measures come from the Foundation document's stakeholder map; sectors are
-  one supporting line in the lede). `Close.tsx` stands on the hero's band
+  the six buying roles as a ruled grid under the heading (guide §8: roles
+  not sectors; the roles and measures come from the Foundation document's
+  stakeholder map; sectors are one supporting line in the lede). Each cell
+  is the role's glyph, its name and its measures one to a line; two columns
+  on a phone, three from md, rules between the cells and across the top and
+  foot but never up the outer sides. Taylor, 23 Sep, dropped the sentence
+  each role carried beside it ("drop the right hand column") and asked for
+  the role and its measures as a grid. `Close.tsx` stands on the hero's band
   (`Band.tsx`, the mesh extracted from the hero; it pauses off-screen so two
   on a page cost nothing) with paper copy: a heading, an optional line, the
   accent button and a secondary link. The home passes H-9-A and the two
@@ -169,9 +192,9 @@ They are guidelines for the register, never lines to lift.
   Workspace, Pilot, Status, Login) and the legal links on the right (Trust,
   Privacy, Terms), then the copyright. No tagline and no column headings.
   `Section`'s `ink` tone went with it; the tones are `page` and `tint`.
-- The "Two products" section (H-3) was removed at Taylor's request on 22 Sep:
-  Engage and Workspace sit straight under the hero, Opportunity follows them.
-  "See how it works" scrolls to `#engage`.
+- The product cards (H-3 to H-5) sit straight under the hero, Opportunity
+  follows them. "See how it works" scrolls to `#products`, and a test holds
+  the link and the id together.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
   `// changed`. H-1-A is "We make complex travel easier to plan and sell"
   (Taylor, 22 Sep; he reworded it four times that afternoon, so check the file
@@ -250,9 +273,10 @@ They are guidelines for the register, never lines to lift.
 ## The home page is signed off
 
 Taylor, 22 Sep, late evening: "Let's sign off this version. This is the home
-page, all done, for now." Hero, Engage, Workspace, the journey, the roles,
-the close, the nav and the footer are all his choices; do not reopen them
-without a new ask from him. The hero headline H-1-A and the Trust hero
+page, all done, for now." Hero, the journey, the roles, the close, the nav
+and the footer are all his choices; do not reopen them without a new ask
+from him. On 23 Sep he replaced the Engage and Workspace sections with
+Charlie's product cards (above). The hero headline H-1-A and the Trust hero
 headline T-1-A are the two strings he and Charlie have reviewed; the copy
 review below changed strings around them, never those.
 

@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
-import { Check, LayoutPanelLeft, MessageCircle } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { Heading, Lede, Section } from '@/components/site/Section'
+import { PRODUCT_GLYPH } from '@/components/site/frames/glyphs'
 import { home } from '@/content/home'
 import { SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
@@ -8,8 +9,8 @@ import { cn } from '@/lib/utils'
 type Stage = (typeof home.opportunity.stages)[number]['name']
 
 const GLYPH: Record<Stage, { icon: LucideIcon; tone: string }> = {
-  Engage: { icon: MessageCircle, tone: 'text-link' },
-  Workspace: { icon: LayoutPanelLeft, tone: 'text-link' },
+  Engage: { icon: PRODUCT_GLYPH.Engage, tone: 'text-link' },
+  Workspace: { icon: PRODUCT_GLYPH.Workspace, tone: 'text-link' },
   Booked: { icon: Check, tone: 'text-up' },
 }
 

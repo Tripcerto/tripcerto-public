@@ -1,7 +1,6 @@
 import { Nav } from '@/components/site/Nav'
 import { Hero } from '@/components/site/Hero'
-import { EngageSection } from '@/components/site/EngageSection'
-import { WorkspaceSection } from '@/components/site/WorkspaceSection'
+import { Products } from '@/components/site/Products'
 import { Opportunity } from '@/components/site/Opportunity'
 import { Audience } from '@/components/site/Audience'
 import { Close } from '@/components/site/Close'
@@ -17,8 +16,7 @@ export function App() {
       <Nav />
       <main>
         <Hero />
-        <EngageSection />
-        <WorkspaceSection />
+        <Products />
         <Opportunity />
         <Audience />
         <Close
