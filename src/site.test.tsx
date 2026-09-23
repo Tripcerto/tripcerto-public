@@ -5,6 +5,9 @@ import { EngagePage } from './pages/EngagePage'
 import { WorkspacePage } from './pages/WorkspacePage'
 import { PilotPage } from './pages/PilotPage'
 import { TrustPage } from './pages/TrustPage'
+import { LegalPage } from './pages/LegalPage'
+import privacyHtml from './content/legal/privacy.html?raw'
+import termsHtml from './content/legal/terms.html?raw'
 import { home } from '@/content/home'
 import { engage } from '@/content/engage'
 import { workspace } from '@/content/workspace'
@@ -39,30 +42,19 @@ const SITE = [
     name: 'engage',
     Page: EngagePage,
     h1: engage.hero['E-1-A'],
-    headings: [
-      engage.travellers['E-3-A'],
-      engage.sales['E-4-A'],
-      engage.business['E-5-A'],
-      engage.boundaries['E-7-A'],
-      engage.close['E-9-A'],
-    ],
+    headings: [engage.sales['E-4-A'], engage.close['E-9-A']],
   },
   {
     name: 'workspace',
     Page: WorkspacePage,
     h1: workspace.hero['W-1-A'],
-    headings: [
-      workspace.trip['W-3-A'],
-      workspace.systems['W-4-A'],
-      workspace.boundaries['W-6-A'],
-      workspace.close['W-8-A'],
-    ],
+    headings: [workspace.trip['W-3-A'], workspace.close['W-8-A']],
   },
   {
     name: 'pilot',
     Page: PilotPage,
     h1: pilot.hero['P-1-A'],
-    headings: [pilot.runs['P-2-A'], pilot.measures['P-3-A'], pilot.needs['P-4-A'], pilot.after['P-5-A'], pilot.close['P-6-A']],
+    headings: [pilot.measures['P-3-A'], pilot.close['P-6-A']],
   },
   {
     name: 'trust',
@@ -128,6 +120,15 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
     for (const text of headings) expect(screen.getAllByText(text).length).toBeGreaterThan(0)
   })
 
+  it('lands every in-page link on a section of the page', () => {
+    render(<Page />)
+    const hashes = screen
+      .getAllByRole('link')
+      .map((a) => a.getAttribute('href') ?? '')
+      .filter((href) => href.startsWith('#'))
+    for (const hash of hashes) expect(document.getElementById(hash.slice(1))).not.toBeNull()
+  })
+
   it('keeps banned language and imperative headlines off the page', () => {
     const { container } = render(<Page />)
     const text = container.textContent ?? ''
@@ -165,5 +166,22 @@ describe('home roles grid', () => {
       const cell = within(section.getByRole('heading', { level: 3, name: role }).closest('li')!)
       for (const measure of measures) cell.getByText(measure)
     }
+  })
+})
+
+/* The legal documents sit inside the site's nav and footer, so a reader
+   can leave them for any page. */
+describe.each([
+  { name: 'privacy', html: privacyHtml, h1: 'Privacy Policy' },
+  { name: 'terms', html: termsHtml, h1: 'Terms of Use' },
+])('$name page', ({ html, h1 }) => {
+  it('renders the document under the nav, with the footer after it', () => {
+    render(<LegalPage html={html} />)
+    const h1s = screen.getAllByRole('heading', { level: 1 })
+    expect(h1s).toHaveLength(1)
+    expect(h1s[0].textContent).toBe(h1)
+    const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'))
+    for (const p of ['/', PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.trust, '/legal/privacy', '/legal/terms']) expect(hrefs).toContain(p)
+    expect(hrefs).toContain(LOGIN_URL)
   })
 })

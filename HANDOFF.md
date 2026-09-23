@@ -31,9 +31,10 @@ They are guidelines for the register, never lines to lift.
   site work as a whole; it covered that evening and is over.)
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (39 tests:
-  the same four over each of the five pages in `src/site.test.tsx`, three
-  over the product cards and one over the roles grid, plus the
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (46 tests:
+  the same five over each of the five pages in `src/site.test.tsx`, three
+  over the product cards, one over the roles grid and one over each legal
+  page's nav and footer, plus the
   brand kit's assertions in `scripts/brand/brand.test.ts`, which hold the
   document to the site: the palette, the even-odd fill rule on every mark,
   the section order, and that the icon build command it prints is the one
@@ -199,14 +200,16 @@ They are guidelines for the register, never lines to lift.
   `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
   (Taylor, 23 Sep, after the design sync moved the site off "we" statements;
   it has been reworded often, so check the file rather than any quote in this
-  doc). It is also the home page's <title>,
-  og:title and twitter:title, the og:image:alt on all five pages, the
+  doc). It is also the home page's <title>, the og:image:alt on all five
+  pages, the
   webmanifest description, and the headline on the link-preview card
   (`scripts/og/copy.js`, `variants.a.head` and `pages.home.head`, baked into
   `public/og-image.png`): change all of them together and re-shoot the card.
+  The home page's og:title and twitter:title are "Tripcerto" alone: the card
+  above them already carries the headline (Taylor, 23 Sep, option D).
   The pill string was deleted at his request. The lower half's copy is
   `home.opportunity` (H-2-A, H-2-B and `stages`: when, name, line),
-  `home.audience` (H-7-A, H-7-B and `roles`: role, measure, line) and
+  `home.audience` (H-7-A and `roles`: role, measures) and
   `home.close` (H-9-A, H-9-C, H-9-D); H-8-B and the four-step `steps` went
   with the unpicked candidates.
 - Deleted once the hero was chosen: the four other candidates, `pick.ts` and
@@ -432,7 +435,7 @@ reference in the PR; Taylor and Charlie reply by reference.
   that no longer exist and led with the category language the guide bans);
   this document corrected where the tree had moved on under it.
 - Not changed, on purpose, each Taylor's call:
-  - `public/legal/privacy/index.html` and `terms/` are the May 2026 documents
+  - `src/content/legal/privacy.html` and `terms.html` are the May 2026 documents
     for the earlier consumer product: the privacy notice covers "planning,
     research, review, social, and messaging features", accounts, profiles and
     follows. The Trust page links to them as the published notice and terms.
@@ -456,3 +459,54 @@ reference in the PR; Taylor and Charlie reply by reference.
 
 1. The legal documents (above).
 2. The nav contrast decision (above).
+
+## The design sync (23 Sep; Charlie, Taylor and Jack, plus Ryan's notes)
+
+Charlie's rule from the call: the home page navigates, a product page shows
+the product, and a section that half-does both goes ("too many words").
+Taylor's go was "1-7".
+
+- H-1-A is "AI that makes complex travel easier to plan and sell" everywhere
+  it is carried; the card was re-shot on a 400px measure with `text-wrap:
+  wrap` so the longer line clears the monogram and breaks as the hero does.
+- The home preview's og:title and twitter:title are "Tripcerto" alone.
+- The product cards are a size smaller on desktop and compact on a phone.
+- The roles: the travel expert folded into Sales (Charlie: "the travel expert
+  is sales"), five roles under the heading alone, one row of five from md.
+- Engage, Workspace and Pilot are each the hero, the one section that shows
+  the product (the brief, the itemised trip, the five measures) and the
+  close. The cut sections took the Workspace page's claims of CRM write-back
+  and supplier-feed pricing with them; Taylor said in the call there are no
+  CRM integrations until a first customer. "We agree the baseline first,
+  then measure the change" is off both product closes.
+- The legal pages are Vite entries: `legal/privacy/index.html` and
+  `legal/terms/index.html` mount `LegalPage`, which sets the document in
+  `src/content/legal/*.html` inside the site's nav and footer. They were
+  static files with no link back to the site. Their text is unchanged and
+  still waits on Taylor (above).
+
+Open, for Charlie's wording pass (new words, his to write):
+- H-2-A "Customer context carries from the first question to the final
+  quote", H-2-B and the stage lines: the Engage-first story he called
+  legacy messaging.
+- H-1-B, the hero's second line: it names the products before saying what
+  Tripcerto is and who it serves (Ryan said the same; his candidate: "AI
+  software for tour operators and destination management companies").
+- H-9-A "We find where our AI has the most effect…", P-1-B "We work with
+  you…" and the Pilot meta description: "we" makes it read as an agency.
+- A short tagline under each role, and the booking label (demo, call or
+  discovery call; all go to one calendar, whose own description still uses
+  the banned words).
+- Whether W-1-B's "resolves prices and availability through the systems
+  you already run" and W-3's "come from your systems" hold today.
+
+Later: content pages under each product (what, who for, how, FAQs) for
+search and AI answers; a page per role; downloadable PDFs; the pilot page's
+detail; Tripcerto Ground as its own site or route; Google Analytics on
+Jack's ticket (Vercel Analytics already records views, scroll depth,
+sections, clicks and time; GA adds cookies and a consent banner); the Trust
+page shorter, with an ISO 27001 target date only Taylor can give; the
+PageSpeed findings. Taylor's to reopen, since they reverse his 22 Sep calls:
+real content in the frames instead of bars (Ryan; Taylor also wants a
+fuller Engage picture) and following the system theme. All the video ideas
+are parked until the videos exist.
