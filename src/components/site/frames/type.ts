@@ -5,9 +5,10 @@
    also stand alone at any size: inside the window it is 62% of the
    window's width, so its sizes are the window's divided by 0.62. Headers,
    titles, chat, names and prices are one size and one weight (semibold);
-   every round badge (the assistant, the operator, a status, a step, a
-   card's kind) is one size; every line icon is one size. The itinerary's
-   small size is for its tags and buttons. */
+   every round badge (the assistant, a status, a step, a card's kind) is
+   one size; every line icon is one size. The itinerary's small size is
+   for its tags and buttons. The phone's header is a step up (`HEADER`), as
+   a phone's chat app sets it, clear of the island. */
 export const TYPE = {
   phone: {
     text: 'text-[length:4.4cqw]',
@@ -32,6 +33,10 @@ export const BADGE = {
 } as const
 
 export type FrameScale = keyof typeof BADGE
+
+export const HEADER = {
+  phone: { text: 'text-[length:4.9cqw]', mark: 'size-[8.6cqw]', icon: 'size-[6cqw]' },
+} as const
 
 export const ICON = {
   phone: 'size-[5.6cqw]',

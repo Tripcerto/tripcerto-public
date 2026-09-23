@@ -13,8 +13,8 @@ import { cn } from '@/lib/utils'
    name is the link and its hit area covers the tile, so a hover anywhere
    lifts the frame and turns the name pink, a press sets the frame back
    down, and the focus ring draws round the whole tile. Both frames stand
-   the same height, centred in stages of one shape: square while the tiles
-   stand one to a row, so the frame has room round it, and 6:5 from lg. */
+   the same height, centred, with the same room above them as between them
+   and the name. */
 function Product({
   name,
   line,
@@ -30,7 +30,7 @@ function Product({
 }) {
   return (
     <article className="glass group relative mx-auto flex w-full max-w-[36rem] flex-col overflow-hidden rounded-xl shadow-card lg:max-w-none">
-      <div className="flex aspect-square items-center justify-center lg:aspect-[6/5]">
+      <div className="flex justify-center py-6 md:py-7">
         <div
           className={cn(
             'still transition-transform duration-300 ease-site group-hover:-translate-y-1.5 group-active:translate-y-0 motion-reduce:transition-none',

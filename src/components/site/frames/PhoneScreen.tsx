@@ -6,7 +6,7 @@ import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { SafariScene } from '@/components/site/frames/SafariScene'
 import { StatusBadge } from '@/components/site/frames/StatusBadge'
 import { Step } from '@/components/site/frames/Step'
-import { BADGE, ICON, SURFACE, TYPE, type Surface } from '@/components/site/frames/type'
+import { BADGE, HEADER, ICON, SURFACE, TYPE, type Surface } from '@/components/site/frames/type'
 import { delay } from '@/components/site/frames/motion'
 import { PHONE_BEAT as AT, trip } from '@/components/site/frames/trip'
 import { cn } from '@/lib/utils'
@@ -47,13 +47,16 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
     >
       <div aria-hidden className={cn('flex h-full w-full flex-col leading-[1.35] text-ink dark:text-paper', SURFACE[surface], T.text)}>
         <div
-          className="animate-pop flex items-center gap-[2.8cqw] border-b border-ink/[0.06] px-[4cqw] pb-[3cqw] pt-[13cqw] dark:border-white/10"
+          className={cn(
+            'animate-pop flex shrink-0 items-center gap-[3cqw] border-b border-ink/[0.06] px-[4cqw] pb-[3.4cqw] pt-[20cqw] dark:border-white/10',
+            HEADER.phone.text,
+          )}
           style={delay(AT.header)}
         >
-          <ChevronLeft className={cn('text-ink/70 dark:text-paper/70', ICON.phone)} />
+          <ChevronLeft className={cn('text-ink/70 dark:text-paper/70', HEADER.phone.icon)} />
           <span className="relative">
-            <OperatorMark className={B.size} />
-            <span className="absolute -bottom-[0.4cqw] -right-[0.4cqw] size-[2.8cqw] rounded-full border-[0.6cqw] border-white bg-up dark:border-ink" />
+            <OperatorMark className={HEADER.phone.mark} />
+            <span className="absolute -bottom-[0.4cqw] -right-[0.4cqw] size-[3cqw] rounded-full border-[0.6cqw] border-white bg-up dark:border-ink" />
           </span>
           <span className="font-semibold">{trip.operator}</span>
         </div>

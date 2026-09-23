@@ -122,11 +122,12 @@ They are guidelines for the register, never lines to lift.
   site), told as a hand-off. `HeroVisuals.tsx` puts the
   Workspace window up and to the right and the phone in front of its
   assistant pane. The phone (`PhoneScreen.tsx` in `PhoneFrame.tsx`) is
-  Engage on the operator's site: the traveller asks, the assistant answers
-  with a destination, a stay and an experience (cards cut from
-  `SafariScene.tsx`, a kind pill on each image, from `kinds.ts`), the
-  traveller asks for a quote, and "Sending your trip to the team" resolves
-  into a tick. Then the phone steps aside and back, the window comes
+  Engage on the operator's site, under a header set a step up and clear of
+  the island (`HEADER` in `frames/type.ts`): the traveller asks, the
+  assistant answers with a destination, a stay and an experience (cards
+  cut from `SafariScene.tsx`, a round kind badge on each image, from
+  `kinds.ts`), the traveller asks for a quote, and "Sending to Safari
+  Expert" resolves into a tick. Then the phone steps aside and back, the window comes
   forward, and Workspace (`WorkspaceScreen.tsx` in `WindowShell.tsx`, a
   painted window titled "Workspace"; the pane is `WorkspaceChat.tsx`) takes
   it from there: "New quote request" arrives with a coral pulse, the
@@ -183,9 +184,9 @@ They are guidelines for the register, never lines to lift.
   in place of the design's "Two products. Built for your travel
   business."), H-3-B as the lede, then a tile of the site's glass per
   product, lifted by the card shadow, side by side from lg and one to a
-  row below, each then as wide as the heading: the frame centred on a
-  stage of one shape in both (square one to a row, so the frame has room
-  round it; 6:5 side by side), held still at its finished state (the
+  row below, each then as wide as the heading: the frame centred, with the
+  same room above it as between it and the name, both frames the same
+  height, held still at its finished state (the
   phone's conversation up to the traveller's picks; the itinerary alone,
   zoomed from the Workspace window), then the product's name and H-4-A or
   H-5-A under it, inside the tile (Taylor, 23 Sep: the names in the box,

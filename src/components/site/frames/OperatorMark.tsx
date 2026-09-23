@@ -1,8 +1,9 @@
 import { useId } from 'react'
 import { cn } from '@/lib/utils'
 
-/* The made-up operator's logo: an acacia against a sunset, in the band's
-   colours, so it reads as the operator's own brand rather than ours. */
+/* The operator's mark in the story's chat: an acacia against a sunset, in
+   the band's colours, so the chat reads as the operator's own rather than
+   Tripcerto's. */
 export function OperatorMark({ className }: { className?: string }) {
   const sky = useId()
   return (
