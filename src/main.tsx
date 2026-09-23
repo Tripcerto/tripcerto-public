@@ -1,4 +1,4 @@
 import { mount } from './boot'
 import { App } from './App'
 
-mount(<App />)
+export default mount(App)

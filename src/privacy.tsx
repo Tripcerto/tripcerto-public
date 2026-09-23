@@ -1,5 +1,4 @@
 import { mount } from './boot'
-import { LegalPage } from './pages/LegalPage'
-import html from './content/legal/privacy.html?raw'
+import { PrivacyPage } from './pages/PrivacyPage'
 
-mount(<LegalPage html={html} />)
+export default mount(PrivacyPage)
