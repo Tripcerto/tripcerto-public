@@ -28,11 +28,15 @@ Tripcerto has two products for travel sales. Engage sits on a travel company's w
 - Every string on the site is in `src/content/<page>.ts`, keyed by the reference in the copy document. Components carry no copy.
 - `src/components/site/` holds the sections; `frames/` under it holds the two product frames, drawn as bars and glyphs rather than text. `src/components/ui/` holds the button and the band shader.
 - `src/index.css` holds the Ember tokens (`@theme`), the page surfaces that switch in dark mode, and the utilities.
+- `api/consent.ts` is the site's one Vercel Function. `POST /api/consent` sets the visitor's analytics answer (`tc_consent`), or the mark on our own browsers (`tc_team`), as a cookie on `.tripcerto.com`, which every tripcerto.com host can read, so a visitor answers once. `src/lib/consent.ts` reads and writes that answer in the page, and `src/components/site/ConsentBar.tsx` asks for it. The build renders no bar: it appears once the page has read the cookie. Its tests sit in `api/__tests__/`, because Vercel deploys every other file under `api/` as a function.
 
 ## Project structure
 
 ```
 index.html, engage/, workspace/, pilot/, trust/, legal/   # one entry per page, each with its own head tags
+api/
+  consent.ts               # POST /api/consent: sets the analytics answer as a cookie on .tripcerto.com
+  __tests__/               # its tests, on a path Vercel does not deploy
 src/
   boot.tsx                 # hydrates a page
   prerender.tsx, Site.tsx  # the build's render of a page, and the tree both sides render
@@ -40,10 +44,10 @@ src/
   App.tsx                  # the home page; the others are in pages/
   pages/                   # EngagePage, WorkspacePage, PilotPage, TrustPage, PrivacyPage, TermsPage, LegalPage
   content/                 # every string on the site, one file per page, keyed by reference; legal/ holds the two documents as HTML
-  components/site/         # Nav, Hero, PageHero, Products, Opportunity, Audience, Close, Footer, Section, Rows, Stage, Band, Reveal, Wordmark
+  components/site/         # Nav, Hero, PageHero, Products, Opportunity, Audience, Close, Footer, Section, Rows, Stage, Band, Reveal, Wordmark, ConsentBar
   components/site/frames/  # the two product frames: phone, window, the brief card, the story they tell
   components/ui/           # button, gradient-mesh (the band shader)
-  lib/                     # links, theme, analytics, utils
+  lib/                     # links, theme, analytics, consent, utils
   index.css                # Ember tokens (@theme), page surfaces, utilities
   site.test.tsx, test/     # the five checks run over every page, the legal pages' chrome, and the jsdom setup
 public/
@@ -66,7 +70,7 @@ npm install
 npm run dev        # Vite dev server; /engage and the other clean URLs answer as in production
 npm run build      # tsc -b && vite build; emits the five pages and the two legal pages into dist/
 npm run lint       # eslint .
-npm run test:run   # vitest: the checks over every page, the nav, boot, theme, head tags and prerender, plus the brand kit's
+npm run test:run   # vitest: the checks over every page, the nav, boot, theme, consent, head tags and prerender, the consent endpoint, plus the brand kit's
 npm run audit      # npm audit at every level; zero advisories is the bar
 npm run preview    # serve dist/ locally
 ```
