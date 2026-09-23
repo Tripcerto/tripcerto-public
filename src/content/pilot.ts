@@ -7,19 +7,19 @@
 
 export const pilot = {
   hero: {
-    'P-1-A': 'One workflow, one measure, and the result decides the rollout', // changed
+    'P-1-A': 'A pilot proves what Tripcerto does for your business', // changed
     'P-1-B':
-      'A pilot starts where customers drop off or where your team loses time. We agree what we are measuring and what it is today, build for that one workflow, and the number decides what happens next.', // changed
-    'P-1-C': 'Book a demo',
-    'P-1-D': 'How it runs', // added
+      'We work with you to find the workflow where Tripcerto will have the most effect, then prove it there on one number, measured from where you are today. The result decides what happens next.', // changed
+    'P-1-C': 'Book a call', // changed
+    'P-1-D': 'Our approach', // added
   },
   runs: {
     'P-2-A': 'Agreed before anything is built', // changed: the hero already says one workflow, one measure
-    'P-2-B': 'One workflow, one baseline, one measure. We agree what we are measuring, and what it is today, and only then build.', // changed
+    'P-2-B': 'Our team proposes where the pilot runs and how it is measured, and agrees both with you.', // changed
     steps: [
       {
-        name: 'The measure',
-        line: 'We agree the one number the pilot is judged on, with the person in your business who owns it.',
+        name: 'The workflow',
+        line: 'Together we identify the workflow where Tripcerto will make the most difference, and the one number it is judged on, with the person in your business who owns that number.',
       },
       {
         name: 'The baseline',
@@ -33,7 +33,7 @@ export const pilot = {
   },
   measures: {
     'P-3-A': 'Conversion, lead quality, quote time, handling time or completeness',
-    'P-3-B': 'You choose the one that matters. We do not measure all five and report the flattering one.',
+    'P-3-B': 'We propose the one that fits the workflow the pilot covers, and the pilot stands or falls on that number.', // changed
     rows: [
       {
         name: 'Conversion',
@@ -63,15 +63,15 @@ export const pilot = {
     ], // added: the five measures, each with its product and its definition
   },
   needs: {
-    'P-4-A': 'Your content, your product data and a named owner',
-    'P-4-B': 'A commercial sponsor and a technical owner, and access to the systems the chosen workflow touches.',
+    'P-4-A': 'We start from the content, product data and systems you already have', // changed
+    'P-4-B': 'The pilot runs on the systems its workflow uses today, with a commercial sponsor and a technical owner on your side, working with our team.', // changed
   },
   after: {
     'P-5-A': 'An agreed result triggers the rollout',
     'P-5-B': 'We agree what the pilot has to produce before we start, so the decision afterwards is already made.',
   },
   close: {
-    'P-6-A': 'It starts with a conversation about where your sales time goes', // added: the document had the button alone
-    'P-6-B': 'Book a demo',
+    'P-6-A': 'It starts with a conversation with our team about where Tripcerto would do the most for your business', // added: the document had the button alone
+    'P-6-B': 'Book a call', // changed
   },
 } as const

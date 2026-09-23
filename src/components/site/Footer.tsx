@@ -12,8 +12,8 @@ const SITE = [
 /* Trust sits with the legal pages (Taylor, 22 Sep). */
 const LEGAL = [
   { href: PAGES.trust, label: 'Trust' },
-  { href: '/legal/privacy/', label: 'Privacy' },
-  { href: '/legal/terms/', label: 'Terms' },
+  { href: '/legal/privacy', label: 'Privacy' },
+  { href: '/legal/terms', label: 'Terms' },
 ] as const
 
 const LINK = 'inline-flex min-h-11 items-center text-[15px] text-body/80 transition-colors hover:text-body'

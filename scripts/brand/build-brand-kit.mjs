@@ -322,8 +322,8 @@ The app icon is that monogram cut out of a tile, on the band.</p>
 <h3>The link preview</h3>
 <p>The card every share of tripcerto.com shows, in a message, a post or a chat. One card for the
 whole site: the wordmark, the homepage headline alone and centred, and the monogram carrying it,
-all on the band. Rendered here from the same file the site serves.</p>
-<div class="card"><img src="${art.card}" width="1200" height="630" alt="" style="width:100%;height:auto;display:block;border-radius:6px"></div>
+all on the band. Rendered here from ${w('scripts/og/card.html')}, the source of the file the site serves.</p>
+<div class="card row"><figure><img src="${art.card}" width="1200" height="630" alt="" style="width:520px;max-width:100%;height:auto;display:block;border-radius:6px"><figcaption>as a network shows it, 520 wide</figcaption></figure></div>
 ${rows([
   ['The file', `${w('public/og-image.png')}, a 1200 × 630 card shot at 2×, so 2400 × 1260 pixels, served to every page.`],
   ['Rebuild it', `${w('node scripts/og/shoot.mjs --pick a')}, then bump the ${w('?v=')} on every page's og:image and twitter:image so the networks refetch it.`],

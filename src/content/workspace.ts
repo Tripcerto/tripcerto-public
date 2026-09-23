@@ -9,7 +9,7 @@ export const workspace = {
   hero: {
     'W-1-A': 'Workspace builds the quote-ready trip and shows what is missing', // changed
     'W-1-B':
-      'A file, an email or a voice note goes in. Workspace brings the dates, places, travellers and services together as an itemised trip, resolves prices and availability through the systems you already run, and flags the pieces that still need an expert before the quote goes out.', // changed
+      'A file, an email or a voice note goes in. Workspace brings the dates, places, travellers and services together as an itemised trip, resolves prices and availability through the systems you already run, and flags the pieces that still need an expert. Your expert opens a trip that is already prepared and spends the time on the decisions only they can make.', // changed
     'W-1-C': 'Book a demo',
     'W-1-D': 'See how it works', // added, as on the home page
   },
@@ -18,7 +18,7 @@ export const workspace = {
   trip: {
     'W-3-A': 'Every inquiry becomes an itemised trip, with the gaps in view', // changed
     'W-3-B':
-      'Workspace reads the requirement however it arrives and builds the service list in order: the stays, the transfers, the flights, the activities. Anything unresolved is a visible row, not a surprise after the quote has gone.', // changed
+      'Workspace reads the requirement however it arrives and builds the service list in order: the stays, the transfers, the flights, the activities. Anything unresolved shows as its own row before the quote goes out.', // changed
     columns: [
       {
         name: 'Structured, in order',
@@ -39,7 +39,7 @@ export const workspace = {
   systems: {
     'W-4-A': 'Connected to the systems between inquiry and quote', // changed
     'W-4-B':
-      'Workspace sits beside the systems your team already runs and reads from them rather than replacing them. Your product, price and availability data stay where they are and stay authoritative.', // changed
+      'Workspace sits beside the systems your team already runs, reads from them and writes to them, and replaces none of them. Your product, price and availability data stay where they are and stay authoritative.', // changed
     rows: [
       {
         name: 'Your inventory and suppliers',
@@ -54,7 +54,7 @@ export const workspace = {
       {
         name: 'Your proposal and booking process',
         detail: 'Structured data out',
-        line: 'The approved quote goes out as structured data into the proposal and booking tools you already use. Nothing has to be rekeyed.',
+        line: 'The approved quote goes out as structured data into the proposal and booking tools you already use, with the dates, travellers and prices carried across.',
       },
       {
         name: 'Your experts, in control',
@@ -67,14 +67,14 @@ export const workspace = {
   boundaries: {
     'W-6-A': 'What stays where it is', // changed
     'W-6-B':
-      'Your reservation platform, itinerary builder and booking process stay where they are. Rates and availability stay in the systems that own them. Nothing reaches a customer without an expert approving it.', // changed
+      'Your reservation platform, itinerary builder and booking process stay where they are. Rates and availability stay in the systems that own them, and complex rate combinations and exceptions stay with your rules and your expert. Nothing reaches a customer without an expert approving it.', // changed
   },
   /* W-8 Pilot and W-9 Close, together on the band: the measures and the call. */
   close: {
-    'W-8-A': 'A pilot proves it on the number you choose', // changed
+    'W-8-A': 'A pilot proves it on one number, agreed with you', // changed
     'W-8-B':
       'Time from inquiry to quote, handling time per inquiry, or the completeness of each quote before it goes out. We agree the baseline first, then measure the change.', // changed
     'W-9-B': 'Book a demo',
-    'W-9-C': 'How a pilot runs', // added
+    'W-9-C': 'What a pilot delivers', // added
   },
 } as const
