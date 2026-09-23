@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 
 const MENU_ID = 'site-menu'
 
-const MENU_ROW = 'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors'
+const MENU_ROW = 'shell flex h-14 items-center justify-between border-b text-subhead transition-colors'
 const MENU_ROW_BAND = 'border-white/25 text-paper hover:bg-white/10'
 const MENU_ROW_PAGE = 'border-line text-body hover:bg-soft'
 
@@ -140,7 +140,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
                     href={link.href}
                     aria-current={current ? 'page' : undefined}
                     className={cn(
-                      'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
+                      'inline-flex h-11 items-center text-nav transition-colors',
                       overBand
                         ? current
                           ? 'text-paper'
@@ -163,7 +163,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
               href={LOGIN_URL}
               onClick={() => trackEvent('login_click', { place: 'nav' })}
               className={cn(
-                'inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors',
+                'inline-flex h-11 items-center gap-1 text-nav transition-colors',
                 overBand ? 'text-paper/90 hover:text-paper' : 'text-body/85 hover:text-body',
               )}
             >

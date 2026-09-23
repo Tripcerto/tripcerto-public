@@ -4,8 +4,7 @@ import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
-import { Heading, Lede, Section } from '@/components/site/Section'
-import { WorkspaceChat } from '@/components/site/frames/WorkspaceChat'
+import { Section } from '@/components/site/Section'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { workspace } from '@/content/workspace'
 import { DEMO_URL, PAGES } from '@/lib/links'
@@ -38,26 +37,22 @@ export function WorkspacePage() {
           layout="window"
           visual={
             <div className="w-full max-w-[600px]">
-              <WorkspaceScreen pane={<WorkspaceChat />} />
+              <WorkspaceScreen surface="band" />
             </div>
           }
         />
 
-        <Section id={ID.trip}>
-          <div className="max-w-[44rem]">
-            <Heading>{workspace.trip['W-3-A']}</Heading>
-            <Lede className="mt-5">{workspace.trip['W-3-B']}</Lede>
-          </div>
-          <ul role="list" className="mt-14 grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
+        <Section id={ID.trip} heading={workspace.trip['W-3-A']} lede={workspace.trip['W-3-B']}>
+          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
             {workspace.trip.columns.map(({ name, line }) => {
               const Glyph = COLUMN_GLYPH[name]
               return (
                 <li key={name} className="border-t border-line pt-6">
-                  <h3 className="flex items-center gap-2.5 text-[19px] font-semibold">
+                  <h3 className="flex items-center gap-2.5 text-subhead">
                     <Glyph size={22} aria-hidden className="shrink-0 text-link" />
                     {name}
                   </h3>
-                  <p className="mt-3 text-[16px] leading-[1.55] text-body/80">{line}</p>
+                  <p className="mt-3 text-copy text-dim">{line}</p>
                 </li>
               )
             })}

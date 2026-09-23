@@ -4,7 +4,7 @@ import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
-import { Heading, Lede, Section } from '@/components/site/Section'
+import { Section } from '@/components/site/Section'
 import { trust } from '@/content/trust'
 import { DEMO_URL, PAGES, STATUS_URL } from '@/lib/links'
 
@@ -33,63 +33,45 @@ export function TrustPage() {
           secondary={{ label: trust.hero['T-1-D'], href: `#${ID.moves}` }}
         />
 
-        <Section id={ID.moves}>
-          <div className="max-w-[44rem]">
-            <Heading>{trust.moves['T-2-A']}</Heading>
-            <Lede className="mt-5">{trust.moves['T-2-B']}</Lede>
-          </div>
+        <Section id={ID.moves} heading={trust.moves['T-2-A']} lede={trust.moves['T-2-B']}>
           <Rows rows={trust.moves.rows} />
         </Section>
 
-        <Section id={ID.decides} tone="tint">
-          <div className="max-w-[44rem]">
-            <Heading>{trust.decides['T-3-A']}</Heading>
-            <Lede className="mt-5">{trust.decides['T-3-B']}</Lede>
-          </div>
-          <ul role="list" className="mt-14 grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
+        <Section id={ID.decides} tone="tint" heading={trust.decides['T-3-A']} lede={trust.decides['T-3-B']}>
+          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
             {trust.decides.columns.map(({ name, line }) => (
               <li key={name} className="border-t border-line pt-6">
-                <h3 className="text-[19px] font-semibold">{name}</h3>
-                <p className="mt-3 text-[16px] leading-[1.55] text-body/80">{line}</p>
+                <h3 className="text-subhead">{name}</h3>
+                <p className="mt-3 text-copy text-dim">{line}</p>
               </li>
             ))}
           </ul>
         </Section>
 
-        <Section id={ID.access}>
-          <div className="max-w-[44rem]">
-            <Heading>{trust.access['T-7-A']}</Heading>
-            <Lede className="mt-5">{trust.access['T-7-B']}</Lede>
-          </div>
+        <Section id={ID.access} heading={trust.access['T-7-A']} lede={trust.access['T-7-B']}>
           <Rows rows={trust.access.rows} />
         </Section>
 
-        <Section id={ID.programme} tone="tint">
-          <div className="max-w-[44rem]">
-            <Heading>{trust.programme['T-4-A']}</Heading>
-            <Lede className="mt-5">{trust.programme['T-4-B']}</Lede>
-          </div>
+        <Section id={ID.programme} tone="tint" heading={trust.programme['T-4-A']} lede={trust.programme['T-4-B']}>
           <Rows rows={trust.programme.rows} />
         </Section>
 
-        <Section id={ID.legal}>
-          <div className="max-w-[44rem]">
-            <Heading>{trust.legal['T-5-A']}</Heading>
-            <Lede className="mt-5">{trust.legal['T-5-B']}</Lede>
-          </div>
+        <Section id={ID.legal} heading={trust.legal['T-5-A']} lede={trust.legal['T-5-B']}>
           <Rows rows={trust.legal.rows} />
         </Section>
 
-        <Section id={ID.status} tone="tint">
-          <div className="max-w-[44rem]">
-            <Heading>{trust.status['T-6-A']}</Heading>
-            <Lede className="mt-5">{trust.status['T-6-B']}</Lede>
-            <a href={STATUS_URL} className="mt-8 inline-flex min-h-11 items-center gap-1 font-semibold text-link">
+        <Section
+          id={ID.status}
+          tone="tint"
+          heading={trust.status['T-6-A']}
+          lede={trust.status['T-6-B']}
+          action={
+            <a href={STATUS_URL} className="inline-flex min-h-11 items-center gap-1 text-action text-link">
               {trust.status['T-6-C']}
               <ArrowRight size={16} aria-hidden />
             </a>
-          </div>
-        </Section>
+          }
+        />
 
         <Close
           heading={trust.close['T-8-A']}

@@ -166,22 +166,42 @@ const pair = (fgName, fg, bgName, bg, role) => {
   return `<tr><td>${fgName} on ${bgName}</td><td class="num">${c.value}:1</td><td>${verdict}</td><td class="dim">${role}</td></tr>`
 }
 
-/* ---- Typography, as the site paints it ---------------------------------- */
+/* ---- Typography, read from the site's roles ----------------------------- */
 
-const SCALE = [
-  ['Hero display', 'Home hero only', '48 / 64 / 60 / 64 / 80', '700', '0.98', '−0.035em'],
-  ['Page display', 'Engage, Workspace, Pilot, Trust', '44 / 56 / 60', '700', '1.02', '−0.03em'],
-  ['Section heading', 'Every section, every page', '32 / 44', '600', '1.1', '−0.02em'],
-  ['Hero lede', 'Under a display line', '18 / 20', '400', '1.55', ''],
-  ['Section lede', 'Under a section heading', '17 / 18', '400', '1.55', ''],
-  ['Column heading', 'Cards and columns', '19', '600', '1.5', ''],
-  ['Row title', 'Ruled rows', '17', '600', '1.4', ''],
-  ['Body', 'Everything read in paragraphs', '16', '400', '1.55', ''],
-  ['Secondary note', 'Under a row title', '14', '400', '1.5', ''],
-  ['Small print', 'Eyebrows, captions, legal', '13', '600 or 400', '1.5', ''],
-  ['UI', 'Nav, buttons, footer links', '15', '500 or 600', '1.5', ''],
-  ['Frame chrome', 'Inside a product mockup', '11 / 12', '400', '1.5', ''],
-]
+/* What each role is for, in words. The numbers come from the role's utility
+   in src/index.css; a role declared there and not described here, or the
+   other way round, fails the build. */
+const ROLE = {
+  display: ['Display', 'The title of every page, one per page'],
+  heading: ['Heading', 'A section’s title, and a product’s name'],
+  lede: ['Lede', 'The line under a display or a heading, and a section’s opening line'],
+  subhead: ['Subhead', 'A column’s, a row’s or a role’s title'],
+  copy: ['Copy', 'Everything read in sentences'],
+  small: ['Small', 'Notes, captions, lists of measures, the footer'],
+  label: ['Label', 'A stage, or whom a product is for, in a pill'],
+  nav: ['Nav', 'The bar’s links'],
+  action: ['Action', 'Buttons, and the links that act as buttons'],
+}
+
+const px = (rem) => String(Math.round(Number(rem) * 16 * 100) / 100)
+
+const SCALE = [...css.matchAll(/^@utility text-([a-z]+) \{\n\s+font-size: ([\d.]+)rem;([\s\S]*?)^\}/gm)].map(([, role, base, body]) => {
+  if (!ROLE[role]) throw new Error(`src/index.css declares text-${role}, which the kit does not describe`)
+  const steps = [...body.matchAll(/@variant \w+ \{\s*font-size: ([\d.]+)rem;/g)].map((m) => px(m[1]))
+  const tracking = body.match(/letter-spacing: (-?[\d.]+em)/)?.[1] ?? ''
+  return {
+    role,
+    name: ROLE[role][0],
+    where: ROLE[role][1],
+    size: [px(base), ...steps].join(' / '),
+    weight: body.match(/font-weight: (\d+)/)[1],
+    leading: body.match(/line-height: ([\d.]+)/)[1],
+    tracking: tracking.replace('-', '−'),
+  }
+})
+for (const role of Object.keys(ROLE)) {
+  if (!SCALE.some((r) => r.role === role)) throw new Error(`the kit describes text-${role}, which src/index.css does not declare`)
+}
 
 /* ---- Voice, as one idea: every rule is a swap --------------------------- */
 
@@ -451,14 +471,17 @@ ${rows([
 ])}
 
 <h3>The scale</h3>
-<p>Sizes in px. A slash means it steps at a breakpoint, smallest first.</p>
+<p>Nine roles, and the only sizes text on the site takes. Each is one utility in ${w('src/index.css')}
+carrying size, weight, leading and tracking; colour stays with the surface. Sizes in px; a slash
+means it steps at a breakpoint, smallest first. The product frames alone keep their own scale,
+drawn to the frame's width.</p>
 <table class="scale"><thead><tr><th>Role</th><th>Where</th><th>Size</th><th>Weight</th><th>Leading</th><th>Tracking</th></tr></thead><tbody>
-${SCALE.map(([role, where, size, weight, leading, tracking]) => `<tr><td>${role}</td><td class="dim">${where}</td><td class="px">${size}</td><td class="px">${weight}</td><td class="px">${leading}</td><td class="px">${tracking}</td></tr>`).join('')}
+${SCALE.map((r) => `<tr><td>${r.name}<br>${w(`text-${r.role}`)}</td><td class="dim">${r.where}</td><td class="px">${r.size}</td><td class="px">${r.weight}</td><td class="px">${r.leading}</td><td class="px">${r.tracking}</td></tr>`).join('')}
 </tbody></table>
 
 <h3>Rules</h3>
 ${rows([
-  ['Tracking is for headlines', 'Three negative values, all on display and heading type. Everything else runs at normal tracking.'],
+  ['Tracking is for headlines', 'Two negative values, one on display and one on heading type. Everything else runs at normal tracking.'],
   ['One reading leading', '1.55, on every lede and every paragraph. Tighter leading belongs to headlines.'],
   ['No uppercase in the sans', 'Uppercase and letter-spacing belong to the mono. The sans is never set in caps.'],
   ['Numerals are tabular', 'Any price, total or step number, so columns line up.'],

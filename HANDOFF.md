@@ -113,80 +113,142 @@ They are guidelines for the register, never lines to lift.
   the buffer after that frame's draw. Context loss is handled here since the
   library is no longer doing it. Copy is paper: headline, lede, the `accent`
   button and the link, one centred group. Right of it, the two product
-  frames, signed off by Taylor on 22 Sep after three candidates (real text,
-  glyphs, mixed) and eight rounds on the glyph one.
-- The frames, `src/components/site/frames/`. `HeroVisuals.tsx` is the
-  composition: the Workspace window top right, the phone bottom left in front
-  of it covering Stella's pane and hanging 12% below, both sized from the
-  column so the pair keeps its shape from 375 to 1680, both rising together.
-  `WorkspaceScreen.tsx` (in `WindowShell.tsx`, a glass window with a 4:3
-  body, no title) and `PhoneScreen.tsx` (in `PhoneFrame.tsx`, 9:18.4) tell
-  one trip without prose: bars for words, glyphs for meaning, only the
-  numerals printed; the vocabulary is `glyphs.ts`, the data `story.ts`, and
-  Stella is always her mark and one bar (`StellaLine.tsx`) in both. The phone
-  is a conversation: two traveller bubbles, Stella's line, two activity cards
-  cut from `SafariScene.tsx` (a drawn sunrise, balloons, an acacia and a
-  giraffe; a real JPEG drops into the same slot), her two lines, typing dots.
-  The window is the itemised list: quote and readiness up top, six rows with
-  a kind icon, bars, a price and a status glyph, the gap row in coral with
-  a one-shot pulse. Everything inside a frame sizes in `cqw` (the screen and
-  the body are size containers), so it scales like a screenshot; the
-  choreography is CSS (`animate-pop` and friends in `index.css`, each element
-  timed by `--d`), nothing from JavaScript, and reduced motion shows the
-  finished state. The phone's bezel and screen are PAINTED (`bg-band-frosted`
-  / `bg-band-smoked`), not glass, because Taylor could see the window through
-  them. In dark mode both frames are smoked ink glass. The same two screens
-  stand in the product cards under the hero (`Products.tsx`, below), and
-  `Stage.tsx` is a pool of the band's light (`bg-glow`) behind a frame with
-  an optional caption hung below it out of the flow. There the window's
-  Stella pane shows the conversation (`WorkspaceChat.tsx`, passed in as
-  `pane`): the consultant drops the enquiry in as a file and a voice note,
-  Stella's reply carries a speaker, and the composer holds the clip and the
-  mic; the hero's window keeps the bare pane the phone covers. The phone has
-  the same voice note (`Voice.tsx`) and speaker, on the hero too. The
-  numerals in the window frame (`story.ts`: the quote, 86%, a green +12%)
-  are frame chrome, aria-hidden, Taylor's choice ("a green delta and a coral
-  gap say it"), not a performance claim.
-- `src/components/site/Products.tsx` (23 Sep, Charlie's design, built at
-  Taylor's ask from `~/Downloads/ChatGPT Image Sep 23, 2026, 08_10_07 AM.png`):
-  the two products as one section under the hero, in place of the separate
-  Engage and Workspace sections. A centred eyebrow, H-3-A and H-3-B, then a
-  glass card per product: glyph and label, the product's name as the h3,
-  H-4-A or H-5-A under it, the B line, the product's frame, and a bar across
-  the foot that is the link to its page. Every string is Charlie's, word for
-  word (Taylor: "use his words not your words"), keyed H-3 to H-5 because the
-  section merges the PDF's sections 3, 4 and 5. The card is a size container:
-  its type is set in `cqw` with a clamp and the frame moves beside the copy
-  once the card is 36rem wide, so the same rules hold on a phone and at 1536,
-  where the card matches the image. Two cards to a row from xl, in the
-  hero's width (`Section wide`); one to a row below that, capped at 52rem.
-  The product glyphs live once, `PRODUCT_GLYPH` in `frames/glyphs.ts`, which
-  `Opportunity.tsx` reads too, so Workspace carries our panel glyph rather
-  than the image's document icon.
+  frames, first signed off on 22 Sep as bars and glyphs and reworked on
+  23 Sep into the hand-off below, out of four candidates (beside, hover
+  swaps, swaps itself, hand-off).
+- The frames, `src/components/site/frames/`, reworked 23 Sep so each product
+  says what it does and the hero shows how they connect. One trip, in real
+  words (`trip.ts`: a Kenya family safari asked for on Safari Expert's
+  site), told as a hand-off. `HeroVisuals.tsx` puts the
+  Workspace window up and to the right and the phone in front of its
+  assistant pane. The phone (`PhoneScreen.tsx` in `PhoneFrame.tsx`) is
+  Engage on the operator's site, under a header set a step up and clear of
+  the island (`HEADER` in `frames/type.ts`): the traveller asks, the
+  assistant answers with a destination, a stay and an experience (cards
+  cut from `SafariScene.tsx`, a round kind badge on each image, from
+  `kinds.ts`), the traveller asks for a quote, and "Sending to Safari
+  Expert" resolves into a tick. Then the phone steps aside and back, the window comes
+  forward, and Workspace (`WorkspaceScreen.tsx` in `WindowShell.tsx`, a
+  painted window titled "Workspace"; the pane is `WorkspaceChat.tsx`) takes
+  it from there: "New quote request" arrives with a coral pulse, the
+  assistant's steps open one by one on a thin rail (Extracting the request,
+  Generating itinerary, Pricing the trip, Detecting gaps, each a spinner
+  and a lit line settling into a tick and its result), and each step's
+  result lands in the itinerary beside it as it finishes: the trip's name,
+  seven rows (flight in, the camp and the balloon tagged "From chat", the
+  flight to the coast, flight out), their prices, then the two gaps (the
+  transfer to camp, the Diani stay) in coral with "Select transfer" and
+  "Select stay", and a one-line summary. The quote total sits bottom right.
+  Replay under the window plays the story again (a new key remounts the
+  pair). The whole story runs on one clock in `trip.ts`: brisk for the
+  traveller's chat, slow through the hand-off, brisk for the build.
+  `type.ts` holds one type, badge and icon scale for both frames (the phone
+  is 0.43 of the window's width, so its sizes are 2.33 times the window's
+  and every pair lands at the same pixel size); `StatusBadge.tsx` is every
+  tick, clock and flag, solid so nothing shows through; `Stella.tsx` is the
+  assistant's mark and working line (the name "Stella" appears nowhere in
+  either frame; the pane is headed "Assistant"). The working line uses the
+  product's own sweep (`text-shimmer`: muted letters under a band of
+  full-strength text, starting on the first letter, from the line's own
+  start via `--shimmer-at`). Everything inside a frame sizes in `cqw`; the
+  choreography is CSS (`animate-pop`, `-vanish`, `-grow`, `-ring`,
+  `-flag`, the hand-off's `animate-window-front` and `animate-phone-back`,
+  each element timed by `--d`, the window's entrances held back by `--d0`),
+  nothing from JavaScript but the replay key; below the fold a Reveal holds
+  them until the section is seen; reduced motion shows the finished state.
+  Both frames are painted (`bg-band-frosted` / `bg-band-smoked`), so the
+  one in front hides the other. The window sits 8% in from the pair's left
+  and 9% up from its foot, so the phone stands over its assistant pane.
+  Whichever frame is behind is out of focus by the same 1px: the window
+  while the phone plays, the phone after. The hand-off moves the phone
+  only, in one continuous arc (out to the side and a little down, back up
+  and in behind, ending exactly where it started), sampled from one eased
+  angle so it never stops at its widest point; the window steps in front
+  there, with no change of size or position, and the two cross focus as
+  they pass. In the window, each of the assistant's steps opens with the
+  rail down to it from the step above, does one thing to the itinerary and
+  ticks the moment that thing lands: reading
+  names the trip, generating flows the rows in top to bottom, pricing
+  slides every price and the total in from the right at once, detecting
+  flags both gaps together at once and ticks as they land. `BEAT` in `frames/trip.ts` works each tick out
+  from `RUN`, the entrances' durations, and `scripts/frames-timing.test.ts`
+  holds `RUN` to the utilities in `index.css`. The same two
+  frames stand in the product tiles (`Products.tsx`) and on the Engage and
+  Workspace pages; frames of their own
+  for those pages are still to come. The numerals are frame
+  chrome, aria-hidden, not a performance claim.
+- `src/components/site/Products.tsx` (23 Sep): the two products as one
+  section under the hero, in place of the separate Engage and Workspace
+  sections. H-3-A as the heading, saying where each product works ("One
+  for your website. One for your sales team.", written in the 23 Sep review
+  in place of the design's "Two products. Built for your travel
+  business."), H-3-B as the lede, then a tile of the site's glass per
+  product, lifted by the card shadow, side by side from lg and one to a
+  row below, each then as wide as the heading: the frame centred, with the
+  same room above it as between it and the name, both frames the same
+  height, held still at its finished state (the
+  phone's conversation up to the traveller's picks; the itinerary alone,
+  zoomed from the Workspace window), then the product's name and H-4-A or
+  H-5-A under it, inside the tile (Taylor, 23 Sep: the names in the box,
+  below the images).
+  The whole tile is the link to its page: the name carries it and its hit
+  area covers the tile, so a hover lifts the frame and turns the name
+  pink. The glass cards, their label, the sentence under the line (H-4-B,
+  H-5-B), the Explore bars and the pools of light went in the 23 Sep
+  review ("too much information, too many bits"). Every string other than H-3-A is Charlie's, word for word, keyed H-3 to H-5
+  because the section merges the PDF's sections 3, 4 and 5.
   Two things in Charlie's words depart from the copy review wave below, BY
   DECISION, not by oversight, so the next review must not revert them
-  without asking: H-5-A and H-4-B open on an instruction to the reader
-  ("Turn every enquiry…", "Answer from your expertise…"), which the guide
-  keeps out of headlines; and "every visitor", "every enquiry" are
-  unqualified. The test's
-  imperative rule does not see H-4-A or H-5-A because they are set as the
-  line under the h3, not as headings: an exception, not compliance.
+  without asking: H-5-A opens on an instruction to the reader ("Turn every
+  enquiry…"), which the guide keeps out of headlines; and "every visitor",
+  "every enquiry" are unqualified. The test's imperative rule does not see
+  H-4-A or H-5-A because they are set as the line under the h3, not as
+  headings: an exception, not compliance.
+- Every section below a hero is one strip in one rhythm, and
+  `Section.tsx` owns it: `SECTION_PAD` above and below, a centred head
+  (`SectionHead`: the heading, the lede 20px under it, an action under
+  that), then the content 64px under the head (48px below md), across the
+  shell. No section sets a padding or a gap of its own, and the close
+  band keeps the rhythm from the same two exports. Taylor, 23 Sep: "every
+  single section should be like this one where like everything is
+  centered". Where a section's content is a pair, as on Engage (the
+  points and the brief card), the pair is centred as one.
+- The type scale (23 Sep) is nine roles, each one `@utility text-*` in
+  `src/index.css` carrying size, weight, leading and tracking: display,
+  heading, lede, subhead, copy, small, label, nav and action. Colour stays
+  with the surface (dim on the page, paper on the band). Nothing is set in
+  capitals, and only display and heading are tracked. Every component
+  outside the frames uses a role and nothing else, and
+  `scripts/type-scale.test.ts` fails the build on a hand-set size, weight,
+  case or tracking, and on a role tailwind-merge does not know
+  (`TYPE_ROLES` in `src/lib/utils.ts`: an unknown `text-*` class reads to
+  it as a colour, so `text-dim` would evict the role). The brand kit reads
+  its table out of the same block. Taylor's ask: "all of the text across
+  the whole site needs to be uniform." The hero's audience line is a label
+  in a solid paper pill (`Tag.tsx`), since white type at that size would
+  not clear the band.
 - The lower half, chosen by Taylor on 22 Sep (evening) from three live
   candidates behind a `?lower=a|b|c` switch: A was a four-step track with the
   product pills hung over the segments they carry, B a drawn timeline in the
   frames' idiom beside the copy with six glass role cards and a measures
   strip, C three dots. He picked C ("C looks good"); A, B and the switch are
-  deleted. `Opportunity.tsx` is the journey as three ruled columns of type
-  under the heading and lede (H-2-A and H-2-B, which carry the opportunity and
-  why it is one; Charlie's guide §3 and §4): Before the enquiry, Engage; After
-  the enquiry, Workspace; The outcome, Booked, each with its glyph and a line.
-  Taylor rejected pills, connecting lines and a reveal here. `Audience.tsx` is
-  the six buying roles as a ruled grid under the heading (guide §8: roles
+  deleted. C was `Opportunity.tsx`, the journey as three ruled columns
+  (Before the enquiry, Engage; After the enquiry, Workspace; The outcome,
+  Booked) under H-2-A and H-2-B; it went on 23 Sep once the hero played the
+  hand-off and the product tiles named both products, leaving it nothing
+  of its own to say (Taylor: "I don't think it's saying anything
+  valuable"). `Audience.tsx` is
+  the five buying roles in one closed box of the site's glass under the
+  heading: from lg as wide as the product tiles, below that as wide as the
+  heading and centred under it, the two columns of each row centred in it
+  and on each other, the glyph and name centred in theirs; from lg the
+  glyph and name are centred in each column, level across all five, with
+  the measures centred as a block under them (guide §8: roles
   not sectors; the roles and measures come from the Foundation document's
-  stakeholder map; sectors are one supporting line in the lede). Each cell
-  is the role's glyph, its name and its measures one to a line; two columns
-  on a phone, three from md, rules between the cells and across the top and
-  foot but never up the outer sides. Taylor, 23 Sep, dropped the sentence
+  stakeholder map). Each role is its glyph, its name and its measures, a
+  bullet each, set as copy: five columns from lg, a row each below that
+  (glyph and name left, measures right), so no measure runs past two
+  lines. Taylor, 23 Sep, dropped the sentence
   each role carried beside it ("drop the right hand column") and asked for
   the role and its measures as a grid. `Close.tsx` stands on the hero's band
   (`Band.tsx`, the mesh extracted from the hero; it pauses off-screen so two
@@ -206,8 +268,8 @@ They are guidelines for the register, never lines to lift.
   Workspace, Pilot, Status, Login) and the legal links on the right (Trust,
   Privacy, Terms), then the copyright. No tagline and no column headings.
   `Section`'s `ink` tone went with it; the tones are `page` and `tint`.
-- The product cards (H-3 to H-5) sit straight under the hero, Opportunity
-  follows them. "See how it works" scrolls to `#products`, and a test holds
+- The product tiles (H-3 to H-5) sit straight under the hero, the roles
+  follow them. "See how it works" scrolls to `#products`, and a test holds
   the link and the id together.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
   `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
@@ -221,7 +283,6 @@ They are guidelines for the register, never lines to lift.
   The home page's og:title and twitter:title are "Tripcerto" alone: the card
   above them already carries the headline (Taylor, 23 Sep, option D).
   The pill string was deleted at his request. The lower half's copy is
-  `home.opportunity` (H-2-A, H-2-B and `stages`: when, name, line),
   `home.audience` (H-7-A and `roles`: role, measures) and
   `home.close` (H-9-A, H-9-C, H-9-D); H-8-B and the four-step `steps` went
   with the unpicked candidates.
@@ -246,10 +307,16 @@ They are guidelines for the register, never lines to lift.
   done smoothly, waves entering from the left.
 - He picked the glass hero on the warped Ember strip with paper copy, and
   said to remove everything else. Done.
-- On the frames: no prose, glyphs and bars ("it needs to look like two blank
-  user messages"); the phone must not show the window through it; both
-  frames animate at the same time; the chat sits at the bottom; nothing
-  literal like "wow" or "profit": a green delta and a coral gap say it.
+- On the frames (22 Sep): no prose, glyphs and bars; the phone must not
+  show the window through it; nothing literal like "wow" or "profit".
+  Superseded 23 Sep: it has to be obvious what each product does and how
+  they interact, so the frames now carry real words and play the hand-off.
+  From that round: no labels on the frames, no pointer tilt ("too
+  interactive"), one text size, weight, tick and input bar across both
+  frames, no "Stella" in Workspace, the itinerary's icons as they were
+  (bed, balloon, plane, warning), a trip that starts and ends with a
+  flight and whose gaps make sense, the tool use as persisting steps, and
+  pacing that is quick where nothing matters and slow at the hand-off.
 - On the theme switch he rejected the circular reveal from the button
   ("does nothing then pops", then "I don't like that one"); a plain
   cross-fade of the whole page is what stayed.

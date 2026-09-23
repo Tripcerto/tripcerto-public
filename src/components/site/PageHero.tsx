@@ -42,7 +42,7 @@ export function PageHero({
           <div className="animate-rise min-w-0">
             <h1
               id="hero-title"
-              className="max-w-[18ch] text-[2.75rem] font-bold leading-[1.02] tracking-[-0.03em] text-paper sm:text-[3.5rem] lg:text-[3.75rem]"
+              className="max-w-[18ch] text-display text-paper"
             >
               {typeof title === 'string'
                 ? title
@@ -55,7 +55,7 @@ export function PageHero({
                     </Fragment>
                   ))}
             </h1>
-            <p className="mt-7 max-w-[34rem] text-lg leading-[1.55] text-paper/85 md:text-xl">{lede}</p>
+            <p className="mt-7 max-w-[34rem] text-lede text-paper/85">{lede}</p>
             <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button asChild size="lg" variant="accent">
                 <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}>
@@ -64,7 +64,7 @@ export function PageHero({
                 </a>
               </Button>
               {secondary && (
-                <a href={secondary.href} className="inline-flex min-h-11 items-center gap-1 font-semibold text-paper">
+                <a href={secondary.href} className="inline-flex min-h-11 items-center gap-1 text-action text-paper">
                   {secondary.label}
                   <ArrowRight size={16} aria-hidden />
                 </a>

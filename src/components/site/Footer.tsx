@@ -25,7 +25,7 @@ const LEGAL: readonly FooterLink[] = [
   { href: '/legal/terms', label: 'Terms' },
 ]
 
-const LINK = 'inline-flex min-h-11 items-center text-[15px] text-body/80 transition-colors hover:text-body'
+const LINK = 'inline-flex min-h-11 items-center text-small text-dim transition-colors hover:text-body'
 
 function Links({ links, className, children }: { links: readonly FooterLink[]; className?: string; children?: ReactNode }) {
   return (
@@ -65,7 +65,7 @@ export function Footer() {
             </li>
           </Links>
         </div>
-        <p className="mt-4 text-[13px] text-dim">© 2026 Tripcerto Ltd</p>
+        <p className="mt-4 text-small text-dim">© 2026 Tripcerto Ltd</p>
       </div>
     </footer>
   )

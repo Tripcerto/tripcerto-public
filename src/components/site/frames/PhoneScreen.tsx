@@ -1,31 +1,34 @@
 import type { ReactNode } from 'react'
-import { ChevronLeft, Sparkles, Sunrise, Volume2 } from 'lucide-react'
-import type { Glyph } from '@/components/site/frames/glyphs'
+import { Check, ChevronLeft, Mic } from 'lucide-react'
+import { KIND_ICON } from '@/components/site/frames/kinds'
+import { OperatorMark } from '@/components/site/frames/OperatorMark'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
-import { SafariScene, BalloonGlyph } from '@/components/site/frames/SafariScene'
-import { BAR } from '@/components/site/frames/glyphs'
-import { Bar, StellaLine } from '@/components/site/frames/StellaLine'
-import { VoiceNote } from '@/components/site/frames/Voice'
+import { SafariScene } from '@/components/site/frames/SafariScene'
+import { StatusBadge } from '@/components/site/frames/StatusBadge'
+import { Step } from '@/components/site/frames/Step'
+import { BADGE, HEADER, ICON, SURFACE, TYPE, type Surface } from '@/components/site/frames/type'
 import { delay } from '@/components/site/frames/motion'
-import { story } from '@/components/site/frames/story'
+import { PHONE_BEAT as AT, trip } from '@/components/site/frames/trip'
 import { cn } from '@/lib/utils'
 
-/* Engage on the phone: the traveller writes, Stella answers with two
-   activities she recommends and a word on them that can be heard as well
-   as read, the traveller answers by voice, and Stella's next reply is on
-   its way. It sits at the bottom of the screen as a conversation does.
-   Bars stand for the words. Bezel and screen are painted, not glass, so
-   the window behind the phone does not show through either. */
+/* Engage on the phone, in the operator's own chat: a parent asks where to
+   take the family on safari, the assistant answers with the Masai Mara and
+   why, and two picks for it (a stay and an experience, each a picture with
+   its kind as a badge), then offers to pass the trip to the operator's
+   team. The parent says yes and names both, and the hand-off runs as the
+   assistant's steps do in Workspace (`Step`): a spinner and a lit line
+   that settle into a tick; Workspace takes it from there. Where the phone
+   stands without the window (`sends` false) it stops at the parent's
+   picks. Sized from the frames' one scale; timed from the story's clock;
+   painted with the surface it stands on. */
 
-const ACTIVITY = [
-  { glyph: BalloonGlyph, crop: 'balloon' },
-  { glyph: Sunrise, crop: 'giraffe' },
-] as const satisfies ReadonlyArray<{ glyph: Glyph; crop: 'balloon' | 'giraffe' }>
+const T = TYPE.phone
+const B = BADGE.phone
 
 function Traveller({ children, at }: { children: ReactNode; at: number }) {
   return (
     <div
-      className="animate-pop flex max-w-[78%] flex-col gap-[2.2cqw] self-end rounded-[4cqw] rounded-br-[1.2cqw] bg-ink/85 p-[3.6cqw] dark:bg-white/90"
+      className="animate-pop max-w-[82%] self-end rounded-[4.2cqw] rounded-br-[1.4cqw] bg-ink/85 px-[3.6cqw] py-[2.6cqw] text-paper dark:bg-white/90 dark:text-ink"
       style={delay(at)}
     >
       {children}
@@ -33,77 +36,93 @@ function Traveller({ children, at }: { children: ReactNode; at: number }) {
   )
 }
 
-const SAID = 'bg-paper/35 dark:bg-ink/25'
-
-export function PhoneScreen() {
+export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boolean }) {
   return (
     <PhoneFrame
-      className="w-full border-white/80 bg-band-frosted shadow-[0_2px_4px_rgb(40_17_49/0.08),0_24px_48px_-12px_rgb(40_17_49/0.35),0_60px_120px_-30px_rgb(40_17_49/0.4)] dark:border-ink/85 dark:bg-band-smoked"
+      className={cn(
+        'w-full border-white/80 shadow-[0_2px_4px_rgb(40_17_49/0.08),0_24px_48px_-12px_rgb(40_17_49/0.35),0_60px_120px_-30px_rgb(40_17_49/0.4)] dark:border-ink/85',
+        SURFACE[surface],
+      )}
       islandClassName="bg-ink/80 dark:bg-ink"
     >
-      <div aria-hidden className="flex h-full w-full flex-col bg-band-frosted text-[4.4cqw] leading-[1.35] text-ink dark:bg-band-smoked dark:text-paper">
-        <div className="animate-pop flex items-center gap-[3cqw] px-[4cqw] pb-[3cqw] pt-[13cqw]" style={delay(0.7)}>
-          <ChevronLeft className="size-[5cqw] text-ink/70 dark:text-paper/70" />
-          <span className="relative flex size-[9cqw] items-center justify-center rounded-full bg-ink text-paper dark:bg-paper dark:text-ink">
-            <Sparkles className="size-[4.6cqw]" />
+      <div aria-hidden className={cn('flex h-full w-full flex-col leading-[1.35] text-ink dark:text-paper', SURFACE[surface], T.text)}>
+        <div
+          className={cn(
+            'animate-pop flex shrink-0 items-center gap-[3cqw] border-b border-ink/[0.06] px-[4cqw] pb-[3.4cqw] pt-[20cqw] dark:border-white/10',
+            HEADER.phone.text,
+          )}
+          style={delay(AT.header)}
+        >
+          <ChevronLeft className={cn('text-ink/70 dark:text-paper/70', HEADER.phone.icon)} />
+          <span className="relative">
+            <OperatorMark className={HEADER.phone.mark} />
             <span className="absolute -bottom-[0.4cqw] -right-[0.4cqw] size-[3cqw] rounded-full border-[0.6cqw] border-white bg-up dark:border-ink" />
           </span>
-          <Bar className={cn('h-[1.8cqw] w-[16cqw] self-end', BAR)} />
+          <span className="font-semibold">{trip.operator}</span>
         </div>
 
-        <div className="mt-auto flex flex-col gap-[4.4cqw] px-[4cqw] pb-[8cqw]">
-          <Traveller at={0.9}>
-            <Bar className={cn('h-[2.2cqw] w-[36cqw]', SAID)} />
-            <Bar className={cn('h-[2.2cqw] w-[24cqw]', SAID)} />
-          </Traveller>
+        <div className="mt-auto flex flex-col gap-[3.4cqw] px-[4cqw] pb-[5cqw]">
+          <Traveller at={AT.ask}>{trip.ask}</Traveller>
 
-          <StellaLine at={1.2} scale="phone" className="px-[1cqw]" />
+          <p className="animate-pop px-[1cqw]" style={delay(AT.reply)}>
+            {trip.reply}
+          </p>
 
-          <div className="animate-pop flex gap-[4%]" style={delay(1.5)}>
-            {story.activities.map((activity, i) => {
-              const { glyph: ActivityGlyph, crop } = ACTIVITY[i]
+          <div className="grid grid-cols-2 gap-[3cqw]">
+            {trip.picks.map((pick, i) => {
+              const Icon = KIND_ICON[pick.kind]
               return (
-                <div key={activity.name} className="w-[48%] shrink-0 overflow-hidden rounded-[3.5cqw] bg-white/85 shadow-card dark:bg-white/10">
+                <div
+                  key={pick.name}
+                  className="animate-pop overflow-hidden rounded-[3.5cqw] bg-white/90 shadow-card dark:bg-white/10"
+                  style={delay(AT.cards + i * AT.cardGap)}
+                >
                   <div className="relative aspect-[4/3] w-full">
-                    <SafariScene crop={crop} />
-                    <span className="absolute left-[2.4cqw] top-[2.4cqw] flex size-[7cqw] items-center justify-center rounded-full bg-white/90 text-ink">
-                      <ActivityGlyph className="size-[3.8cqw]" />
+                    <SafariScene crop={pick.crop} />
+                    <span className={cn('absolute left-[2cqw] top-[2cqw] flex items-center justify-center rounded-full bg-white/90 text-ink', B.size)}>
+                      <Icon className={B.glyph} />
                     </span>
                   </div>
-                  <div className="flex flex-col gap-[1.8cqw] p-[2.8cqw]">
-                    <Bar className={cn('h-[2cqw] w-[72%]', BAR)} />
-                    <div className="flex items-center justify-between gap-[1.5cqw]">
-                      <Bar className={cn('h-[1.6cqw] w-[38%]', BAR)} />
-                      <span className="text-[3.8cqw] font-semibold tabular-nums">{activity.price}</span>
-                    </div>
+                  <div className="flex flex-col gap-[0.8cqw] p-[2.8cqw] leading-tight">
+                    <span className="line-clamp-2 min-h-[11cqw] font-semibold">{pick.name}</span>
+                    <span className="flex items-baseline justify-between gap-[1cqw]">
+                      <span className={cn('truncate text-ink/55 dark:text-paper/60', T.detail)}>{pick.detail}</span>
+                      {pick.price && <span className="font-semibold tabular-nums">{pick.price}</span>}
+                    </span>
                   </div>
                 </div>
               )
             })}
           </div>
 
-          <div
-            className="animate-pop flex max-w-[82%] flex-col gap-[2.2cqw] self-start rounded-[4cqw] rounded-bl-[1.2cqw] bg-white/80 p-[3.6cqw] dark:bg-white/12"
-            style={delay(1.8)}
-          >
-            <Bar className={cn('h-[2.2cqw] w-[44cqw]', BAR)} />
-            <span className="flex items-end justify-between gap-[2.4cqw]">
-              <Bar className={cn('h-[2.2cqw] w-[30cqw]', BAR)} />
-              <Volume2 className="size-[3.4cqw] shrink-0 text-ink/45 dark:text-paper/60" />
-            </span>
-          </div>
+          <p className="animate-pop px-[1cqw]" style={delay(AT.offer)}>
+            {trip.offer}
+          </p>
 
-          <Traveller at={2.2}>
-            <VoiceNote scale="phone" />
-          </Traveller>
+          <Traveller at={AT.confirm}>{trip.confirm}</Traveller>
+
+          {sends && (
+            <div className={cn('animate-pop px-[1cqw]', T.detail)} style={delay(AT.sending)}>
+              <Step
+                scale="phone"
+                start={AT.sending}
+                end={AT.sent}
+                text={trip.phoneWorking}
+                done={<span className="truncate text-ink/80 dark:text-paper/80">{trip.phoneSent}</span>}
+                badge={<StatusBadge scale="phone" tone="done" glyph={Check} />}
+              />
+            </div>
+          )}
 
           <div
-            className="animate-pop flex items-center gap-[1.4cqw] self-start rounded-[4cqw] rounded-bl-[1.2cqw] bg-white/80 px-[3.6cqw] py-[3cqw] dark:bg-white/12"
-            style={delay(2.6)}
+            className={cn(
+              'animate-pop flex h-[9.8cqw] items-center rounded-full border border-ink/10 bg-white/70 pl-[3.8cqw] pr-[3cqw] text-ink/45 dark:border-white/10 dark:bg-white/[0.06] dark:text-paper/50',
+              T.detail,
+            )}
+            style={delay(AT.header)}
           >
-            {[0, 0.2, 0.4].map((d) => (
-              <span key={d} className="animate-blink size-[2cqw] rounded-full bg-ink/50 dark:bg-paper" style={delay(d)} />
-            ))}
+            {trip.composer}
+            <Mic className={cn('ml-auto text-ink/60 dark:text-paper/70', ICON.phone)} />
           </div>
         </div>
       </div>
