@@ -49,10 +49,10 @@ function Bar({ decide }: { decide: (analytics: ConsentDecision) => void }) {
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-page pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_32px_-16px_rgb(40_17_49/0.25)] dark:shadow-[0_-12px_32px_-12px_rgb(0_0_0/0.6)]"
     >
       <div className="shell flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-        <p className="text-[14px] leading-snug text-body">
+        <p className="text-small text-body">
           Can we measure how the site is used, with Google Analytics?
           <span className="hidden sm:inline"> Never advertising.</span>{' '}
-          <a href="/legal/privacy" className="font-medium text-link underline underline-offset-4">
+          <a href="/legal/privacy" className="text-link underline underline-offset-4">
             Privacy
           </a>
         </p>
