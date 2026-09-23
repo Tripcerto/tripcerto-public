@@ -7,9 +7,10 @@
 
 export const home = {
   hero: {
+    audience: 'For tour operators and DMCs', // added (23 Sep sync): who it is for, before the headline
     'H-1-A': 'AI that makes complex travel easier to plan and sell', // changed (23 Sep sync)
     'H-1-B':
-      'Software for tour operators and DMCs. It answers travellers on your website and turns what they ask for into an itemised trip your team can quote, so more of them book.', // changed (23 Sep sync): who it is for, both jobs and the booking (Guide §4, §5); the products are named on their cards below
+      'Tripcerto answers travellers on your website, then turns each enquiry into an itemised trip your team can check and quote.', // changed (23 Sep sync): the products are named on their cards below
     'H-1-C': 'Book a demo',
     'H-1-D': 'See how it works',
   },
