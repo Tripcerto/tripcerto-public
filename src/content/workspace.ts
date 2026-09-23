@@ -1,9 +1,10 @@
 /* Workspace page strings, keyed by the reference in "Website copy for
    review" (21 Sep 2026). Strings marked `changed` depart from that document
    on the direction in Charlie's Positioning and Messaging Guide (22 Sep
-   2026): the software is the subject, what it does is told apart from how
-   it sits in the business's systems (§6), no problem section (§3), no
-   sector cards (§8). Reply with the reference and the change. */
+   2026): the software is the subject, no problem section (§3), no sector
+   cards (§8). The design sync (23 Sep 2026) kept the sections that show the
+   product: W-4 to W-6 are not on the page. Reply with the reference and the
+   change. */
 
 export const workspace = {
   hero: {
@@ -34,46 +35,11 @@ export const workspace = {
       },
     ], // changed: W-3-C, D, E were the steps Structure, Flag the gaps, Resolve
   },
-  /* W-4, "What you get" in the document, with W-5 Controls: how Workspace
-     sits in the business's systems (§6). */
-  systems: {
-    'W-4-A': 'Connected to the systems between inquiry and quote', // changed
-    'W-4-B':
-      'Workspace sits beside the systems your team already runs, reads from them and writes to them, and replaces none of them. Your product, price and availability data stay where they are and stay authoritative.', // changed
-    rows: [
-      {
-        name: 'Your inventory and suppliers',
-        detail: 'Product, rates, availability',
-        line: 'Stays, transfers and activities are matched against your own catalogue and supplier feeds, and priced from the rates those systems hold.',
-      },
-      {
-        name: 'Your CRM and inquiry channels',
-        detail: 'Email, forms, Engage',
-        line: 'The inquiry opens with the customer’s context intact, from a form, a forwarded email or the brief Engage captured on your website.',
-      },
-      {
-        name: 'Your proposal and booking process',
-        detail: 'Structured data out',
-        line: 'The approved quote goes out as structured data into the proposal and booking tools you already use, with the dates, travellers and prices carried across.',
-      },
-      {
-        name: 'Your experts, in control',
-        detail: 'Review, approval, revision',
-        line: 'The expert decides what goes to the customer, changes any line, and revises one part of the trip without restarting the rest.',
-      },
-    ], // changed: W-4-B and W-5-A, B, as rows
-  },
-  /* W-6 Boundaries, said as what stays yours rather than what Workspace does not do. */
-  boundaries: {
-    'W-6-A': 'What stays where it is', // changed
-    'W-6-B':
-      'Your reservation platform, itinerary builder and booking process stay where they are. Rates and availability stay in the systems that own them, and complex rate combinations and exceptions stay with your rules and your expert. Nothing reaches a customer without an expert approving it.', // changed
-  },
   /* W-8 Pilot and W-9 Close, together on the band: the measures and the call. */
   close: {
     'W-8-A': 'A pilot proves it on one number, agreed with you', // changed
     'W-8-B':
-      'Time from inquiry to quote, handling time per inquiry, or the completeness of each quote before it goes out. We agree the baseline first, then measure the change.', // changed
+      'Time from inquiry to quote, handling time per inquiry, or the completeness of each quote before it goes out.', // changed (23 Sep sync)
     'W-9-B': 'Book a demo',
     'W-9-C': 'What a pilot delivers', // added
   },
