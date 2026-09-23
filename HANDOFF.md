@@ -52,9 +52,10 @@ They are guidelines for the register, never lines to lift.
   syntax that Safari and iOS before 16.4 ignore. Run tsc from this repo or with
   its tsconfig path; a bare `tsc -b` from the monorepo worktree emits thousands
   of stray `.js` files.
-- The site lives at `https://www.tripcerto.com`. The apex answers 307 to www
-  for every path (a 308 is the permanent form search engines want; it is a
-  Vercel Domains setting, Taylor's to change), so every canonical, `og:url`, `og:image` and `twitter:image`
+- The site lives at `https://www.tripcerto.com`. The apex answers 308 to www
+  for every path (the project domain's `redirectStatusCode`, set 23 Sep; it
+  was Vercel's default 307, which search engines do not treat as permanent),
+  so every canonical, `og:url`, `og:image` and `twitter:image`
   names the www host. The legal pages are `/legal/privacy` and `/legal/terms`
   with no trailing slash (`vercel.json` `trailingSlash: false`; the slash form
   308s), and every link to them is written that way.
@@ -629,15 +630,15 @@ to block the clicks for while its animating"); the band's contrast stays
   "Tripcerto". A PR description or commit message here is published; keep
   internal findings in the product repo.
 
-After this deploys (Taylor, about half an hour): Search Console, URL
-inspection, Request indexing for `/`, `/engage`, `/workspace`, `/pilot` and
-`/trust` (this also refreshes the icon and title Google shows, which come
-from its last crawl of the home page); Brave, search.brave.com/submit-url
-for the same five plus `/about` and `https://chat.tripcerto.com/` (Claude's
-web search reads Brave, whose copy still says "the intelligence layer");
-Vercel, Domains, the apex redirect from 307 to 308. Then check Bing Webmaster
-Tools, IndexNow, for the seven URLs, and the IndexNow run in the repo's
-Actions tab (200 or 202).
+After the deploy (23 Sep, #21): every page served its full text to a
+crawler with no JavaScript; the first IndexNow run posted the seven URLs and
+IndexNow answered 202; the apex redirect became a 308; and Brave's
+search.brave.com/submit-url took the five pages, `/about` and
+`https://chat.tripcerto.com/` (Claude's web search reads Brave, whose copy
+still said "the intelligence layer"). Left for Taylor, since it needs his
+Google sign-in: Search Console, URL inspection, Request indexing for `/`,
+`/engage`, `/workspace`, `/pilot` and `/trust`. The home page's request is
+what refreshes the icon and title Google shows.
 
 Researched and parked on Taylor's word ("just the indexing for the time
 being"): pages for DMCs, tailor-made and safari operators; guides on quote
