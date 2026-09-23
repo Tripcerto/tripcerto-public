@@ -19,7 +19,7 @@ const ROOT = resolve(fileURLToPath(new URL('../../', import.meta.url)))
 const BRAND = join(ROOT, 'public/brand')
 const OUT = join(ROOT, 'scripts/brand/tripcerto-brand-kit.html')
 
-const SIGNED = '22 September 2026'
+const SIGNED = '23 September 2026'
 
 /* ---- The palette, read from the site rather than retyped ---------------- */
 
@@ -47,6 +47,13 @@ const NIGHT = css.match(/:root\.dark[^}]*--color-page:\s*(#[0-9a-fA-F]{6})/s)?.[
 /* The still strip, exactly as the site declares it. */
 const STRIP = css.match(/--band:\s*(linear-gradient\([^;]+)\);/)?.[1]
 if (!STRIP) throw new Error('src/index.css declares no --band')
+
+/* ---- The product's address, read from the site's own link --------------- */
+
+const links = await readFile(join(ROOT, 'src/lib/links.ts'), 'utf8')
+const WORKSPACE_URL = links.match(/LOGIN_URL = '(https:\/\/[^']+)'/)?.[1]
+if (!WORKSPACE_URL) throw new Error('src/lib/links.ts declares no LOGIN_URL')
+const WORKSPACE_HOST = new URL(WORKSPACE_URL).host
 
 /* ---- The band, read from the component that paints it ------------------- */
 
@@ -242,7 +249,7 @@ const html = `<!doctype html>
 <style>
 :root{--ink:${INK};--primary:${PRIMARY};--accent:${ACCENT};--tint:${TINT};--paper:${PAPER};
       --pink:${PINK};--peach:${PEACH};--muted:${MUTED};--rule:${RULE};--up:${UP};--night:${NIGHT};
-      --band:${STRIP});--bandshot:url(${art.band});--bandtall:url(${art.bandTall})}
+      --band:${STRIP});--bandshot:url(${art.band});--bandtall:url(${art.bandTall});--fav:url(${art.icon16})}
 *{box-sizing:border-box;margin:0}
 body{font:400 15px/1.55 'Instrument Sans',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 .wrap{max-width:940px;margin:0 auto;padding:56px 28px 96px}
@@ -250,7 +257,7 @@ h1{font-size:31px;font-weight:700;letter-spacing:-.025em}
 .lede{color:var(--muted);margin-top:10px;max-width:660px}
 .stamp{font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);background:var(--ink);border-radius:5px;padding:6px 10px;display:inline-block;margin-bottom:18px}
 nav{margin-top:24px;font:500 12px/2 'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.04em}
-nav a{color:var(--muted);text-decoration:none;margin-right:16px;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none;margin-right:8px;white-space:nowrap}
 section{margin-top:52px;border-top:1px solid var(--rule);padding-top:24px;scroll-margin-top:20px}
 h2{font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
 h3{font-size:15px;font-weight:600;margin-top:30px}
@@ -297,6 +304,23 @@ li b,td b{color:var(--ink);font-weight:600}
 code.w{font:400 12.5px/1.4 'JetBrains Mono',monospace;background:var(--tint);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
 pre{font:400 12.5px/1.6 'JetBrains Mono',monospace;background:var(--tint);border-radius:8px;padding:13px 15px;margin-top:10px;overflow-x:auto}
 .pass{color:var(--up)}.fail{color:var(--pink)}.warn{color:var(--accent)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:12px 12px 0;align-items:flex-end}
+.tab{display:flex;align-items:center;gap:8px;background:var(--paper);border-radius:8px 8px 0 0;padding:9px 18px 10px 12px;font-size:13px;white-space:nowrap}
+.fav{width:16px;height:16px;flex:none;background:var(--fav) center/contain no-repeat}
+.preview{display:flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 20px 12px 12px;width:max-content;max-width:100%}
+.preview img{flex:none}
+.preview b{display:block;font-size:14.5px;font-weight:600}
+.preview span{display:block;color:var(--muted);font-size:13px}
+.plate{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:32px 30px 34px;max-width:440px}
+.plate h4{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.plate svg+h4{margin-top:26px}
+.plate p{margin-top:10px;font-size:14px}
+.plate .line{color:var(--muted)}
+.btn{display:inline-block;margin-top:22px;background:var(--primary);color:var(--paper);font-weight:600;font-size:15px;line-height:1;border-radius:999px;padding:13px 22px}
+.toc{background:var(--tint);border-radius:8px;padding:12px 16px 13px;margin-top:16px;font-size:13.5px}
+.toc b{display:block;font-weight:600;margin-bottom:4px}
+.toc span{display:block;color:var(--muted)}
+.plate a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:1.5px;text-underline-offset:3px}
 @media(max-width:760px){.grounds,.roles,.ramp{grid-template-columns:1fr}td.k{width:auto;display:block;padding-bottom:0;border:0}td{display:block}.vs td{width:auto}.scale td:first-child{width:auto}}
 </style>
 </head>
@@ -304,9 +328,17 @@ pre{font:400 12.5px/1.6 'JetBrains Mono',monospace;background:var(--tint);border
 
 <span class="stamp">Signed ${SIGNED}</span>
 <h1>tripcerto brand kit</h1>
-<p class="lede">Everything here is decided and in use on tripcerto.com. Implement from it.
-Every value is read out of the site at build time, so the two cannot disagree.</p>
-<nav><a href="#logo">01 Logo</a><a href="#band">02 Band</a><a href="#colour">03 Colour</a><a href="#type">04 Type</a><a href="#voice">05 Voice</a><a href="#files">06 Files</a></nav>
+<p class="lede">Everything here is decided, for tripcerto.com and for every Tripcerto product. Implement
+from it. Every value is read out of the site at build time, so the two cannot disagree.</p>
+<nav>
+<a href="#logo">01 Logo</a>
+<a href="#band">02 Band</a>
+<a href="#colour">03 Colour</a>
+<a href="#type">04 Type</a>
+<a href="#voice">05 Voice</a>
+<a href="#surfaces">06 Surfaces</a>
+<a href="#files">07 Files</a>
+</nav>
 
 <section id="logo">
 <h2>01 · Logo</h2>
@@ -322,11 +354,12 @@ Every value is read out of the site at build time, so the two cannot disagree.</
 <h3>Monogram and app icon</h3>
 <p>The monogram is the wordmark's t and c locked together, for anywhere too tight for the wordmark.
 The app icon is that monogram cut out of a tile, on the band.</p>
+<p>There is one app icon, and tripcerto.com, Engage, Workspace and every other Tripcerto page carry
+it. No product has its own icon, colour or tile.</p>
 <div class="card row">
-  ${use(monogram, { fill: INK, height: 84 })}
-  <img src="${art.icon104}" width="104" height="104" alt="">
-  ${tile(104, PRIMARY)}
-  ${tile(104, INK)}
+  <figure>${use(monogram, { fill: INK, height: 84 })}<figcaption>monogram</figcaption></figure>
+  <figure><img src="${art.icon104}" width="104" height="104" alt=""><figcaption>the app icon</figcaption></figure>
+  <figure>${tile(104, INK)}<figcaption>the artwork it is cut from</figcaption></figure>
 </div>
 
 <h3>At the sizes they are met at</h3>
@@ -342,7 +375,8 @@ The app icon is that monogram cut out of a tile, on the band.</p>
 <h3>The link preview</h3>
 <p>The card every share of tripcerto.com shows, in a message, a post or a chat. One card for the
 whole site: the wordmark, the homepage headline alone and centred, and the monogram carrying it,
-all on the band. Rendered here from ${w('scripts/og/card.html')}, the source of the file the site serves.</p>
+all on the band. Rendered here from ${w('scripts/og/card.html')}, the source of the file the site serves.
+It is tripcerto.com's alone; what every other surface previews with is in 06.</p>
 <div class="card row"><figure><img src="${art.card}" width="1200" height="630" alt="" style="width:520px;max-width:100%;height:auto;display:block;border-radius:6px"><figcaption>as a network shows it, 520 wide</figcaption></figure></div>
 ${rows([
   ['The file', `${w('public/og-image.png')}, a 1200 × 630 card shot at 2×, so 2400 × 1260 pixels, served to every page.`],
@@ -424,11 +458,11 @@ ${rows([
   <div class="role"><div class="chip" style="background:${INK}"><b style="color:${PAPER}">Ink</b></div>
     <div class="body"><strong>Everything you read</strong><p>All text on light grounds, and the dark page surface. The one colour that is never decorative.</p><code>${INK} · ${hsl(INK)}</code></div></div>
   <div class="role"><div class="chip" style="background:${PRIMARY}"><b style="color:${PAPER}">Primary</b></div>
-    <div class="body"><strong>The brand coral</strong><p>The app icon, the filled button, the active state. Where the brand signs its name in colour.</p><code>${PRIMARY} · ${hsl(PRIMARY)}</code></div></div>
+    <div class="body"><strong>The brand coral</strong><p>The app icon, the filled button, the active state. Where the brand signs its name in colour. Text on coral is white, the filled button's label included. Ink is never set on coral, at any size.</p><code>${PRIMARY} · ${hsl(PRIMARY)}</code></div></div>
   <div class="role"><div class="chip" style="background:${ACCENT}"><b style="color:${PAPER}">Accent</b></div>
     <div class="body"><strong>The warm half of the band</strong><p>Its job is inside the ramp, holding the coral open before it reaches the peach. It is not a second brand colour and is not painted on its own.</p><code>${ACCENT} · ${hsl(ACCENT)}</code></div></div>
   <div class="role"><div class="chip" style="background:${TINT}"><b style="color:${INK}">Tint</b></div>
-    <div class="body"><strong>The page</strong><p>The cream everything stands on in light mode. White is not a surface here; it only appears as a glass wash over this.</p><code>${TINT} · ${hsl(TINT)}</code></div></div>
+    <div class="body"><strong>The page</strong><p>The cream everything stands on in light mode. White is not a surface on the site; it only appears as a glass wash over this. A document is the one white page (06).</p><code>${TINT} · ${hsl(TINT)}</code></div></div>
 </div>
 
 <h3>The band is those colours in order</h3>
@@ -438,8 +472,9 @@ ${rows([
   <div style="background:${ACCENT}">Accent ${ACCENT}</div>
   <div style="background:${PEACH};color:${INK}">Peach ${PEACH}</div>
 </div>
-<p>Pink and peach are the ramp's ends. They appear as flat colour in one place each: pink is the link
-and glyph colour on light grounds, peach only inside the band.</p>
+<p>Pink and peach are the ramp's ends. They appear as flat colour in one place each: pink on light
+grounds, for glyphs, for a link that stands on its own and for the underline under a link in running
+text; peach only inside the band.</p>
 
 <h3>The rest</h3>
 ${rows([
@@ -454,11 +489,12 @@ ${rows([
 ${pair('Ink', INK, 'tint', TINT, 'Body copy, light')}
 ${pair('Muted', MUTED, 'tint', TINT, 'Secondary text, light')}
 ${pair('White', PAPER, 'night', NIGHT, 'Body copy, dark')}
-${pair('White', PAPER, 'primary', PRIMARY, 'Copy on the band and on coral')}
-${pair('Pink', PINK, 'tint', TINT, 'Links and glyphs, light')}
+${pair('White', PAPER, 'primary', PRIMARY, 'Copy on the band, and all text on coral')}
+${pair('Pink', PINK, 'tint', TINT, 'Glyphs, underlines and links that stand alone, light')}
 </tbody></table>
 <p>White on the band clears large text only, which is why nothing smaller than a lede is set on it.
-Pink on cream is under the body bar and is used for links and glyphs alone, never for running text.</p>
+Pink on cream is under the body bar, so it never sets running text. A link inside running text is
+ink with a pink underline; pink itself carries glyphs, underlines and a link that stands alone.</p>
 </section>
 
 <section id="type">
@@ -518,8 +554,59 @@ ${rows(REGISTERS)}
 allowed to say.</p>
 </section>
 
+<section id="surfaces">
+<h2>06 · Product surfaces</h2>
+<p>The rules for everything Tripcerto puts in front of someone: tripcerto.com, Engage, Workspace, the
+status page, the documents and the emails.</p>
+
+<h3>Tab titles</h3>
+<div class="card tabs">
+  ${['Tripcerto', 'Engage | Tripcerto', 'Workspace | Tripcerto', 'Status | Tripcerto', 'Privacy | Tripcerto'].map((t) => `<span class="tab"><span class="fav"></span>${t}</span>`).join('\n  ')}
+</div>
+${rows([
+  ['A product or a page', `${w('&lt;Label&gt; | Tripcerto')}, the label one short word: ${['Engage', 'Workspace', 'Status', 'Privacy'].map((l) => w(`${l} | Tripcerto`)).join(', ')}.`],
+  ['The home page', 'The tripcerto.com home page is Tripcerto, alone.'],
+  ['A partner’s page', 'The partner’s name, alone.'],
+  ['The icon', 'The one app icon, on every tab.'],
+])}
+
+<h3>Link previews</h3>
+<div class="card"><div class="preview"><img src="${art.icon48}" width="48" height="48" alt=""><div><b>Workspace | Tripcerto</b><span>${WORKSPACE_HOST}</span></div></div></div>
+${rows([
+  ['tripcerto.com', 'The band card, shown in 01.'],
+  ['A product surface', 'The compact preview: the title, the address and the app icon. No image.'],
+  ['A partner’s page', 'The partner’s name alone, and nothing of Tripcerto.'],
+])}
+
+<h3>Emails</h3>
+<div class="card"><div class="plate">
+  ${use(wordmark, { fill: INK, size: 112 })}
+  <h4>One heading</h4>
+  <p class="line">One line.</p>
+  <span class="btn">One button</span>
+</div></div>
+${rows([
+  ['What it carries', 'The wordmark, one heading, one line and one button.'],
+  ['The button', 'Coral, with white text.'],
+  ['Nothing else', 'No footer, no divider, no second Tripcerto after the wordmark.'],
+])}
+
+<h3>Documents</h3>
+<div class="card"><div class="plate">
+  <h4>Privacy</h4>
+  <div class="toc"><b>Contents</b><span>The first section</span><span>The second section</span><span>The third section</span></div>
+  <p>Running text is ink on white. A link inside it is ink too, with a <a href="#colour">pink underline</a>.</p>
+</div></div>
+${rows([
+  ['What counts', 'Privacy, terms and anything else read at length.'],
+  ['The page', 'White.'],
+  ['Cream', 'Only inside a contained box, such as a contents list.'],
+  ['Links', 'Ink, with a pink underline. Pink as running text is under the body bar (03).'],
+])}
+</section>
+
 <section id="files">
-<h2>06 · Files</h2>
+<h2>07 · Files</h2>
 ${rows([
   ['Marks', `${w('public/brand/')} carries the wordmark, monogram and app icon, each as SVG in ink and in white. One path per mark, cut by the even-odd fill rule. Drop that rule and the counters fill solid.`],
   ['Icons', `${w('public/')} carries favicon.svg, favicon.ico at 48/32/16, apple-touch-icon at 180, icon-192, icon-512, two maskable icons for Android, mask-icon.svg for a pinned Safari tab, and og-image at 1200 × 630. The favicon's tc is paper, not open: a dark tab bar would otherwise show through it as a black tc.`],
