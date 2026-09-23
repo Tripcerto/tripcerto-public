@@ -1,8 +1,9 @@
 /* Home page strings, keyed by the reference in "Website copy for review" (21 Sep 2026).
    Strings marked `changed` depart from that document on the direction in Charlie's
    Positioning and Messaging Guide (22 Sep 2026): the software is the subject, the framing
-   is the opportunity, the hero covers both products, section 6 is removed. Reply with the
-   reference and the change. */
+   is the opportunity, the hero covers both products, section 6 is removed. Sections 3 to 5
+   are the 23 Sep 2026 design's, word for word. Reply with the reference
+   and the change. */
 
 export const home = {
   hero: {
@@ -37,27 +38,26 @@ export const home = {
       },
     ],
   },
+  /* Sections 3, 4 and 5 as one: the two products side by side, a card
+     each, word for word from the 23 Sep 2026 design. The label, the name
+     and the link sit on the card; H-4-A and H-5-A are the line under the
+     product's name, H-4-B and H-5-B the sentence under that. */
+  products: {
+    eyebrow: 'Our solutions', // changed (23 Sep design)
+    'H-3-A': 'Two products. Built for your travel business.', // changed (23 Sep design)
+    'H-3-B': 'Explore the right solution for your customers and your team.', // changed (23 Sep design)
+  },
   engage: {
-    'H-4-A': 'Every website visitor, understood before the first call', // changed
-    'H-4-B':
-      'Travellers research in their own way. Engage answers from your expertise and your products, keeps you in control of what is shown, and hands sales the questions, preferences and products considered.', // changed
-    caption: 'Engage on a travel website, typed or spoken.',
-    points: [
-      'Answers in your voice, from the content and products you approve',
-      'Records needs, timing, preferences and concerns as the conversation goes on',
-      'Passes the transcript and the structured brief into your sales process',
-    ],
+    label: 'Customer conversations', // changed (23 Sep design)
+    'H-4-A': 'Understand every visitor. Before the first call.', // changed (23 Sep design)
+    'H-4-B': 'Answer from your expertise and turn conversations into sales-ready briefs.', // changed (23 Sep design)
+    link: 'Explore Engage', // changed (23 Sep design)
   },
   workspace: {
-    'H-5-A': 'The customer’s requirements, turned into a sellable trip', // changed
-    'H-5-B':
-      'Workspace turns the dates, places, travellers and services in an inquiry into an itemised trip, resolved against your inventory, with the missing pieces flagged before the quote goes out.', // changed (names the product; the section has no badge)
-    caption: 'A dropped file, a voice note, and the trip itemised.',
-    points: [
-      'Builds the itemised service list from the inquiry, in order',
-      'Shows the stays, transfers and dates that still need attention',
-      'Resolves prices and availability through the systems you already run',
-    ],
+    label: 'Trip planning & sales', // changed (23 Sep design)
+    'H-5-A': 'Turn every enquiry into a sellable trip.', // changed (23 Sep design)
+    'H-5-B': 'Build itemised trips from customer needs, with gaps flagged before you quote.', // changed (23 Sep design)
+    link: 'Explore Workspace', // changed (23 Sep design)
   },
   audience: {
     'H-7-A': 'Built for the people who sell complex travel', // changed

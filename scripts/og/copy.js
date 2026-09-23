@@ -39,7 +39,7 @@ export const variants = {
     theme: 'ink',
     eyebrow: 'Engage · Workspace',
     head: 'Every inquiry arrives with the whole conversation behind it',
-    // from: home.engage['H-4-B']
+    // from: home.audience.roles — Sales
     sub: 'Your experts still decide what goes to the customer.',
     // from: home.audience.roles — the travel expert
   },

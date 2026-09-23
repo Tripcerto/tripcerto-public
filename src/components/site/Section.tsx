@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function Section({
@@ -7,11 +6,14 @@ export function Section({
   className,
   children,
   tone = 'page',
+  wide = false,
 }: {
   id?: string
   className?: string
   children: ReactNode
   tone?: 'page' | 'tint'
+  /* The hero's width from xl, past the shell. */
+  wide?: boolean
 }) {
   return (
     <section
@@ -22,20 +24,8 @@ export function Section({
         className,
       )}
     >
-      <div className="shell">{children}</div>
+      <div className={cn('shell', wide && 'xl:max-w-[1480px]')}>{children}</div>
     </section>
-  )
-}
-
-/* A product's name as a small glass pill with its glyph, in place of an
-   eyebrow, so the heading under it can say what the product does without
-   naming it again. */
-export function ProductBadge({ glyph: Glyph, children }: { glyph: LucideIcon; children: ReactNode }) {
-  return (
-    <p className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-[13px] font-semibold">
-      <Glyph size={15} aria-hidden className="text-link" />
-      {children}
-    </p>
   )
 }
 
