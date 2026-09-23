@@ -5,7 +5,7 @@ vi.mock('@/lib/ga', () => ({ gaEvent: vi.fn() }))
 
 const { track } = await import('@vercel/analytics')
 const { gaEvent } = await import('@/lib/ga')
-const { EVENTS, enterPage, trackEvent } = await import('./events')
+const { EVENTS, EVENT_PARAMETERS, enterPage, trackEvent } = await import('./events')
 
 /* Every source file of the page, as written: test files are left out, as
    they name what they check. */
@@ -29,6 +29,16 @@ describe('the event list', () => {
       .map(([name]) => name)
       .sort()
     expect(conversions).toEqual(['contact_click', 'demo_click'])
+  })
+
+  it('counts button, page, place and section as the dimensions', () => {
+    // The monorepo's scripts/ga/properties.test.mjs asserts the same literal
+    // (WEBSITE_DIMENSIONS), and `npm run ga:apply` registers each one.
+    const dimensions = Object.entries(EVENT_PARAMETERS)
+      .filter(([, kind]) => kind === 'dimension')
+      .map(([name]) => name)
+      .sort()
+    expect(dimensions).toEqual(['button', 'page', 'place', 'section'])
   })
 
   it('has a call site for every event the page sends', () => {

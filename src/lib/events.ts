@@ -27,6 +27,28 @@ export type EventParams = {
   login_click: { place: 'nav' | 'menu' | 'footer'; page: PageKey }
 }
 
+/* Every parameter name any event sends. */
+type EventParameter = { [K in keyof EventParams]: keyof EventParams[K] }[keyof EventParams]
+
+/* `dimension`: a category GA can report on once the property registers it.
+   `number`: a count, score or duration.
+   `id`: one value per item, more rows than a report can show. */
+type ParameterKind = 'dimension' | 'number' | 'id'
+
+/* Every parameter, classified, as the monorepo's
+   packages/core/src/lib/analyticsCatalogue.ts classifies chat's and the
+   workspace's. Exhaustive by type: a new parameter does not compile until it
+   is given a kind. The dimensions are registered on the property by the
+   monorepo's scripts/ga/properties.mjs from its own copy of their names
+   (WEBSITE_DIMENSIONS), so no category reaches GA unregistered while the two
+   agree. */
+export const EVENT_PARAMETERS = {
+  button: 'dimension',
+  page: 'dimension',
+  place: 'dimension',
+  section: 'dimension',
+} as const satisfies { [P in EventParameter]: ParameterKind }
+
 export const EVENTS = {
   page_view: { why: 'Which pages people land on and leave from', owner: 'Taylor', sendTo: ['ga'], conversion: false },
   section_view: { why: 'How far people read before leaving', owner: 'Taylor', sendTo: ['vercel', 'ga'], conversion: false },
