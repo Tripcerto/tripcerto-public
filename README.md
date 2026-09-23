@@ -23,7 +23,8 @@ Tripcerto has two products for travel sales. Engage sits on a travel company's w
 
 ## How the site is put together
 
-- One HTML entry per page, each carrying its own title, description, canonical and social tags; `src/boot.tsx` mounts the page each entry file names.
+- One HTML entry per page, each carrying its own title, description, canonical and social tags. Each entry file exports the page it mounts (`export default mount(EngagePage)`).
+- The build writes every page's full markup into its HTML: the `prerender` plugin in `vite.config.ts` imports each entry and renders its default export through `src/prerender.tsx`, inside the same `src/Site.tsx` tree the browser renders. A crawler that runs no JavaScript reads the whole page, and `src/boot.tsx` hydrates it in the browser. The build fails if a page throws or renders nothing, and the dev server renders the same way.
 - Every string on the site is in `src/content/<page>.ts`, keyed by the reference in the copy document. Components carry no copy.
 - `src/components/site/` holds the sections; `frames/` under it holds the two product frames, drawn as bars and glyphs rather than text. `src/components/ui/` holds the button and the band shader.
 - `src/index.css` holds the Ember tokens (`@theme`), the page surfaces that switch in dark mode, and the utilities.
@@ -33,10 +34,11 @@ Tripcerto has two products for travel sales. Engage sits on a travel company's w
 ```
 index.html, engage/, workspace/, pilot/, trust/, legal/   # one entry per page, each with its own head tags
 src/
-  boot.tsx                 # mounts a page
+  boot.tsx                 # hydrates a page
+  prerender.tsx, Site.tsx  # the build's render of a page, and the tree both sides render
   main.tsx, engage.tsx, workspace.tsx, pilot.tsx, trust.tsx, privacy.tsx, terms.tsx   # entry files
   App.tsx                  # the home page; the others are in pages/
-  pages/                   # EngagePage, WorkspacePage, PilotPage, TrustPage, LegalPage
+  pages/                   # EngagePage, WorkspacePage, PilotPage, TrustPage, PrivacyPage, TermsPage, LegalPage
   content/                 # every string on the site, one file per page, keyed by reference; legal/ holds the two documents as HTML
   components/site/         # Nav, Hero, PageHero, Products, Opportunity, Audience, Close, Footer, Section, Rows, Stage, Band, Reveal, Wordmark
   components/site/frames/  # the two product frames: phone, window, the brief card, the story they tell
@@ -47,10 +49,14 @@ src/
 public/
   brand/                   # the marks: wordmark, monogram, app icon, each in ink and white
   favicon.*, apple-touch-icon.png, icon-*.png, mask-icon.svg, site.webmanifest, og-image.png
+  robots.txt, sitemap.xml, llms.txt, <32 hex>.txt   # what crawlers read, and the IndexNow key
 scripts/
   og/                      # build-icons.mjs (the icon set); shoot.mjs, card.html and copy.js (the link-preview card)
   brand/                   # build-brand-kit.mjs and render.mjs, the brand kit they write, brand.test.ts
+  head.test.ts             # every page's description, canonical, structured data, sitemap and llms.txt line, held together
+  prerender.test.ts        # every entry renders with no window or document, and carries its h1
 .github/workflows/validate.yml   # the gate every pull request passes
+.github/workflows/indexnow.yml   # tells IndexNow about every page after each production deploy
 ```
 
 ## Local development
@@ -60,12 +66,21 @@ npm install
 npm run dev        # Vite dev server; /engage and the other clean URLs answer as in production
 npm run build      # tsc -b && vite build; emits the five pages and the two legal pages into dist/
 npm run lint       # eslint .
-npm run test:run   # vitest: the same five checks over every page, plus the brand kit's
+npm run test:run   # vitest: the checks over every page, the nav, boot, theme, head tags and prerender, plus the brand kit's
 npm run audit      # npm audit at every level; zero advisories is the bar
 npm run preview    # serve dist/ locally
 ```
 
 `.github/workflows/validate.yml` runs the type-check, lint, tests, build (and checks every page and both legal pages were emitted) and audit on every pull request. There is no prettier config here and none should be run: the code is single-quoted with no semicolons, and eslint is the only formatting gate. No runtime environment variables are required.
+
+## Search engines and AI assistants
+
+- `robots.txt` lets every crawler in and names the sitemap; `sitemap.xml` lists the seven pages; `llms.txt` describes the site for AI assistants, one line per page. Home, Engage and Workspace carry JSON-LD (the organisation and website on home, a software application on each product page).
+- `scripts/head.test.ts` holds these to the pages: every build entry is in the sitemap, and every JSON-LD description and every `llms.txt` line is the page's own meta description. Change a description in the page's `<head>` and the test names each place that has to follow.
+- Adding a page takes five things: the HTML entry, its line in the `input` block of `vite.config.ts` (the test reads that block as written), an entry file that exports `mount(ThePage)`, a `<loc>` in the sitemap and a line in `llms.txt`.
+- Google Search Console holds `tripcerto.com` as a domain property, verified by a TXT record in the domain's DNS at IONOS; removing that record loses the property. Bing Webmaster Tools imported it from Search Console.
+- IndexNow (Bing, and the engines that share with it): the key is the one `.txt` file named by 32 hex characters in `public/`, and its content is its own name. After every successful production deploy, `.github/workflows/indexnow.yml` posts every URL in the live sitemap to `api.indexnow.org`. To change the key, generate one in Bing Webmaster Tools and replace the file; the head test allows exactly one.
+- `vercel.json` sends `/about`, a page of an earlier site that search engines still list, to the home page with a permanent redirect.
 
 ## Deployment
 

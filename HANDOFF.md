@@ -16,7 +16,7 @@ They are guidelines for the register, never lines to lift.
 - Repo `Tripcerto/tripcerto-public`. Work branches from `main`, short-lived,
   one PR each. `claude/landing-ember` carried the page PRs, is merged and
   behind `main`; do not branch from it.
-- PRs #1 to #17 are merged (`gh pr list --state merged`); #7, a Dependabot
+- PRs #1 to #20 are merged (`gh pr list --state merged`); #7, a Dependabot
   bump of `@types/node` to 26, was closed. The ones a reader needs: #1 the
   home page, #2 the three product pages and light by default, #3 Trust, #4 the
   icon set and social cards, #6 the dependency upgrade and the `validate`
@@ -31,13 +31,16 @@ They are guidelines for the register, never lines to lift.
   site work as a whole; it covered that evening and is over.)
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (56 tests:
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (96 tests:
   the same five over each of the five pages in `src/site.test.tsx`, three
   over the product cards, one over the roles grid and one over each legal
   page's nav and footer; the theme button and the menu across Back and
-  other tabs, and the nav's tone under a pull past the top, in
-  `src/components/site/Nav.test.tsx`; the boot contract in
-  `src/boot.test.tsx`; plus the
+  other tabs, the nav's tone under a pull past the top and with the menu
+  open, in `src/components/site/Nav.test.tsx`; the boot and hydration
+  contract in `src/boot.test.tsx`; two quick theme presses in
+  `src/lib/theme.test.ts`; every entry rendered with no window in
+  `scripts/prerender.test.ts`; the head tags, sitemap, `llms.txt` and
+  IndexNow key in `scripts/head.test.ts`; plus the
   brand kit's assertions in `scripts/brand/brand.test.ts`, which hold the
   document to the site: the palette, the even-odd fill rule on every mark,
   the section order, and that the icon build command it prints is the one
@@ -50,7 +53,8 @@ They are guidelines for the register, never lines to lift.
   its tsconfig path; a bare `tsc -b` from the monorepo worktree emits thousands
   of stray `.js` files.
 - The site lives at `https://www.tripcerto.com`. The apex answers 307 to www
-  for every path, so every canonical, `og:url`, `og:image` and `twitter:image`
+  for every path (a 308 is the permanent form search engines want; it is a
+  Vercel Domains setting, Taylor's to change), so every canonical, `og:url`, `og:image` and `twitter:image`
   names the www host. The legal pages are `/legal/privacy` and `/legal/terms`
   with no trailing slash (`vercel.json` `trailingSlash: false`; the slash form
   308s), and every link to them is written that way.
@@ -464,7 +468,10 @@ reference in the PR; Taylor and Charlie reply by reference.
 ## Still to do
 
 1. The legal documents (above).
-2. The nav contrast decision (above). The 23 Sep measure, light theme, over
+2. Decided, not to do: the band's contrast stays as it is (Taylor, 23 Sep:
+   "i want it to look as similar as possible to right nw", then "leave it as
+   is"), with PageSpeed's accessibility at 96 as the accepted cost. The 23 Sep
+   measure, light theme, over
    the pixels under the text: nav links 1.84 to 2.51, hero and close ledes
    2.0 to 2.7, "See how it works" 2.5 to 3.2, the close's pilot pill 2.4,
    "Book a demo" pink on white 3.79; white can reach at most 3.79 on the
@@ -556,8 +563,7 @@ Not changed, measured: the band's own contrast (Still to do); the typing
 dots and the phone's float loop forever and, under the nav's and window's
 40px blurs, keep a desktop GPU compositing at about 22% of a core; no
 security headers beyond HSTS (no CSP, nosniff, referrer policy or frame
-policy); the pages render only in the browser, so their HTML is empty
-without JavaScript.
+policy).
 
 Open, for Charlie's wording pass (new words, his to write):
 - H-2-A "Customer context carries from the first question to the final
@@ -580,3 +586,60 @@ page shorter, with an ISO 27001 target date only Taylor can give. Taylor's to re
 real content in the frames instead of bars (Ryan; Taylor also wants a
 fuller Engage picture) and following the system theme. All the video ideas
 are parked until the videos exist.
+
+## Close-out (23 Sep, afternoon)
+
+Taylor's calls: "we should be using British English across the entire
+thing"; the theme cross-fade stays and clicks during it are ignored ("its ok
+to block the clicks for while its animating"); the band's contrast stays
+("leave it as is"); and for search, "just the indexing for the time being".
+
+- British English everywhere the site speaks: enquiry, organise, licence,
+  towards, dates as 20 May 2026. `llms.txt` and the JSON-LD follow the meta
+  descriptions, so they follow too.
+- The band's shader fades in over 1.4s instead of snapping onto the still
+  gradient (none under reduced motion), and a chunk that fails to load leaves
+  the still strip.
+- Trust (`src/content/trust.ts`) was checked against the product code and a
+  Codex review. Strings rewritten where the code contradicted them carry
+  `// corrected`; where the code and the compliance set disagree, the page
+  says what the code does. What the audit found in the product repo went to
+  Taylor directly, not here.
+- The open mobile menu takes the band's paper tone only when the band runs
+  under all of it; the nav's midline is the bar row's, not the header's the
+  menu makes taller. The focus ring is ink on the band in light and paper in
+  dark. The legal pages print as black text on white with no nav or footer.
+- Every page is prerendered (README, "How the site is put together"): the
+  HTML carries the whole page, so ChatGPT's, Claude's and Perplexity's
+  crawlers, which run no JavaScript, read it; before this they saw a title
+  and an empty `#root`. The theme is read through `useSyncExternalStore`
+  (the server renders light, the pre-paint script darkens before paint), the
+  sun and moon are chosen by CSS, and the band shader mounts after
+  hydration. Two quick theme presses end where they began. Illustrations a
+  Reveal holds are held only under `@media (scripting: enabled)`, so a
+  reader without scripts sees them.
+- Crawl files and the search consoles: README, "Search engines and AI
+  assistants". Search Console is a domain property verified by DNS TXT at
+  IONOS (do not remove the record); the sitemap is submitted; Bing imported
+  it; IndexNow posts after every production deploy. `/about`, from an earlier
+  site and still in Google's and Brave's indexes, redirects home.
+- This repo is public, and its pull requests show up when people search for
+  "Tripcerto". A PR description or commit message here is published; keep
+  internal findings in the product repo.
+
+After this deploys (Taylor, about half an hour): Search Console, URL
+inspection, Request indexing for `/`, `/engage`, `/workspace`, `/pilot` and
+`/trust` (this also refreshes the icon and title Google shows, which come
+from its last crawl of the home page); Brave, search.brave.com/submit-url
+for the same five plus `/about` and `https://chat.tripcerto.com/` (Claude's
+web search reads Brave, whose copy still says "the intelligence layer");
+Vercel, Domains, the apex redirect from 307 to 308. Then check Bing Webmaster
+Tools, IndexNow, for the seven URLs, and the IndexNow run in the repo's
+Actions tab (200 or 202).
+
+Researched and parked on Taylor's word ("just the indexing for the time
+being"): pages for DMCs, tailor-made and safari operators; guides on quote
+turnaround, enquiry response time and qualifying questions; an honest,
+dated comparison of AI tools by job; FAQs; an About page; directory
+listings; and a fix to the LinkedIn company page, which is named
+"tripcerto." and claims results no pilot has measured.
