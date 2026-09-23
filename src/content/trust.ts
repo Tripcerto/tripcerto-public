@@ -38,7 +38,7 @@ export const trust = {
       {
         name: 'Your customer records',
         note: 'Held in London, for a set time', // corrected
-        line: 'When a visitor asks to be contacted, their name, contact details and the conversation become an enquiry. It is stored in a database in London, emailed to your team through a mail service in the United States, and deleted after 24 months, or sooner on request. Deleting it removes our copy, and we ask your team to delete the one in its inbox. A conversation that never becomes an enquiry is deleted after 90 days without activity, unless the visitor uploaded a file or saved a plan. Trips and conversations in Workspace are kept until you ask for them to be deleted.', // corrected
+        line: 'When a visitor asks to be contacted, their name, contact details and the conversation become an enquiry. It is stored in a database in London, emailed to your team through a mail service in the United States, and deleted after 24 months, or sooner on request. Deleting it removes it from the database at once and from the daily backups within seven days, and we ask your team to delete the copy in its inbox. A conversation that never becomes an enquiry is deleted after 90 days without activity, unless the visitor uploaded a file or saved a plan. Trips and conversations in Workspace are kept until you ask for them to be deleted.', // corrected
       },
       {
         name: 'Your systems',
