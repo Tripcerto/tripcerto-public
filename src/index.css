@@ -769,15 +769,17 @@
   }
 }
 
-/* Choreography below the fold waits for its section to be seen: the same
-   one-shot animations, held on their first frame inside a Reveal until it
-   is in view. Only on a page whose scripts run (the pre-paint script in
-   each page's head sets `.js`), since a script marks it in view: without
-   one, the first frame is invisible and would stay so. */
-.js .reveal :is(.animate-pop, .animate-flow, .animate-slide, .animate-flag, .animate-vanish, .animate-grow, .animate-ring, .text-shimmer) {
+/* A frame's choreography waits until the frame is wholly on screen: every
+   animation inside a Reveal, whatever it is, holds on its first frame until
+   the Reveal is in view. Only on a page whose scripts run (the pre-paint
+   script in each page's head sets `.js`), since a script marks it in view:
+   without one, the first frame is invisible and would stay so. */
+.js .reveal,
+.js .reveal * {
   animation-play-state: paused;
 }
-.js .reveal.is-in :is(.animate-pop, .animate-flow, .animate-slide, .animate-flag, .animate-vanish, .animate-grow, .animate-ring, .text-shimmer) {
+.js .reveal.is-in,
+.js .reveal.is-in * {
   animation-play-state: running;
 }
 
