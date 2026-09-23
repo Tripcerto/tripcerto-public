@@ -15,6 +15,10 @@ function clearCookies() {
 }
 
 const bar = () => screen.queryByRole('region', { name: 'Analytics permission' })
+/* The full question needs the width of sm and more than a landscape phone's height. */
+const WIDE_AND_TALL = 'sm:[@media(height>480px)]'
+/* A class that lays the bar out another way at some width. */
+const REFLOWS = /^(?:xs|sm|md|lg|xl|2xl|max-[\w-]+|min-[\w-]+|\[@media[^\]]*\]):(?:flex|grid|block|inline|hidden|contents|items-|justify-)/
 const posted = () => vi.mocked(fetch).mock.calls.map(([url, init]) => ({ url, method: init?.method, body: init?.body, keepalive: init?.keepalive }))
 
 beforeEach(() => {
@@ -38,6 +42,33 @@ describe('ConsentBar', () => {
     render(<ConsentBar />)
     expect(bar()?.textContent).toContain('Can we measure how the site is used, with Google Analytics?')
     expect(screen.getByRole('link', { name: 'Privacy' }).getAttribute('href')).toBe('/legal/privacy')
+  })
+
+  it('asks in four words on a phone, in full from sm, and in four again on a landscape phone', async () => {
+    const { ConsentBar } = await load()
+    render(<ConsentBar />)
+    const brief = screen.getByText('Allow Google Analytics?')
+    const full = screen.getByText('Can we measure how the site is used, with Google Analytics? Never advertising.')
+    expect([...brief.classList]).toEqual([`${WIDE_AND_TALL}:hidden`])
+    expect([...full.classList]).toEqual(['hidden', `${WIDE_AND_TALL}:inline`])
+    expect(full.parentElement).toBe(brief.parentElement)
+    expect(brief.parentElement?.textContent).toBe(
+      'Allow Google Analytics?Can we measure how the site is used, with Google Analytics? Never advertising. Privacy',
+    )
+  })
+
+  it('keeps the question and both answers on one row at every width', async () => {
+    const { ConsentBar } = await load()
+    render(<ConsentBar />)
+    const question = screen.getByRole('link', { name: 'Privacy' }).parentElement!
+    const answers = screen.getByRole('button', { name: 'Reject' }).parentElement!
+    const row = question.parentElement!
+    expect(answers.parentElement).toBe(row)
+    expect(answers).toBe(screen.getByRole('button', { name: 'Accept' }).parentElement)
+    expect(row.classList).toContain('flex')
+    expect(row.classList).toContain('items-center')
+    expect(row.classList).not.toContain('flex-col')
+    expect([...row.classList, ...answers.classList].filter((c) => REFLOWS.test(c))).toEqual([])
   })
 
   it('keeps quiet for a visitor who has answered', async () => {
