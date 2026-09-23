@@ -318,12 +318,15 @@
 
 /* Choreography below the fold waits for its section to be seen: the same
    one-shot animations, held on their first frame inside a Reveal until it
-   is in view. */
-.reveal :is(.animate-pop, .animate-flag) {
-  animation-play-state: paused;
-}
-.reveal.is-in :is(.animate-pop, .animate-flag) {
-  animation-play-state: running;
+   is in view. Only where scripts run, since a script marks it in view:
+   without one, the first frame is invisible and would stay so. */
+@media (scripting: enabled) {
+  .reveal :is(.animate-pop, .animate-flag) {
+    animation-play-state: paused;
+  }
+  .reveal.is-in :is(.animate-pop, .animate-flag) {
+    animation-play-state: running;
+  }
 }
 
 /* The legal documents: long-form text set in the page's type and tokens.
