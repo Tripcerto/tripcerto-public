@@ -77,9 +77,15 @@
   * {
     box-sizing: border-box;
   }
+  /* The fixed bar's height, so an anchor jump or a focused element never
+     lands under it. */
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
     -webkit-text-size-adjust: 100%;
+    @media (width >= 48rem) {
+      scroll-padding-top: 72px;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -132,14 +138,6 @@
     outline: 2px solid var(--color-link);
     outline-offset: 3px;
   }
-}
-
-/* The theme switch: the browser cross-fades its snapshots of the old and
-   new page, so every colour eases at once. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
 }
 
 @utility shell {

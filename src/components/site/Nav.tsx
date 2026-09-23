@@ -69,6 +69,16 @@ export function Nav() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
+  /* A page the back-forward cache restores comes back as it was left, so a
+     menu open when a link inside it was followed would still be open. */
+  useEffect(() => {
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) setOpen(false)
+    }
+    window.addEventListener('pageshow', onPageShow)
+    return () => window.removeEventListener('pageshow', onPageShow)
+  }, [])
+
   /* The panel only renders below md; if the viewport crosses that line
      while it is open, the state closes with it. */
   useEffect(() => {
@@ -227,7 +237,6 @@ function ThemeButton({ theme, overBand, onClick }: { theme: 'light' | 'dark'; ov
       size="icon"
       className={cn('size-11 [&_svg]:size-5', overBand && 'text-paper hover:bg-white/10')}
       aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-      aria-pressed={dark}
       onClick={onClick}
     >
       <ThemeIcon dark={dark} />
