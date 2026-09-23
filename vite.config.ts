@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs'
-import { extname, join } from 'node:path'
+import { extname, join, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import type { Connect } from 'vite'
 import { defineConfig, type Plugin } from 'vitest/config'
@@ -26,7 +26,7 @@ function cleanUrls(): Plugin {
       server.middlewares.use(rewriteCleanUrls(server.config.root))
     },
     configurePreviewServer(server) {
-      server.middlewares.use(rewriteCleanUrls(join(server.config.root, server.config.build.outDir)))
+      server.middlewares.use(rewriteCleanUrls(resolve(server.config.root, server.config.build.outDir)))
     },
   }
 }
