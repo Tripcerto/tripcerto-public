@@ -41,7 +41,7 @@ export const variants = {
     head: 'Every inquiry arrives with the whole conversation behind it',
     // from: home.opportunity['H-2-B']
     sub: 'Your experts still decide what goes to the customer.',
-    // from: workspace.systems, Your experts, in control
+    // from: workspace.trip, Resolved, then approved
   },
   d: {
     name: 'Product',
