@@ -1,17 +1,16 @@
 import { useId } from 'react'
 import { cn } from '@/lib/utils'
 
-/* A sunrise in the band's colours, two balloons, an acacia and a giraffe
-   cut in ink. A depiction, not a photograph; the slot takes a real image
-   later. A crop centres one subject of the scene, so two cards can share it
-   and read as two pictures. */
+/* A sunrise in the band's colours, two balloons, a tent, an acacia and a
+   giraffe cut in ink. A depiction, not a photograph; the slot takes a real
+   image later. A crop centres one subject of the scene, so the cards can
+   share it and read as separate pictures. */
 const CROP = {
-  all: '0 0 160 100',
   balloon: '16 24 60 45',
-  giraffe: '100 36 60 45',
+  camp: '0 42 60 45',
 } as const
 
-export function SafariScene({ className, crop = 'all' }: { className?: string; crop?: keyof typeof CROP }) {
+export function SafariScene({ className, crop }: { className?: string; crop: keyof typeof CROP }) {
   const sky = useId()
   return (
     <svg viewBox={CROP[crop]} preserveAspectRatio="xMidYMid slice" className={cn('block h-full w-full', className)} aria-hidden>
@@ -35,6 +34,8 @@ export function SafariScene({ className, crop = 'all' }: { className?: string; c
         <path d="M22 76 L23 61" strokeWidth="1.8" />
         <path d="M9 62 Q 23 48 39 62 Z" stroke="none" />
       </g>
+      <path d="M28 77.5 L34.5 69.5 L41 77.5 Z" fill="#281131" />
+      <path d="M33.6 77.5 L34.5 72.5 L35.4 77.5 Z" fill="#ff9b7a" />
       <g transform="translate(122 49)" fill="#281131" stroke="#281131" strokeLinecap="round">
         <rect x="4" y="12" width="16" height="7.5" rx="3" stroke="none" />
         <path d="M6.5 13.5 L-0.5 -3" strokeWidth="2.4" />

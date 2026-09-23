@@ -134,3 +134,18 @@ describe('ink', () => {
     }
   })
 })
+
+describe('the type scale', () => {
+  /* The kit reads the roles out of src/index.css when it is built; this
+     catches a kit committed before the roles last changed. */
+  const css = read(join(ROOT, 'src/index.css'))
+  const roles = [...css.matchAll(/^@utility text-([a-z]+) \{\n\s+font-size:/gm)].map((m) => m[1])
+
+  it('is the nine roles the site declares', () => {
+    expect(roles).toHaveLength(9)
+  })
+
+  it.each(roles)('lists text-%s in the kit', (role) => {
+    expect(read(KIT)).toContain(`<code class="w">text-${role}</code>`)
+  })
+})

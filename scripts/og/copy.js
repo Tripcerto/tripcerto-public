@@ -29,7 +29,7 @@ export const variants = {
     theme: 'paper',
     eyebrow: 'Before the enquiry, and after it',
     head: 'The traveller explains it once. Nobody retypes it.',
-    // from: home.opportunity['H-2-B']
+    // from: the home page's H-2-B, which went with its section on 23 Sep
     sub: 'Engage records what each website visitor wants. Workspace builds the quote structure from it.',
     // from: home.hero['H-1-B']
   },
@@ -39,7 +39,7 @@ export const variants = {
     theme: 'ink',
     eyebrow: 'Engage · Workspace',
     head: 'Every enquiry arrives with the whole conversation behind it',
-    // from: home.opportunity['H-2-B']
+    // from: the home page's H-2-B, which went with its section on 23 Sep
     sub: 'Your experts still decide what goes to the customer.',
     // from: workspace.trip, Resolved, then approved
   },

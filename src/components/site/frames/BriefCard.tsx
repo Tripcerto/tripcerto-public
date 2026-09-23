@@ -1,10 +1,7 @@
 import { CalendarDays, Check, FileText, Heart, MapPin, Sunrise, TriangleAlert, Users } from 'lucide-react'
 import type { Glyph } from '@/components/site/frames/glyphs'
-import { BAR, BAR_FAINT } from '@/components/site/frames/glyphs'
 import { BalloonGlyph } from '@/components/site/frames/SafariScene'
-import { Bar } from '@/components/site/frames/StellaLine'
 import { delay } from '@/components/site/frames/motion'
-import { story } from '@/components/site/frames/story'
 import { cn } from '@/lib/utils'
 
 /* The brief as it reaches sales: the fields Engage filled in as the
@@ -20,7 +17,17 @@ const FIELDS = [
   { glyph: TriangleAlert, bars: ['w-[42%]'] },
 ] as const satisfies ReadonlyArray<{ glyph: Glyph; bars: ReadonlyArray<string> }>
 
-const CONSIDERED = [BalloonGlyph, Sunrise] as const satisfies ReadonlyArray<Glyph>
+const CONSIDERED = [
+  { glyph: BalloonGlyph, name: 'Balloon safari', price: '£520' },
+  { glyph: Sunrise, name: 'Sunrise game drive', price: '£180' },
+] as const satisfies ReadonlyArray<{ glyph: Glyph; name: string; price: string }>
+
+const BAR = 'bg-ink/15 dark:bg-white/30'
+const BAR_FAINT = 'bg-ink/10 dark:bg-white/20'
+
+function Bar({ className }: { className: string }) {
+  return <span className={cn('block rounded-full', className)} />
+}
 
 export function BriefCard() {
   return (
@@ -31,7 +38,7 @@ export function BriefCard() {
       <div className="flex flex-col gap-[2.6cqw] p-[4.5cqw] text-[3cqw] leading-[1.35]">
         <div className="animate-pop flex items-center justify-between" style={delay(0.9)}>
           <Bar className={cn('h-[2cqw] w-[30cqw]', BAR)} />
-          <span className="flex size-[5.2cqw] items-center justify-center rounded-full bg-up/15 text-up dark:bg-up dark:text-paper">
+          <span className="flex size-[5.2cqw] items-center justify-center rounded-full bg-up-tint text-up dark:bg-up dark:text-paper">
             <Check className="size-[3cqw]" />
           </span>
         </div>
@@ -50,8 +57,8 @@ export function BriefCard() {
         </div>
 
         <div className="flex flex-col gap-[1.6cqw] border-t border-ink/[0.08] pt-[3cqw] dark:border-white/10">
-          {story.activities.map((activity, i) => {
-            const ConsideredGlyph = CONSIDERED[i]
+          {CONSIDERED.map((activity, i) => {
+            const ConsideredGlyph = activity.glyph
             return (
               <div
                 key={activity.name}

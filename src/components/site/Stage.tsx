@@ -13,7 +13,7 @@ export function Stage({ caption, className, children }: { caption?: string; clas
     <Tag className={cn('relative isolate flex items-center justify-center', className)}>
       <span aria-hidden className="bg-glow absolute inset-x-0 -inset-y-[15%] -z-10 rounded-full" />
       {children}
-      {caption && <figcaption className="absolute inset-x-0 top-full mt-5 text-center text-[13px] text-dim">{caption}</figcaption>}
+      {caption && <figcaption className="absolute inset-x-0 top-full mt-5 text-center text-small text-dim">{caption}</figcaption>}
     </Tag>
   )
 }
