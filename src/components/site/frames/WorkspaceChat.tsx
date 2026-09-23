@@ -1,25 +1,25 @@
 import type { ReactNode } from 'react'
-import { Check, FileText, Mic, Paperclip, TriangleAlert } from 'lucide-react'
+import { Check, FileText, TriangleAlert } from 'lucide-react'
+import { Composer } from '@/components/site/frames/Composer'
 import { StatusBadge } from '@/components/site/frames/StatusBadge'
-import { StellaMark } from '@/components/site/frames/Stella'
 import { Step } from '@/components/site/frames/Step'
-import { BADGE, ICON, TYPE } from '@/components/site/frames/type'
+import { BADGE, TYPE } from '@/components/site/frames/type'
 import { delay } from '@/components/site/frames/motion'
 import { BEAT, trip } from '@/components/site/frames/trip'
 import { cn } from '@/lib/utils'
 
 /* The assistant's pane in Workspace, picking up where the phone left off.
-   The quote request arrives from the website at the top, a file in the
-   itinerary's icon grey with a green pulse, level with the trip's name
-   across the window. The assistant's work sits at the foot of the chat,
+   The pane has no header of its own: the quote request arrives from the
+   website at the top, a file in the itinerary's icon grey with a green
+   pulse, level with the trip's name across the window. The assistant's work sits at the foot of the chat,
    above the input bar, and grows upwards as it goes. Its steps (`Step`,
    drawn as the phone draws its own) open one at a time, each bringing a
    thin rail down to it from the step above. Each runs as a spinner and a
    lit line, then settles into a tick and its result as that result lands
    in the itinerary, and stays, so the rail reads as the work done. The
    last step finds the gaps, and the assistant then simply speaks, as it
-   does on the phone: what to do about them. Header, badges, input bar and
-   type match the phone's, from the frames' one scale. */
+   does on the phone: what to do about them. Badges, input and type match
+   the phone's, from the frames' one scale. */
 
 const T = TYPE.window
 const B = BADGE.window
@@ -38,14 +38,6 @@ export function WorkspaceChat() {
   const detect = trip.detect
   return (
     <div className={cn('flex flex-1 flex-col leading-[1.35]', T.text)}>
-      <div
-        className="animate-pop -mx-[2.6cqw] -mt-[2.6cqw] mb-[1.4cqw] flex items-center gap-[1.2cqw] border-b border-ink/[0.06] px-[2.6cqw] py-[1.6cqw] dark:border-white/10"
-        style={delay(0.1)}
-      >
-        <StellaMark scale="window" />
-        <span className="font-semibold">Assistant</span>
-      </div>
-
       <div className="animate-pop" style={delay(BEAT.request)}>
         <div
           className="animate-ring flex items-center gap-[1.2cqw] rounded-[1.5cqw] border border-ink/10 bg-white/90 p-[1.2cqw] dark:border-white/15 dark:bg-white/10"
@@ -91,19 +83,7 @@ export function WorkspaceChat() {
         <p className="pt-[1.8cqw]">{trip.next}</p>
       </Opens>
 
-      <div
-        className={cn(
-          'animate-pop mt-[1.8cqw] flex h-[4.2cqw] shrink-0 items-center rounded-full border border-ink/10 bg-white/70 pl-[1.6cqw] pr-[1.3cqw] text-ink/45 dark:border-white/10 dark:bg-white/[0.06] dark:text-paper/50',
-          T.detail,
-        )}
-        style={delay(0.1)}
-      >
-        {trip.paneComposer}
-        <span className="ml-auto flex items-center gap-[1cqw] text-ink/60 dark:text-paper/70">
-          <Paperclip className={ICON.window} />
-          <Mic className={ICON.window} />
-        </span>
-      </div>
+      <Composer scale="window" placeholder={trip.paneComposer} at={0.1} className="mt-[1.8cqw]" />
     </div>
   )
 }

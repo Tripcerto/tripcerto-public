@@ -145,17 +145,25 @@ They are guidelines for the register, never lines to lift.
   `type.ts` holds one type, badge and icon scale for both frames (the phone
   is 0.43 of the window's width, so its sizes are 2.33 times the window's
   and every pair lands at the same pixel size); `StatusBadge.tsx` is every
-  tick, clock and flag, solid so nothing shows through; `Stella.tsx` is the
-  assistant's mark and working line (the name "Stella" appears nowhere in
-  either frame; the pane is headed "Assistant"). The working line uses the
-  product's own sweep (`text-shimmer`: muted letters under a band of
+  tick, clock and flag, solid so nothing shows through; `Composer.tsx` is
+  the input in both frames, drawn as a phone's messaging app draws its own
+  (a round add button, a white field with a hairline edge and the mic
+  inside). The assistant's pane has no header: the quote request is its
+  first line (Taylor, 23 Sep), and the name "Stella" appears nowhere in
+  either frame. A running step's line uses the product's own sweep (`text-shimmer`: muted letters under a band of
   full-strength text, starting on the first letter, from the line's own
   start via `--shimmer-at`). Everything inside a frame sizes in `cqw`; the
   choreography is CSS (`animate-pop`, `-vanish`, `-grow`, `-ring`,
   `-flag`, the hand-off's `animate-window-front` and `animate-phone-back`,
   each element timed by `--d`, the window's entrances held back by `--d0`),
-  nothing from JavaScript but the replay key; below the fold a Reveal holds
-  them until the section is seen; reduced motion shows the finished state.
+  nothing from JavaScript but the replay key. Every frame that plays, the
+  hero's pair included, sits in a Reveal, which holds every animation
+  inside it on its first frame until the frame is wholly on screen
+  (`src/lib/view.ts`), so on a phone the hero waits to be scrolled into
+  view; a site test fails on any frame animation outside a Reveal or a
+  still frame. Reduced motion shows the finished state. The phone's bezel
+  sizes in its own width, corners and rim included, so it is the same
+  drawing at every size and its corners never cut into the screen.
   Both frames are painted (`bg-band-frosted` / `bg-band-smoked`), so the
   one in front hides the other. The window sits 8% in from the pair's left
   and 9% up from its foot, so the phone stands over its assistant pane.

@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
+import { inFullView } from '@/lib/view'
 
-/* Holds the choreography inside it on its first frame until half of the
-   wrapper is on screen, then lets it run once. The animations are the
-   frames' own, at their own speed; nothing is timed here. */
+const STEPS = Array.from({ length: 51 }, (_, i) => i / 50)
+
+/* Holds every animation inside it on its first frame until the whole of it
+   is on screen, then lets it all run once. The animations are the frames'
+   own, at their own speed; nothing is timed here. */
 export function Reveal({ className, children }: { className?: string; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
   const [seen, setSeen] = useState(false)
@@ -12,9 +15,10 @@ export function Reveal({ className, children }: { className?: string; children: 
     if (!el || seen) return
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setSeen(true)
+        const screen = entry.rootBounds?.height ?? window.innerHeight
+        if (inFullView(entry.intersectionRect.height, entry.boundingClientRect.height, screen)) setSeen(true)
       },
-      { threshold: 0.5 },
+      { threshold: STEPS },
     )
     observer.observe(el)
     return () => observer.disconnect()
