@@ -46,7 +46,10 @@ describe('the favicon', () => {
     expect(paper, 'no paper under the tile').toBeTruthy()
     expect(paper?.[3]).toBe(outline)
     expect(svg.indexOf(paper?.[0] ?? '')).toBeLessThan(svg.indexOf(`d="${tile}"`))
-    expect(Number(paper?.[2])).toBeLessThan(1)
+    const scale = Number(paper?.[2])
+    expect(scale).toBeLessThan(1)
+    const side = Number(svg.match(/viewBox="[\d.]+ [\d.]+ ([\d.]+) [\d.]+"/)?.[1])
+    expect(Number(paper?.[1]), 'paper off centre').toBeCloseTo((side * (1 - scale)) / 2, 6)
   })
 })
 

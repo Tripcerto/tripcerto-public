@@ -143,6 +143,14 @@
   }
 }
 
+/* The theme switch: the browser cross-fades its snapshots of the old and
+   new page, so every colour eases at once. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
 @utility shell {
   width: 100%;
   max-width: var(--shell);
@@ -200,6 +208,21 @@
 
 @utility animate-rise {
   animation: rise 0.7s var(--ease-site) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* The band's shader arrives over the still gradient instead of snapping onto
+   it. Reduced motion shows it at once. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 1.4s ease-in-out both;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }

@@ -79,9 +79,9 @@ They are guidelines for the register, never lines to lift.
   (`card` and `soft` are white at 0.6 and 0.5). Light is the default.
   `index.html` adds `.dark` before first paint when that is the stored choice;
   `src/lib/theme.ts` reads and toggles the class and updates the one
-  `theme-color` meta. The colours change at once and the toggle's moon and
-  sun carry the motion (23 Sep: the view-transition cross-fade swallowed
-  every click for its half second; see the design sync below). A page the
+  `theme-color` meta. The switch cross-fades the whole page as a view
+  transition (0.5s, ease-in-out); while it runs every click goes to `<html>`,
+  and Taylor accepted that half second on 23 Sep. A page the
   back-forward cache restores, or one open in another tab, takes up the
   choice on `pageshow` and `storage`. Every section uses the tokens (`bg-soft`, `text-dim`,
   `text-link`, the `glass` utility for panels), so a new page inherits the
@@ -133,7 +133,7 @@ They are guidelines for the register, never lines to lift.
   `Stage.tsx` is a pool of the band's light (`bg-glow`) behind a frame with
   an optional caption hung below it out of the flow. There the window's
   Stella pane shows the conversation (`WorkspaceChat.tsx`, passed in as
-  `pane`): the consultant drops the inquiry in as a file and a voice note,
+  `pane`): the consultant drops the enquiry in as a file and a voice note,
   Stella's reply carries a speaker, and the composer holds the clip and the
   mic; the hero's window keeps the bare pane the phone covers. The phone has
   the same voice note (`Voice.tsx`) and speaker, on the hero too. The
@@ -156,12 +156,12 @@ They are guidelines for the register, never lines to lift.
   The product glyphs live once, `PRODUCT_GLYPH` in `frames/glyphs.ts`, which
   `Opportunity.tsx` reads too, so Workspace carries our panel glyph rather
   than the image's document icon.
-  Three things in Charlie's words depart from the copy review wave below, BY
+  Two things in Charlie's words depart from the copy review wave below, BY
   DECISION, not by oversight, so the next review must not revert them
-  without asking: "enquiry" where the wave settled on "inquiry"; H-5-A and
-  H-4-B open on an instruction to the reader ("Turn every enquiry…",
-  "Answer from your expertise…"), which the guide keeps out of headlines;
-  and "every visitor", "every enquiry" are unqualified. The test's
+  without asking: H-5-A and H-4-B open on an instruction to the reader
+  ("Turn every enquiry…", "Answer from your expertise…"), which the guide
+  keeps out of headlines; and "every visitor", "every enquiry" are
+  unqualified. The test's
   imperative rule does not see H-4-A or H-5-A because they are set as the
   line under the h3, not as headings: an exception, not compliance.
 - The lower half, chosen by Taylor on 22 Sep (evening) from three live
@@ -171,8 +171,8 @@ They are guidelines for the register, never lines to lift.
   strip, C three dots. He picked C ("C looks good"); A, B and the switch are
   deleted. `Opportunity.tsx` is the journey as three ruled columns of type
   under the heading and lede (H-2-A and H-2-B, which carry the opportunity and
-  why it is one; Charlie's guide §3 and §4): Before the inquiry, Engage; After
-  the inquiry, Workspace; The outcome, Booked, each with its glyph and a line.
+  why it is one; Charlie's guide §3 and §4): Before the enquiry, Engage; After
+  the enquiry, Workspace; The outcome, Booked, each with its glyph and a line.
   Taylor rejected pills, connecting lines and a reveal here. `Audience.tsx` is
   the six buying roles as a ruled grid under the heading (guide §8: roles
   not sectors; the roles and measures come from the Foundation document's
@@ -186,7 +186,7 @@ They are guidelines for the register, never lines to lift.
   on a page cost nothing) with paper copy: a heading, an optional line, the
   accent button and a secondary link. The home passes H-9-A and the two
   buttons, with nothing between them (Taylor, 22 Sep). There is no Proof
-  section: guide §10 wants it inquiry-related and no pilot has measured
+  section: guide §10 wants it enquiry-related and no pilot has measured
   anything, so the pilot's measures ride in the Engage and Workspace closes
   (E-9-B, W-8-B) and on the Pilot page, and the proof is the call.
 - `src/components/site/Footer.tsx` (rebuilt 22 Sep evening at Taylor's ask):
@@ -425,7 +425,7 @@ reference in the PR; Taylor and Charlie reply by reference.
   but Y" tails, no telling the buyer their current process is wrong (§3,
   §7), and the Pilot page selling the opportunity to try one with the
   proposing on us (§12) rather than a method statement. "partner", an
-  internal tenancy word, is gone from Trust; "enquiries" is "inquiries".
+  internal tenancy word, is gone from Trust.
 - Site-wide: the four links into the Pilot page read "What a pilot delivers"
   (they read "How a pilot runs", which sold the page as the process manual
   §12 rules out); the in-page link is "Our approach". The Pilot page's two
@@ -521,8 +521,7 @@ and what fixed it; each is measured before and after:
 - Every click was ignored for about half a second after the theme toggle,
   and a second press inside that window was lost: the view transition sends
   all input to `<html>` while it runs (`pointer-events: none` on it does not
-  help). The switch is instant now; whether the cross-fade comes back, with
-  that dead half second, is Taylor's call.
+  help). Taylor kept the cross-fade and accepts the half second (23 Sep).
 - Back or Forward after a toggle showed the old theme, and another tab
   never followed: the back-forward cache restores a page without rerunning
   the pre-paint script. `useTheme` re-reads on `pageshow` and `storage`.

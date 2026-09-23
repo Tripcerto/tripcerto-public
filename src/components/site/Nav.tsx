@@ -24,7 +24,7 @@ export function Nav() {
   const [overBand, setOverBand] = useState(false)
   const [theme, toggleTheme] = useTheme()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
-  const barRef = useRef<HTMLElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
 
   /* Over a band means a band section is under the bar's midline: measured
      against the bar on every scroll, not "somewhere in the viewport", which
@@ -33,8 +33,9 @@ export function Nav() {
      placed on the page and held inside it, because pulling the page past
      its top (Safari reports a negative scroll, and moves the bar with the
      page) is not scrolling off the hero: measured from the window, the band
-     slid below the midline and the nav turned ink over it. Before paint, so
-     the first frame has the right tone. */
+     slid below the midline and the nav turned ink over it. The midline is
+     the bar row's, not the header's, which grows with the open menu. Before
+     paint, so the first frame has the right tone. */
   useLayoutEffect(() => {
     const bands = Array.from(document.querySelectorAll<HTMLElement>('[data-band]'))
     const bar = barRef.current
@@ -99,14 +100,13 @@ export function Nav() {
   return (
     <>
       <header
-        ref={barRef}
         className={cn(
           'fixed inset-x-0 top-0 z-50 border-b bg-glass backdrop-blur-2xl backdrop-saturate-150 transition-shadow duration-300 ease-site',
           overBand ? 'border-white/40' : 'border-line',
           open && 'shadow-[0_28px_48px_-20px_rgb(40_17_49/0.45)] dark:shadow-[0_28px_48px_-16px_rgb(0_0_0/0.7)]',
         )}
       >
-        <div className="shell flex h-16 items-center justify-between md:h-[72px]">
+        <div ref={barRef} className="shell flex h-16 items-center justify-between md:h-[72px]">
           <div className="flex items-center">
             <a href={PAGES.home} aria-label="tripcerto home" className="inline-flex h-11 items-center">
               <Wordmark tone={overBand ? 'paper' : 'page'} />

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 export type Theme = 'light' | 'dark'
 
@@ -28,11 +29,12 @@ function paint(theme: Theme) {
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', BAR_COLOUR[theme])
 }
 
-/* The colours change at once and the toggle's icon carries the motion. No
-   view transition: while one runs the browser sends every click to <html>,
-   so the page would ignore input for the length of the fade. A page the
-   back-forward cache restores, or one open in another tab, takes up a
-   choice made elsewhere, since neither reruns the pre-paint script. */
+/* Switching cross-fades the whole page where the browser can snapshot it
+   for a view transition; otherwise the colours simply change. While the fade
+   runs the browser sends every click to <html>, so the page ignores input
+   for its half second (accepted, 23 Sep). A page the back-forward cache
+   restores, or one open in another tab, takes up a choice made elsewhere,
+   since neither reruns the pre-paint script. */
 export function useTheme(): [Theme, () => void] {
   const [theme, setTheme] = useState<Theme>(resolvedTheme)
 
@@ -59,13 +61,17 @@ export function useTheme(): [Theme, () => void] {
 
   const toggle = useCallback(() => {
     const next: Theme = resolvedTheme() === 'dark' ? 'light' : 'dark'
-    paint(next)
-    try {
-      localStorage.setItem(KEY, next)
-    } catch {
-      /* Private mode or blocked storage: the choice lasts for the page. */
+    const apply = () => {
+      paint(next)
+      try {
+        localStorage.setItem(KEY, next)
+      } catch {
+        /* Private mode or blocked storage: the choice lasts for the page. */
+      }
+      flushSync(() => setTheme(next))
     }
-    setTheme(next)
+    if (typeof document.startViewTransition !== 'function' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) apply()
+    else document.startViewTransition(apply)
   }, [])
 
   return [theme, toggle]

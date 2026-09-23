@@ -1,7 +1,14 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, type ComponentType } from 'react'
+import type { GradientMeshProps } from '@/components/ui/gradient-mesh'
 
-const GradientMesh = lazy(() =>
-  import('@/components/ui/gradient-mesh').then((m) => ({ default: m.GradientMesh })),
+/* A chunk that fails to load (a network drop, or a page left open across a
+   deploy, whose hashed file is gone) leaves the still strip, as no WebGL
+   does; unhandled, the rejection would take the whole page down with it. */
+const GradientMesh = lazy<ComponentType<GradientMeshProps>>(() =>
+  import('@/components/ui/gradient-mesh').then(
+    (m) => ({ default: m.GradientMesh }),
+    () => ({ default: () => null }),
+  ),
 )
 
 /* The Ember strip from the identity pack, pink through coral into peach,

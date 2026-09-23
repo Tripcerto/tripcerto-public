@@ -104,6 +104,21 @@ describe('tone over the band', () => {
     expect(header().className).toContain('border-white/40')
   })
 
+  it('measures from the bar row, not the header the open menu makes taller', () => {
+    place({ scrolled: 800 })
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      if (this.tagName === 'HEADER') return 600
+      return this.parentElement?.tagName === 'HEADER' ? 64 : 0
+    })
+    render(
+      <>
+        <Nav />
+        <section data-band />
+      </>,
+    )
+    expect(header().className).toContain('border-white/40')
+  })
+
   it('turns to the page once the band has scrolled out from under it', () => {
     place({ scrolled: 2000 })
     render(
