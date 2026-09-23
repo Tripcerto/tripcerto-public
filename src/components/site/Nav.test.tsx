@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { Nav } from './Nav'
 
@@ -74,5 +74,44 @@ describe('mobile menu', () => {
     expect(button.getAttribute('aria-expanded')).toBe('true')
     restoredFromCache(true)
     expect(button.getAttribute('aria-expanded')).toBe('false')
+  })
+})
+
+describe('tone over the band', () => {
+  /* The page and the band, placed as the browser would report them: `pulled`
+     is how far the page has been dragged down past its top, `scrolled` how
+     far it has been scrolled. The band is the first 900px of a 3000px page. */
+  function place({ pulled = 0, scrolled = 0 }) {
+    const top = pulled - scrolled
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this === document.documentElement) return DOMRect.fromRect({ x: 0, y: top, width: 1440, height: 3000 })
+      if (this.hasAttribute('data-band')) return DOMRect.fromRect({ x: 0, y: top, width: 1440, height: 900 })
+      return DOMRect.fromRect({ x: 0, y: 0, width: 0, height: 0 })
+    })
+  }
+  const header = () => document.querySelector('header') as HTMLElement
+
+  afterEach(() => vi.restoreAllMocks())
+
+  it('stays paper while the page is pulled down past its top', () => {
+    place({ pulled: 160 })
+    render(
+      <>
+        <Nav />
+        <section data-band />
+      </>,
+    )
+    expect(header().className).toContain('border-white/40')
+  })
+
+  it('turns to the page once the band has scrolled out from under it', () => {
+    place({ scrolled: 2000 })
+    render(
+      <>
+        <Nav />
+        <section data-band />
+      </>,
+    )
+    expect(header().className).not.toContain('border-white/40')
   })
 })

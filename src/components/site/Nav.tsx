@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ChevronRight, Moon, Sun } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -29,19 +29,25 @@ export function Nav() {
   /* Over a band means a band section is under the bar's midline: measured
      against the bar on every scroll, not "somewhere in the viewport", which
      is what an intersection observer answers. Switching at the midline
-     keeps the flip to the moment the seam passes the copy. */
-  useEffect(() => {
+     keeps the flip to the moment the seam passes the copy. The midline is
+     placed on the page and held inside it, because pulling the page past
+     its top (Safari reports a negative scroll, and moves the bar with the
+     page) is not scrolling off the hero: measured from the window, the band
+     slid below the midline and the nav turned ink over it. Before paint, so
+     the first frame has the right tone. */
+  useLayoutEffect(() => {
     const bands = Array.from(document.querySelectorAll<HTMLElement>('[data-band]'))
     const bar = barRef.current
     if (!bands.length || !bar) return
     let frame = 0
     const measure = () => {
       frame = 0
-      const mid = bar.offsetHeight / 2
+      const page = document.documentElement.getBoundingClientRect()
+      const mid = Math.min(Math.max(bar.offsetHeight / 2 - page.top, 0), page.height)
       setOverBand(
         bands.some((band) => {
           const rect = band.getBoundingClientRect()
-          return rect.top <= mid && rect.bottom >= mid
+          return rect.top - page.top <= mid && rect.bottom - page.top >= mid
         }),
       )
     }
