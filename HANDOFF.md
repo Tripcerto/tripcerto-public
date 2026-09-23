@@ -266,7 +266,7 @@ They are guidelines for the register, never lines to lift.
   removed everywhere else. Now: the page-toned wordmark and the contact
   email, then under a hairline the site's pages in order on the left (Engage,
   Workspace, Pilot, Status, Login) and the legal links on the right (Trust,
-  Privacy, Terms), then the copyright. No tagline and no column headings.
+  Privacy, Terms, Cookie settings), then the copyright. No tagline and no column headings.
   `Section`'s `ink` tone went with it; the tones are `page` and `tint`.
 - The product tiles (H-3 to H-5) sit straight under the hero, the roles
   follow them. "See how it works" scrolls to `#products`, and a test holds
