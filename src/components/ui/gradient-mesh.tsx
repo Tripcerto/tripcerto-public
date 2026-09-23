@@ -174,8 +174,18 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
 
     /* Transparent, so any frame the shader has not drawn yet — first paint, a
        resize, a lost context — shows the still gradient underneath instead of
-       black. Every fragment writes alpha 1, so drawn pixels are unaffected. */
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, stencil: false })
+       black. Every fragment writes alpha 1, so drawn pixels are unaffected.
+       No context where the browser would draw it in software (no GPU, or a
+       blocklisted one): there each frame holds the main thread for a quarter
+       of a second (PageSpeed's mobile run, 23 Sep: 23.9s blocking), and the
+       still gradient stays. */
+    const gl = canvas.getContext('webgl', {
+      alpha: true,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      failIfMajorPerformanceCaveat: true,
+    })
     if (!gl) return
 
     let active = true
