@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff1ea" />
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1A0B20')
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=9" sizes="any" />
+    <link rel="icon" href="/favicon.ico?v=9" sizes="48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=9" />
+    <link rel="mask-icon" href="/mask-icon.svg?v=9" color="#ff5c6c" />
+    <link rel="manifest" href="/site.webmanifest?v=9" />
+
+    <title>Privacy Policy | Tripcerto</title>
+    <link rel="canonical" href="https://www.tripcerto.com/legal/privacy" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/privacy.tsx"></script>
+  </body>
+</html>

@@ -285,3 +285,63 @@
 .reveal.is-in :is(.animate-pop, .animate-flag) {
   animation-play-state: running;
 }
+
+/* The legal documents: long-form text set in the page's type and tokens.
+   The documents are HTML as written, so the styling reaches their tags. */
+@layer components {
+  .legal {
+    max-width: 44rem;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-body);
+  }
+  .legal h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .legal h2 {
+    margin-top: 2.5rem;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .legal h3 {
+    margin-top: 1.75rem;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .legal p {
+    margin-top: 0.75rem;
+  }
+  .legal h1 + p {
+    margin-top: 1rem;
+    font-size: 14px;
+    color: var(--color-dim);
+  }
+  .legal ul {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .legal li {
+    margin-top: 0.35rem;
+  }
+  .legal li::marker {
+    color: var(--color-dim);
+  }
+  .legal code {
+    font: inherit;
+  }
+  .legal a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal hr {
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+}

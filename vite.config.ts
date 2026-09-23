@@ -40,6 +40,8 @@ export default defineConfig({
         workspace: fileURLToPath(new URL('./workspace/index.html', import.meta.url)),
         pilot: fileURLToPath(new URL('./pilot/index.html', import.meta.url)),
         trust: fileURLToPath(new URL('./trust/index.html', import.meta.url)),
+        privacy: fileURLToPath(new URL('./legal/privacy/index.html', import.meta.url)),
+        terms: fileURLToPath(new URL('./legal/terms/index.html', import.meta.url)),
       },
     },
   },
