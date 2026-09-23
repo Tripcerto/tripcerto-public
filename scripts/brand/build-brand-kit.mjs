@@ -499,7 +499,7 @@ allowed to say.</p>
 <h2>06 · Files</h2>
 ${rows([
   ['Marks', `${w('public/brand/')} carries the wordmark, monogram and app icon, each as SVG in ink and in white. One path per mark, cut by the even-odd fill rule. Drop that rule and the counters fill solid.`],
-  ['Icons', `${w('public/')} carries favicon.svg, favicon.ico at 48/32/16, apple-touch-icon at 180, icon-192, icon-512, two maskable icons for Android, mask-icon.svg for a pinned Safari tab, and og-image at 1200 × 630.`],
+  ['Icons', `${w('public/')} carries favicon.svg, favicon.ico at 48/32/16, apple-touch-icon at 180, icon-192, icon-512, two maskable icons for Android, mask-icon.svg for a pinned Safari tab, and og-image at 1200 × 630. The favicon's tc is paper, not open: a dark tab bar would otherwise show through it as a black tc.`],
   ['Icon ground', `All of them regenerate from one command, so a favicon cannot drift from an app icon: ${w(`node scripts/og/build-icons.mjs --ground mesh --scale ${ICON.scale} --seed ${ICON.seed}`)}`],
   ['Colour', `${w('src/index.css')} declares the brand colours, the working set and the band, as CSS custom properties. That file is the source; this document reads it.`],
   ['The band', `${w('src/components/ui/gradient-mesh.tsx')} is the shader, about 6 kB of WebGL with no dependency. ${w('src/components/site/Band.tsx')} passes the live parameters.`],

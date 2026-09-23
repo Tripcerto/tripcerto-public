@@ -165,22 +165,22 @@ for (const size of [48, 32, 16]) {
 await write('favicon.ico', ico(icoPngs))
 
 /* The vector favicon: a flat fill for coral, the still ramp for band. The
-   mesh ground keeps coral here on purpose (see the header). */
-const appicon = readFileSync(join(PUBLIC, 'brand/appicon.svg'), 'utf8')
-if (ground === 'band') {
-  const stops = ['#E8437E', '#FF5C6C', '#FF9B7A']
-    .map((c, i) => `<stop offset="${i / 2}" stop-color="${c}"/>`)
-    .join('')
-  const withRamp = appicon
-    .replace('<path', `<defs><linearGradient id="ramp" x1="-0.071" y1="0.399" x2="1.071" y2="0.601">${stops}</linearGradient></defs><path`)
-    .replace(/fill="#[0-9A-Fa-f]{6}"/, 'fill="url(#ramp)"')
-  if (!withRamp.includes('url(#ramp)')) throw new Error('favicon.svg: no fill was rewritten')
-  await write('favicon.svg', Buffer.from(withRamp))
-} else {
-  const coral = appicon.replace(/fill="#[0-9A-Fa-f]{6}"/, 'fill="#FF5C6C"')
-  if (!coral.includes('#FF5C6C')) throw new Error('favicon.svg: no fill was rewritten')
-  await write('favicon.svg', Buffer.from(coral))
-}
+   mesh ground keeps coral here on purpose (see the header). The tc is paper,
+   as on the ICO: the tile's outline at 80%, in white, under the cut
+   (icon-variants.html, PAPER_INSET). */
+const artwork = readFileSync(join(PUBLIC, 'brand/appicon.svg'), 'utf8')
+const tilePath = artwork.match(/<path[^>]*\sd="([^"]+)"/)?.[1]
+const side = Number(artwork.match(/viewBox="([^"]+)"/)?.[1].split(/\s+/)[2])
+if (!tilePath || !side) throw new Error('favicon.svg: appicon.svg has no path or viewBox to read')
+const stops = ['#E8437E', '#FF5C6C', '#FF9B7A'].map((c, i) => `<stop offset="${i / 2}" stop-color="${c}"/>`).join('')
+const paint = ground === 'band' ? 'url(#ramp)' : '#FF5C6C'
+const painted = artwork.replace(/fill="#[0-9A-Fa-f]{6}"/, `fill="${paint}"`)
+if (!painted.includes(`fill="${paint}"`)) throw new Error('favicon.svg: no fill was rewritten')
+const PAPER_INSET = 0.8
+const offset = (side * (1 - PAPER_INSET)) / 2
+const outline = tilePath.slice(0, tilePath.indexOf('Z') + 1)
+const beneath = `${ground === 'band' ? `<defs><linearGradient id="ramp" x1="-0.071" y1="0.399" x2="1.071" y2="0.601">${stops}</linearGradient></defs>` : ''}<g transform="translate(${offset} ${offset}) scale(${PAPER_INSET})"><path d="${outline}" fill="#FFFFFF"/></g>`
+await write('favicon.svg', Buffer.from(painted.replace('<path', `${beneath}<path`)))
 
 await browser.close()
 server.close()
