@@ -48,7 +48,7 @@ export const variants = {
     note: 'The software itself, in the frames the site draws it with.',
     theme: 'product',
     eyebrow: 'Tripcerto',
-    head: 'Complex travel, easier to plan and sell',
+    head: 'We make complex travel easier to plan and sell',
     // from: home.hero['H-1-A']
     sub: 'Engage records what the visitor wants. Workspace turns it into an itemised trip with the gaps showing.',
     // from: home.hero['H-1-B'] + home.workspace['H-5-B']
@@ -63,12 +63,12 @@ export const variants = {
       {
         name: 'Engage',
         when: 'Before the inquiry',
-        line: 'Turns website research into qualified inquiries.',
+        line: 'Learns what each visitor wants, so your team can sell it sooner.',
       },
       {
         name: 'Workspace',
         when: 'After the inquiry',
-        line: 'Turns a travel requirement into a quote structure.',
+        line: 'Builds the quote-ready trip and shows what is missing.',
       },
     ],
   },
@@ -84,19 +84,19 @@ export const pages = {
   },
   engage: {
     eyebrow: 'Engage',
-    head: 'Every website visitor, understood before the first call',
+    head: 'Engage learns what each visitor wants, so your team can sell it sooner',
     // signed: engage hero
     sub: 'Answers from your expertise and your products, and hands sales the questions, preferences and products considered.',
   },
   workspace: {
     eyebrow: 'Workspace',
-    head: 'The customer’s requirements, turned into a sellable trip',
+    head: 'Workspace builds the quote-ready trip and shows what is missing',
     // signed: workspace hero
     sub: 'The dates, places, travellers and services in an inquiry, itemised against your inventory, with the gaps flagged.',
   },
   pilot: {
     eyebrow: 'Pilot',
-    head: 'One workflow, one measure, and the result decides the rollout',
+    head: 'A pilot proves what Tripcerto does for your business',
     sub: 'We find where our AI has the most effect in your business, then prove it there.',
     // signed: home.close['H-9-A']
   },

@@ -60,32 +60,35 @@ export async function renderAssets(jobs) {
   const problems = []
   const out = {}
 
-  for (const [name, job] of Object.entries(jobs)) {
-    const tab = await browser.newPage()
-    tab.on('pageerror', (e) => problems.push(`${name}: ${e}`))
-    tab.on('console', (m) => m.type() === 'error' && problems.push(`${name}: ${m.text()}`))
-    /* An icon job gives one dimension, because the tile is square. */
-    await tab.setViewport({ width: job.width, height: job.height ?? job.width, deviceScaleFactor: job.scale ?? 2 })
+  /* The browser and the server close whether or not every job rendered. */
+  try {
+    for (const [name, job] of Object.entries(jobs)) {
+      const tab = await browser.newPage()
+      tab.on('pageerror', (e) => problems.push(`${name}: ${e}`))
+      tab.on('console', (m) => m.type() === 'error' && problems.push(`${name}: ${m.text()}`))
+      /* An icon job gives one dimension, because the tile is square. */
+      await tab.setViewport({ width: job.width, height: job.height ?? job.width, deviceScaleFactor: job.scale ?? 2 })
 
-    if (job.kind === 'band') {
-      const qs = new URLSearchParams({ w: String(job.width), h: String(job.height), o: JSON.stringify(job.options) })
-      await tab.goto(`http://127.0.0.1:${port}/scripts/brand/band.html?${qs}`, { waitUntil: 'networkidle0' })
-    } else if (job.kind === 'card') {
-      const qs = new URLSearchParams({ v: job.variant, page: job.page })
-      await tab.goto(`http://127.0.0.1:${port}/scripts/og/card.html?${qs}`, { waitUntil: 'networkidle0' })
-    } else {
-      const qs = new URLSearchParams({ g: 'mesh', shape: job.shape ?? 'tile', s: String(job.width), ...job.options })
-      await tab.goto(`http://127.0.0.1:${port}/scripts/og/icon-variants.html?${qs}`, { waitUntil: 'networkidle0' })
+      if (job.kind === 'band') {
+        const qs = new URLSearchParams({ w: String(job.width), h: String(job.height), o: JSON.stringify(job.options) })
+        await tab.goto(`http://127.0.0.1:${port}/scripts/brand/band.html?${qs}`, { waitUntil: 'networkidle0' })
+      } else if (job.kind === 'card') {
+        const qs = new URLSearchParams({ v: job.variant, page: job.page })
+        await tab.goto(`http://127.0.0.1:${port}/scripts/og/card.html?${qs}`, { waitUntil: 'networkidle0' })
+      } else {
+        const qs = new URLSearchParams({ g: 'mesh', shape: job.shape ?? 'tile', s: String(job.width), ...job.options })
+        await tab.goto(`http://127.0.0.1:${port}/scripts/og/icon-variants.html?${qs}`, { waitUntil: 'networkidle0' })
+      }
+
+      await tab.evaluate(() => window.cardReady)
+      const buf = await tab.screenshot({ type: 'png', encoding: 'base64', omitBackground: job.transparent ?? false })
+      await tab.close()
+      out[name] = `data:image/png;base64,${buf}`
     }
-
-    await tab.evaluate(() => window.cardReady)
-    const buf = await tab.screenshot({ type: 'png', encoding: 'base64', omitBackground: job.transparent ?? false })
-    await tab.close()
-    out[name] = `data:image/png;base64,${buf}`
+  } finally {
+    await browser.close()
+    server.close()
   }
-
-  await browser.close()
-  server.close()
 
   if (problems.length) throw new Error(`render: ${problems.length} problem(s)\n  ${problems.join('\n  ')}`)
   return out
