@@ -45,17 +45,17 @@ function ProductCard({
   return (
     <article className="glass @container relative isolate flex flex-col overflow-hidden rounded-xl shadow-card">
       <span aria-hidden className="bg-glow absolute -bottom-[30%] -left-[25%] -z-10 aspect-square w-[95%] rounded-full" />
-      <div className={cn('grid flex-1 grid-cols-1 gap-10 p-6 @min-[36rem]:gap-6 @min-[36rem]:p-9', columns)}>
+      <div className={cn('grid flex-1 grid-cols-1 gap-7 p-5 @min-[36rem]:gap-6 @min-[36rem]:p-8', columns)}>
         <div>
-          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase text-dim @min-[20rem]:gap-3 @min-[20rem]:text-[13px] @min-[20rem]:tracking-[0.04em] @min-[42rem]:gap-4 @min-[42rem]:text-sm">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-link @min-[20rem]:size-12 @min-[42rem]:size-13">
-              <Glyph size={22} aria-hidden />
+          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase text-dim @min-[20rem]:tracking-[0.04em] @min-[42rem]:gap-3 @min-[42rem]:text-[13px]">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-link @min-[42rem]:size-11">
+              <Glyph aria-hidden className="size-[18px] @min-[42rem]:size-5" />
             </span>
             {label}
           </p>
-          <h3 className="mt-6 text-[clamp(2.25rem,7cqw,3rem)] font-bold leading-none tracking-[-0.03em]">{name}</h3>
-          <p className="mt-6 text-balance text-[clamp(1.375rem,4cqw,1.75rem)] font-semibold leading-[1.2] tracking-[-0.015em]">{line}</p>
-          <Lede className="mt-5 max-w-[24rem]">{body}</Lede>
+          <h3 className="mt-4 text-[clamp(1.875rem,6.5cqw,2.75rem)] font-bold leading-none tracking-[-0.03em] @min-[36rem]:mt-5">{name}</h3>
+          <p className="mt-3 text-balance text-[clamp(1.1875rem,3.8cqw,1.625rem)] font-semibold leading-[1.2] tracking-[-0.015em] @min-[36rem]:mt-5">{line}</p>
+          <Lede className="mt-3 max-w-[24rem] text-base @min-[36rem]:mt-4 @min-[36rem]:text-[17px]">{body}</Lede>
         </div>
         <Stage className="self-center">
           <Reveal className={frameClassName}>{frame}</Reveal>
@@ -63,11 +63,11 @@ function ProductCard({
       </div>
       <a
         href={href}
-        className="group flex items-center justify-between gap-4 rounded-b-xl border-t border-line bg-soft px-6 py-5 transition-colors hover:bg-card focus-visible:-outline-offset-4 @min-[36rem]:px-9"
+        className="group flex items-center justify-between gap-4 rounded-b-xl border-t border-line bg-soft px-5 py-4 transition-colors hover:bg-card focus-visible:-outline-offset-4 @min-[36rem]:px-8 @min-[36rem]:py-5"
       >
-        <span className="text-lg font-bold tracking-[-0.015em] text-link @min-[20rem]:text-[clamp(1.25rem,3.7cqw,1.625rem)]">{link}</span>
-        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-body text-page transition-transform duration-200 group-hover:translate-x-1 @min-[36rem]:size-14">
-          <ArrowRight size={22} aria-hidden />
+        <span className="text-base font-bold tracking-[-0.015em] text-link @min-[20rem]:text-[clamp(1.125rem,3.4cqw,1.5rem)]">{link}</span>
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-body text-page transition-transform duration-200 group-hover:translate-x-1 @min-[36rem]:size-12">
+          <ArrowRight aria-hidden className="size-[18px] @min-[36rem]:size-5" />
         </span>
       </a>
     </article>
@@ -95,8 +95,8 @@ export function Products() {
           body={home.engage['H-4-B']}
           link={home.engage.link}
           href={PAGES.engage}
-          columns="@min-[36rem]:grid-cols-[minmax(0,1fr)_34%]"
-          frameClassName="w-[min(64%,230px)] @min-[36rem]:w-full @min-[36rem]:max-w-[230px]"
+          columns="@min-[36rem]:grid-cols-[minmax(0,1fr)_32%]"
+          frameClassName="w-[min(48%,180px)] @min-[36rem]:w-full @min-[36rem]:max-w-[205px]"
           frame={<PhoneScreen />}
         />
         <ProductCard
@@ -107,7 +107,7 @@ export function Products() {
           body={home.workspace['H-5-B']}
           link={home.workspace.link}
           href={PAGES.workspace}
-          columns="@min-[36rem]:grid-cols-[minmax(0,1fr)_48%] @min-[42rem]:grid-cols-[minmax(0,1fr)_52%]"
+          columns="@min-[36rem]:grid-cols-[minmax(0,1fr)_45%] @min-[42rem]:grid-cols-[minmax(0,1fr)_48%]"
           frameClassName="w-full"
           frame={<WorkspaceScreen pane={<WorkspaceChat />} />}
         />
