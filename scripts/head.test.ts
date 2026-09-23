@@ -32,6 +32,9 @@ it('reads every entry, one for each page the sitemap lists', () => {
    data; the others carry none. */
 const STRUCTURED = ['home', 'engage', 'workspace']
 
+/* The legal documents, read at length. */
+const DOCUMENTS = ['privacy', 'terms']
+
 /* The inline script at the top of each head: it sets the stored theme and
    marks the page as scripted before the first paint. */
 const prePaint = (html: string) => html.match(/<script>([\s\S]*?)<\/script>/)?.[1]
@@ -49,6 +52,13 @@ describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
       .filter((node) => node.description)
     expect(described.length > 0).toBe(STRUCTURED.includes(name))
     for (const node of described) expect(node.description).toContain(description(html))
+  })
+
+  /* A document is the one white page, and the browser bar matches it. */
+  it(DOCUMENTS.includes(name) ? 'is a white document page' : 'is a cream page', () => {
+    const document = DOCUMENTS.includes(name)
+    expect(html).toContain(document ? '<body class="document">' : '<body>')
+    expect(html).toContain(`<meta name="theme-color" content="${document ? '#ffffff' : '#fff1ea'}" />`)
   })
 
   it('runs the same pre-paint script as the home page', () => {
