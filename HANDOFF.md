@@ -16,7 +16,7 @@ They are guidelines for the register, never lines to lift.
 - Repo `Tripcerto/tripcerto-public`. Work branches from `main`, short-lived,
   one PR each. `claude/landing-ember` carried the page PRs, is merged and
   behind `main`; do not branch from it.
-- PRs #1 to #16 are merged (`gh pr list --state merged`); #7, a Dependabot
+- PRs #1 to #17 are merged (`gh pr list --state merged`); #7, a Dependabot
   bump of `@types/node` to 26, was closed. The ones a reader needs: #1 the
   home page, #2 the three product pages and light by default, #3 Trust, #4 the
   icon set and social cards, #6 the dependency upgrade and the `validate`
@@ -345,7 +345,9 @@ review below changed strings around them, never those.
   `scripts/og/card.html`, so the document cannot drift from the source; it can
   drift from `public/og-image.png` whenever the card is edited and not
   re-shot, so re-shoot in the same change. `scripts/brand/render.mjs` grew a
-  `card` job for it.
+  `card` job for it, and closes its browser in a `finally`: a render that
+  threw once left a Chrome alive, and the next build hung at the screenshot
+  until it was killed.
 - What it replaced: a black Harbour-era wordmark card reading "Agentic AI for
   Travel Recommendations" that every page shared and no alt text described.
 
@@ -418,14 +420,14 @@ reference in the PR; Taylor and Charlie reply by reference.
     kit's own rule is "nothing smaller than a lede" on the band. Ink links on
     the light band would fix it and change the signed-off look, so it is his
     decision, not a copy edit.
-  - GitHub still lists 26 Dependabot alerts against versions the lockfile no
-    longer holds (`npm audit` is zero; js-yaml is not installed at all). Its
-    dependency graph had parsed nothing; alerts were re-enabled on 22 Sep to
-    make it re-read the lockfile. If the count has not dropped, flip
-    Dependency graph off and on in Settings, Code security.
+- The 26 Dependabot alerts GitHub kept open against versions the lockfile no
+  longer held closed on 23 Sep. `npm audit` had been zero for a day; a
+  lockfile push did not move GitHub's alert state, and re-enabling alerts over
+  an already-enabled repo did not either. Turning them off and on did
+  (`gh api -X DELETE repos/…/vulnerability-alerts`, then `-X PUT`): a rescan
+  ran and 41 alerts went to fixed or auto-dismissed within minutes.
 
 ## Still to do
 
 1. The legal documents (above).
 2. The nav contrast decision (above).
-3. Confirm the Dependabot alerts closed.
