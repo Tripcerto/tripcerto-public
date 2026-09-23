@@ -26,7 +26,7 @@ Tripcerto has two products for travel sales. Engage sits on a travel company's w
 - One HTML entry per page, each carrying its own title, description, canonical and social tags. Each entry file exports the page it mounts (`export default mount(EngagePage)`).
 - The build writes every page's full markup into its HTML: the `prerender` plugin in `vite.config.ts` imports each entry and renders its default export through `src/prerender.tsx`, inside the same `src/Site.tsx` tree the browser renders. A crawler that runs no JavaScript reads the whole page, and `src/boot.tsx` hydrates it in the browser. The build fails if a page throws or renders nothing, and the dev server renders the same way.
 - Every string on the site is in `src/content/<page>.ts`, keyed by the reference in the copy document. Components carry no copy.
-- `src/components/site/` holds the sections; `frames/` under it holds the two product frames, drawn as bars and glyphs rather than text. `src/components/ui/` holds the button and the band shader.
+- `src/components/site/` holds the sections; `frames/` under it holds the two product frames, which tell one trip from the traveller's chat to the consultant's quote. `src/components/ui/` holds the button and the band shader.
 - `src/index.css` holds the Ember tokens (`@theme`), the page surfaces that switch in dark mode, and the utilities.
 
 ## Project structure
@@ -40,8 +40,8 @@ src/
   App.tsx                  # the home page; the others are in pages/
   pages/                   # EngagePage, WorkspacePage, PilotPage, TrustPage, PrivacyPage, TermsPage, LegalPage
   content/                 # every string on the site, one file per page, keyed by reference; legal/ holds the two documents as HTML
-  components/site/         # Nav, Hero, PageHero, Products, Opportunity, Audience, Close, Footer, Section, Rows, Stage, Band, Reveal, Wordmark
-  components/site/frames/  # the two product frames: phone, window, the brief card, the story they tell
+  components/site/         # Nav, Hero, PageHero, Products, Audience, Close, Footer, Section, Rows, Stage, Tag, Band, Reveal, Wordmark
+  components/site/frames/  # the two product frames: phone, window, the brief card, the trip they tell
   components/ui/           # button, gradient-mesh (the band shader)
   lib/                     # links, theme, analytics, utils
   index.css                # Ember tokens (@theme), page surfaces, utilities

@@ -1,7 +1,6 @@
 import { Nav } from '@/components/site/Nav'
 import { Hero } from '@/components/site/Hero'
 import { Products } from '@/components/site/Products'
-import { Opportunity } from '@/components/site/Opportunity'
 import { Audience } from '@/components/site/Audience'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
@@ -17,7 +16,6 @@ export function App() {
       <main>
         <Hero />
         <Products />
-        <Opportunity />
         <Audience />
         <Close
           heading={home.close['H-9-A']}
