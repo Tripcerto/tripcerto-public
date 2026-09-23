@@ -31,9 +31,9 @@ They are guidelines for the register, never lines to lift.
   site work as a whole; it covered that evening and is over.)
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (38 tests:
-  the same four over each of the five pages in `src/site.test.tsx` and three
-  over the product cards, plus the
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (39 tests:
+  the same four over each of the five pages in `src/site.test.tsx`, three
+  over the product cards and one over the roles grid, plus the
   brand kit's assertions in `scripts/brand/brand.test.ts`, which hold the
   document to the site: the palette, the even-odd fill rule on every mark,
   the section order, and that the icon build command it prints is the one
@@ -167,10 +167,14 @@ They are guidelines for the register, never lines to lift.
   why it is one; Charlie's guide §3 and §4): Before the inquiry, Engage; After
   the inquiry, Workspace; The outcome, Booked, each with its glyph and a line.
   Taylor rejected pills, connecting lines and a reveal here. `Audience.tsx` is
-  the six buying roles as a ruled list beside the heading, each with the
-  number it is measured on (guide §8: roles not sectors; the roles and
-  measures come from the Foundation document's stakeholder map; sectors are
-  one supporting line in the lede). `Close.tsx` stands on the hero's band
+  the six buying roles as a ruled grid under the heading (guide §8: roles
+  not sectors; the roles and measures come from the Foundation document's
+  stakeholder map; sectors are one supporting line in the lede). Each cell
+  is the role's glyph, its name and its measures one to a line; two columns
+  on a phone, three from md, rules between the cells and across the top and
+  foot but never up the outer sides. Taylor, 23 Sep, dropped the sentence
+  each role carried beside it ("drop the right hand column") and asked for
+  the role and its measures as a grid. `Close.tsx` stands on the hero's band
   (`Band.tsx`, the mesh extracted from the hero; it pauses off-screen so two
   on a page cost nothing) with paper copy: a heading, an optional line, the
   accent button and a secondary link. The home passes H-9-A and the two

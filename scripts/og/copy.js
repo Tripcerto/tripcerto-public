@@ -39,9 +39,9 @@ export const variants = {
     theme: 'ink',
     eyebrow: 'Engage · Workspace',
     head: 'Every inquiry arrives with the whole conversation behind it',
-    // from: home.audience.roles — Sales
+    // from: home.opportunity['H-2-B']
     sub: 'Your experts still decide what goes to the customer.',
-    // from: home.audience.roles — the travel expert
+    // from: workspace.systems, Your experts, in control
   },
   d: {
     name: 'Product',
@@ -51,7 +51,7 @@ export const variants = {
     head: 'We make complex travel easier to plan and sell',
     // from: home.hero['H-1-A']
     sub: 'Engage records what the visitor wants. Workspace turns it into an itemised trip with the gaps showing.',
-    // from: home.hero['H-1-B'] + home.workspace['H-5-B']
+    // from: home.hero['H-1-B']
   },
   e: {
     name: 'Split',

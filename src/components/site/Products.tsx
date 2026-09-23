@@ -15,9 +15,9 @@ import { cn } from '@/lib/utils'
 /* A product as a glass card that opens its page: label, name, the line
    and the sentence under it beside the product's frame, a pool of the
    band's light low in the card, and a bar across the foot that is the
-   link. The card is a size container: its type scales with its own width
-   and the frame moves beside the copy once the card is wide enough, the
-   same at any screen. The frame's column is set per card, since the phone
+   link. The card is a size container: its type scales with its own width,
+   steps down in a card narrower than 20rem, and the frame moves beside the
+   copy once the card is 36rem wide, the same at any screen. The frame's column is set per card, since the phone
    stands narrower than the window. */
 function ProductCard({
   glyph: Glyph,
@@ -45,10 +45,10 @@ function ProductCard({
   return (
     <article className="glass @container relative isolate flex flex-col overflow-hidden rounded-xl shadow-card">
       <span aria-hidden className="bg-glow absolute -bottom-[30%] -left-[25%] -z-10 aspect-square w-[95%] rounded-full" />
-      <div className={cn('grid flex-1 grid-cols-1 gap-10 p-6 @min-[32rem]:gap-6 @min-[32rem]:p-9', columns)}>
+      <div className={cn('grid flex-1 grid-cols-1 gap-10 p-6 @min-[36rem]:gap-6 @min-[36rem]:p-9', columns)}>
         <div>
-          <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.04em] text-dim @min-[42rem]:gap-4 @min-[42rem]:text-sm">
-            <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-link @min-[42rem]:size-13">
+          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase text-dim @min-[20rem]:gap-3 @min-[20rem]:text-[13px] @min-[20rem]:tracking-[0.04em] @min-[42rem]:gap-4 @min-[42rem]:text-sm">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-link @min-[20rem]:size-12 @min-[42rem]:size-13">
               <Glyph size={22} aria-hidden />
             </span>
             {label}
@@ -63,10 +63,10 @@ function ProductCard({
       </div>
       <a
         href={href}
-        className="group flex items-center justify-between gap-4 border-t border-line bg-soft px-6 py-5 transition-colors hover:bg-card focus-visible:-outline-offset-4 @min-[32rem]:px-9"
+        className="group flex items-center justify-between gap-4 rounded-b-xl border-t border-line bg-soft px-6 py-5 transition-colors hover:bg-card focus-visible:-outline-offset-4 @min-[36rem]:px-9"
       >
-        <span className="text-[clamp(1.25rem,3.7cqw,1.625rem)] font-semibold tracking-[-0.015em] text-link">{link}</span>
-        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-body text-page transition-transform duration-200 group-hover:translate-x-1 @min-[32rem]:size-14">
+        <span className="text-lg font-bold tracking-[-0.015em] text-link @min-[20rem]:text-[clamp(1.25rem,3.7cqw,1.625rem)]">{link}</span>
+        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-body text-page transition-transform duration-200 group-hover:translate-x-1 @min-[36rem]:size-14">
           <ArrowRight size={22} aria-hidden />
         </span>
       </a>
@@ -95,8 +95,8 @@ export function Products() {
           body={home.engage['H-4-B']}
           link={home.engage.link}
           href={PAGES.engage}
-          columns="@min-[32rem]:grid-cols-[minmax(0,1fr)_34%]"
-          frameClassName="w-[min(64%,260px)] @min-[32rem]:w-full @min-[32rem]:max-w-[230px]"
+          columns="@min-[36rem]:grid-cols-[minmax(0,1fr)_34%]"
+          frameClassName="w-[min(64%,230px)] @min-[36rem]:w-full @min-[36rem]:max-w-[230px]"
           frame={<PhoneScreen />}
         />
         <ProductCard
@@ -107,7 +107,7 @@ export function Products() {
           body={home.workspace['H-5-B']}
           link={home.workspace.link}
           href={PAGES.workspace}
-          columns="@min-[32rem]:grid-cols-[minmax(0,1fr)_48%] @min-[42rem]:grid-cols-[minmax(0,1fr)_52%]"
+          columns="@min-[36rem]:grid-cols-[minmax(0,1fr)_48%] @min-[42rem]:grid-cols-[minmax(0,1fr)_52%]"
           frameClassName="w-full"
           frame={<WorkspaceScreen pane={<WorkspaceChat />} />}
         />

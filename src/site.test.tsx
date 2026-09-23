@@ -156,3 +156,14 @@ describe('home products section', () => {
     expect(card.getByRole('link', { name: link }).getAttribute('href')).toBe(href)
   })
 })
+
+describe('home roles grid', () => {
+  it('gives every buying role a cell with its measures', () => {
+    render(<App />)
+    const section = within(document.getElementById(SECTION.audience)!)
+    for (const { role, measures } of home.audience.roles) {
+      const cell = within(section.getByRole('heading', { level: 3, name: role }).closest('li')!)
+      for (const measure of measures) cell.getByText(measure)
+    }
+  })
+})

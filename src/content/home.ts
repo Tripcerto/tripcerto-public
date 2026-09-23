@@ -64,39 +64,16 @@ export const home = {
     'H-7-B':
       'Tripcerto takes the manual steps out of selling multi-day, multi-supplier trips at bespoke tour operators, DMCs and digitally connected ground transportation. Each role sees it in the number it is measured on.', // changed
     /* Buying roles and what they are measured on (Guide §8; the Foundation's
-       stakeholder map). Sectors support the explanation, they do not lead it. */
+       stakeholder map). Sectors support the explanation, they do not lead it.
+       Each role is its name and its measures, nothing more (23 Sep). */
     roles: [
-      {
-        role: 'Sales',
-        measure: 'Conversion, response time, booking value',
-        line: 'Every inquiry arrives with the questions asked, the preferences given and the products considered, so the first reply can be faster and better informed.',
-      },
-      {
-        role: 'Marketing',
-        measure: 'Inquiry rate, cost per qualified inquiry',
-        line: 'Engage helps more of the visitors you already pay for reach a useful conversation, and each inquiry carries a record of what the visitor wanted.',
-      },
-      {
-        role: 'Operations',
-        measure: 'Quote time, completeness, handling time',
-        line: 'Workspace itemises and checks every quote, with the gaps visible before it goes out.',
-      },
-      {
-        role: 'Technology',
-        measure: 'Security, data ownership, integration',
-        line: 'Works with the systems you already run. Customer data stays separated by tenant, your approved sources stay authoritative and every recommendation is governed.',
-      },
-      {
-        role: 'Finance',
-        measure: 'Total cost, payback, contract exposure',
-        line: 'Subscription, usage and implementation are priced separately, and the pilot measures are agreed before anything expands.',
-      },
-      {
-        role: 'The travel expert',
-        measure: 'Time on expert work, fewer corrections',
-        line: 'Tripcerto prepares the work and shows what is missing. The expert decides what goes to the customer.',
-      },
-    ], // changed: roles, not sectors
+      { role: 'Sales', measures: ['Conversion', 'Response time', 'Booking value'] },
+      { role: 'Marketing', measures: ['Inquiry rate', 'Cost per qualified inquiry'] },
+      { role: 'Operations', measures: ['Quote time', 'Completeness', 'Handling time'] },
+      { role: 'Technology', measures: ['Security', 'Data ownership', 'Integration'] },
+      { role: 'Finance', measures: ['Total cost', 'Payback', 'Contract exposure'] },
+      { role: 'The travel expert', measures: ['Time on expert work', 'Fewer corrections'] },
+    ], // changed: roles, not sectors; the measures as a list and the sentences dropped (23 Sep)
   },
   /* No Proof section (Guide §10): the close is the call, with the pilot
      page beside it. Taylor, 22 Sep: nothing stands between the headline
