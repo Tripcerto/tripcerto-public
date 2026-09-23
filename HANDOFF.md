@@ -73,7 +73,9 @@ They are guidelines for the register, never lines to lift.
   moment the seam passes the copy. Off a band, every colour in the bar comes
   from the page tokens, the wordmark included (`<Wordmark tone="page">` draws
   both SVGs and CSS shows one), so nothing in the bar can disagree with the
-  theme. `useTheme` only chooses the icon.
+  theme. `useTheme` only chooses the switch's label; the pre-paint `.dark`
+  class picks the icon through `dark:` variants, so a prerendered page shows
+  the right one before any script runs.
 - Dark mode (Taylor, 22 Sep: "that dark glassy look"). The page surfaces are
   seven tokens in `src/index.css` (`page`, `body`, `dim`, `soft`, `line`,
   `card`, `link`, plus `glass` for the nav), and only those switch in dark
