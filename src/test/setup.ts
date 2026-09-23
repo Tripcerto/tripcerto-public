@@ -3,8 +3,13 @@ import { cleanup } from '@testing-library/react'
 
 afterEach(() => cleanup())
 
+// The stand-ins below are for jsdom. A file that opts into the node
+// environment (the server render test) has no window at all, and keeps it
+// that way so a stray browser read during render fails.
+const browser = typeof window !== 'undefined'
+
 // jsdom has no matchMedia — animations read prefers-reduced-motion.
-if (!window.matchMedia) {
+if (browser && !window.matchMedia) {
   window.matchMedia = vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
@@ -37,4 +42,4 @@ class MockIntersectionObserver implements IntersectionObserver {
   disconnect = () => {}
   takeRecords = () => []
 }
-vi.stubGlobal('IntersectionObserver', MockIntersectionObserver)
+if (browser) vi.stubGlobal('IntersectionObserver', MockIntersectionObserver)

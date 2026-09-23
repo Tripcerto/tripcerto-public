@@ -1,7 +1,7 @@
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { extname, join, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
-import type { Connect } from 'vite'
+import { createServer, type Connect, type ResolvedConfig, type ViteDevServer } from 'vite'
 import { defineConfig, type Plugin } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -31,9 +31,92 @@ function cleanUrls(): Plugin {
   }
 }
 
+const ROOT = '<div id="root"></div>'
+const MODULE_SCRIPT = /<script type="module" src="([^"]+)"><\/script>/g
+
+type Load = (id: string) => Promise<Record<string, unknown>>
+
+/* The markup for the page an HTML file loads. The file's one module script
+   is the page's entry, whose default export is the page it hydrates
+   (src/boot.tsx); src/prerender.tsx renders that same export, so the
+   markup and the tree that takes it over are one import. `load` imports a
+   module by its URL from the root, through Vite or the test runner. */
+export async function renderPage(file: string, load: Load): Promise<string> {
+  const scripts = [...readFileSync(file, 'utf8').matchAll(MODULE_SCRIPT)].map(([, src]) => src)
+  if (scripts.length !== 1) throw new Error(`${file} needs exactly one module script, its entry; it has ${scripts.length}`)
+  const [script] = scripts
+  const { default: page } = await load(script)
+  if (typeof page !== 'function') throw new Error(`${script} must export its page as its default export`)
+  const { render } = await load('/src/prerender.tsx')
+  if (typeof render !== 'function') throw new Error('src/prerender.tsx must export render')
+  try {
+    return await render(page)
+  } catch (error) {
+    throw new Error(`${file} could not be rendered`, { cause: error })
+  }
+}
+
+/* Every page ships with its markup already in #root, so crawlers that run
+   no scripts, and readers without them, get the whole page; the browser
+   hydrates it. The dev server renders the same way, so development
+   hydrates what production does. The build fails on a page that throws or
+   renders nothing. */
+function prerender(): Plugin {
+  let config: ResolvedConfig
+  let pages: string[] = []
+  /* The build has no dev server to load TSX through, so it runs its own
+     while the pages are written. */
+  let renderer: ViteDevServer | undefined
+
+  async function close() {
+    await renderer?.close()
+    renderer = undefined
+  }
+
+  return {
+    name: 'prerender',
+    configResolved(resolved) {
+      config = resolved
+      const input = resolved.build.rolldownOptions.input ?? []
+      pages = (typeof input === 'string' ? [input] : Array.isArray(input) ? input : Object.values(input)).map((file) => resolve(file))
+    },
+    async buildStart() {
+      if (config.command !== 'build') return
+      renderer = await createServer({
+        configFile: config.configFile ?? false,
+        root: config.root,
+        mode: config.mode,
+        logLevel: 'warn',
+        appType: 'custom',
+        optimizeDeps: { noDiscovery: true, include: [] },
+        server: { middlewareMode: true, hmr: false, ws: false, watch: null },
+      })
+    },
+    async buildEnd(error) {
+      if (error) await close()
+    },
+    async closeBundle() {
+      await close()
+    },
+    transformIndexHtml: {
+      async handler(html, { filename, server }) {
+        /* The dev server also serves pages that are not the site's, such as
+           the LinkedIn banner; those are left as they are. */
+        if (!pages.includes(resolve(filename))) return
+        const from = server ?? renderer
+        if (!from) throw new Error(`No renderer is running for ${filename}`)
+        const parts = html.split(ROOT)
+        if (parts.length !== 2) throw new Error(`${filename} needs exactly one empty ${ROOT} for its page`)
+        const markup = await renderPage(filename, (id) => from.ssrLoadModule(id))
+        return parts.join(`<div id="root">${markup}</div>`)
+      },
+    },
+  }
+}
+
 export default defineConfig({
   appType: 'mpa',
-  plugins: [cleanUrls(), react(), tailwindcss()],
+  plugins: [cleanUrls(), prerender(), react(), tailwindcss()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },

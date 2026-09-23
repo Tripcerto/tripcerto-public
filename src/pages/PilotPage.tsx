@@ -6,7 +6,7 @@ import { Rows } from '@/components/site/Rows'
 import { Heading, Section } from '@/components/site/Section'
 import { pilot } from '@/content/pilot'
 import { usePageAnalytics } from '@/lib/analytics'
-import { DEMO_URL } from '@/lib/links'
+import { DEMO_URL, PAGES } from '@/lib/links'
 
 const MEASURES_ID = 'the-measures'
 
@@ -18,7 +18,7 @@ export function PilotPage() {
   usePageAnalytics()
   return (
     <>
-      <Nav />
+      <Nav current={PAGES.pilot} />
       <main>
         <PageHero
           title={pilot.hero['P-1-A']}

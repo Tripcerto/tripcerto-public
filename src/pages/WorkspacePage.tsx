@@ -30,7 +30,7 @@ export function WorkspacePage() {
   usePageAnalytics()
   return (
     <>
-      <Nav />
+      <Nav current={PAGES.workspace} />
       <main>
         <PageHero
           title={workspace.hero['W-1-A']}
