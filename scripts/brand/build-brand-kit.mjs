@@ -480,7 +480,7 @@ page, or if a heading opens with an instruction to the reader.</p>
 
 <h3>What we always say</h3>
 ${bullets([
-  'Two products, two jobs. Engage turns website research into qualified inquiries. Workspace turns a travel requirement into a quote structure.',
+  'Two products, two jobs. Engage turns website research into qualified enquiries. Workspace turns a travel requirement into a quote structure.',
   'Works with the systems they already run, and never replaces them.',
   'The expert decides what reaches the customer.',
   'Plain words for anything technical, in the same sentence.',

@@ -19,7 +19,7 @@ The public site stays small, safe to share and quick to deploy. A change to the 
 
 ## The products the site describes
 
-Tripcerto has two products for travel sales. Engage sits on a travel company's website: it answers visitors from the expertise and products the company approves, records what each visitor wants and passes the brief to sales. Workspace sits with the travel expert: it builds the itemised trip from an inquiry, shows what is still missing and resolves prices and availability through the systems the company already runs. The copy for each page is in `src/content/`, one file per page, keyed by the reference in the copy document.
+Tripcerto has two products for travel sales. Engage sits on a travel company's website: it answers visitors from the expertise and products the company approves, records what each visitor wants and passes the brief to sales. Workspace sits with the travel expert: it builds the itemised trip from an enquiry, shows what is still missing and resolves prices and availability through the systems the company already runs. The copy for each page is in `src/content/`, one file per page, keyed by the reference in the copy document.
 
 ## How the site is put together
 

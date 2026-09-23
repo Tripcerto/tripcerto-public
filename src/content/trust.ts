@@ -35,7 +35,7 @@ export const trust = {
       {
         name: 'Your customer records',
         note: 'Held in London, apart from the conversation',
-        line: 'Names, contact details and inquiries are held in a database in London, separately from the conversation, for a stated period, and deleted on request. The conversation itself is processed in the United States and discarded.',
+        line: 'Names, contact details and enquiries are held in a database in London, separately from the conversation, for a stated period, and deleted on request. The conversation itself is processed in the United States and discarded.',
       },
       {
         name: 'Your systems',
