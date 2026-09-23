@@ -6,76 +6,79 @@
    take anything. Every fact comes from the compliance set both directors
    approved on 21 Sep 2026 (the monorepo's apps/internal/documents); no
    certificate is claimed. The one string that is a promise rather than a
-   fact is marked `owned`. Reply with the reference and the change. */
+   fact is marked `owned`. Strings marked `corrected` were rewritten on
+   23 Sep 2026 where the monorepo's code contradicted them; where the code
+   and the compliance set disagree, this page states what the code does.
+   Reply with the reference and the change. */
 
 export const trust = {
   hero: {
     // Three lines, as Taylor set them (22 Sep).
     'T-1-A': ['Your data,', 'Your expertise,', 'You’re in control.'], // changed
     'T-1-B':
-      'Tripcerto sits between your content, your systems and the model, so your business can put its own data to work with AI. It decides what the model may read, recommend and do, records what the model read and did, keeps every customer’s data apart and leaves the commercial decisions with your experts.', // changed
+      'Tripcerto sits between your content, your systems and the model, so your business can put its own data to work with AI. It decides what the model may read, recommend and do, records what the model read and did, keeps each business’s data apart and leaves the commercial decisions with your experts.', // changed
     'T-1-C': 'Book a demo', // added
     'T-1-D': 'How information moves', // added
   },
   moves: {
     'T-2-A': 'How information moves through the system', // changed
     'T-2-B':
-      'Tripcerto reads your content, your product data and your customer records to run the workflow you configured. Where each goes and what it is used for is set out below, and training a model, ours or a supplier’s, is not among the uses.', // changed
+      'Tripcerto reads your content, your product data and your customer records to run the workflow you configured. The main paths, and how long each record is kept, are set out below; the full list of suppliers is available on request. None of it is used to train a model, by us or by our suppliers.', // corrected
     rows: [
       {
         name: 'Your content and product data',
-        note: 'Indexed for retrieval, chosen by the system',
-        line: 'Your pages, documents and product records are indexed so a conversation can draw on them. Which products, places and operators a visitor sees is decided by matching against the catalogue you enabled, so nothing outside it can be recommended.',
+        note: 'Drawn on, never trained on', // corrected
+        line: 'The documents and product records you provide are indexed so a conversation can draw on them. Each product or place a visitor is shown as a recommendation comes from matching against the catalogue set for your account.', // corrected
       },
       {
         name: 'The conversation',
-        note: 'Written by a model that keeps nothing',
-        line: 'Anthropic runs the model that writes each reply. It receives the conversation with no contact field attached, under terms that rule out training, and since September 2026 it retains nothing once the reply is written. A second model turns phrases from the conversation into the vectors used for matching and never sees a whole message.',
+        note: 'Written by Anthropic’s model, which keeps nothing', // corrected
+        line: 'Anthropic runs the model that writes each reply, under terms that rule out training, and keeps nothing once the reply is written. It receives the conversation and any document uploaded to it. We attach no contact details, but whatever a customer types or uploads goes with it, and in Workspace so do the travellers’ names. A second model, from OpenAI, turns short phrases into the vectors used for matching. It never sees a whole message, and it does not train on what it receives but does keep it.', // corrected
       },
       {
         name: 'Your customer records',
-        note: 'Held in London, apart from the conversation',
-        line: 'Names, contact details and enquiries are held in a database in London, separately from the conversation, for a stated period, and deleted on request. The conversation itself is processed in the United States and discarded.',
+        note: 'Held in London, for a set time', // corrected
+        line: 'When a visitor asks to be contacted, their name, contact details and the conversation become an enquiry. It is stored in a database in London, emailed to your team through a mail service in the United States, and deleted after 24 months, or sooner on request. Deleting it removes our copy, and we ask your team to delete the one in its inbox. A conversation that never becomes an enquiry is deleted after 90 days without activity, unless the visitor uploaded a file or saved a plan. Trips and conversations in Workspace are kept until you ask for them to be deleted.', // corrected
       },
       {
         name: 'Your systems',
         note: 'Authoritative, and left where they are',
-        line: 'Your CRM, reservations, pricing and availability stay the record. Tripcerto connects to them and does not replace them, and a change reaches them only through a connection you approved.',
+        line: 'Your CRM, reservations, pricing and availability stay the record, and Tripcerto does not replace them. It writes to none of them unless you approve a connection that lets it.', // corrected
       },
     ], // added
   },
   decides: {
-    'T-3-A': 'Every recommendation traces back to a source you approved', // changed
+    'T-3-A': 'Matching chooses, the model writes, your expert decides', // corrected
     'T-3-B':
-      'Engage recommends only from the catalogue and the content you enabled, and records what it used. Workspace builds the trip and leaves the price, the exception and the final call with your expert.', // changed
+      'The products and places Engage recommends are chosen by matching against the catalogue set for your account, and each one shown is recorded. Workspace builds and prices the trip, and your expert checks it and decides what goes to the customer.', // corrected
     columns: [
       {
-        name: 'The system chooses',
-        line: 'Which product, place or operator a visitor sees is decided by matching against the catalogue you enabled, not by the model. Something outside it cannot appear.',
+        name: 'Matching chooses', // corrected
+        line: 'Each product or place a visitor is shown as a recommendation comes from matching against the catalogue set for your account, not from the model’s own knowledge.', // corrected
       },
       {
         name: 'The model writes',
-        line: 'The model turns what the system chose into a reply, in your voice, and says that it is an AI at first contact. What it may do in a conversation is a fixed list of actions, set for your account, and each one it takes is recorded.',
+        line: 'The model turns what matching found into a reply, in your voice, and is told never to claim to be human; the chat window tells every visitor that it is an AI assistant. It is instructed not to suggest products or places from its own knowledge. What it may do is a fixed list of actions, set for your account, and each action it takes is recorded.', // corrected
       },
       {
         name: 'Your expert decides',
-        line: 'In Workspace every change to a trip names the person or the process that made it. Prices, exceptions and the recommendation that goes to the customer stay with your expert.',
+        line: 'In Workspace, changes to a trip are logged with the person or the process that made them. Nothing reaches the customer until your expert has checked the prices, the exceptions and the recommendation.', // corrected
       },
     ], // added
   },
   access: {
-    'T-7-A': 'Separated by customer, reached by name', // added
-    'T-7-B': 'Each customer of ours is a tenant of its own, and every path to its data is checked, recorded and reviewed.', // added
+    'T-7-A': 'Each business kept apart, every request checked', // corrected
+    'T-7-B': 'Each business we work with is a tenant of its own. Every request is checked against its tenant before any data is read, and changes are logged with who made them.', // corrected
     rows: [
       {
         name: 'Separation',
         note: 'A check on every request',
-        line: 'Every request is checked against the tenant it belongs to, at every endpoint, before any data is read. Your consultants see your trips and no other tenant’s.',
+        line: 'Every request is checked in the application against the tenant it belongs to, at every endpoint, before any data is read. Your consultants see your trips and no other business’s.', // corrected
       },
       {
         name: 'Access',
         note: 'Denied by default, granted against a need',
-        line: 'Access to every system is granted per person against a stated need, recorded the same day, reviewed quarterly and removed within one working day of the need ending. One named account per person per system, and a second factor on every system that offers one.',
+        line: 'Access to each of our systems is granted per person against a stated need, recorded the same day and removed within one working day of the need ending, with a second factor on every system that offers one. Access is reviewed every quarter, most recently in September 2026.', // corrected
       },
       {
         name: 'Machine access',
@@ -85,12 +88,12 @@ export const trust = {
       {
         name: 'What is recorded',
         note: 'Events, changes, sign-ins and deployments',
-        line: 'Every application event is recorded at the boundary with what happened, how long it took and the outcome, and shipped to a monitoring service that alerts both directors. Every sign-in is recorded, every change to a trip names who made it, and every deployment is tied to a commit, an author and a time.',
+        line: 'Application events are logged at the boundary with what happened, how long it took and the outcome, and sent on to a monitoring service that alerts both directors. Replies are recorded with what the model read and the actions it took, and those records are kept for 30 days. Sign-ins are recorded, changes to a trip are logged with who made them, and every deployment is tied to a commit, an author and a time.', // corrected
       },
       {
         name: 'How the system changes',
-        note: 'A reviewed commit, never an edit in place',
-        line: 'Every change reaches production as a pull request that has passed type checking, linting, tests and an architecture check. Nothing is edited in place, and a schema change is a committed file applied by the pipeline, never by hand.',
+        note: 'A pull request, checked by the pipeline', // corrected
+        line: 'Every code and schema change goes to production as a pull request that runs type checking, linting, tests and an architecture check, and the pipeline applies each schema change from a committed file. Secrets and service settings are set by hand, by the two directors.', // corrected
       },
     ],
   },
@@ -107,17 +110,17 @@ export const trust = {
       {
         name: 'Operating on a schedule',
         note: 'Quarterly, whether or not anything has happened',
-        line: 'Risk, access and supplier registers reviewed quarterly, incidents logged, objectives measured, and a management review held and minuted by both directors.',
+        line: 'Risk, access and supplier registers are reviewed every quarter. Incidents are logged, objectives are measured, and the first management review was held and minuted by both directors in September 2026.', // corrected
       },
       {
         name: 'Suppliers, chosen against four tests',
         note: 'A register of everything that receives personal data',
-        line: 'Every supplier that receives personal data is recorded with what it receives, where it processes it and what assurance it publishes. A supplier is chosen for receiving no more than the job needs, publishing where it processes, offering a second factor and publishing an independent report; a shortfall is recorded as a risk, not waived.',
+        line: 'Every supplier that receives personal data is recorded with what it receives, where it processes it where that is known, and what assurance it publishes. A supplier is chosen for receiving no more than the job needs, publishing where it processes, offering a second factor and publishing an independent report; a shortfall is recorded as a risk, not waived.',
       },
       {
         name: 'Availability',
         note: 'Checked from outside, backed up daily',
-        line: 'Eight external checks every three minutes from outside our own infrastructure, with the history published on the status page. The database is backed up daily, and a restore was performed and verified in September 2026.',
+        line: 'External checks run around the clock from outside our own infrastructure, and their history is published on the status page. The database is backed up daily, and a restore was performed and verified in September 2026.', // corrected
       },
       {
         name: 'On the register',
@@ -138,7 +141,7 @@ export const trust = {
       {
         name: 'Privacy notice',
         note: 'Published',
-        line: 'What is collected, why, for how long, and the rights that go with it.',
+        line: 'What is collected, why, and the rights that go with it.', // corrected
         href: '/legal/privacy',
       },
       {
@@ -161,7 +164,7 @@ export const trust = {
   },
   status: {
     'T-6-A': 'Live status', // changed: the address is the link, not the headline
-    'T-6-B': 'Every check on the status page runs from your own browser when it loads. Nothing is pre-recorded.', // changed
+    'T-6-B': 'The checks on the status page run from your own browser when it loads. The history beneath them is recorded by our monitoring service.', // corrected
     'T-6-C': 'status.tripcerto.com', // added
   },
   close: {
