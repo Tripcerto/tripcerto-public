@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 /* What a crawler or an AI assistant reads about each page before it reads
@@ -60,6 +60,12 @@ describe('the crawl files', () => {
       const line = llms.split('\n').find((l) => l.includes(`](${url}):`))
       expect(line?.split(`](${url}): `)[1]).toBe(description(html))
     }
+  })
+
+  it('keeps one IndexNow key at the root, whose content is its own name', () => {
+    const keys = readdirSync(join(ROOT, 'public')).filter((f) => /^[0-9a-f]{32}\.txt$/.test(f))
+    expect(keys).toHaveLength(1)
+    expect(read(join(ROOT, 'public', keys[0]))).toBe(keys[0].replace('.txt', ''))
   })
 
   it('points crawlers at the sitemap and shuts none out', () => {

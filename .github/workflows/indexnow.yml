@@ -1,0 +1,30 @@
+# Once Vercel reports a production deployment live, tells IndexNow (the
+# protocol Bing reads, and ChatGPT's search reads Bing) that every page in the
+# sitemap may have changed, so a deploy is crawled within minutes rather than
+# whenever the crawler next comes round. The key is the 32-hex-character file
+# at the root of public/, whose content is its own name.
+name: indexnow
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    if: github.event.deployment.environment == 'Production' && github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Submit the sitemap's pages
+        run: |
+          key_file=$(find public -maxdepth 1 -regex '.*/[0-9a-f]\{32\}\.txt')
+          test "$(echo "$key_file" | wc -l)" -eq 1 || { echo "expected one IndexNow key file in public/"; exit 1; }
+          key=$(basename "$key_file" .txt)
+          urls=$(curl -fsS https://www.tripcerto.com/sitemap.xml | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's/<\/loc>//' | jq -R . | jq -s .)
+          jq -n --arg key "$key" --argjson urls "$urls" \
+            '{host: "www.tripcerto.com", key: $key, keyLocation: ("https://www.tripcerto.com/" + $key + ".txt"), urlList: $urls}' \
+            | curl -fsS -X POST https://api.indexnow.org/indexnow \
+                -H 'Content-Type: application/json; charset=utf-8' --data-binary @- \
+                -o /dev/null -w 'IndexNow answered %{http_code}\n'
