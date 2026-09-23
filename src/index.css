@@ -80,16 +80,19 @@
   /* The fixed bar's height, so an anchor jump or a focused element never
      lands under it. */
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 4rem;
     -webkit-text-size-adjust: 100%;
     @media (width >= 48rem) {
       scroll-padding-top: 72px;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
+  /* Smooth once the page has loaded (boot.tsx adds .loaded), so an in-page
+     link glides to its section while a reload's restored position and a
+     shared #section link land straight there instead of gliding from the
+     top. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.loaded {
+      scroll-behavior: smooth;
     }
   }
   body {
