@@ -4,7 +4,13 @@ import { flushSync } from 'react-dom'
 export type Theme = 'light' | 'dark'
 
 const KEY = 'theme'
-const BAR_COLOUR: Record<Theme, string> = { light: '#fff1ea', dark: '#1A0B20' }
+
+/* The browser bar takes the page's colour: cream by day, white on a
+   document, the night ink by night. */
+function barColour(theme: Theme): string {
+  if (theme === 'dark') return '#1A0B20'
+  return document.body.classList.contains('document') ? '#ffffff' : '#fff1ea'
+}
 
 /* Light unless <html> carries .dark. index.html applies the stored choice
    before first paint, so this only has to read it. */
@@ -30,7 +36,7 @@ function paint(theme: Theme) {
   const root = document.documentElement.classList
   root.remove('dark', 'light')
   root.add(theme)
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', BAR_COLOUR[theme])
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', barColour(theme))
   for (const listener of listeners) listener()
 }
 
