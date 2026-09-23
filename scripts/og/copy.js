@@ -27,7 +27,7 @@ export const variants = {
     name: 'Paper',
     note: 'The light page, typographic, the band held to a strip at the foot.',
     theme: 'paper',
-    eyebrow: 'Before the inquiry, and after it',
+    eyebrow: 'Before the enquiry, and after it',
     head: 'The traveller explains it once. Nobody retypes it.',
     // from: home.opportunity['H-2-B']
     sub: 'Engage records what each website visitor wants. Workspace builds the quote structure from it.',
@@ -38,7 +38,7 @@ export const variants = {
     note: 'Dark mode: smoked glass on ink under a wash of the band.',
     theme: 'ink',
     eyebrow: 'Engage · Workspace',
-    head: 'Every inquiry arrives with the whole conversation behind it',
+    head: 'Every enquiry arrives with the whole conversation behind it',
     // from: home.opportunity['H-2-B']
     sub: 'Your experts still decide what goes to the customer.',
     // from: workspace.trip, Resolved, then approved
@@ -62,12 +62,12 @@ export const variants = {
     columns: [
       {
         name: 'Engage',
-        when: 'Before the inquiry',
+        when: 'Before the enquiry',
         line: 'Learns what each visitor wants, so your team can sell it sooner.',
       },
       {
         name: 'Workspace',
-        when: 'After the inquiry',
+        when: 'After the enquiry',
         line: 'Builds the quote-ready trip and shows what is missing.',
       },
     ],
@@ -92,7 +92,7 @@ export const pages = {
     eyebrow: 'Workspace',
     head: 'Workspace builds the quote-ready trip and shows what is missing',
     // signed: workspace hero
-    sub: 'The dates, places, travellers and services in an inquiry, itemised against your inventory, with the gaps flagged.',
+    sub: 'The dates, places, travellers and services in an enquiry, itemised against your inventory, with the gaps flagged.',
   },
   pilot: {
     eyebrow: 'Pilot',

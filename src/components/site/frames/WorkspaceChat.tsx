@@ -6,7 +6,7 @@ import { delay } from '@/components/site/frames/motion'
 import { cn } from '@/lib/utils'
 
 /* Stella's pane with the conversation showing: the consultant drops the
-   inquiry in as a file and a voice note, Stella reads them back and can
+   enquiry in as a file and a voice note, Stella reads them back and can
    be heard as well as read, and her next line is on its way. The
    composer at the foot carries the clip and the mic. Bars stand for the
    words. */

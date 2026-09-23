@@ -8,7 +8,7 @@ export function LegalPage({ html }: { html: string }) {
   usePageAnalytics()
   return (
     <>
-      <Nav />
+      <Nav opensOnBand={false} />
       <main className="shell pt-28 pb-20 md:pt-36 md:pb-28">
         <article className="legal" dangerouslySetInnerHTML={{ __html: html }} />
       </main>

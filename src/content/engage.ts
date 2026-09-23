@@ -30,7 +30,7 @@ export const engage = {
   close: {
     'E-9-A': 'A pilot proves it on one number, agreed with you', // changed
     'E-9-B':
-      'Engaged visitors who become inquiries, the quality of each inquiry, time to a useful answer, or the completeness of the brief.', // changed (23 Sep sync)
+      'Engaged visitors who become enquiries, the quality of each enquiry, time to a useful answer, or the completeness of the brief.', // changed (23 Sep sync)
     'E-10-B': 'Book a demo',
     'E-10-C': 'What a pilot delivers', // added
   },

@@ -16,7 +16,7 @@ They are guidelines for the register, never lines to lift.
 - Repo `Tripcerto/tripcerto-public`. Work branches from `main`, short-lived,
   one PR each. `claude/landing-ember` carried the page PRs, is merged and
   behind `main`; do not branch from it.
-- PRs #1 to #17 are merged (`gh pr list --state merged`); #7, a Dependabot
+- PRs #1 to #20 are merged (`gh pr list --state merged`); #7, a Dependabot
   bump of `@types/node` to 26, was closed. The ones a reader needs: #1 the
   home page, #2 the three product pages and light by default, #3 Trust, #4 the
   icon set and social cards, #6 the dependency upgrade and the `validate`
@@ -31,13 +31,16 @@ They are guidelines for the register, never lines to lift.
   site work as a whole; it covered that evening and is over.)
 - Dev server: `npm run dev -- --port 8091 --strictPort`. Port 8090 is taken by
   the monorepo's admin lab on Taylor's machine; do not use it.
-- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (56 tests:
+- Gates: `npx tsc -b --noEmit`, `npm run lint`, `npx vitest run` (96 tests:
   the same five over each of the five pages in `src/site.test.tsx`, three
   over the product cards, one over the roles grid and one over each legal
   page's nav and footer; the theme button and the menu across Back and
-  other tabs, and the nav's tone under a pull past the top, in
-  `src/components/site/Nav.test.tsx`; the boot contract in
-  `src/boot.test.tsx`; plus the
+  other tabs, the nav's tone under a pull past the top and with the menu
+  open, in `src/components/site/Nav.test.tsx`; the boot and hydration
+  contract in `src/boot.test.tsx`; two quick theme presses in
+  `src/lib/theme.test.ts`; every entry rendered with no window in
+  `scripts/prerender.test.ts`; the head tags, sitemap, `llms.txt` and
+  IndexNow key in `scripts/head.test.ts`; plus the
   brand kit's assertions in `scripts/brand/brand.test.ts`, which hold the
   document to the site: the palette, the even-odd fill rule on every mark,
   the section order, and that the icon build command it prints is the one
@@ -50,7 +53,8 @@ They are guidelines for the register, never lines to lift.
   its tsconfig path; a bare `tsc -b` from the monorepo worktree emits thousands
   of stray `.js` files.
 - The site lives at `https://www.tripcerto.com`. The apex answers 307 to www
-  for every path, so every canonical, `og:url`, `og:image` and `twitter:image`
+  for every path (a 308 is the permanent form search engines want; it is a
+  Vercel Domains setting, Taylor's to change), so every canonical, `og:url`, `og:image` and `twitter:image`
   names the www host. The legal pages are `/legal/privacy` and `/legal/terms`
   with no trailing slash (`vercel.json` `trailingSlash: false`; the slash form
   308s), and every link to them is written that way.
@@ -69,7 +73,9 @@ They are guidelines for the register, never lines to lift.
   moment the seam passes the copy. Off a band, every colour in the bar comes
   from the page tokens, the wordmark included (`<Wordmark tone="page">` draws
   both SVGs and CSS shows one), so nothing in the bar can disagree with the
-  theme. `useTheme` only chooses the icon.
+  theme. `useTheme` only chooses the switch's label; the pre-paint `.dark`
+  class picks the icon through `dark:` variants, so a prerendered page shows
+  the right one before any script runs.
 - Dark mode (Taylor, 22 Sep: "that dark glassy look"). The page surfaces are
   seven tokens in `src/index.css` (`page`, `body`, `dim`, `soft`, `line`,
   `card`, `link`, plus `glass` for the nav), and only those switch in dark
@@ -79,9 +85,9 @@ They are guidelines for the register, never lines to lift.
   (`card` and `soft` are white at 0.6 and 0.5). Light is the default.
   `index.html` adds `.dark` before first paint when that is the stored choice;
   `src/lib/theme.ts` reads and toggles the class and updates the one
-  `theme-color` meta. The colours change at once and the toggle's moon and
-  sun carry the motion (23 Sep: the view-transition cross-fade swallowed
-  every click for its half second; see the design sync below). A page the
+  `theme-color` meta. The switch cross-fades the whole page as a view
+  transition (0.5s, ease-in-out); while it runs every click goes to `<html>`,
+  and Taylor accepted that half second on 23 Sep. A page the
   back-forward cache restores, or one open in another tab, takes up the
   choice on `pageshow` and `storage`. Every section uses the tokens (`bg-soft`, `text-dim`,
   `text-link`, the `glass` utility for panels), so a new page inherits the
@@ -133,7 +139,7 @@ They are guidelines for the register, never lines to lift.
   `Stage.tsx` is a pool of the band's light (`bg-glow`) behind a frame with
   an optional caption hung below it out of the flow. There the window's
   Stella pane shows the conversation (`WorkspaceChat.tsx`, passed in as
-  `pane`): the consultant drops the inquiry in as a file and a voice note,
+  `pane`): the consultant drops the enquiry in as a file and a voice note,
   Stella's reply carries a speaker, and the composer holds the clip and the
   mic; the hero's window keeps the bare pane the phone covers. The phone has
   the same voice note (`Voice.tsx`) and speaker, on the hero too. The
@@ -156,12 +162,12 @@ They are guidelines for the register, never lines to lift.
   The product glyphs live once, `PRODUCT_GLYPH` in `frames/glyphs.ts`, which
   `Opportunity.tsx` reads too, so Workspace carries our panel glyph rather
   than the image's document icon.
-  Three things in Charlie's words depart from the copy review wave below, BY
+  Two things in Charlie's words depart from the copy review wave below, BY
   DECISION, not by oversight, so the next review must not revert them
-  without asking: "enquiry" where the wave settled on "inquiry"; H-5-A and
-  H-4-B open on an instruction to the reader ("Turn every enquiry…",
-  "Answer from your expertise…"), which the guide keeps out of headlines;
-  and "every visitor", "every enquiry" are unqualified. The test's
+  without asking: H-5-A and H-4-B open on an instruction to the reader
+  ("Turn every enquiry…", "Answer from your expertise…"), which the guide
+  keeps out of headlines; and "every visitor", "every enquiry" are
+  unqualified. The test's
   imperative rule does not see H-4-A or H-5-A because they are set as the
   line under the h3, not as headings: an exception, not compliance.
 - The lower half, chosen by Taylor on 22 Sep (evening) from three live
@@ -171,8 +177,8 @@ They are guidelines for the register, never lines to lift.
   strip, C three dots. He picked C ("C looks good"); A, B and the switch are
   deleted. `Opportunity.tsx` is the journey as three ruled columns of type
   under the heading and lede (H-2-A and H-2-B, which carry the opportunity and
-  why it is one; Charlie's guide §3 and §4): Before the inquiry, Engage; After
-  the inquiry, Workspace; The outcome, Booked, each with its glyph and a line.
+  why it is one; Charlie's guide §3 and §4): Before the enquiry, Engage; After
+  the enquiry, Workspace; The outcome, Booked, each with its glyph and a line.
   Taylor rejected pills, connecting lines and a reveal here. `Audience.tsx` is
   the six buying roles as a ruled grid under the heading (guide §8: roles
   not sectors; the roles and measures come from the Foundation document's
@@ -186,7 +192,7 @@ They are guidelines for the register, never lines to lift.
   on a page cost nothing) with paper copy: a heading, an optional line, the
   accent button and a secondary link. The home passes H-9-A and the two
   buttons, with nothing between them (Taylor, 22 Sep). There is no Proof
-  section: guide §10 wants it inquiry-related and no pilot has measured
+  section: guide §10 wants it enquiry-related and no pilot has measured
   anything, so the pilot's measures ride in the Engage and Workspace closes
   (E-9-B, W-8-B) and on the Pilot page, and the proof is the call.
 - `src/components/site/Footer.tsx` (rebuilt 22 Sep evening at Taylor's ask):
@@ -425,7 +431,7 @@ reference in the PR; Taylor and Charlie reply by reference.
   but Y" tails, no telling the buyer their current process is wrong (§3,
   §7), and the Pilot page selling the opportunity to try one with the
   proposing on us (§12) rather than a method statement. "partner", an
-  internal tenancy word, is gone from Trust; "enquiries" is "inquiries".
+  internal tenancy word, is gone from Trust.
 - Site-wide: the four links into the Pilot page read "What a pilot delivers"
   (they read "How a pilot runs", which sold the page as the process manual
   §12 rules out); the in-page link is "Our approach". The Pilot page's two
@@ -464,7 +470,10 @@ reference in the PR; Taylor and Charlie reply by reference.
 ## Still to do
 
 1. The legal documents (above).
-2. The nav contrast decision (above). The 23 Sep measure, light theme, over
+2. Decided, not to do: the band's contrast stays as it is (Taylor, 23 Sep:
+   "i want it to look as similar as possible to right nw", then "leave it as
+   is"), with PageSpeed's accessibility at 96 as the accepted cost. The 23 Sep
+   measure, light theme, over
    the pixels under the text: nav links 1.84 to 2.51, hero and close ledes
    2.0 to 2.7, "See how it works" 2.5 to 3.2, the close's pilot pill 2.4,
    "Book a demo" pink on white 3.79; white can reach at most 3.79 on the
@@ -521,8 +530,7 @@ and what fixed it; each is measured before and after:
 - Every click was ignored for about half a second after the theme toggle,
   and a second press inside that window was lost: the view transition sends
   all input to `<html>` while it runs (`pointer-events: none` on it does not
-  help). The switch is instant now; whether the cross-fade comes back, with
-  that dead half second, is Taylor's call.
+  help). Taylor kept the cross-fade and accepts the half second (23 Sep).
 - Back or Forward after a toggle showed the old theme, and another tab
   never followed: the back-forward cache restores a page without rerunning
   the pre-paint script. `useTheme` re-reads on `pageshow` and `storage`.
@@ -557,8 +565,7 @@ Not changed, measured: the band's own contrast (Still to do); the typing
 dots and the phone's float loop forever and, under the nav's and window's
 40px blurs, keep a desktop GPU compositing at about 22% of a core; no
 security headers beyond HSTS (no CSP, nosniff, referrer policy or frame
-policy); the pages render only in the browser, so their HTML is empty
-without JavaScript.
+policy).
 
 Open, for Charlie's wording pass (new words, his to write):
 - H-2-A "Customer context carries from the first question to the final
@@ -581,3 +588,60 @@ page shorter, with an ISO 27001 target date only Taylor can give. Taylor's to re
 real content in the frames instead of bars (Ryan; Taylor also wants a
 fuller Engage picture) and following the system theme. All the video ideas
 are parked until the videos exist.
+
+## Close-out (23 Sep, afternoon)
+
+Taylor's calls: "we should be using British English across the entire
+thing"; the theme cross-fade stays and clicks during it are ignored ("its ok
+to block the clicks for while its animating"); the band's contrast stays
+("leave it as is"); and for search, "just the indexing for the time being".
+
+- British English everywhere the site speaks: enquiry, organise, licence,
+  towards, dates as 20 May 2026. `llms.txt` and the JSON-LD follow the meta
+  descriptions, so they follow too.
+- The band's shader fades in over 1.4s instead of snapping onto the still
+  gradient (none under reduced motion), and a chunk that fails to load leaves
+  the still strip.
+- Trust (`src/content/trust.ts`) was checked against the product code and a
+  Codex review. Strings rewritten where the code contradicted them carry
+  `// corrected`; where the code and the compliance set disagree, the page
+  says what the code does. What the audit found in the product repo went to
+  Taylor directly, not here.
+- The open mobile menu takes the band's paper tone only when the band runs
+  under all of it; the nav's midline is the bar row's, not the header's the
+  menu makes taller. The focus ring is ink on the band in light and paper in
+  dark. The legal pages print as black text on white with no nav or footer.
+- Every page is prerendered (README, "How the site is put together"): the
+  HTML carries the whole page, so ChatGPT's, Claude's and Perplexity's
+  crawlers, which run no JavaScript, read it; before this they saw a title
+  and an empty `#root`. The theme is read through `useSyncExternalStore`
+  (the server renders light, the pre-paint script darkens before paint), the
+  sun and moon are chosen by CSS, and the band shader mounts after
+  hydration. Two quick theme presses end where they began. Illustrations a
+  Reveal holds are held only under `@media (scripting: enabled)`, so a
+  reader without scripts sees them.
+- Crawl files and the search consoles: README, "Search engines and AI
+  assistants". Search Console is a domain property verified by DNS TXT at
+  IONOS (do not remove the record); the sitemap is submitted; Bing imported
+  it; IndexNow posts after every production deploy. `/about`, from an earlier
+  site and still in Google's and Brave's indexes, redirects home.
+- This repo is public, and its pull requests show up when people search for
+  "Tripcerto". A PR description or commit message here is published; keep
+  internal findings in the product repo.
+
+After this deploys (Taylor, about half an hour): Search Console, URL
+inspection, Request indexing for `/`, `/engage`, `/workspace`, `/pilot` and
+`/trust` (this also refreshes the icon and title Google shows, which come
+from its last crawl of the home page); Brave, search.brave.com/submit-url
+for the same five plus `/about` and `https://chat.tripcerto.com/` (Claude's
+web search reads Brave, whose copy still says "the intelligence layer");
+Vercel, Domains, the apex redirect from 307 to 308. Then check Bing Webmaster
+Tools, IndexNow, for the seven URLs, and the IndexNow run in the repo's
+Actions tab (200 or 202).
+
+Researched and parked on Taylor's word ("just the indexing for the time
+being"): pages for DMCs, tailor-made and safari operators; guides on quote
+turnaround, enquiry response time and qualifying questions; an honest,
+dated comparison of AI tools by job; FAQs; an About page; directory
+listings; and a fix to the LinkedIn company page, which is named
+"tripcerto." and claims results no pilot has measured.

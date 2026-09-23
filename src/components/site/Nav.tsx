@@ -9,22 +9,29 @@ import { cn } from '@/lib/utils'
 
 const MENU_ID = 'site-menu'
 
-/* The page the bar is on, by path; the clean URL and the dev server's
-   trailing slash both count. */
-function isCurrent(href: string) {
-  return window.location.pathname.replace(/\/+$/, '') === href
+interface NavProps {
+  /* The path of the page the bar is on, named by the page: the build renders
+     the bar with no address to read. */
+  current?: string
+  /* Whether the page opens on the band, as every page but the legal ones
+     does. */
+  opensOnBand?: boolean
 }
 
-export function Nav() {
+export function Nav({ current, opensOnBand = true }: NavProps) {
+  const isCurrent = (href: string) => href === current
   const [open, setOpen] = useState(false)
   /* The bar is glass over the band and over the page. Over a band section
      (the hero and the close carry `data-band`) the copy is paper whatever
      the theme; on the page it takes the page's own colours, which flip
-     with the theme in CSS. */
-  const [overBand, setOverBand] = useState(false)
+     with the theme in CSS. It starts as the top of its page stands, which
+     is what the built page shows until the script has measured it. */
+  const [overBand, setOverBand] = useState(opensOnBand)
+  const [menuOverBand, setMenuOverBand] = useState(false)
   const [theme, toggleTheme] = useTheme()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
-  const barRef = useRef<HTMLElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   /* Over a band means a band section is under the bar's midline: measured
      against the bar on every scroll, not "somewhere in the viewport", which
@@ -33,8 +40,11 @@ export function Nav() {
      placed on the page and held inside it, because pulling the page past
      its top (Safari reports a negative scroll, and moves the bar with the
      page) is not scrolling off the hero: measured from the window, the band
-     slid below the midline and the nav turned ink over it. Before paint, so
-     the first frame has the right tone. */
+     slid below the midline and the nav turned ink over it. The midline is
+     the bar row's, not the header's, which grows with the open menu. The
+     menu takes the band's tone only when the band runs under all of it:
+     paper rows that reach past the band's edge sit white on white. Before
+     paint, so the first frame has the right tone. */
   useLayoutEffect(() => {
     const bands = Array.from(document.querySelectorAll<HTMLElement>('[data-band]'))
     const bar = barRef.current
@@ -43,13 +53,16 @@ export function Nav() {
     const measure = () => {
       frame = 0
       const page = document.documentElement.getBoundingClientRect()
-      const mid = Math.min(Math.max(bar.offsetHeight / 2 - page.top, 0), page.height)
-      setOverBand(
+      const onPage = (y: number) => Math.min(Math.max(y - page.top, 0), page.height)
+      const mid = onPage(bar.offsetHeight / 2)
+      const menuBottom = onPage(bar.offsetHeight + (menuRef.current?.offsetHeight ?? 0))
+      const under = (from: number, to: number) =>
         bands.some((band) => {
           const rect = band.getBoundingClientRect()
-          return rect.top - page.top <= mid && rect.bottom - page.top >= mid
-        }),
-      )
+          return rect.top - page.top <= from && rect.bottom - page.top >= to
+        })
+      setOverBand(under(mid, mid))
+      setMenuOverBand(under(mid, menuBottom))
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(measure)
@@ -99,14 +112,14 @@ export function Nav() {
   return (
     <>
       <header
-        ref={barRef}
+        data-tone={overBand ? 'band' : 'page'}
         className={cn(
           'fixed inset-x-0 top-0 z-50 border-b bg-glass backdrop-blur-2xl backdrop-saturate-150 transition-shadow duration-300 ease-site',
           overBand ? 'border-white/40' : 'border-line',
           open && 'shadow-[0_28px_48px_-20px_rgb(40_17_49/0.45)] dark:shadow-[0_28px_48px_-16px_rgb(0_0_0/0.7)]',
         )}
       >
-        <div className="shell flex h-16 items-center justify-between md:h-[72px]">
+        <div ref={barRef} className="shell flex h-16 items-center justify-between md:h-[72px]">
           <div className="flex items-center">
             <a href={PAGES.home} aria-label="tripcerto home" className="inline-flex h-11 items-center">
               <Wordmark tone={overBand ? 'paper' : 'page'} />
@@ -180,9 +193,10 @@ export function Nav() {
         >
           <nav id={MENU_ID} inert={!open} className="min-h-0 overflow-hidden">
             <div
+              ref={menuRef}
               className={cn(
                 'border-t transition-[opacity,translate] duration-300 ease-site motion-reduce:transition-none',
-                overBand ? 'border-white/25' : 'border-line',
+                menuOverBand ? 'border-white/25' : 'border-line',
                 open ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
               )}
             >
@@ -194,11 +208,11 @@ export function Nav() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
-                    overBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
+                    menuOverBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
                   )}
                 >
                   {link.label}
-                  <ChevronRight size={16} aria-hidden="true" className={overBand ? 'text-paper/60' : 'text-body/40'} />
+                  <ChevronRight size={16} aria-hidden="true" className={menuOverBand ? 'text-paper/60' : 'text-body/40'} />
                 </a>
               ))}
             </div>
@@ -245,20 +259,22 @@ function ThemeButton({ theme, overBand, onClick }: { theme: 'light' | 'dark'; ov
       aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={onClick}
     >
-      <ThemeIcon dark={dark} />
+      <ThemeIcon />
     </Button>
   )
 }
 
 /* The moon and the sun share one square and trade places on the site's
    curve: the one leaving turns a quarter and shrinks away as the other
-   turns in, the same speed as the menu icon beside it. */
-function ThemeIcon({ dark }: { dark: boolean }) {
+   turns in, the same speed as the menu icon beside it. The dark variant
+   picks the one showing from the class the pre-paint script sets, so a dark
+   page shows the sun from its first frame, before any script has run. */
+function ThemeIcon() {
   const glyph = 'absolute inset-0 transition-[opacity,rotate,scale] duration-300 ease-site motion-reduce:transition-none'
   return (
     <span aria-hidden="true" className="relative block size-5">
-      <Moon className={cn(glyph, dark ? '-rotate-90 scale-50 opacity-0' : 'rotate-0 scale-100 opacity-100')} />
-      <Sun className={cn(glyph, dark ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-50 opacity-0')} />
+      <Moon className={cn(glyph, 'rotate-0 scale-100 opacity-100 dark:-rotate-90 dark:scale-50 dark:opacity-0')} />
+      <Sun className={cn(glyph, 'rotate-90 scale-50 opacity-0 dark:rotate-0 dark:scale-100 dark:opacity-100')} />
     </span>
   )
 }

@@ -104,6 +104,51 @@ describe('tone over the band', () => {
     expect(header().className).toContain('border-white/40')
   })
 
+  it('measures from the bar row, not the header the open menu makes taller', () => {
+    place({ scrolled: 800 })
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      if (this.tagName === 'HEADER') return 600
+      return this.parentElement?.tagName === 'HEADER' ? 64 : 0
+    })
+    render(
+      <>
+        <Nav />
+        <section data-band />
+      </>,
+    )
+    expect(header().className).toContain('border-white/40')
+  })
+
+  /* The bar row is 64px and the open menu 224px under it. */
+  function openMenuOver(scrolled: number) {
+    place({ scrolled })
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      if (this.parentElement?.tagName === 'HEADER') return 64
+      return this.parentElement?.id === 'site-menu' ? 224 : 0
+    })
+    render(
+      <>
+        <Nav />
+        <section data-band />
+      </>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+    return document.querySelector('#site-menu a') as HTMLElement
+  }
+
+  it('gives the menu the band tone when the band runs under all of it', () => {
+    const row = openMenuOver(0)
+    expect(row.className).toContain('text-paper')
+    expect(row.className).toContain('border-white/25')
+  })
+
+  it('keeps the menu in the page tone when it reaches past the band', () => {
+    const row = openMenuOver(800)
+    expect(header().className).toContain('border-white/40')
+    expect(row.className).toContain('text-body')
+    expect(row.className).not.toContain('text-paper')
+  })
+
   it('turns to the page once the band has scrolled out from under it', () => {
     place({ scrolled: 2000 })
     render(

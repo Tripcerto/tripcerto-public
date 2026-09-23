@@ -171,6 +171,7 @@ export function GradientMesh({ className, colours, angle = 100, warp = 0.28, sca
     canvas.style.width = '100%'
     canvas.style.height = '100%'
     canvas.style.display = 'block'
+    canvas.className = 'animate-fade-in'
 
     /* Transparent, so any frame the shader has not drawn yet — first paint, a
        resize, a lost context — shows the still gradient underneath instead of

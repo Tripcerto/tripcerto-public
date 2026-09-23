@@ -17,7 +17,7 @@ export const workspace = {
   /* W-3 in the document was "How it works": structure, flag the gaps,
      resolve. That is what Workspace does, so it is told as that (§6). */
   trip: {
-    'W-3-A': 'Every inquiry becomes an itemised trip, with the gaps in view', // changed
+    'W-3-A': 'Every enquiry becomes an itemised trip, with the gaps in view', // changed
     'W-3-B':
       'Workspace reads the requirement however it arrives and builds the service list in order: the stays, the transfers, the flights, the activities. Anything unresolved shows as its own row before the quote goes out.', // changed
     columns: [
@@ -39,7 +39,7 @@ export const workspace = {
   close: {
     'W-8-A': 'A pilot proves it on one number, agreed with you', // changed
     'W-8-B':
-      'Time from inquiry to quote, handling time per inquiry, or the completeness of each quote before it goes out.', // changed (23 Sep sync)
+      'Time from enquiry to quote, handling time per enquiry, or the completeness of each quote before it goes out.', // changed (23 Sep sync)
     'W-9-B': 'Book a demo',
     'W-9-C': 'What a pilot delivers', // added
   },

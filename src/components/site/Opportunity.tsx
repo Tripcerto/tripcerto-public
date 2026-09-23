@@ -15,7 +15,7 @@ const GLYPH: Record<Stage, { icon: LucideIcon; tone: string }> = {
 }
 
 /* The journey as three ruled columns of type: the product before the
-   inquiry, the product after it, the outcome. Taylor (22 Sep evening)
+   enquiry, the product after it, the outcome. Taylor (22 Sep evening)
    rejected pills, connecting lines and a choreographed reveal here ("too
    big, too clunky … not clear enough"); this is the plain statement. */
 export function Opportunity() {

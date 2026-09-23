@@ -1,0 +1,20 @@
+# Tripcerto
+
+> AI that makes complex travel easier to plan and sell, for tour operators and DMCs.
+
+Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds an itemised trip from the enquiry as soon as it arrives and shows what is still missing. Your experts decide what goes to the customer.
+
+## Products
+
+- [Engage](https://www.tripcerto.com/engage): Engage answers travellers on your website from the expertise and products you approve, records what matters to them as they research, and hands your sales team a brief in place of a form.
+- [Workspace](https://www.tripcerto.com/workspace): Workspace turns an enquiry into an itemised, quote-ready trip, resolves prices and availability through the systems you already run, and shows what still needs an expert before the quote goes out.
+
+## Working with Tripcerto
+
+- [Pilot](https://www.tripcerto.com/pilot): We find the workflow where Tripcerto will have the most effect in your business and prove it there on one number. The result decides the rollout.
+- [Trust](https://www.tripcerto.com/trust): How Tripcerto puts a travel business’s content and customer data to work with AI: where information goes, who can reach it, how each customer stays separate, and the security programme behind it.
+
+## Optional
+
+- [Privacy Policy](https://www.tripcerto.com/legal/privacy): How Tripcerto collects, uses, shares and protects personal information, and the rights you have over it.
+- [Terms of Use](https://www.tripcerto.com/legal/terms): The terms that govern your use of the Tripcerto website and services.

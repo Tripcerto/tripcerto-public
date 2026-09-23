@@ -13,7 +13,7 @@ const HOW_IT_WORKS_HREF = `#${SECTION.products}`
    centred group; the Pilot pill above it went on Taylor's ask, 22 Sep
    evening), the two product frames beside it. The
    container runs wider than the nav's shell on large screens, so the frames
-   grow and the copy and visuals spread apart, and everything tightens toward
+   grow and the copy and visuals spread apart, and everything tightens towards
    the middle as the screen narrows. */
 export function Hero() {
   return (

@@ -18,19 +18,19 @@ export const home = {
     'H-2-A': 'Customer context carries from the first question to the final quote', // changed
     /* The opportunity and why it is one, in one breath (Guide §3, §4). */
     'H-2-B':
-      'A traveller explains what they want once. Engage records it, the inquiry arrives with it and Workspace builds from it. The two handoffs where travel sales lose momentum are the two Tripcerto carries.', // changed
-    /* The journey in three stages: the product before the inquiry, the
+      'A traveller explains what they want once. Engage records it, the enquiry arrives with it and Workspace builds from it. The two handoffs where travel sales lose momentum are the two Tripcerto carries.', // changed
+    /* The journey in three stages: the product before the enquiry, the
        product after it, and the outcome (the Foundation's framing). */
     stages: [
       {
-        when: 'Before the inquiry',
+        when: 'Before the enquiry',
         name: 'Engage',
         line: 'Engage answers the traveller from your expertise and your products, and records what they want as they research.',
       },
       {
-        when: 'After the inquiry',
+        when: 'After the enquiry',
         name: 'Workspace',
-        line: 'Workspace opens the inquiry with that context intact, builds the itemised trip and shows what is still missing.',
+        line: 'Workspace opens the enquiry with that context intact, builds the itemised trip and shows what is still missing.',
       },
       {
         when: 'The outcome',
@@ -67,7 +67,7 @@ export const home = {
        under the heading alone (23 Sep sync: the travel expert is sales). */
     roles: [
       { role: 'Sales', measures: ['Conversion', 'Response time', 'Booking value'] },
-      { role: 'Marketing', measures: ['Inquiry rate', 'Cost per qualified inquiry'] },
+      { role: 'Marketing', measures: ['Enquiry rate', 'Cost per qualified enquiry'] },
       { role: 'Operations', measures: ['Quote time', 'Completeness', 'Handling time'] },
       { role: 'Technology', measures: ['Security', 'Data ownership', 'Integration'] },
       { role: 'Finance', measures: ['Total cost', 'Payback', 'Contract exposure'] },

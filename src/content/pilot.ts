@@ -19,7 +19,7 @@ export const pilot = {
       {
         name: 'Conversion',
         note: 'Engage',
-        line: 'Engaged website visitors who become inquiries, against the rate the site had before.',
+        line: 'Engaged website visitors who become enquiries, against the rate the site had before.',
       },
       {
         name: 'Lead quality',
@@ -29,12 +29,12 @@ export const pilot = {
       {
         name: 'Quote time',
         note: 'Workspace',
-        line: 'Time from the inquiry arriving to the quote going out, for the workflow the pilot covers.',
+        line: 'Time from the enquiry arriving to the quote going out, for the workflow the pilot covers.',
       },
       {
         name: 'Handling time',
         note: 'Workspace',
-        line: 'Expert time spent per inquiry: the searching, rekeying and checking, before and after.',
+        line: 'Expert time spent per enquiry: the searching, rekeying and checking, before and after.',
       },
       {
         name: 'Completeness',

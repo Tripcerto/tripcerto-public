@@ -24,7 +24,7 @@ export function EngagePage() {
   usePageAnalytics()
   return (
     <>
-      <Nav />
+      <Nav current={PAGES.engage} />
       <main>
         <PageHero
           title={engage.hero['E-1-A']}
