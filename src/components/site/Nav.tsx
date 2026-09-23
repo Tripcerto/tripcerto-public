@@ -230,7 +230,20 @@ function ThemeButton({ theme, overBand, onClick }: { theme: 'light' | 'dark'; ov
       aria-pressed={dark}
       onClick={onClick}
     >
-      {dark ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
+      <ThemeIcon dark={dark} />
     </Button>
+  )
+}
+
+/* The moon and the sun share one square and trade places on the site's
+   curve: the one leaving turns a quarter and shrinks away as the other
+   turns in, the same speed as the menu icon beside it. */
+function ThemeIcon({ dark }: { dark: boolean }) {
+  const glyph = 'absolute inset-0 transition-[opacity,rotate,scale] duration-300 ease-site motion-reduce:transition-none'
+  return (
+    <span aria-hidden="true" className="relative block size-5">
+      <Moon className={cn(glyph, dark ? '-rotate-90 scale-50 opacity-0' : 'rotate-0 scale-100 opacity-100')} />
+      <Sun className={cn(glyph, dark ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-50 opacity-0')} />
+    </span>
   )
 }
