@@ -118,8 +118,9 @@ export function gaEvent(name: string, params: Record<string, string>): void {
   if (stamp) gtag('event', name, { ...params, ...stamp })
 }
 
-/* `.www.tripcerto.com`, `.tripcerto.com` and `.com`: GA writes its cookies
-   on the widest of these that takes them. */
+/* The host and each domain above it, short of the top-level one: on
+   www.tripcerto.com, `.www.tripcerto.com` and `.tripcerto.com`. GA writes
+   its cookies on the widest of these that takes them. */
 function parentDomains(hostname: string): string[] {
   const labels = hostname.split('.')
   return labels.slice(0, -1).map((_, i) => `.${labels.slice(i).join('.')}`)
