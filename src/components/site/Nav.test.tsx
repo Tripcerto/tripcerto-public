@@ -119,6 +119,24 @@ describe('tone over the band', () => {
     expect(header().className).toContain('border-white/40')
   })
 
+  it('keeps the menu in the page tone when it reaches past the band', () => {
+    place({ scrolled: 800 })
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(function (this: HTMLElement) {
+      if (this.parentElement?.tagName === 'HEADER') return 64
+      return this.parentElement?.id === 'site-menu' ? 224 : 0
+    })
+    render(
+      <>
+        <Nav />
+        <section data-band />
+      </>,
+    )
+    expect(header().className).toContain('border-white/40')
+    const row = document.querySelector('#site-menu a') as HTMLElement
+    expect(row.className).toContain('text-body')
+    expect(row.className).not.toContain('text-paper')
+  })
+
   it('turns to the page once the band has scrolled out from under it', () => {
     place({ scrolled: 2000 })
     render(

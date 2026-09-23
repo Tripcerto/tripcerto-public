@@ -143,6 +143,18 @@
   }
 }
 
+/* On the band the link pink is the band's own colour, so a focus ring in it
+   disappears: ink by day, paper by night. Outside any layer, so it beats the
+   ring utilities on the buttons. */
+:is([data-band], [data-tone='band']) :focus-visible {
+  outline-color: var(--color-ink);
+  --tw-ring-color: var(--color-ink);
+}
+:root.dark :is([data-band], [data-tone='band']) :focus-visible {
+  outline-color: var(--color-paper);
+  --tw-ring-color: var(--color-paper);
+}
+
 /* The theme switch: the browser cross-fades its snapshots of the old and
    new page, so every colour eases at once. */
 ::view-transition-old(root),

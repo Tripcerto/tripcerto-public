@@ -22,9 +22,11 @@ export function Nav() {
      the theme; on the page it takes the page's own colours, which flip
      with the theme in CSS. */
   const [overBand, setOverBand] = useState(false)
+  const [menuOverBand, setMenuOverBand] = useState(false)
   const [theme, toggleTheme] = useTheme()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   /* Over a band means a band section is under the bar's midline: measured
      against the bar on every scroll, not "somewhere in the viewport", which
@@ -34,7 +36,9 @@ export function Nav() {
      its top (Safari reports a negative scroll, and moves the bar with the
      page) is not scrolling off the hero: measured from the window, the band
      slid below the midline and the nav turned ink over it. The midline is
-     the bar row's, not the header's, which grows with the open menu. Before
+     the bar row's, not the header's, which grows with the open menu. The
+     menu takes the band's tone only when the band runs under all of it:
+     paper rows that reach past the band's edge sit white on white. Before
      paint, so the first frame has the right tone. */
   useLayoutEffect(() => {
     const bands = Array.from(document.querySelectorAll<HTMLElement>('[data-band]'))
@@ -44,13 +48,16 @@ export function Nav() {
     const measure = () => {
       frame = 0
       const page = document.documentElement.getBoundingClientRect()
-      const mid = Math.min(Math.max(bar.offsetHeight / 2 - page.top, 0), page.height)
-      setOverBand(
+      const onPage = (y: number) => Math.min(Math.max(y - page.top, 0), page.height)
+      const mid = onPage(bar.offsetHeight / 2)
+      const menuBottom = onPage(bar.offsetHeight + (menuRef.current?.offsetHeight ?? 0))
+      const under = (from: number, to: number) =>
         bands.some((band) => {
           const rect = band.getBoundingClientRect()
-          return rect.top - page.top <= mid && rect.bottom - page.top >= mid
-        }),
-      )
+          return rect.top - page.top <= from && rect.bottom - page.top >= to
+        })
+      setOverBand(under(mid, mid))
+      setMenuOverBand(under(mid, menuBottom))
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(measure)
@@ -100,6 +107,7 @@ export function Nav() {
   return (
     <>
       <header
+        data-tone={overBand ? 'band' : 'page'}
         className={cn(
           'fixed inset-x-0 top-0 z-50 border-b bg-glass backdrop-blur-2xl backdrop-saturate-150 transition-shadow duration-300 ease-site',
           overBand ? 'border-white/40' : 'border-line',
@@ -180,9 +188,10 @@ export function Nav() {
         >
           <nav id={MENU_ID} inert={!open} className="min-h-0 overflow-hidden">
             <div
+              ref={menuRef}
               className={cn(
                 'border-t transition-[opacity,translate] duration-300 ease-site motion-reduce:transition-none',
-                overBand ? 'border-white/25' : 'border-line',
+                menuOverBand ? 'border-white/25' : 'border-line',
                 open ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
               )}
             >
@@ -194,11 +203,11 @@ export function Nav() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
-                    overBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
+                    menuOverBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
                   )}
                 >
                   {link.label}
-                  <ChevronRight size={16} aria-hidden="true" className={overBand ? 'text-paper/60' : 'text-body/40'} />
+                  <ChevronRight size={16} aria-hidden="true" className={menuOverBand ? 'text-paper/60' : 'text-body/40'} />
                 </a>
               ))}
             </div>
