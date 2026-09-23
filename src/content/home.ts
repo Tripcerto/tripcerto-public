@@ -9,7 +9,7 @@ export const home = {
   hero: {
     'H-1-A': 'AI that makes complex travel easier to plan and sell', // changed (23 Sep sync)
     'H-1-B':
-      'Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds an itemised trip from the inquiry as soon as it arrives and shows what is still missing.', // changed
+      'Software for tour operators and DMCs. It answers travellers on your website and turns what they ask for into an itemised trip your team can quote, so more of them book.', // changed (23 Sep sync): who it is for, both jobs and the booking (Guide §4, §5); the products are named on their cards below
     'H-1-C': 'Book a demo',
     'H-1-D': 'See how it works',
   },
