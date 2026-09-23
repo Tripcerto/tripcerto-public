@@ -22,7 +22,6 @@ export const NAV_LINKS = [
 
 export const SECTION = {
   products: 'products',
-  opportunity: 'opportunity',
   audience: 'is-this-for-me',
   close: 'close',
 } as const

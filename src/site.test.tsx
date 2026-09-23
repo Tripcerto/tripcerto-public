@@ -36,7 +36,7 @@ const SITE = [
     name: 'home',
     Page: App,
     h1: home.hero['H-1-A'],
-    headings: [home.opportunity['H-2-A'], home.products['H-3-A'], home.audience['H-7-A'], home.close['H-9-A']],
+    headings: [home.products['H-3-A'], home.audience['H-7-A'], home.close['H-9-A']],
   },
   {
     name: 'engage',
@@ -146,15 +146,14 @@ describe('home products section', () => {
   })
 
   it.each([
-    { name: 'Engage', line: home.engage['H-4-A'], body: home.engage['H-4-B'], link: home.engage.link, href: PAGES.engage },
-    { name: 'Workspace', line: home.workspace['H-5-A'], body: home.workspace['H-5-B'], link: home.workspace.link, href: PAGES.workspace },
-  ])('gives $name a card that opens its page', ({ name, line, body, link, href }) => {
+    { name: 'Engage', line: home.engage['H-4-A'], href: PAGES.engage },
+    { name: 'Workspace', line: home.workspace['H-5-A'], href: PAGES.workspace },
+  ])('gives $name a tile whose name opens its page', ({ name, line, href }) => {
     render(<App />)
     const section = within(document.getElementById(SECTION.products)!)
-    const card = within(section.getByRole('heading', { level: 3, name }).closest('article')!)
-    card.getByText(line)
-    card.getByText(body)
-    expect(card.getByRole('link', { name: link }).getAttribute('href')).toBe(href)
+    const product = within(section.getByRole('heading', { level: 3, name }).closest('article')!)
+    product.getByText(line)
+    expect(product.getByRole('link', { name }).getAttribute('href')).toBe(href)
   })
 })
 

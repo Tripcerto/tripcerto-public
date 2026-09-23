@@ -1,57 +1,60 @@
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
+/* Every section below a hero is one strip in the same rhythm, and this
+   file is where it lives: the same padding above and below, a centred head
+   (the heading, and the lede 20px under it), then its content the same
+   distance under the head, across the shell's width. The close band keeps
+   the rhythm too, from SECTION_PAD and SectionHead. No section sets a
+   padding or a gap of its own. */
+export const SECTION_PAD = 'py-20 md:py-28'
+
 export function Section({
   id,
-  className,
-  children,
+  heading,
+  lede,
+  action,
   tone = 'page',
-  wide = false,
+  children,
 }: {
   id?: string
-  className?: string
-  children: ReactNode
+  heading: string
+  lede?: string
+  action?: ReactNode
   tone?: 'page' | 'tint'
-  /* The hero's width from xl, past the shell. */
-  wide?: boolean
+  children?: ReactNode
 }) {
   return (
-    <section
-      id={id}
-      className={cn(
-        'py-20 md:py-28',
-        tone === 'tint' && 'bg-soft',
-        className,
-      )}
-    >
-      <div className={cn('shell', wide && 'xl:max-w-[1480px]')}>{children}</div>
+    <section id={id} className={cn(SECTION_PAD, tone === 'tint' && 'bg-soft')}>
+      <div className="shell">
+        <SectionHead heading={heading} lede={lede} action={action} />
+        {children && <div className="mt-12 md:mt-16">{children}</div>}
+      </div>
     </section>
   )
 }
 
-export function Heading({
-  as: Tag = 'h2',
-  children,
-  className,
+/* A section's head: the heading, the lede under it, and an action under
+   that where the section has one (a link, or the close's buttons), all
+   centred. On the band it is set in paper. */
+export function SectionHead({
+  heading,
+  lede,
+  action,
+  onBand = false,
 }: {
-  as?: 'h1' | 'h2' | 'h3'
-  children: ReactNode
-  className?: string
+  heading: string
+  lede?: string
+  action?: ReactNode
+  onBand?: boolean
 }) {
   return (
-    <Tag
-      className={cn(
-        'text-balance font-semibold tracking-[-0.02em]',
-        Tag === 'h2' && 'text-[2rem] leading-[1.1] md:text-[2.75rem]',
-        Tag === 'h3' && 'text-[1.375rem] leading-[1.2] md:text-2xl',
-        className,
+    <div className="mx-auto max-w-[44rem] text-center">
+      <h2 className={cn('text-heading text-balance', onBand && 'text-paper')}>{heading}</h2>
+      {lede && (
+        <p className={cn('mx-auto mt-5 max-w-[40rem] text-lede text-pretty', onBand ? 'text-paper/85' : 'text-dim')}>{lede}</p>
       )}
-    >
-      {children}
-    </Tag>
+      {action && <div className="mt-10 flex flex-wrap items-center justify-center gap-3">{action}</div>}
+    </div>
   )
-}
-
-export function Lede({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn('text-pretty text-[17px] leading-[1.55] text-dim md:text-lg', className)}>{children}</p>
 }

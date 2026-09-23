@@ -1,9 +1,8 @@
 import type { LucideIcon } from 'lucide-react'
 import { BadgePoundSterling, ClipboardCheck, Handshake, Megaphone, ServerCog } from 'lucide-react'
-import { Heading, Section } from '@/components/site/Section'
+import { Section } from '@/components/site/Section'
 import { home } from '@/content/home'
 import { SECTION } from '@/lib/links'
-import { cn } from '@/lib/utils'
 
 type Role = (typeof home.audience.roles)[number]['role']
 
@@ -15,34 +14,35 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
   Finance: BadgePoundSterling,
 }
 
-/* The buying roles as a ruled grid under the heading: each cell the role's
-   glyph, its name and the measures it is held to, one to a line. Two
-   columns on a phone, the fifth role across both; one row of five from md.
-   Rules run between the cells and across the top and foot, never up the
-   outer sides, so the grid opens onto the page. The foot rule sits 40px
-   above the band, the distance the footer keeps under it; md:pb-10 is what
-   outranks the Section's md:py-28. */
+/* The buying roles in one closed box of the site's glass under the
+   heading. Each role is its glyph and name, then the measures it is held
+   to, a bullet each, set as copy. From lg the box is as wide as the
+   product tiles above and the five stand side by side, ruled between.
+   Below that the box is as wide as the heading, centred under it, and each
+   role is a row: the glyph and name on the left and the measures down the
+   right, in two columns of one width in every row, the pair centred and
+   each centred on the other, so no measure runs past two lines at any
+   width. The glyph and name are centred in their column, and in their
+   column from lg, with the measures centred as a block under them. */
 export function Audience() {
   return (
-    <Section id={SECTION.audience} tone="tint" className="pb-10 md:pb-10">
-      <Heading className="max-w-[44rem]">{home.audience['H-7-A']}</Heading>
-
-      <ul role="list" className="mt-10 grid grid-cols-2 border-t border-line md:mt-12 md:grid-cols-5">
-        {home.audience.roles.map(({ role, measures }, i) => {
+    <Section id={SECTION.audience} tone="tint" heading={home.audience['H-7-A']}>
+      <ul
+        role="list"
+        className="glass mx-auto max-w-[40rem] divide-y divide-line overflow-hidden rounded-xl shadow-card lg:grid lg:max-w-none lg:grid-cols-5 lg:divide-x lg:divide-y-0"
+      >
+        {home.audience.roles.map(({ role, measures }) => {
           const Glyph = ROLE_GLYPH[role]
           return (
             <li
               key={role}
-              className={cn(
-                'border-b border-line py-6 pr-4 md:py-8 lg:pr-6',
-                i % 2 ? 'border-l pl-5' : 'pl-0',
-                i === home.audience.roles.length - 1 && i % 2 === 0 && 'col-span-2 md:col-span-1',
-                i ? 'md:border-l md:pl-5 lg:pl-6' : 'md:pl-0',
-              )}
+              className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-x-5 px-5 py-5 sm:grid-cols-[10rem_16rem] sm:justify-center sm:px-6 lg:flex lg:flex-col lg:justify-start lg:gap-x-0 lg:px-7 lg:py-9"
             >
-              <Glyph size={22} aria-hidden className="text-link" />
-              <h3 className="mt-4 text-[17px] leading-[1.3] font-semibold md:text-[19px]">{role}</h3>
-              <ul role="list" className="mt-3 space-y-1.5 text-[14px] leading-[1.4] text-dim md:text-[15px]">
+              <div className="flex flex-col items-center gap-2 text-center lg:gap-4">
+                <Glyph size={24} aria-hidden className="text-link" />
+                <h3 className="text-subhead">{role}</h3>
+              </div>
+              <ul role="list" className="list-disc space-y-1 pl-[1.1em] text-copy text-dim marker:text-dim/60 lg:mx-auto lg:mt-4">
                 {measures.map((measure) => (
                   <li key={measure}>{measure}</li>
                 ))}

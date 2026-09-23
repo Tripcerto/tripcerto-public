@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { extname, join, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
-import { createServer, type Connect, type ResolvedConfig, type ViteDevServer } from 'vite'
+import { createServer, type Connect, type EnvironmentModuleNode, type ResolvedConfig, type ViteDevServer } from 'vite'
 import { defineConfig, type Plugin } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -36,15 +36,20 @@ const MODULE_SCRIPT = /<script type="module" src="([^"]+)"><\/script>/g
 
 type Load = (id: string) => Promise<Record<string, unknown>>
 
-/* The markup for the page an HTML file loads. The file's one module script
-   is the page's entry, whose default export is the page it hydrates
-   (src/boot.tsx); src/prerender.tsx renders that same export, so the
-   markup and the tree that takes it over are one import. `load` imports a
-   module by its URL from the root, through Vite or the test runner. */
-export async function renderPage(file: string, load: Load): Promise<string> {
+/* A page's entry: the one module script in its HTML file as written. */
+function pageEntry(file: string): string {
   const scripts = [...readFileSync(file, 'utf8').matchAll(MODULE_SCRIPT)].map(([, src]) => src)
   if (scripts.length !== 1) throw new Error(`${file} needs exactly one module script, its entry; it has ${scripts.length}`)
-  const [script] = scripts
+  return scripts[0]
+}
+
+/* The markup for the page an HTML file loads. The file's entry's default
+   export is the page it hydrates (src/boot.tsx); src/prerender.tsx renders
+   that same export, so the markup and the tree that takes it over are one
+   import. `load` imports a module by its URL from the root, through Vite
+   or the test runner. */
+export async function renderPage(file: string, load: Load): Promise<string> {
+  const script = pageEntry(file)
   const { default: page } = await load(script)
   if (typeof page !== 'function') throw new Error(`${script} must export its page as its default export`)
   const { render } = await load('/src/prerender.tsx')
@@ -54,6 +59,36 @@ export async function renderPage(file: string, load: Load): Promise<string> {
   } catch (error) {
     throw new Error(`${file} could not be rendered`, { cause: error })
   }
+}
+
+/* The stylesheets a rendered page's entry imports, as <style> tags for its
+   head. The build links its stylesheet from the head, but the dev server
+   hands styles over through the entry's scripts, so without these the
+   rendered markup paints unstyled until the scripts run. Each tag carries
+   the id Vite's client looks for (data-vite-dev-id), so the client adopts
+   the tag as that stylesheet and updates it in place when the CSS changes. */
+async function devStyles(server: ViteDevServer, entry: string): Promise<string> {
+  const root = await server.environments.ssr.moduleGraph.getModuleByUrl(entry)
+  if (!root) throw new Error(`${entry} has not been loaded, so its stylesheets cannot be found`)
+  const seen = new Set<EnvironmentModuleNode>()
+  const sheets: EnvironmentModuleNode[] = []
+  const walk = (node: EnvironmentModuleNode) => {
+    for (const dep of node.importedModules) {
+      if (seen.has(dep)) continue
+      seen.add(dep)
+      if (dep.file?.endsWith('.css')) sheets.push(dep)
+      else walk(dep)
+    }
+  }
+  walk(root)
+  const tags = await Promise.all(
+    sheets.map(async (sheet) => {
+      const result = await server.environments.client.transformRequest(`${sheet.url}?direct`)
+      if (!result) throw new Error(`${sheet.url} could not be compiled for the page's head`)
+      return `<style type="text/css" data-vite-dev-id="${sheet.id}">${result.code}</style>`
+    }),
+  )
+  return tags.join('')
 }
 
 /* Every page ships with its markup already in #root, so crawlers that run
@@ -108,7 +143,9 @@ function prerender(): Plugin {
         const parts = html.split(ROOT)
         if (parts.length !== 2) throw new Error(`${filename} needs exactly one empty ${ROOT} for its page`)
         const markup = await renderPage(filename, (id) => from.ssrLoadModule(id))
-        return parts.join(`<div id="root">${markup}</div>`)
+        const page = parts.join(`<div id="root">${markup}</div>`)
+        if (!server) return page
+        return page.replace('</head>', `${await devStyles(server, pageEntry(filename))}</head>`)
       },
     },
   }

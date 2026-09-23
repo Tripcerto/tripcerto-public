@@ -133,7 +133,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
                     href={link.href}
                     aria-current={current ? 'page' : undefined}
                     className={cn(
-                      'inline-flex h-11 items-center text-[15px] font-medium transition-colors',
+                      'inline-flex h-11 items-center text-nav transition-colors',
                       overBand
                         ? current
                           ? 'text-paper'
@@ -155,7 +155,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
             <a
               href={LOGIN_URL}
               className={cn(
-                'inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors',
+                'inline-flex h-11 items-center gap-1 text-nav transition-colors',
                 overBand ? 'text-paper/90 hover:text-paper' : 'text-body/85 hover:text-body',
               )}
             >
@@ -207,7 +207,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
                   aria-current={isCurrent(link.href) ? 'page' : undefined}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    'shell flex h-14 items-center justify-between border-b text-[17px] font-medium transition-colors',
+                    'shell flex h-14 items-center justify-between border-b text-subhead transition-colors',
                     menuOverBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
                   )}
                 >

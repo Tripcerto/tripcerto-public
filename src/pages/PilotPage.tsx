@@ -3,7 +3,7 @@ import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
-import { Heading, Section } from '@/components/site/Section'
+import { Section } from '@/components/site/Section'
 import { pilot } from '@/content/pilot'
 import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
@@ -26,8 +26,7 @@ export function PilotPage() {
           primary={{ label: pilot.hero['P-1-C'], href: DEMO_URL }}
         />
 
-        <Section id={MEASURES_ID} tone="tint">
-          <Heading className="max-w-[44rem]">{pilot.measures['P-3-A']}</Heading>
+        <Section id={MEASURES_ID} tone="tint" heading={pilot.measures['P-3-A']}>
           <Rows rows={pilot.measures.rows} />
         </Section>
 
