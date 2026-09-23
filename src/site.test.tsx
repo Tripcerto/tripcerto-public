@@ -119,8 +119,8 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
     expect(hrefs).toContain(DEMO_URL)
     expect(hrefs).toContain(LOGIN_URL)
     for (const p of [PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.trust]) expect(hrefs).toContain(p)
-    expect(hrefs).toContain('/legal/privacy/')
-    expect(hrefs).toContain('/legal/terms/')
+    expect(hrefs).toContain('/legal/privacy')
+    expect(hrefs).toContain('/legal/terms')
   })
 
   it('renders every section heading from the copy file', () => {

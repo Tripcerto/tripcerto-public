@@ -9,7 +9,7 @@ export const home = {
   hero: {
     'H-1-A': 'We make complex travel easier to plan and sell', // changed
     'H-1-B':
-      'Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds the quote structure from that brief and shows what is still missing.', // changed
+      'Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds an itemised trip from the inquiry as soon as it arrives and shows what is still missing.', // changed
     'H-1-C': 'Book a demo',
     'H-1-D': 'See how it works',
   },
@@ -69,17 +69,17 @@ export const home = {
       {
         role: 'Sales',
         measure: 'Conversion, response time, booking value',
-        line: 'Every inquiry arrives with the questions asked, the preferences given and the products considered, so the first reply is faster and better informed.',
+        line: 'Every inquiry arrives with the questions asked, the preferences given and the products considered, so the first reply can be faster and better informed.',
       },
       {
         role: 'Marketing',
         measure: 'Inquiry rate, cost per qualified inquiry',
-        line: 'More of the visitors you already pay for reach a useful conversation, and each inquiry carries a record of what the visitor wanted.',
+        line: 'Engage helps more of the visitors you already pay for reach a useful conversation, and each inquiry carries a record of what the visitor wanted.',
       },
       {
         role: 'Operations',
         measure: 'Quote time, completeness, handling time',
-        line: 'Quotes are itemised and checked before they go out, with the gaps visible before send rather than corrected after.',
+        line: 'Workspace itemises and checks every quote, with the gaps visible before it goes out.',
       },
       {
         role: 'Technology',
@@ -104,6 +104,6 @@ export const home = {
   close: {
     'H-9-A': 'We find where our AI has the most effect in your business, then prove it there', // changed (Taylor, 22 Sep)
     'H-9-C': 'Book a demo',
-    'H-9-D': 'How a pilot runs',
+    'H-9-D': 'What a pilot delivers',
   },
 } as const

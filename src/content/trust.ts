@@ -13,14 +13,14 @@ export const trust = {
     // Three lines, as Taylor set them (22 Sep).
     'T-1-A': ['Your data,', 'Your expertise,', 'You’re in control.'], // changed
     'T-1-B':
-      'Tripcerto sits between your content, your systems and the model. It decides what the model may read, recommend and do, records each of them, keeps every customer’s data apart and leaves the commercial decisions with your experts.', // changed
+      'Tripcerto sits between your content, your systems and the model, so your business can put its own data to work with AI. It decides what the model may read, recommend and do, records what the model read and did, keeps every customer’s data apart and leaves the commercial decisions with your experts.', // changed
     'T-1-C': 'Book a demo', // added
     'T-1-D': 'How information moves', // added
   },
   moves: {
     'T-2-A': 'How information moves through the system', // changed
     'T-2-B':
-      'You own your content, your product data and your customer records. Tripcerto reads them to run the workflow you configured, and nothing of yours is used to train a model, ours or a supplier’s.', // changed
+      'Tripcerto reads your content, your product data and your customer records to run the workflow you configured. Where each goes and what it is used for is set out below, and training a model, ours or a supplier’s, is not among the uses.', // changed
     rows: [
       {
         name: 'Your content and product data',
@@ -30,12 +30,12 @@ export const trust = {
       {
         name: 'The conversation',
         note: 'Written by a model that keeps nothing',
-        line: 'The model that writes each reply, run by Anthropic, receives the conversation with no contact field attached, under terms that rule out training and, since September 2026, retain nothing once the reply is written. A second model turns phrases from it into the vectors used for matching and never sees a whole message.',
+        line: 'Anthropic runs the model that writes each reply. It receives the conversation with no contact field attached, under terms that rule out training, and since September 2026 it retains nothing once the reply is written. A second model turns phrases from the conversation into the vectors used for matching and never sees a whole message.',
       },
       {
         name: 'Your customer records',
         note: 'Held in London, apart from the conversation',
-        line: 'Names, contact details and enquiries are held in a database in London, separately from the conversation, for a stated period, and deleted on request. The conversation itself is processed in the United States and discarded.',
+        line: 'Names, contact details and inquiries are held in a database in London, separately from the conversation, for a stated period, and deleted on request. The conversation itself is processed in the United States and discarded.',
       },
       {
         name: 'Your systems',
@@ -70,7 +70,7 @@ export const trust = {
       {
         name: 'Separation',
         note: 'A check on every request',
-        line: 'Every request is checked against the tenant it belongs to, at every endpoint, before any data is read. A partner’s consultants see their own partner’s trips and no other’s.',
+        line: 'Every request is checked against the tenant it belongs to, at every endpoint, before any data is read. Your consultants see your trips and no other tenant’s.',
       },
       {
         name: 'Access',
@@ -79,13 +79,13 @@ export const trust = {
       },
       {
         name: 'Machine access',
-        note: 'A credential names a partner, never a person',
-        line: 'A partner’s own system calls the API with a credential that names the partner. Each of its customers is identified by the partner’s own reference, and the credential reaches that partner’s data and nothing else.',
+        note: 'A credential names your business, never a person',
+        line: 'Your own system calls the API with a credential that names your business. Each of your customers is identified by your own reference, and the credential reaches your data and nothing else.',
       },
       {
         name: 'What is recorded',
         note: 'Events, changes, sign-ins and deployments',
-        line: 'Every application event is recorded at the boundary with what happened, how long it took and the outcome, and shipped to a monitoring service that alerts both directors. Every change to a trip names who made it. Every deployment is tied to a commit, an author and a time.',
+        line: 'Every application event is recorded at the boundary with what happened, how long it took and the outcome, and shipped to a monitoring service that alerts both directors. Every sign-in is recorded, every change to a trip names who made it, and every deployment is tied to a commit, an author and a time.',
       },
       {
         name: 'How the system changes',
@@ -97,7 +97,7 @@ export const trust = {
   programme: {
     'T-4-A': 'An information security management system aligned to ISO/IEC 27001',
     'T-4-B':
-      'Tripcerto holds no certificate today and claims none. The management system is written, approved and operating, and certification is what it is run toward.', // changed: the PDF asked for the programme and the direction of travel
+      'The management system is written, approved and operating, and certification is what it is run towards. Tripcerto holds no certificate today and claims none.', // changed: the PDF asked for the programme and the direction of travel
     rows: [
       {
         name: 'Written and approved',
@@ -110,7 +110,7 @@ export const trust = {
         line: 'Risk, access and supplier registers reviewed quarterly, incidents logged, objectives measured, and a management review held and minuted by both directors.',
       },
       {
-        name: 'Suppliers, chosen not assumed',
+        name: 'Suppliers, chosen against four tests',
         note: 'A register of everything that receives personal data',
         line: 'Every supplier that receives personal data is recorded with what it receives, where it processes it and what assurance it publishes. A supplier is chosen for receiving no more than the job needs, publishing where it processes, offering a second factor and publishing an independent report; a shortfall is recorded as a risk, not waived.',
       },
@@ -139,13 +139,13 @@ export const trust = {
         name: 'Privacy notice',
         note: 'Published',
         line: 'What is collected, why, for how long, and the rights that go with it.',
-        href: '/legal/privacy/',
+        href: '/legal/privacy',
       },
       {
         name: 'Terms',
         note: 'Published',
         line: 'The terms on which the service is provided.',
-        href: '/legal/terms/',
+        href: '/legal/terms',
       },
       {
         name: 'Processing terms and suppliers',
@@ -165,9 +165,9 @@ export const trust = {
     'T-6-C': 'status.tripcerto.com', // added
   },
   close: {
-    'T-8-A': 'A security review is where a pilot starts', // added
+    'T-8-A': 'A pilot begins with your security questions answered', // added
     'T-8-B': 'Your security questionnaire is welcome before anything is built.', // added
     'T-8-C': 'Book a demo', // added
-    'T-8-D': 'How a pilot runs', // added
+    'T-8-D': 'What a pilot delivers', // added
   },
 } as const

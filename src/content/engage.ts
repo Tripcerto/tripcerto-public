@@ -39,7 +39,7 @@ export const engage = {
   sales: {
     'E-4-A': 'The brief that reaches your sales team', // changed
     'E-4-B':
-      'When a traveller is ready for a person, your team receives the conversation and a structured brief with it. The first reply starts from what the traveller has already said, not from a form.', // changed
+      'When a traveller is ready for a person, your team receives the conversation and a structured brief with it. The first reply starts from what the traveller has already said.', // changed
     caption: 'The brief as it arrives, with the transcript behind it.',
     points: [
       'Needs, timing, preferences, concerns and exclusions, as fields',
@@ -66,7 +66,7 @@ export const engage = {
       {
         name: 'Your sales process',
         detail: 'CRM, live chat, email, WhatsApp',
-        line: 'The brief and the transcript arrive in the CRM or channel your team already uses. Contact details are captured, or the traveller is handed to the channel they choose.',
+        line: 'The brief and the transcript arrive in the CRM or channel your team already uses. Contact details are captured, or the traveller is handed to your team in that channel.',
       },
       {
         name: 'Your controls',
@@ -83,10 +83,10 @@ export const engage = {
   },
   /* E-9 Pilot and E-10 Close, together on the band: the measures and the call. */
   close: {
-    'E-9-A': 'A pilot proves it on the number you choose', // changed
+    'E-9-A': 'A pilot proves it on one number, agreed with you', // changed
     'E-9-B':
       'Engaged visitors who become inquiries, the quality of each inquiry, time to a useful answer, or the completeness of the brief. We agree the baseline first, then measure the change.', // changed
     'E-10-B': 'Book a demo',
-    'E-10-C': 'How a pilot runs', // added
+    'E-10-C': 'What a pilot delivers', // added
   },
 } as const
