@@ -2,7 +2,8 @@ import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import { Heading } from '@/components/site/Section'
 import { Button } from '@/components/ui/button'
-import { SECTION } from '@/lib/links'
+import { trackEvent } from '@/lib/events'
+import { DEMO_URL, SECTION } from '@/lib/links'
 
 export type CloseLink = { label: string; href: string }
 
@@ -27,7 +28,7 @@ export function Close({
         {line && <p className="mx-auto mt-6 max-w-[40rem] text-lg leading-[1.55] text-paper/85">{line}</p>}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <Button asChild variant="accent" size="lg">
-            <a href={primary.href}>
+            <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'close' }) : undefined}>
               {primary.label}
               <ArrowRight aria-hidden />
             </a>

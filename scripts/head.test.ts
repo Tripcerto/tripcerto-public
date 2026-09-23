@@ -55,6 +55,20 @@ describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
     expect(prePaint(html)).toContain("classList.add('js')")
     expect(prePaint(html)).toBe(prePaint(ENTRIES.find((entry) => entry.name === 'home')?.html ?? ''))
   })
+
+  /* Google Analytics is loaded by the page, and only after a visitor says
+     yes; a tag in the head would load it before anyone was asked. */
+  it('loads no Google tag', () => {
+    expect(html).not.toContain('googletagmanager')
+    expect(html).not.toContain('gtag(')
+  })
+
+  /* The name the entry mounts its page under is the page every event
+     reports, so it is the build's own name for the page. */
+  it('mounts its page under its own name', () => {
+    const script = html.match(/<script type="module" src="\/([^"]+)"><\/script>/)?.[1] ?? ''
+    expect(read(join(ROOT, script))).toMatch(new RegExp(`\\bmount\\(\\w+, '${name}'\\)`))
+  })
 })
 
 describe('the crawl files', () => {

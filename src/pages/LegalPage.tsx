@@ -1,11 +1,9 @@
 import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
-import { usePageAnalytics } from '@/lib/analytics'
 
 /* A legal document inside the site's nav and footer. The document is our
    own HTML file from src/content/legal, set as written. */
 export function LegalPage({ html }: { html: string }) {
-  usePageAnalytics()
   return (
     <>
       <Nav opensOnBand={false} />

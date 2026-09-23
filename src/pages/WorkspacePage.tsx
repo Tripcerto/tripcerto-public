@@ -8,7 +8,6 @@ import { Heading, Lede, Section } from '@/components/site/Section'
 import { WorkspaceChat } from '@/components/site/frames/WorkspaceChat'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { workspace } from '@/content/workspace'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
@@ -27,7 +26,6 @@ const COLUMN_GLYPH: Record<Column, LucideIcon> = {
    pane, the itemised trip as three ruled columns, and the close. Every
    section shows the product or leads somewhere (23 Sep sync). */
 export function WorkspacePage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.workspace} />

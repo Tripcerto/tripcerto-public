@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 import { flushSync } from 'react-dom'
 import { hydrateRoot } from 'react-dom/client'
+import { enterPage, type PageKey } from '@/lib/events'
 import { Site } from './Site'
 import './index.css'
 
@@ -9,7 +10,8 @@ import './index.css'
    back. The build imports that entry, renders its default export into the
    page's #root (prerender in vite.config.ts) and takes the page from nowhere
    else, so the markup a page ships and the tree that hydrates it cannot
-   differ. On the server mount only hands the page back.
+   differ. On the server mount only hands the page back. The key is the
+   build's name for the page, which every event the page sends reports.
 
    In the browser the markup is already there, so the page has its full
    height while the document is still loading: that is the only window in
@@ -19,8 +21,9 @@ import './index.css'
    nav's measured tone and the stored theme. Smooth scrolling (index.css,
    html.loaded) waits for the frame after load, so that restore and that
    jump are not animated from the top. */
-export function mount(page: ComponentType): ComponentType {
+export function mount(page: ComponentType, key: PageKey): ComponentType {
   if (import.meta.env.SSR) return page
+  enterPage(key)
   flushSync(() => {
     hydrateRoot(document.getElementById('root')!, <Site page={page} />)
   })

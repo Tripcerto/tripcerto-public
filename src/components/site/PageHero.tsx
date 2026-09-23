@@ -4,6 +4,8 @@ import { Band } from '@/components/site/Band'
 import type { CloseLink } from '@/components/site/Close'
 import { delay } from '@/components/site/frames/motion'
 import { Button } from '@/components/ui/button'
+import { trackEvent } from '@/lib/events'
+import { DEMO_URL } from '@/lib/links'
 import { cn } from '@/lib/utils'
 
 /* A page's opening on the band, in the home hero's idiom a step smaller:
@@ -56,7 +58,7 @@ export function PageHero({
             <p className="mt-7 max-w-[34rem] text-lg leading-[1.55] text-paper/85 md:text-xl">{lede}</p>
             <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button asChild size="lg" variant="accent">
-                <a href={primary.href}>
+                <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}>
                   {primary.label}
                   <ArrowRight aria-hidden />
                 </a>
