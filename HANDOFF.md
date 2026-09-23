@@ -213,8 +213,7 @@ They are guidelines for the register, never lines to lift.
   `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
   (Taylor, 23 Sep, after the design sync moved the site off "we" statements;
   it has been reworded often, so check the file rather than any quote in this
-  doc). It is also the home page's <title>, the og:image:alt on all five
-  pages, the
+  doc). It is also the og:image:alt on all five pages, the
   webmanifest description, and the headline on the link-preview card
   (`scripts/og/copy.js`, `variants.a.head` and `pages.home.head`, baked into
   `public/og-image.png`): change all of them together and re-shoot the card.
@@ -437,8 +436,14 @@ reference in the PR; Taylor and Charlie reply by reference.
   (they read "How a pilot runs", which sold the page as the process manual
   §12 rules out); the in-page link is "Our approach". The Pilot page's two
   buttons read "Book a call" (§12: the next step is a call with our team; the
-  URL is the same calendar page). Engage and Workspace carry their hero
-  headline in the title tag, as the home page does.
+  URL is the same calendar page).
+- Tab titles: every page's `<title>` is a one-word label and the name
+  ("Engage | Tripcerto", "Workspace | Tripcerto", "Pilot | Tripcerto",
+  "Trust | Tripcerto", "Privacy | Tripcerto", "Terms | Tripcerto"); the home
+  page's is "Tripcerto" alone. The label is the page's entry name in
+  `vite.config.ts`, and `scripts/head.test.ts` holds the rule. A link preview
+  may carry the headline (Engage's and Workspace's og:title and
+  twitter:title do); the tab does not.
 - Head: every canonical, `og:url`, `og:image` and `twitter:image` names
   `www.tripcerto.com` (the apex 307s). The legal pages got the site's head
   contract (lang, viewport, v=9 icons, mask icon, manifest, canonical, a

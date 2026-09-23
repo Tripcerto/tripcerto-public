@@ -19,7 +19,14 @@ const ENTRIES = [...INPUT.matchAll(/(\w+): fileURLToPath\(new URL\('\.\/([^']+)'
   return { name, html: read(join(ROOT, file)), url: `${SITE}/${path}` }
 })
 
+const title = (html: string) => html.match(/<title>([^<]*)<\/title>/)?.[1]
 const description = (html: string) => html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1]
+
+/* The tab names the page in one word, its entry's name, then the company;
+   the home page is the company alone. A link preview may carry the page's
+   headline in og:title; the tab does not. */
+const tabTitle = (name: string) =>
+  name === 'home' ? 'Tripcerto' : `${name[0].toUpperCase()}${name.slice(1)} | Tripcerto`
 const structured = (html: string) =>
   [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]))
 
@@ -37,6 +44,11 @@ const STRUCTURED = ['home', 'engage', 'workspace']
 const prePaint = (html: string) => html.match(/<script>([\s\S]*?)<\/script>/)?.[1]
 
 describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
+  it('names the page in its tab title', () => {
+    expect(html.match(/<title>/g)).toHaveLength(1)
+    expect(title(html)).toBe(tabTitle(name))
+  })
+
   it('describes the page and names its address', () => {
     expect(description(html)?.length ?? 0).toBeGreaterThan(40)
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1]
