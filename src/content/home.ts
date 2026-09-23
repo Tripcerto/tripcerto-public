@@ -61,18 +61,15 @@ export const home = {
   },
   audience: {
     'H-7-A': 'Built for the people who sell complex travel', // changed
-    'H-7-B':
-      'Tripcerto takes the manual steps out of selling multi-day, multi-supplier trips at bespoke tour operators, DMCs and digitally connected ground transportation. Each role sees it in the number it is measured on.', // changed
     /* Buying roles and what they are measured on (Guide §8; the Foundation's
-       stakeholder map). Sectors support the explanation, they do not lead it.
-       Each role is its name and its measures, nothing more (23 Sep). */
+       stakeholder map). Each role is its name and its measures, nothing more,
+       under the heading alone (23 Sep sync: the travel expert is sales). */
     roles: [
       { role: 'Sales', measures: ['Conversion', 'Response time', 'Booking value'] },
       { role: 'Marketing', measures: ['Inquiry rate', 'Cost per qualified inquiry'] },
       { role: 'Operations', measures: ['Quote time', 'Completeness', 'Handling time'] },
       { role: 'Technology', measures: ['Security', 'Data ownership', 'Integration'] },
       { role: 'Finance', measures: ['Total cost', 'Payback', 'Contract exposure'] },
-      { role: 'The travel expert', measures: ['Time on expert work', 'Fewer corrections'] },
     ], // changed: roles, not sectors; the measures as a list and the sentences dropped (23 Sep)
   },
   /* No Proof section (Guide §10): the close is the call, with the pilot
