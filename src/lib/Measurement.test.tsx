@@ -78,12 +78,12 @@ afterEach(() => {
 })
 
 describe('Vercel Web Analytics', () => {
-  it('records every visitor, by origin and path only', async () => {
+  it('records every visitor, by origin, path and campaign tags only', async () => {
     const { Measurement } = await load()
     render(<Measurement />)
-    expect(vercel.beforeSend?.({ type: 'pageview', url: 'https://www.tripcerto.com/pilot?utm_source=x#top' })).toEqual({
+    expect(vercel.beforeSend?.({ type: 'pageview', url: 'https://www.tripcerto.com/pilot?utm_source=x&ref=abc#top' })).toEqual({
       type: 'pageview',
-      url: 'https://www.tripcerto.com/pilot',
+      url: 'https://www.tripcerto.com/pilot?utm_source=x',
     })
   })
 

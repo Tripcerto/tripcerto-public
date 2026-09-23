@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Analytics, type BeforeSendEvent } from '@vercel/analytics/react'
 
-import { stripAddress } from '@/lib/address'
+import { analyticsAddress } from '@/lib/address'
 import { isTeamBrowser, markTeamBrowser, useConsent } from '@/lib/consent'
 import { currentPage, trackEvent } from '@/lib/events'
 import { initGoogleAnalytics, sendPageView, setAnalyticsLayout, stopGoogleAnalytics, type Layout } from '@/lib/ga'
@@ -51,7 +51,7 @@ export function Measurement() {
 
 function beforeSend(event: BeforeSendEvent): BeforeSendEvent | null {
   if (isTeamBrowser()) return null
-  const url = stripAddress(event.url)
+  const url = analyticsAddress(event.url)
   return url ? { ...event, url } : null
 }
 

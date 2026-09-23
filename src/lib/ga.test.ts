@@ -83,7 +83,7 @@ describe('initGoogleAnalytics', () => {
     expect(queue.map((entry) => entry[0])).toEqual(['js', 'consent', 'set', 'config'])
     expect(queue[0][1]).toBeInstanceOf(Date)
     expect(queue[1]).toEqual(['consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' }])
-    expect(queue[2]).toEqual(['set', { page_location: 'https://www.tripcerto.com/engage', page_referrer: '' }])
+    expect(queue[2]).toEqual(['set', { page_location: 'https://www.tripcerto.com/engage?utm_source=x', page_referrer: '' }])
     expect(queue[3]).toEqual(['config', GA_ID, CONFIG])
   })
 
@@ -100,12 +100,15 @@ describe('initGoogleAnalytics', () => {
     }
   })
 
-  it('strips the referrer to its origin and path', async () => {
-    Object.defineProperty(Document.prototype, 'referrer', { get: () => 'https://www.google.com/search?q=tripcerto#x', configurable: true })
+  it('strips the referrer to its origin, path and campaign tags', async () => {
+    Object.defineProperty(Document.prototype, 'referrer', {
+      get: () => 'https://www.google.com/search?q=tripcerto&utm_medium=email#x',
+      configurable: true,
+    })
     const { initGoogleAnalytics } = await load()
     initGoogleAnalytics({ layout: 'phone' })
     const set = queued().find((entry) => entry[0] === 'set')
-    expect(set?.[1]).toMatchObject({ page_referrer: 'https://www.google.com/search' })
+    expect(set?.[1]).toMatchObject({ page_referrer: 'https://www.google.com/search?utm_medium=email' })
   })
 
   it('sends to DebugView with VITE_GA_DEBUG=1', async () => {
@@ -118,13 +121,18 @@ describe('initGoogleAnalytics', () => {
 })
 
 describe('sendPageView', () => {
-  it('sends the page as origin and path, once per address', async () => {
+  it('sends the page with its campaign tags and nothing else from the query, once per page', async () => {
+    visit('https://www.tripcerto.com/engage?utm_source=li&ref=abc&utm_campaign=launch#top')
     const { initGoogleAnalytics, sendPageView } = await load()
     initGoogleAnalytics({ layout: 'desktop' })
     sendPageView('engage')
     sendPageView('engage')
+    visit('https://www.tripcerto.com/engage?utm_source=email')
+    sendPageView('engage')
     const views = queued().filter((entry) => entry[0] === 'event' && entry[1] === 'page_view')
-    expect(views).toEqual([['event', 'page_view', { page_location: 'https://www.tripcerto.com/engage', page: 'engage', app_surface: 'website', layout: 'desktop' }]])
+    expect(views).toEqual([
+      ['event', 'page_view', { page_location: 'https://www.tripcerto.com/engage?utm_source=li&utm_campaign=launch', page: 'engage', app_surface: 'website', layout: 'desktop' }],
+    ])
   })
 
   it('sends nothing before GA is running', async () => {

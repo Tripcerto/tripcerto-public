@@ -51,14 +51,34 @@ async function readJson(req: Request): Promise<unknown> {
   }
 }
 
+function refuse(status: number, error: string, headers: Record<string, string> = {}): Response {
+  return Response.json({ ok: false, error }, { status, headers: { ...NO_STORE, ...headers } })
+}
+
+/* The address the browser used. Behind Vercel's proxy the request may carry
+   an internal one; the forwarded headers carry the public scheme and host,
+   which is what `Origin` names. Either header missing, the request's own
+   value stands in for it. */
+function publicOrigin(req: Request): URL {
+  const url = new URL(req.url)
+  const proto = req.headers.get('x-forwarded-proto')?.split(',')[0].trim()
+  const host = req.headers.get('x-forwarded-host')?.split(',')[0].trim()
+  return new URL(`${proto ? `${proto}:` : url.protocol}//${host ?? url.host}`)
+}
+
 /* Only the page's own origin may set the cookie: a request from anywhere
    else, or with no Origin at all, is refused before its body is read. */
 export async function handleConsent(req: Request, now: number): Promise<Response> {
-  if (req.method !== 'POST') return new Response(null, { status: 405, headers: { ...NO_STORE, allow: 'POST' } })
-  const url = new URL(req.url)
-  if (req.headers.get('origin') !== url.origin) return new Response(null, { status: 403, headers: NO_STORE })
-  const cookie = cookieFor(await readJson(req), url, now)
-  if (!cookie) return Response.json({ ok: false, error: 'invalid_body' }, { status: 400, headers: NO_STORE })
+  if (req.method !== 'POST') return refuse(405, 'method_not_allowed', { allow: 'POST' })
+  let own: URL
+  try {
+    own = publicOrigin(req)
+  } catch {
+    return refuse(403, 'forbidden_origin')
+  }
+  if (req.headers.get('origin') !== own.origin) return refuse(403, 'forbidden_origin')
+  const cookie = cookieFor(await readJson(req), own, now)
+  if (!cookie) return refuse(400, 'invalid_body')
   return new Response(null, { status: 204, headers: { ...NO_STORE, 'set-cookie': cookie } })
 }
 

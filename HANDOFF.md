@@ -582,10 +582,9 @@ Open, for Charlie's wording pass (new words, his to write):
 
 Later: content pages under each product (what, who for, how, FAQs) for
 search and AI answers; a page per role; downloadable PDFs; the pilot page's
-detail; Tripcerto Ground as its own site or route; Google Analytics on
-Jack's ticket (Vercel Analytics already records views, scroll depth,
-sections, clicks and time; GA adds cookies and a consent banner); the Trust
-page shorter, with an ISO 27001 target date only Taylor can give. Taylor's to reopen, since they reverse his 22 Sep calls:
+detail; Tripcerto Ground as its own site or route; the Trust page shorter,
+with an ISO 27001 target date only Taylor can give. Analytics is no longer
+later work: see "Analytics (23 Sep)" below. Taylor's to reopen, since they reverse his 22 Sep calls:
 real content in the frames instead of bars (Ryan; Taylor also wants a
 fuller Engage picture) and following the system theme. All the video ideas
 are parked until the videos exist.
@@ -646,3 +645,22 @@ turnaround, enquiry response time and qualifying questions; an honest,
 dated comparison of AI tools by job; FAQs; an About page; directory
 listings; and a fix to the LinkedIn company page, which is named
 "tripcerto." and claims results no pilot has measured.
+
+## Analytics (23 Sep)
+
+- Vercel Web Analytics counts every visitor with no cookie and no
+  identifier: page views, section views, and demo, contact and login clicks.
+  Scroll depth and time on page are no longer recorded.
+- Google Analytics 4 loads only after a visitor chooses Accept in the
+  consent bar (`src/components/site/ConsentBar.tsx`). Reject stops it and
+  deletes its cookies; Cookie settings, in the footer and the phone menu,
+  brings the bar back. `src/lib/ga.ts` is the only file that talks to it.
+- Every event the site sends is typed in `src/lib/events.ts`, with why it
+  exists, who owns it, where it goes and whether it is a conversion (demo and
+  contact clicks are).
+- `POST /api/consent` (`api/consent.ts`, run in London) sets the answer as
+  the `tc_consent` cookie on `.tripcerto.com`, so one answer holds on the
+  website, chat and workspace. `?team` on any address marks one of our own
+  browsers, and neither service counts it.
+- Both services receive addresses as origin and path plus any `utm_*`
+  campaign tags; nothing else from the query, and never the hash.

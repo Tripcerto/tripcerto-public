@@ -1,13 +1,14 @@
-import { pageAddress, stripAddress } from '@/lib/address'
+import { analyticsAddress, pageAddress } from '@/lib/address'
 import type { PageKey } from '@/lib/events'
 
 /* The only module that talks to Google Analytics: src/lib/events.test.ts
    fails on a `gtag(` or a `dataLayer` anywhere else. It loads gtag.js once,
    only on our own hosts and only after a visitor says yes (Measurement), and
-   sends page views itself, as origin and path, because GA's own would carry
-   the query string. Events reach it through trackEvent (events.ts). The
-   monorepo's packages/core/src/lib/googleAnalytics.ts does the same for chat
-   and workspace, into the same property. */
+   sends page views itself, as origin, path and campaign tags, because GA's
+   own would carry the whole query string. Events reach it through
+   trackEvent (events.ts). The monorepo's
+   packages/core/src/lib/googleAnalytics.ts does the same for chat and
+   workspace, into the same property. */
 
 type GtagArgs =
   | [command: 'js', date: Date]
@@ -41,7 +42,7 @@ const COOKIE_EXPIRES_SECONDS = 33696000
 export type Layout = 'phone' | 'tablet' | 'desktop'
 
 let loaded = false
-let lastPageAddress: string | null = null
+let lastPagePath: string | null = null
 /* What every event carries while GA runs: GA4 sends no parameter of our own
    given in `set` or `config`, only what rides the event itself. */
 let stamp: { app_surface: 'website'; layout: Layout } | null = null
@@ -86,7 +87,7 @@ export function initGoogleAnalytics({ layout }: { layout: Layout }): void {
   Reflect.set(window, `ga-disable-${GA_ID}`, false)
   /* The address rides `set`, not `config`: a config parameter outranks a
      set one, so an address in config would pin every later event to it. */
-  gtag('set', { page_location: pageAddress(), page_referrer: stripAddress(document.referrer) })
+  gtag('set', { page_location: analyticsAddress(window.location.href), page_referrer: analyticsAddress(document.referrer) })
   gtag('config', GA_ID, {
     send_page_view: false,
     allow_google_signals: false,
@@ -103,13 +104,14 @@ export function setAnalyticsLayout(layout: Layout): void {
   if (stamp) stamp = { ...stamp, layout }
 }
 
-/* One page view per address, as origin and path. */
+/* One page view per page, sent as origin, path and campaign tags. A page is
+   its origin and path: a change to the query alone is not a second one. */
 export function sendPageView(page: PageKey): void {
   if (!stamp) return
-  const address = pageAddress()
-  if (address === lastPageAddress) return
-  lastPageAddress = address
-  gtag('event', 'page_view', { page_location: address, page, ...stamp })
+  const path = pageAddress()
+  if (path === lastPagePath) return
+  lastPagePath = path
+  gtag('event', 'page_view', { page_location: analyticsAddress(window.location.href), page, ...stamp })
 }
 
 export function gaEvent(name: string, params: Record<string, string>): void {
@@ -130,7 +132,7 @@ function parentDomains(hostname: string): string[] {
 export function stopGoogleAnalytics(): void {
   Reflect.set(window, `ga-disable-${GA_ID}`, true)
   stamp = null
-  lastPageAddress = null
+  lastPagePath = null
   const names = new Set(
     document.cookie
       .split(';')
