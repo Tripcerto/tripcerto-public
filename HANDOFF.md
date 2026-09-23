@@ -147,8 +147,10 @@ They are guidelines for the register, never lines to lift.
   and every pair lands at the same pixel size); `StatusBadge.tsx` is every
   tick, clock and flag, solid so nothing shows through; `Composer.tsx` is
   the input in both frames, drawn as a phone's messaging app draws its own
-  (a round add button, a white field with a hairline edge and the mic
-  inside). The assistant's pane has no header: the quote request is its
+  (one white field with a hairline edge, the placeholder at the chat's own
+  size, the controls inside at the right): "Tell me about your dream trip"
+  and the mic on the phone, "Ask me anything" with a paperclip and the mic
+  in Workspace. The assistant's pane has no header: the quote request is its
   first line (Taylor, 23 Sep), and the name "Stella" appears nowhere in
   either frame. A running step's line uses the product's own sweep (`text-shimmer`: muted letters under a band of
   full-strength text, starting on the first letter, from the line's own

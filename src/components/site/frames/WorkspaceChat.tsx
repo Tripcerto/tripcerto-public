@@ -83,7 +83,7 @@ export function WorkspaceChat() {
         <p className="pt-[1.8cqw]">{trip.next}</p>
       </Opens>
 
-      <Composer scale="window" placeholder={trip.paneComposer} at={0.1} className="mt-[1.8cqw]" />
+      <Composer scale="window" placeholder={trip.paneComposer} at={0.1} attach className="mt-[1.8cqw]" />
     </div>
   )
 }

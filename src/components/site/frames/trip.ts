@@ -93,7 +93,7 @@ export const trip = {
   ],
   offer: 'Shall I ask Safari Expert to quote this for you?',
   confirm: 'Yes please, with the camp and the balloon.',
-  composer: 'Ask me about your trip',
+  composer: 'Tell me about your dream trip',
   phoneWorking: 'Sending to Safari Expert',
   phoneSent: 'Sent to Safari Expert',
 
@@ -112,5 +112,5 @@ export const trip = {
   ],
   detect: { text: 'Detecting gaps', found: '2 gaps found', start: BEAT.detect, end: BEAT.found },
   next: 'What would you like to do next? Book the transfer, or explore stays in Diani?',
-  paneComposer: 'Ask me about this trip',
+  paneComposer: 'Ask me anything',
 } as const
