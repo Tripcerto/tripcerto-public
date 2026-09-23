@@ -7,7 +7,7 @@
 
 export const home = {
   hero: {
-    'H-1-A': 'We make complex travel easier to plan and sell', // changed
+    'H-1-A': 'AI that makes complex travel easier to plan and sell', // changed (23 Sep sync)
     'H-1-B':
       'Engage understands what each website visitor wants and passes the full brief to your sales team. Workspace builds an itemised trip from the inquiry as soon as it arrives and shows what is still missing.', // changed
     'H-1-C': 'Book a demo',

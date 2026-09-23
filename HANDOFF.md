@@ -196,9 +196,10 @@ They are guidelines for the register, never lines to lift.
   follows them. "See how it works" scrolls to `#products`, and a test holds
   the link and the id together.
 - Copy in `src/content/home.ts` by PDF reference, changed strings marked
-  `// changed`. H-1-A is "We make complex travel easier to plan and sell"
-  (Taylor, 22 Sep; he reworded it four times that afternoon, so check the file
-  rather than any quote in this doc). It is also the home page's <title>,
+  `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
+  (Taylor, 23 Sep, after the design sync moved the site off "we" statements;
+  it has been reworded often, so check the file rather than any quote in this
+  doc). It is also the home page's <title>,
   og:title and twitter:title, the og:image:alt on all five pages, the
   webmanifest description, and the headline on the link-preview card
   (`scripts/og/copy.js`, `variants.a.head` and `pages.home.head`, baked into
@@ -356,9 +357,9 @@ review below changed strings around them, never those.
   easier to plan and sell... that's the only one I want."
 - `node scripts/og/shoot.mjs --pick a` writes that one file and nothing else.
   Then bump the `?v=` on every page's `og:image` and `twitter:image` so the
-  networks refetch (at `?v=12` since the centred card).
+  networks refetch (at `?v=13` since the "AI that makes" headline).
 - The composition, his, after four passes: the Ember band, the wordmark, the
-  homepage headline alone at 55px on a 540px measure, centred on the card's
+  homepage headline alone at 55px on a 400px measure, centred on the card's
   height, and the monogram as a white ghost, 700px wide at 0.34, off the right
   edge by 24px. The line under the headline went on his word (22 Sep, late:
   "drop the subtext. centre the headline"). Do not enlarge the type, put a

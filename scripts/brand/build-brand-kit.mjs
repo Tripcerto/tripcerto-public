@@ -327,7 +327,7 @@ all on the band. Rendered here from ${w('scripts/og/card.html')}, the source of 
 ${rows([
   ['The file', `${w('public/og-image.png')}, a 1200 × 630 card shot at 2×, so 2400 × 1260 pixels, served to every page.`],
   ['Rebuild it', `${w('node scripts/og/shoot.mjs --pick a')}, then bump the ${w('?v=')} on every page's og:image and twitter:image so the networks refetch it.`],
-  ['The type', 'The headline at 55px on a 540px measure, centred on the card’s height, and nothing under it. Short enough that the mark is never crowded.'],
+  ['The type', 'The headline at 55px on a 400px measure, centred on the card’s height, and nothing under it. Short enough that the mark is never crowded.'],
   ['The mark', 'The monogram, white at 0.34, 700px wide, off the right edge by 24px. It is the card; do not fade it back.'],
   ['Never', 'A second card per page, a line of copy under the headline, a photograph behind the type, or a headline long enough to run into the mark.'],
 ])}

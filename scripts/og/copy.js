@@ -20,7 +20,7 @@ export const variants = {
     name: 'Band',
     note: 'The hero itself: the Ember band under the signed-off headline.',
     theme: 'band',
-    head: 'We make complex travel easier to plan and sell',
+    head: 'AI that makes complex travel easier to plan and sell',
     // signed: home.hero['H-1-A']. The headline stands alone; no sub.
   },
   b: {
@@ -48,7 +48,7 @@ export const variants = {
     note: 'The software itself, in the frames the site draws it with.',
     theme: 'product',
     eyebrow: 'Tripcerto',
-    head: 'We make complex travel easier to plan and sell',
+    head: 'AI that makes complex travel easier to plan and sell',
     // from: home.hero['H-1-A']
     sub: 'Engage records what the visitor wants. Workspace turns it into an itemised trip with the gaps showing.',
     // from: home.hero['H-1-B']
@@ -80,7 +80,7 @@ export const variants = {
 export const pages = {
   home: {
     eyebrow: 'Engage · Workspace',
-    head: 'We make complex travel easier to plan and sell',
+    head: 'AI that makes complex travel easier to plan and sell',
   },
   engage: {
     eyebrow: 'Engage',
