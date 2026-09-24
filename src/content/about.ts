@@ -48,7 +48,7 @@ export const founders: readonly Person[] = [
     role: 'Co-founder and CTO',
     facts: [
       { figure: '7+', label: 'years in scalable systems' },
-      { figure: '2', label: 'products built: Engage and Workspace' },
+      { figure: '5+', label: 'products shipped, from mobile apps to web platforms' },
     ], // new (24 Sep, Taylor: no Dyson)
     note: 'Leads the platform: product, architecture and engineering.', // new (24 Sep): the Our Team document's "all technical development and architecture"
     linkedin: LINKEDIN.taylor,

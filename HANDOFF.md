@@ -786,7 +786,8 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   facts and a line on what they lead: Charlie 10+ years in travel sales,
   7,500+ enquiries handled (the Our Team document's figure), "Leads the
   company: strategy, operations and sales"; Taylor 7+ years in scalable
-  systems, 2 products built (Engage and Workspace), "Leads the platform:
+  systems, 5+ products shipped from mobile apps to web platforms (no
+  employer or product named, Taylor), "Leads the platform:
   product, architecture and engineering". No Dyson, no ownership, and no brand of either founder's is
   named (Taylor, 24 Sep). The portraits go in `public/team/` and in each founder's
   `photo`; until then each tile shows the initials on the band.
