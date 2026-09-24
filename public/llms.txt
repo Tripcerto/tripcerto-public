@@ -13,7 +13,7 @@ Engage understands what each website visitor wants and passes the full brief to 
 
 - [Pilot](https://www.tripcerto.com/pilot): Tripcerto works with you to find where it will do the most for your business, then proves it there on one agreed number.
 - [FAQ](https://www.tripcerto.com/faq): Answers to the questions travel businesses ask about Tripcerto: what Engage and Workspace do, where your data goes, and what a pilot delivers.
-- [About](https://www.tripcerto.com/about): Tripcerto takes the repetitive work out of planning and selling complex travel. It was founded by Charlie Potter, with more than ten years in travel sales, and Taylor Styles, with more than ten years building systems at scale.
+- [About](https://www.tripcerto.com/about): Tripcerto takes the repetitive work out of planning and selling complex travel. It was founded by Charlie Potter, with more than ten years in travel sales, and Taylor Styles, who designed and built its platform.
 - [Trust](https://www.tripcerto.com/trust): How Tripcerto puts a travel business’s content and customer data to work with AI: where information goes, who can reach it, how each customer stays separate, and the security programme behind it.
 
 ## Optional

@@ -79,7 +79,8 @@ function LinkedIn({ person }: { person: Person }) {
 
 /* A founder's tile, of the site's glass: the words lead and the portrait
    stays second (Taylor, 24 Sep), a square beside them from sm and above
-   them on a phone, then the name, the role, the facts and the LinkedIn. */
+   them on a phone, then the name, the role, the facts, what they lead and
+   the LinkedIn. */
 function FounderTile({ person }: { person: Person }) {
   return (
     <li className="glass flex flex-col gap-5 rounded-xl p-6 shadow-card sm:flex-row md:p-7">
@@ -88,6 +89,7 @@ function FounderTile({ person }: { person: Person }) {
         <h4 className="text-subhead">{person.name}</h4>
         <p className="text-small text-dim">{person.role}</p>
         <Facts facts={person.facts} size="copy" />
+        {person.note && <p className="mt-3 text-copy text-dim">{person.note}</p>}
         <LinkedIn person={person} />
       </div>
     </li>

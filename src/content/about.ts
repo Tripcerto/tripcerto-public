@@ -18,7 +18,7 @@ export type Fact = { figure: string; label: string }
 export type Person = {
   name: string
   role: string
-  /* What an adviser brings, in a line under the facts. */
+  /* What the person leads or brings, in a line under the facts. */
   note?: string
   /* One or two facts, each a figure and what it counts, set one under the
      other (Taylor, 24 Sep: no bullets). */
@@ -39,6 +39,7 @@ export const founders: readonly Person[] = [
       { figure: '10+', label: 'years in travel sales' },
       { figure: '7,500+', label: 'enquiries handled' },
     ], // new (24 Sep, Taylor): the enquiry figure is the Our Team document's "7,500+ enquiry journeys managed"
+    note: 'Leads sales and partnerships.', // new
     linkedin: LINKEDIN.charlie,
     photo: '/team/charlie-potter.webp',
   },
@@ -47,8 +48,9 @@ export const founders: readonly Person[] = [
     role: 'Co-founder and CTO',
     facts: [
       { figure: '7+', label: 'years in scalable systems' },
-      { figure: '5+', label: 'years at Dyson' },
-    ], // new (24 Sep, Taylor)
+      { figure: '2', label: 'products built: Engage and Workspace' },
+    ], // new (24 Sep, Taylor: no Dyson)
+    note: 'Leads product and engineering.', // new
     linkedin: LINKEDIN.taylor,
     photo: '/team/taylor-styles.webp',
   },

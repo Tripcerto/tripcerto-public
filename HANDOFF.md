@@ -780,9 +780,12 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   initials on the band.
 - The founders' facts are the ones both founders confirmed on 24 Sep:
   Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
-  Taylor Styles, Co-founder and CTO, more than ten years in scalable
-  systems, five at Dyson (cut to match Charlie's line, Taylor). No
-  ownership and no brand of either founder's is named. The portraits go in `public/team/` and in each founder's
+  Taylor Styles, Co-founder and CTO. On the tiles each founder has two
+  facts and a line on what they lead: Charlie 10+ years in travel sales,
+  7,500+ enquiries handled (the Our Team document's figure), leads sales
+  and partnerships; Taylor 7+ years in scalable systems, 2 products
+  built (Engage and Workspace), leads product and engineering. No Dyson, no ownership, and no brand of either founder's is
+  named (Taylor, 24 Sep). The portraits go in `public/team/` and in each founder's
   `photo`; until then each tile shows the initials on the band.
 - About (`/about`): Charlie's company line as the headline, why Tripcerto was
   started told through Charlie's experience rather than as the buyer's
