@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
-import { Check, ChevronLeft, Mic } from 'lucide-react'
+import { Check, ChevronLeft } from 'lucide-react'
+import { Composer } from '@/components/site/frames/Composer'
 import { KIND_ICON } from '@/components/site/frames/kinds'
 import { OperatorMark } from '@/components/site/frames/OperatorMark'
 import { PhoneFrame } from '@/components/site/frames/PhoneFrame'
 import { SafariScene } from '@/components/site/frames/SafariScene'
 import { StatusBadge } from '@/components/site/frames/StatusBadge'
 import { Step } from '@/components/site/frames/Step'
-import { BADGE, HEADER, ICON, SURFACE, TYPE, type Surface } from '@/components/site/frames/type'
+import { BADGE, HEADER, SURFACE, TYPE, type Surface } from '@/components/site/frames/type'
 import { delay } from '@/components/site/frames/motion'
 import { PHONE_BEAT as AT, trip } from '@/components/site/frames/trip'
 import { cn } from '@/lib/utils'
@@ -40,7 +41,7 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
   return (
     <PhoneFrame
       className={cn(
-        'w-full border-white/80 shadow-[0_2px_4px_rgb(40_17_49/0.08),0_24px_48px_-12px_rgb(40_17_49/0.35),0_60px_120px_-30px_rgb(40_17_49/0.4)] dark:border-ink/85',
+        'border-white/80 shadow-[0_2px_4px_rgb(40_17_49/0.08),0_24px_48px_-12px_rgb(40_17_49/0.35),0_60px_120px_-30px_rgb(40_17_49/0.4)] dark:border-ink/85',
         SURFACE[surface],
       )}
       islandClassName="bg-ink/80 dark:bg-ink"
@@ -114,16 +115,7 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
             </div>
           )}
 
-          <div
-            className={cn(
-              'animate-pop flex h-[9.8cqw] items-center rounded-full border border-ink/10 bg-white/70 pl-[3.8cqw] pr-[3cqw] text-ink/45 dark:border-white/10 dark:bg-white/[0.06] dark:text-paper/50',
-              T.detail,
-            )}
-            style={delay(AT.header)}
-          >
-            {trip.composer}
-            <Mic className={cn('ml-auto text-ink/60 dark:text-paper/70', ICON.phone)} />
-          </div>
+          <Composer scale="phone" placeholder={trip.composer} at={AT.header} />
         </div>
       </div>
     </PhoneFrame>

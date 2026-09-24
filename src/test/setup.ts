@@ -22,8 +22,8 @@ if (browser && !window.matchMedia) {
   }))
 }
 
-// jsdom has no IntersectionObserver. Auto-fire as intersecting on observe so
-// `.reveal` content is present and useReveal adds `.in` deterministically.
+// jsdom has no IntersectionObserver. Auto-fire on observe with the element
+// wholly on screen, so every Reveal marks itself in view deterministically.
 class MockIntersectionObserver implements IntersectionObserver {
   readonly root = null
   readonly rootMargin = ''
@@ -33,8 +33,19 @@ class MockIntersectionObserver implements IntersectionObserver {
     this.cb = cb
   }
   observe = (el: Element) => {
+    const rect = new DOMRect(0, 0, 100, 100)
     this.cb(
-      [{ isIntersecting: true, target: el } as IntersectionObserverEntry],
+      [
+        {
+          isIntersecting: true,
+          intersectionRatio: 1,
+          intersectionRect: rect,
+          boundingClientRect: rect,
+          rootBounds: new DOMRect(0, 0, 100, 800),
+          target: el,
+          time: 0,
+        },
+      ],
       this,
     )
   }

@@ -19,7 +19,14 @@ const ENTRIES = [...INPUT.matchAll(/(\w+): fileURLToPath\(new URL\('\.\/([^']+)'
   return { name, html: read(join(ROOT, file)), url: `${SITE}/${path}` }
 })
 
+const title = (html: string) => html.match(/<title>([^<]*)<\/title>/)?.[1]
 const description = (html: string) => html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1]
+
+/* The tab names the page in one word, its entry's name, then the company;
+   the home page is the company alone. A link preview may carry the page's
+   headline in og:title; the tab does not. */
+const tabTitle = (name: string) =>
+  name === 'home' ? 'Tripcerto' : `${name[0].toUpperCase()}${name.slice(1)} | Tripcerto`
 const structured = (html: string) =>
   [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]))
 
@@ -32,11 +39,19 @@ it('reads every entry, one for each page the sitemap lists', () => {
    data; the others carry none. */
 const STRUCTURED = ['home', 'engage', 'workspace']
 
+/* The legal documents, read at length. */
+const DOCUMENTS = ['privacy', 'terms']
+
 /* The inline script at the top of each head: it sets the stored theme and
    marks the page as scripted before the first paint. */
 const prePaint = (html: string) => html.match(/<script>([\s\S]*?)<\/script>/)?.[1]
 
 describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
+  it('names the page in its tab title', () => {
+    expect(html.match(/<title>/g)).toHaveLength(1)
+    expect(title(html)).toBe(tabTitle(name))
+  })
+
   it('describes the page and names its address', () => {
     expect(description(html)?.length ?? 0).toBeGreaterThan(40)
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1]
@@ -49,6 +64,13 @@ describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
       .filter((node) => node.description)
     expect(described.length > 0).toBe(STRUCTURED.includes(name))
     for (const node of described) expect(node.description).toContain(description(html))
+  })
+
+  /* A document is the one white page, and the browser bar matches it. */
+  it(DOCUMENTS.includes(name) ? 'is a white document page' : 'is a cream page', () => {
+    const document = DOCUMENTS.includes(name)
+    expect(html).toContain(document ? '<body class="document">' : '<body>')
+    expect(html).toContain(`<meta name="theme-color" content="${document ? '#ffffff' : '#fff1ea'}" />`)
   })
 
   it('runs the same pre-paint script as the home page', () => {

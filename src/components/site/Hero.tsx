@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
+import { Reveal } from '@/components/site/Reveal'
 import { Tag } from '@/components/site/Tag'
 import { Button } from '@/components/ui/button'
 import { HeroVisuals } from '@/components/site/frames/HeroVisuals'
@@ -51,9 +52,9 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="min-w-0 lg:col-span-7">
+          <Reveal className="min-w-0 lg:col-span-7">
             <HeroVisuals window={<WorkspaceScreen surface="band" />} phone={<PhoneScreen surface="band" sends />} />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

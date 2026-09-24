@@ -21,9 +21,9 @@ const COLUMN_GLYPH: Record<Column, LucideIcon> = {
   'Resolved, then approved': BadgeCheck,
 }
 
-/* The Workspace page: the opening on the band with the window and Stella's
-   pane, the itemised trip as three ruled columns, and the close. Every
-   section shows the product or leads somewhere (23 Sep sync). */
+/* The Workspace page: the opening on the band with the window and its
+   assistant pane, the itemised trip as three ruled columns, and the close.
+   Every section shows the product or leads somewhere (23 Sep sync). */
 export function WorkspacePage() {
   return (
     <>

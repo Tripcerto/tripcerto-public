@@ -25,8 +25,9 @@
   --color-up-tint: color-mix(in srgb, var(--color-up) 16%, white);
 
   /* The page surfaces: cream by day, ink by night. These switch in dark
-     mode; the brand colours above do not. White is not a surface; it only
-     ever appears as a glass wash over the cream. */
+     mode; the brand colours above do not. White is a surface only on a
+     document (body.document); everywhere else it only ever appears as a
+     glass wash over the cream. */
   --color-page: #fff1ea;
   --color-body: #281131;
   --color-dim: #685A6E;
@@ -139,6 +140,14 @@
     background:
       radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%),
       radial-gradient(50% 45% at 5% 95%, rgb(255 155 122 / 0.16), transparent 70%);
+  }
+  /* A document is the one white page by day: no cream and no wash behind
+     the text. By night it is the same ink as every page. */
+  :root:not(.dark) body.document {
+    background: white;
+  }
+  :root:not(.dark) body.document::before {
+    content: none;
   }
   :focus-visible {
     outline: 2px solid var(--color-link);
@@ -769,15 +778,17 @@
   }
 }
 
-/* Choreography below the fold waits for its section to be seen: the same
-   one-shot animations, held on their first frame inside a Reveal until it
-   is in view. Only on a page whose scripts run (the pre-paint script in
-   each page's head sets `.js`), since a script marks it in view: without
-   one, the first frame is invisible and would stay so. */
-.js .reveal :is(.animate-pop, .animate-flow, .animate-slide, .animate-flag, .animate-vanish, .animate-grow, .animate-ring, .text-shimmer) {
+/* A frame's choreography waits until the frame is wholly on screen: every
+   animation inside a Reveal, whatever it is, holds on its first frame until
+   the Reveal is in view. Only on a page whose scripts run (the pre-paint
+   script in each page's head sets `.js`), since a script marks it in view:
+   without one, the first frame is invisible and would stay so. */
+.js .reveal,
+.js .reveal * {
   animation-play-state: paused;
 }
-.js .reveal.is-in :is(.animate-pop, .animate-flow, .animate-slide, .animate-flag, .animate-vanish, .animate-grow, .animate-ring, .text-shimmer) {
+.js .reveal.is-in,
+.js .reveal.is-in * {
   animation-play-state: running;
 }
 
@@ -825,9 +836,12 @@
   .legal code {
     font: inherit;
   }
+  /* A link inside running text is the text's own colour, marked by the
+     accent on its underline: the accent as text is under the body bar. */
   .legal a {
-    color: var(--color-link);
+    color: var(--color-body);
     text-decoration: underline;
+    text-decoration-color: var(--color-link);
     text-underline-offset: 3px;
   }
   .legal hr {
