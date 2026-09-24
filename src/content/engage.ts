@@ -57,9 +57,7 @@ export const engage = {
   },
   /* E-9 Pilot and E-10 Close, together on the band: the measures and the call. */
   close: {
-    'E-9-A': 'A pilot proves it on one number, agreed with you', // changed
-    'E-9-B':
-      'Engaged visitors who become enquiries, or how complete each brief is when it reaches sales.', // changed (24 Sep): the two Engage measures the Pilot page lists
+    'E-9-A': 'A pilot proves it on one number', // changed (24 Sep): every close is one line (Taylor); E-9-B, the two Engage measures, went, and the Pilot page lists them
     'E-10-B': 'Book a demo',
     'E-10-C': 'What a pilot delivers', // added
   },

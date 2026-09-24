@@ -9,16 +9,14 @@ import { cn } from '@/lib/utils'
 export type CloseLink = { label: string; href: string }
 
 /* The close stands on the hero's living band with paper copy, in the same
-   rhythm as every other section: the headline, a line under it where the
-   page has one, and the ways in. */
+   rhythm as every other section: one short headline, on one line from a
+   tablet up and with nothing under it, then the ways in. */
 export function Close({
   heading,
-  line,
   primary,
   secondary,
 }: {
   heading: string
-  line?: string
   primary: CloseLink
   secondary?: CloseLink
 }) {
@@ -29,7 +27,6 @@ export function Close({
         <SectionHead
           onBand
           heading={heading}
-          lede={line}
           action={
             <>
               <Button asChild variant="accent" size="lg">

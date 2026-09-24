@@ -168,8 +168,7 @@ export const trust = {
     'T-6-C': 'status.tripcerto.com', // added
   },
   close: {
-    'T-8-A': 'A pilot begins with your security questions answered', // added
-    'T-8-B': 'Your security questionnaire is welcome before anything is built.', // added
+    'T-8-A': 'Your security questions come first', // changed (24 Sep): every close is one line (Taylor); it says what T-8-B, which went, did
     'T-8-C': 'Book a demo', // added
     'T-8-D': 'What a pilot delivers', // added
   },

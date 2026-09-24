@@ -102,8 +102,10 @@ export const about = {
   },
   story: {
     'A-2-A': 'Started at the sales desk', // new
-    'A-2-B':
-      'Selling complex trips, Charlie saw how much of each day went on rekeying, searching and checking. Tripcerto was started to give that time back to the expert.', // new: why the opportunity exists, told through the founder's experience (Guide §3)
+    'A-2-B': [
+      'Selling complex trips, Charlie saw how much of each day went on rekeying, searching and checking.',
+      'Tripcerto was started to give that time back to the expert.',
+    ], // new: why the opportunity exists, told through the founder's experience (Guide §3); the second sentence on a line of its own (Taylor, 24 Sep)
   },
   /* The team, on the home page and on About (Taylor, 24 Sep): one section,
      the founders then the advisers. */
@@ -129,7 +131,7 @@ export const about = {
     ], // new
   },
   close: {
-    'A-5-A': 'Every demo is run by one of the founders', // new
+    'A-5-A': 'Your experts get their time back', // changed (24 Sep, Taylor): what the reader gains, where "Every demo is run by one of the founders" said nothing they gain; one line
     'A-5-B': 'Book a demo', // new
     'A-5-C': 'What a pilot delivers', // new
   },

@@ -58,14 +58,11 @@ export function EngagePage() {
         </Section>
 
         <Section id={ID.business} heading={engage.business['E-5-A']} lede={engage.business['E-5-B']}>
-          <div className="mx-auto max-w-[56rem]">
-            <Rows rows={engage.business.rows} />
-          </div>
+          <Rows rows={engage.business.rows} />
         </Section>
 
         <Close
           heading={engage.close['E-9-A']}
-          line={engage.close['E-9-B']}
           primary={{ label: engage.close['E-10-B'], href: DEMO_URL }}
           secondary={{ label: engage.close['E-10-C'], href: PAGES.pilot }}
         />

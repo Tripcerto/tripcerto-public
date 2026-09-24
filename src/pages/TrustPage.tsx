@@ -66,7 +66,6 @@ export function TrustPage() {
 
         <Close
           heading={trust.close['T-8-A']}
-          line={trust.close['T-8-B']}
           primary={{ label: trust.close['T-8-C'], href: DEMO_URL }}
           secondary={{ label: trust.close['T-8-D'], href: PAGES.pilot }}
         />

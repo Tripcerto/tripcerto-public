@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Lines, type Copy } from '@/components/site/Lines'
 import { cn } from '@/lib/utils'
 
 /* Every section below a hero is one strip in the same rhythm, and this
@@ -33,8 +34,8 @@ export function Section({
   children,
 }: {
   id?: string
-  heading: string
-  lede?: string
+  heading: Copy
+  lede?: Copy
   action?: ReactNode
   tone?: 'page' | 'tint'
   children?: ReactNode
@@ -51,23 +52,31 @@ export function Section({
 
 /* A section's head: the heading, the lede under it, and an action under
    that where the section has one (a link, or the close's buttons), all
-   centred. On the band it is set in paper. */
+   centred. The heading's measure is wide enough that no heading on the site
+   runs past two lines from a tablet up, and a short one, as every close's
+   is, stands on one; the lede keeps the narrower measure prose reads best
+   at. Either can set its own lines (Lines). On the band it is set in
+   paper. */
 export function SectionHead({
   heading,
   lede,
   action,
   onBand = false,
 }: {
-  heading: string
-  lede?: string
+  heading: Copy
+  lede?: Copy
   action?: ReactNode
   onBand?: boolean
 }) {
   return (
-    <div className="mx-auto max-w-[44rem] text-center">
-      <h2 className={cn('text-heading text-balance', onBand && 'text-paper')}>{heading}</h2>
+    <div className="mx-auto max-w-[52rem] text-center">
+      <h2 className={cn('text-heading text-balance', onBand && 'text-paper')}>
+        <Lines text={heading} />
+      </h2>
       {lede && (
-        <p className={cn('mx-auto mt-5 max-w-[40rem] text-lede text-pretty', onBand ? 'text-paper/85' : 'text-dim')}>{lede}</p>
+        <p className={cn('mx-auto mt-5 max-w-[40rem] text-lede text-pretty', onBand ? 'text-paper/85' : 'text-dim')}>
+          <Lines text={lede} />
+        </p>
       )}
       {action && <div className="mt-10 flex flex-wrap items-center justify-center gap-3">{action}</div>}
     </div>

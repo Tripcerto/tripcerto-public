@@ -63,14 +63,11 @@ export function WorkspacePage() {
         </Section>
 
         <Section id={ID.fit} tone="tint" heading={workspace.fit['W-4-A']}>
-          <div className="mx-auto max-w-[56rem]">
-            <Rows rows={workspace.fit.rows} />
-          </div>
+          <Rows rows={workspace.fit.rows} />
         </Section>
 
         <Close
           heading={workspace.close['W-8-A']}
-          line={workspace.close['W-8-B']}
           primary={{ label: workspace.close['W-9-B'], href: DEMO_URL }}
           secondary={{ label: workspace.close['W-9-C'], href: PAGES.pilot }}
         />

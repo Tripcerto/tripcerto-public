@@ -33,9 +33,7 @@ export function AboutPage() {
         <Team tone="tint" />
 
         <Section id={ID.company} heading={about.company['A-4-A']}>
-          <div className="mx-auto max-w-[56rem]">
-            <Rows rows={about.company.rows} />
-          </div>
+          <Rows rows={about.company.rows} />
         </Section>
 
         <Close

@@ -42,7 +42,7 @@ const SITE = [
     h1: home.hero['H-1-A'],
     headings: [
       home.products['H-3-A'],
-      home.systems['H-11-A'],
+      home.systems['H-11-A'].join(' '),
       home.audience['H-7-A'],
       about.team['A-3-A'],
       home.close['H-9-A'],
@@ -157,7 +157,7 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
 
   it('renders every section heading from the copy file', () => {
     render(<Page />)
-    for (const text of headings) expect(screen.getAllByText(text).length).toBeGreaterThan(0)
+    for (const text of headings) expect(screen.getAllByRole('heading', { name: text }).length).toBeGreaterThan(0)
   })
 
   it('lands every in-page link on a section of the page', () => {

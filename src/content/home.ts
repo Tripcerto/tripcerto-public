@@ -36,7 +36,7 @@ export const home = {
      runs left to right, each step with the product that carries it; the
      systems sit under it and stay where they are. */
   systems: {
-    'H-11-A': 'Your systems stay where they are. The work between them gets faster.', // new (24 Sep): Charlie's, from "Built for the changing customer journey"
+    'H-11-A': ['Your systems stay where they are.', 'The work between them gets faster.'], // new (24 Sep): Charlie's, from "Built for the changing customer journey"; a sentence to a line (Taylor, 24 Sep)
     steps: [
       { name: 'Research', owner: 'Engage', line: 'Travellers ask on your website.' },
       { name: 'Enquiry', owner: 'Engage', line: 'Sales receives the brief.' },
@@ -69,7 +69,7 @@ export const home = {
      page beside it. Taylor, 22 Sep: nothing stands between the headline
      and the two buttons. */
   close: {
-    'H-9-A': 'A pilot finds where Tripcerto does the most for your business, then proves it there', // changed (24 Sep): the software is the subject, and "we" no longer reads as an agency (open since the 23 Sep sync)
+    'H-9-A': 'A pilot proves it in your business', // changed (24 Sep): every close is one line (Taylor); was "A pilot finds where Tripcerto does the most for your business, then proves it there"
     'H-9-C': 'Book a demo',
     'H-9-D': 'What a pilot delivers',
   },

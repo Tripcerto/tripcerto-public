@@ -66,9 +66,7 @@ export const workspace = {
   },
   /* W-8 Pilot and W-9 Close, together on the band: the measures and the call. */
   close: {
-    'W-8-A': 'A pilot proves it on one number, agreed with you', // changed
-    'W-8-B':
-      'Time from enquiry to quote, handling time per enquiry, or the completeness of each quote before it goes out.', // changed (23 Sep sync)
+    'W-8-A': 'A pilot proves it on one number', // changed (24 Sep): every close is one line (Taylor); W-8-B, the three Workspace measures, went, and the Pilot page lists them
     'W-9-B': 'Book a demo',
     'W-9-C': 'What a pilot delivers', // added
   },

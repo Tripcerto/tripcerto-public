@@ -13,7 +13,7 @@ const ID = {
 } as const
 
 /* The pilot page sells the chance to try one: what a pilot includes as
-   four ruled columns, the five measures it can be judged on as ruled rows
+   four ruled columns, each centred under the centred head, the five measures it can be judged on as ruled rows
    with the product each belongs to, then the call. Words throughout; the
    frames belong to the product pages. */
 export function PilotPage() {
@@ -32,7 +32,7 @@ export function PilotPage() {
         <Section id={ID.includes} heading={pilot.includes['P-7-A']}>
           <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-2 md:gap-x-12 lg:grid-cols-4">
             {pilot.includes.columns.map(({ name, line }) => (
-              <li key={name} className="border-t border-line pt-6">
+              <li key={name} className="border-t border-line pt-6 text-center">
                 <h3 className="text-subhead">{name}</h3>
                 <p className="mt-3 text-copy text-dim">{line}</p>
               </li>

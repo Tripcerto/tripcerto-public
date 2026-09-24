@@ -1,7 +1,8 @@
-import { Fragment, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import type { CloseLink } from '@/components/site/Close'
+import { Lines, type Copy } from '@/components/site/Lines'
 import { Reveal } from '@/components/site/Reveal'
 import { HERO_PAD } from '@/components/site/Section'
 import { Tag } from '@/components/site/Tag'
@@ -24,8 +25,7 @@ export function PageHero({
 }: {
   /* A label in a pill above the title, as on the home hero. */
   tag?: string
-  /* A list sets the headline's lines; a string wraps where it falls. */
-  title: string | readonly string[]
+  title: Copy
   lede: string
   primary: CloseLink
   secondary?: CloseLink
@@ -50,16 +50,9 @@ export function PageHero({
               id="hero-title"
               className="max-w-[18ch] text-display text-paper"
             >
-              {typeof title === 'string'
-                ? title
-                : title.map((line, i) => (
-                    <Fragment key={line}>
-                      {i > 0 && ' '}
-                      {/* Each line stays whole on a narrow phone: the type
-                          steps down with the viewport rather than wrapping. */}
-                      <span className="block text-[length:min(1em,11.8vw)]">{line}</span>
-                    </Fragment>
-                  ))}
+              {/* Set lines stay whole on a narrow phone: the type steps
+                  down with the viewport rather than wrapping. */}
+              <Lines text={title} className="text-[length:min(1em,11.8vw)]" />
             </h1>
             <p className="mt-7 max-w-[34rem] text-lede text-paper/85">{lede}</p>
             <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">

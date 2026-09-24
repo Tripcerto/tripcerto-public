@@ -267,12 +267,13 @@ They are guidelines for the register, never lines to lift.
   each role carried beside it ("drop the right hand column") and asked for
   the role and its measures as a grid. `Close.tsx` stands on the hero's band
   (`Band.tsx`, the mesh extracted from the hero; it pauses off-screen so two
-  on a page cost nothing) with paper copy: a heading, an optional line, the
-  accent button and a secondary link. The home passes H-9-A and the two
-  buttons, with nothing between them (Taylor, 22 Sep). There is no Proof
-  section: guide §10 wants it enquiry-related and no pilot has measured
-  anything, so the pilot's measures ride in the Engage and Workspace closes
-  (E-9-B, W-8-B) and on the Pilot page, and the proof is the call.
+  on a page cost nothing) with paper copy: one short heading, the accent
+  button and a secondary link, nothing between them. Every close's heading
+  stands on one line from a tablet up (Taylor, 24 Sep: "way punchier", as
+  the Pilot and FAQ closes were); on a phone it may take two. There is no
+  Proof section: guide §10 wants it enquiry-related and no pilot has
+  measured anything, so the pilot's measures are on the Pilot page, and the
+  proof is the call.
 - `src/components/site/Footer.tsx` (rebuilt 22 Sep evening at Taylor's ask):
   on the page tokens like the nav, cream by day and ink by night, under a
   hairline, so the page ends quietly after the band. It had been fixed to
@@ -393,7 +394,7 @@ review below changed strings around them, never those.
   guide applied: the software is the subject; the hero ends at the booking
   (§5); what travellers get is told apart from how the business uses it (§6);
   no problem section (§3); no sector cards (§8); the boundaries are said as
-  what stays where it is; the pilot measures ride in each product page's close.
+  what stays where it is; the pilot measures are on the Pilot page.
 - Idioms reused from the home page and nothing new but two pieces:
   `PageHero.tsx` (the band opening, a step smaller than the home hero, with a
   `layout` of `phone` or `window` for the column split) and
