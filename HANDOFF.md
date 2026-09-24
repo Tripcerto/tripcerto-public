@@ -767,30 +767,32 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   then an Advisers label over Nigel Clarke, Joanne Dickson, Steve Endacott
   and Gerd Bommer, four across from lg and two to a row below it, phones
   included, on the same columns, so a founder's tile spans two adviser
-  columns and the edges line up. The words lead and the photographs stay
-  second (Taylor): a founder's portrait is a square beside the words (above
-  them on a phone), an adviser's a smaller square above the name. Each person is a name, a role and a fact or two,
-  a figure and what it counts, set between hairlines (Taylor: no bullets);
-  an adviser has one fact (so the figures line up) and a line on what they
-  bring. The adviser tiles are subgrids of the list's rows, so across a row
-  the name, the fact, the line and the LinkedIn each start level. The advisers' words come from
-  the Non-Executive Directors and Advisers document (July 2026) and, for
-  Gerd, gerdbommer.com; each is called an adviser until both founders
-  confirm who is a registered director. On the home page "About
-  Tripcerto" sits under the team. Portraits are square-cornered (Taylor:
-  no circles); a person without a photograph in `public/team/` shows
-  initials on the band.
-- The founders' facts are the ones both founders confirmed on 24 Sep:
-  Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
-  Taylor Styles, Co-founder and CTO. On the tiles each founder has two
-  facts and a line on what they lead: Charlie 10+ years in travel sales,
-  7,500+ enquiries handled (the Our Team document's figure), "Leads the
-  company: strategy, operations and sales"; Taylor 7+ years in scalable
-  systems, 5+ products shipped from mobile apps to web platforms (no
-  employer or product named, Taylor), "Leads the platform:
-  product, architecture and engineering". No Dyson, no ownership, and no brand of either founder's is
-  named (Taylor, 24 Sep). The portraits go in `public/team/` and in each founder's
-  `photo`; until then each tile shows the initials on the band.
+  columns and the edges line up. On the home page "About Tripcerto" sits
+  under the team.
+- The words lead and the photographs stay second (Taylor): a founder's
+  portrait is a square beside the words (above them on a phone), an
+  adviser's a smaller square above the name. Portraits are square with
+  rounded corners (Taylor: no circles), all WebP in `public/team/`, each
+  cropped so the face is the same share of the frame (measured with a face
+  detector, not eyeballed) and the eyes sit level: the founders' 400 by 400
+  (face 43% of the width, eyes 36% down), the advisers' 192 by 192 (45%,
+  40%; Steve Endacott's taken from inside the gold ring his photograph is
+  framed in). Anyone without a photograph shows initials on the band.
+- Each person is a name, a role, a fact or two (a figure and what it
+  counts, set between hairlines; Taylor: no bullets) and a line on what
+  they lead or bring. The founders' facts are the ones both founders
+  confirmed on 24 Sep: Charlie, Co-founder and CEO, 10+ years in travel
+  sales, 7,500+ enquiries handled (the Our Team document's figure), "Leads
+  the company: strategy, operations and sales"; Taylor, Co-founder and CTO,
+  7+ years in scalable systems, 5+ products shipped from mobile apps to web
+  platforms, "Leads the platform: product, architecture and engineering".
+  No employer, product, ownership or brand of either founder's is named
+  (Taylor, 24 Sep). Each adviser has one fact, so the four figures line up,
+  and the adviser tiles are subgrids of the list's rows, so across a row the
+  name, the fact, the line and the LinkedIn each start level. The advisers'
+  words come from the Non-Executive Directors and Advisers document (July
+  2026) and, for Gerd, gerdbommer.com; each is called an adviser until both
+  founders confirm who is a registered director.
 - About (`/about`): Charlie's company line as the headline, why Tripcerto was
   started told through Charlie's experience rather than as the buyer's
   problem (Guide §3), the founders in full, and the registered facts. The
