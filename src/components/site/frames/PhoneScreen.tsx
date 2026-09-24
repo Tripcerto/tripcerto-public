@@ -62,9 +62,10 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
           <span className="font-semibold">{trip.operator}</span>
         </div>
 
-        {/* The chat ends above the home indicator, where a phone's own
-            chat app keeps its input: a bottom safe area of 9cqw. */}
-        <div className="mt-auto flex flex-col gap-[3.4cqw] px-[4cqw] pb-[9cqw]">
+        {/* The messages stand on the input, as a phone's own chat app
+            stands them: when there are more than the screen holds, the
+            earliest go off the top, and the input never moves. */}
+        <div className="flex min-h-0 flex-1 flex-col justify-end gap-[3.4cqw] overflow-hidden px-[4cqw] pb-[3.4cqw]">
           <Traveller at={AT.ask}>{trip.ask}</Traveller>
 
           <p className="animate-pop px-[1cqw]" style={delay(AT.reply)}>
@@ -116,9 +117,13 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
               />
             </div>
           )}
+        </div>
 
-          {/* The input stands a little apart from the chat above it. */}
-          <Composer scale="phone" placeholder={trip.composer} at={AT.header} className="mt-[2.6cqw]" />
+        {/* The input sits clear above the home indicator, as it does on the
+            phone itself: 11cqw of the screen's foot is left to the
+            indicator. */}
+        <div className="shrink-0 px-[4cqw] pb-[11cqw]">
+          <Composer scale="phone" placeholder={trip.composer} at={AT.header} />
         </div>
       </div>
     </PhoneFrame>
