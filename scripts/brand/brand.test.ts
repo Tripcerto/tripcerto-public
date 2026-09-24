@@ -83,7 +83,42 @@ describe('the brand kit', () => {
     /* The order is the point of the document: a reader meets the logo, the
        icon, the band and the colour before a paragraph of rules. */
     const ids = [...kit.matchAll(/<section id="([a-z]+)"/g)].map((m) => m[1])
-    expect(ids).toEqual(['logo', 'band', 'colour', 'type', 'voice', 'files'])
+    expect(ids).toEqual(['logo', 'band', 'colour', 'type', 'voice', 'surfaces', 'files'])
+  })
+
+  it('draws every mark in ink or white, the two fills it allows', () => {
+    /* A tile drawn in coral is a third fill, and it reads as a product's own
+       icon. There is one app icon, and every mark is ink or white. */
+    const css = read(join(ROOT, 'src/index.css'))
+    const allowed = ['ink', 'paper'].map((name) =>
+      css.match(new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`))?.[1]?.toUpperCase(),
+    )
+    const fills = [...kit.matchAll(/<svg[^>]*aria-label="tripcerto"[^>]*><path[^>]*\sfill="([^"]+)"/g)].map((m) =>
+      m[1].toUpperCase(),
+    )
+    expect(fills.length).toBeGreaterThan(0)
+    expect(fills.filter((f) => !allowed.includes(f))).toEqual([])
+  })
+
+  it('sets no ink on coral', () => {
+    /* Text on coral is white, at every size. Checked two ways: no element
+       painted coral declares ink on itself or inside it, and no rule in the
+       kit's stylesheet pairs a coral ground with ink. */
+    const css = read(join(ROOT, 'src/index.css'))
+    const hex = (name: string) => css.match(new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`))?.[1] as string
+    const coral = `(?:${hex('primary')}|var\\(--primary\\))`
+    const ink = new RegExp(`(?:color:|fill=")(?:${hex('ink')}|var\\(--ink\\))`, 'i')
+
+    const painted = [
+      ...kit.matchAll(new RegExp(`<(\\w+)[^>]*style="[^"]*background:${coral}[^"]*"[^>]*>([\\s\\S]*?)</\\1>`, 'gi')),
+    ]
+    expect(painted.length).toBeGreaterThan(0)
+    for (const [element] of painted) expect(element).not.toMatch(ink)
+
+    const rules = [...kit.matchAll(/\{([^{}]*)\}/g)].map((m) => m[1])
+    for (const rule of rules.filter((r) => new RegExp(`background:${coral}`, 'i').test(r))) {
+      expect(rule).not.toMatch(ink)
+    }
   })
 
   it('shows the shader, not a still that approximates it', () => {
