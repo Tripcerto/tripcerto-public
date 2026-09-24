@@ -117,7 +117,8 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
             </div>
           )}
 
-          <Composer scale="phone" placeholder={trip.composer} at={AT.header} />
+          {/* The input stands a little apart from the chat above it. */}
+          <Composer scale="phone" placeholder={trip.composer} at={AT.header} className="mt-[2.6cqw]" />
         </div>
       </div>
     </PhoneFrame>
