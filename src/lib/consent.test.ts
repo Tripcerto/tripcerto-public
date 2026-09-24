@@ -25,6 +25,17 @@ describe('tc_consent', () => {
     expect(parseConsentValue(decided, (NOW + 1) * 1000)).toBeNull()
   })
 
+  /* The server dates the answer by its own clock, so a device up to a day
+     behind still reads it; the monorepo's consentCookie.test.ts holds the
+     same day. */
+  it('reads an answer dated up to a day ahead of the device, and none later', () => {
+    expect(parseConsentValue(`2.granted.${NOW + DAY}`, NOW * 1000)).toBe('granted')
+    expect(parseConsentValue(`2.denied.${NOW + DAY}`, NOW * 1000)).toBe('denied')
+    expect(parseConsentValue(`2.granted.${NOW + DAY + 1}`, NOW * 1000)).toBeNull()
+    expect(parseConsentValue('2.granted.9999999999', NOW * 1000)).toBeNull()
+    expect(parseConsentValue(`2.granted.${'9'.repeat(400)}`, NOW * 1000)).toBeNull()
+  })
+
   it('refuses a value that is not exactly version, answer and whole seconds', () => {
     for (const raw of ['', '2.granted', '2.granted.1758620000.1', '02.granted.1758620000', '2.granted.0', '2.granted.-1758620000', '2.granted.17586e5', '2.granted.1758620000.5', undefined]) {
       expect(parseConsentValue(raw, NOW * 1000)).toBeNull()

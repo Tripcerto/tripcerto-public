@@ -12,6 +12,11 @@ export const CONSENT_COOKIE = 'tc_consent'
 export const TEAM_COOKIE = 'tc_team'
 export const CONSENT_POLICY_VERSION = 2
 export const CONSENT_MAX_AGE_SECONDS = 15552000
+/* How far ahead of the device's clock an answer's date may sit: the server
+   dates it by its own clock, and a device running behind reads a fresh answer
+   as a little in the future. Anything further ahead would never reach six
+   months, and reads as no answer. */
+export const CONSENT_CLOCK_SKEW_SECONDS = 86400
 
 const ENDPOINT = '/api/consent'
 const SHARED_DOMAIN = 'tripcerto.com'
@@ -21,8 +26,9 @@ export function formatConsentValue(analytics: ConsentDecision, decidedAt: number
 }
 
 /* The answer a cookie value records, or null when there is none to go on:
-   another policy version, an answer older than the cookie may live, or
-   anything that is not the format above. */
+   another policy version, an answer older than the cookie may live or dated
+   further ahead than a slow clock explains, or anything that is not the
+   format above. */
 export function parseConsentValue(raw: string | null | undefined, now: number): ConsentDecision | null {
   const parts = raw?.split('.') ?? []
   if (parts.length !== 3) return null
@@ -30,7 +36,9 @@ export function parseConsentValue(raw: string | null | undefined, now: number): 
   if (version !== String(CONSENT_POLICY_VERSION)) return null
   if (answer !== 'granted' && answer !== 'denied') return null
   if (!/^[1-9]\d*$/.test(seconds)) return null
-  if (now - Number(seconds) * 1000 > CONSENT_MAX_AGE_SECONDS * 1000) return null
+  const decidedAt = Number(seconds) * 1000
+  if (decidedAt - now > CONSENT_CLOCK_SKEW_SECONDS * 1000) return null
+  if (now - decidedAt > CONSENT_MAX_AGE_SECONDS * 1000) return null
   return answer
 }
 
