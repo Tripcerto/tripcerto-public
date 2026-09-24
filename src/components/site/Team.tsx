@@ -105,7 +105,7 @@ function AdviserTile({ person }: { person: Person }) {
   return (
     <li className="glass row-span-4 grid grid-rows-subgrid gap-y-0 rounded-xl p-4 shadow-card md:p-5">
       <div className="flex flex-col gap-3">
-        <Portrait person={person} size={160} className="size-14 shrink-0 rounded-lg" />
+        <Portrait person={person} size={192} className="size-14 shrink-0 rounded-lg" />
         <div className="min-w-0">
           <h4 className="text-subhead">{person.name}</h4>
           <p className="text-small text-dim">{person.role}</p>

@@ -26,7 +26,9 @@ export type Person = {
   linkedin?: string
   /* A square portrait in public/team/, WebP: 400 by 400 for a founder,
      cropped so the face is the same width in every frame and the eyes sit
-     36% down; 160 by 160 for an adviser. Until it is there the card shows the person's
+     36% down; 192 by 192 for an adviser, cropped the same way (the face 45%
+     of the width, the eyes 40% down; Steve Endacott's inside his photo's
+     ring). Until it is there the card shows the person's
      initials on the band. */
   photo?: string
 }
@@ -63,6 +65,7 @@ export const advisers: readonly Person[] = [
     facts: [{ figure: '20+', label: 'years in technology sales' }], // new
     note: 'Three exits and an IPO, across SaaS and travel technology.', // new
     linkedin: LINKEDIN.nigel,
+    photo: '/team/nigel-clarke.webp',
   },
   {
     name: 'Joanne Dickson',
@@ -70,6 +73,7 @@ export const advisers: readonly Person[] = [
     facts: [{ figure: '30+', label: 'years in travel and hospitality' }], // new
     note: 'Scaling and modernising established travel businesses.', // new
     linkedin: LINKEDIN.joanne,
+    photo: '/team/joanne-dickson.webp',
   },
   {
     name: 'Steve Endacott',
@@ -77,6 +81,7 @@ export const advisers: readonly Person[] = [
     facts: [{ figure: '30+', label: 'years building and selling businesses' }], // new
     note: 'Portfolio chairman across travel, tourism and online businesses.', // new
     linkedin: LINKEDIN.steve,
+    photo: '/team/steve-endacott.webp',
   },
   {
     name: 'Gerd Bommer',
@@ -84,6 +89,7 @@ export const advisers: readonly Person[] = [
     facts: [{ figure: '25+', label: 'years in international markets' }], // new
     note: 'Founder of Zoenora, investing in early-stage founders.', // new
     linkedin: LINKEDIN.gerd,
+    photo: '/team/gerd-bommer.webp',
   },
 ]
 
