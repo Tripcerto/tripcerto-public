@@ -1,27 +1,33 @@
 /* About page strings, new on 24 Sep 2026: the company, the two founders
    and the advisers. Nothing here comes from the 21 Sep copy document, so
    every string is `new`. The company line is Charlie's, from the 24 Sep
-   call. Each person is a name, a role and one line, in the same form as
-   Charlie's (Taylor, 24 Sep: cut to match). The founders' facts are the ones
+   call. Each person is a name, a role and a fact or two, a figure and what
+   it counts (Taylor, 24 Sep). The founders' facts are the ones
    both founders confirmed on 24 Sep; no ownership and no brand of either
-   founder's is named. The advisers' lines come from the Non-Executive
-   Directors and Advisers document (July 2026) and, for Gerd Bommer, his own
-   public profile; each is called an adviser until both founders confirm
+   founder's is named. The advisers' facts and notes come from the
+   Non-Executive Directors and Advisers document (July 2026) and, for Gerd
+   Bommer, his own public profile (gerdbommer.com); each is called an adviser until both founders confirm
    who is a registered director. Why the opportunity exists is told through
    Charlie's experience, not as the buyer's problem (Guide §3). Reply with
    the reference and the change. */
 
 import { LINKEDIN } from '../lib/links'
 
+export type Fact = { figure: string; label: string }
+
 export type Person = {
   name: string
   role: string
-  /* One line under the name, in the form "More than N years in …". */
-  line: string
+  /* What an adviser brings, in a line under the facts. */
+  note?: string
+  /* One or two facts, each a figure and what it counts, set one under the
+     other (Taylor, 24 Sep: no bullets). */
+  facts: readonly Fact[]
   linkedin?: string
   /* A portrait in public/team/: 1200 by 900 WebP for a founder, cropped so
-     the eyes sit 40% down, level across the pair; square for an adviser.
-     Until it is there the card shows the person's initials on the band. */
+     the face is the same width in every frame and the eyes sit 44% down;
+     square for an adviser. Until it is there the card shows the person's
+     initials on the band. */
   photo?: string
 }
 
@@ -29,14 +35,20 @@ export const founders: readonly Person[] = [
   {
     name: 'Charlie Potter',
     role: 'Co-founder and CEO',
-    line: 'More than ten years in travel sales.', // new
+    facts: [
+      { figure: '10+', label: 'years in travel sales' },
+      { figure: '7,500+', label: 'enquiries handled' },
+    ], // new (24 Sep, Taylor): the enquiry figure is the Our Team document's "7,500+ enquiry journeys managed"
     linkedin: LINKEDIN.charlie,
     photo: '/team/charlie-potter.webp',
   },
   {
     name: 'Taylor Styles',
     role: 'Co-founder and CTO',
-    line: 'More than ten years in scalable systems, five at Dyson.', // new (24 Sep, Taylor: shorter)
+    facts: [
+      { figure: '7+', label: 'years in scalable systems' },
+      { figure: '5+', label: 'years at Dyson' },
+    ], // new (24 Sep, Taylor)
     linkedin: LINKEDIN.taylor,
     photo: '/team/taylor-styles.webp',
   },
@@ -46,22 +58,29 @@ export const advisers: readonly Person[] = [
   {
     name: 'Nigel Clarke',
     role: 'Adviser',
-    line: 'More than 20 years in technology sales and growth, with three exits and an IPO.', // new
+    facts: [
+      { figure: '20+', label: 'years in technology sales and growth' },
+      { figure: '3', label: 'exits and an IPO' },
+    ], // new
+    note: 'SaaS, travel technology, ground transport and mobility, from capital raising to M&A.', // new
   },
   {
     name: 'Joanne Dickson',
     role: 'Adviser',
-    line: 'More than 30 years leading travel and hospitality businesses.', // new
+    facts: [{ figure: '30+', label: 'years leading travel and hospitality businesses' }], // new
+    note: 'Scaling and modernising established travel businesses.', // new
   },
   {
     name: 'Steve Endacott',
     role: 'Adviser and investor',
-    line: 'More than 30 years building and selling travel and leisure businesses.', // new
+    facts: [{ figure: '30+', label: 'years building and selling travel and leisure businesses' }], // new
+    note: 'Portfolio chairman and non-executive across travel, tourism and online businesses.', // new
   },
   {
     name: 'Gerd Bommer',
     role: 'Strategic adviser',
-    line: 'More than 25 years building international markets, now investing in early-stage founders.', // new
+    facts: [{ figure: '25+', label: 'years building international markets' }], // new
+    note: 'Founder of Zoenora, investing in and advising early-stage founders.', // new
   },
 ]
 
@@ -70,18 +89,19 @@ export const about = {
     'A-1-A': 'Tripcerto takes the repetitive work out of planning and selling complex travel', // new: Charlie's line, 24 Sep
     'A-1-B': 'So customers get what they asked for sooner, and more enquiries can become bookings.', // new: the rest of Charlie's line
     'A-1-C': 'Book a demo', // new
-    'A-1-D': 'Meet the founders', // new
+    'A-1-D': 'Meet the team', // new
   },
   story: {
     'A-2-A': 'Started at the sales desk', // new
     'A-2-B':
       'Selling complex trips, Charlie saw how much of each day went on rekeying, searching and checking. Tripcerto was started to give that time back to the expert.', // new: why the opportunity exists, told through the founder's experience (Guide §3)
   },
-  founders: {
-    'A-3-A': 'The founders', // new
-  },
-  advisers: {
-    'A-6-A': 'The advisers', // new (24 Sep)
+  /* The team, on the home page and on About (Taylor, 24 Sep): one section,
+     the founders then the advisers. */
+  team: {
+    'A-3-A': 'Meet the team', // new (24 Sep, Taylor)
+    'A-3-B': 'Founders', // new
+    'A-3-C': 'Advisers', // new
   },
   company: {
     'A-4-A': 'The company', // new

@@ -60,14 +60,10 @@ export const home = {
       { role: 'Finance', measures: ['Total cost', 'Payback', 'Contract exposure'] },
     ], // changed: roles, not sectors; the measures as a list and the sentences dropped (23 Sep)
   },
-  /* H-12 and H-13: who builds it and who advises it, a line each, then the
-     way on to About under the advisers (Taylor, 24 Sep). */
-  founders: {
-    'H-12-A': 'Meet the founders', // new (24 Sep, Taylor)
-  },
-  advisers: {
-    'H-13-A': 'Meet the advisers', // new (24 Sep, Taylor)
-    'H-13-B': 'About Tripcerto', // new
+  /* H-12: the way on to About, under the team, which is About's own
+     section (src/content/about.ts, A-3). */
+  team: {
+    'H-12-B': 'About Tripcerto', // new (24 Sep)
   },
   /* No Proof section (Guide §10): the close is the call, with the pilot
      page beside it. Taylor, 22 Sep: nothing stands between the headline

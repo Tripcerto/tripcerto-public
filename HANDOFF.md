@@ -762,16 +762,21 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   the 12:20 call ("Tripcerto sits inside the planning and selling of complex
   trips and takes the repetitive work out of both"), so the home page says
   what Tripcerto is as well as what the tools do; his to confirm.
-- Meet the advisers (H-13, 24 Sep, Taylor) follows the founders: Nigel
-  Clarke, Joanne Dickson, Steve Endacott and Gerd Bommer, each a name, a
-  role and one line, on the founders' two columns, with "About Tripcerto"
-  under them. Each is called an adviser until both founders confirm who is
-  a registered director. The founder tiles are built as the product tiles
-  are, the portrait across the top and square-cornered (Taylor: no circles);
-  every person shows initials until a photograph is in `public/team/`.
-  Charlie's and Taylor's portraits are in (Taylor, 24 Sep): 1200 by 900
-  WebP cropped from the square originals so the eyes sit 40% down and level
-  across the pair, filling the tile's top edge to edge.
+- Meet the team (`Team.tsx`, Taylor, 24 Sep) is one section on the home
+  page and on About: a Founders label over Charlie and Taylor, two tiles,
+  then an Advisers label over Nigel Clarke, Joanne Dickson, Steve Endacott
+  and Gerd Bommer, four across from lg and two to a row below it, phones
+  included. Every tile carries its portrait across the top (a founder's
+  4:3, an adviser's square), so a founder's tile spans two adviser columns
+  and the edges line up. Each person is a name, a role and a fact or two,
+  a figure and what it counts, set between hairlines (Taylor: no bullets);
+  an adviser adds a line on what they bring. The advisers' words come from
+  the Non-Executive Directors and Advisers document (July 2026) and, for
+  Gerd, gerdbommer.com; each is called an adviser until both founders
+  confirm who is a registered director. On the home page "About
+  Tripcerto" sits under the team. Portraits are square-cornered (Taylor:
+  no circles); a person without a photograph in `public/team/` shows
+  initials on the band.
 - The founders' facts are the ones both founders confirmed on 24 Sep:
   Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
   Taylor Styles, Co-founder and CTO, more than ten years in scalable

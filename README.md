@@ -40,7 +40,7 @@ src/
   App.tsx                  # the home page; the others are in pages/
   pages/                   # EngagePage, WorkspacePage, PilotPage, FaqPage, AboutPage, TrustPage, PrivacyPage, TermsPage, LegalPage
   content/                 # every string on the site, one file per page, keyed by reference; legal/ holds the two documents as HTML
-  components/site/         # Nav, Hero, PageHero, Products, Systems, Audience, Founders, Close, Footer, Section, Rows, Stage, Tag, Band, Reveal, Wordmark
+  components/site/         # Nav, Hero, PageHero, Products, Systems, Audience, Team, Close, Footer, Section, Rows, Stage, Tag, Band, Reveal, Wordmark
   components/site/frames/  # the two product frames: phone, window, the brief card, the trip they tell
   components/ui/           # button, gradient-mesh (the band shader)
   lib/                     # links, theme, analytics, utils

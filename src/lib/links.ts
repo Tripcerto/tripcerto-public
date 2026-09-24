@@ -46,7 +46,6 @@ export const SECTION = {
   products: 'products',
   systems: 'how-it-fits',
   audience: 'is-this-for-me',
-  founders: 'founders',
-  advisers: 'advisers',
+  team: 'team',
   close: 'close',
 } as const

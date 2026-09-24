@@ -44,8 +44,7 @@ const SITE = [
       home.products['H-3-A'],
       home.systems['H-11-A'],
       home.audience['H-7-A'],
-      home.founders['H-12-A'],
-      home.advisers['H-13-A'],
+      about.team['A-3-A'],
       home.close['H-9-A'],
     ],
   },
@@ -77,7 +76,7 @@ const SITE = [
     name: 'about',
     Page: AboutPage,
     h1: about.hero['A-1-A'],
-    headings: [about.story['A-2-A'], about.founders['A-3-A'], about.advisers['A-6-A'], about.company['A-4-A'], about.close['A-5-A']],
+    headings: [about.story['A-2-A'], about.team['A-3-A'], about.company['A-4-A'], about.close['A-5-A']],
   },
   {
     name: 'trust',
@@ -209,22 +208,28 @@ describe('home roles grid', () => {
   })
 })
 
-/* The founders and the advisers stand on the home page and on About, each
-   with the role and the line, the founders with a link to their LinkedIn. */
+/* The team stands on the home page and on About as one section: the
+   founders, then the advisers, each with the role and the facts, an
+   adviser's note, and a link to the person's LinkedIn where there is one. */
 describe.each([
   { name: 'home', Page: App },
   { name: 'about', Page: AboutPage },
-])('the people on the $name page', ({ Page }) => {
+])('the team on the $name page', ({ Page }) => {
   it.each([
-    { group: 'founders', id: SECTION.founders, people: founders },
-    { group: 'advisers', id: SECTION.advisers, people: advisers },
-  ])('give each of the $group a tile with the role and the line', ({ id, people }) => {
+    { group: about.team['A-3-B'], people: founders },
+    { group: about.team['A-3-C'], people: advisers },
+  ])('gives each of the $group a tile under its label', ({ group, people }) => {
     render(<Page />)
-    const section = within(document.getElementById(id)!)
+    const section = within(document.getElementById(SECTION.team)!)
+    const list = within(section.getByRole('heading', { level: 3, name: group }).nextElementSibling as HTMLElement)
     for (const person of people) {
-      const tile = within(section.getByRole('heading', { level: 3, name: person.name }).closest('li')!)
+      const tile = within(list.getByRole('heading', { level: 4, name: person.name }).closest('li')!)
       tile.getByText(person.role)
-      tile.getByText(person.line)
+      for (const { figure, label } of person.facts) {
+        tile.getByText(figure)
+        tile.getByText(label)
+      }
+      if (person.note) tile.getByText(person.note)
       if (person.linkedin) expect(tile.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(person.linkedin)
     }
   })
