@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { useLayoutEffect, useRef, type ComponentType } from 'react'
 import { Nav } from '@/components/site/Nav'
+import { currentPage } from '@/lib/events'
 import { mount } from './boot'
 import { render } from './prerender'
 
@@ -36,7 +37,7 @@ describe('mount', () => {
     const paragraph = root.querySelector('p')
     expect(paragraph?.textContent).toBe('page')
     const error = vi.spyOn(console, 'error')
-    mount(Measured)
+    mount(Measured, 'home')
     expect(root.querySelector('p')).toBe(paragraph)
     expect(paragraph?.hasAttribute('data-measured')).toBe(true)
     expect(error).not.toHaveBeenCalled()
@@ -47,19 +48,31 @@ describe('mount', () => {
     /* The pre-paint script, for a visitor who chose dark. */
     document.documentElement.classList.add('dark')
     const error = vi.spyOn(console, 'error')
-    mount(Nav)
+    mount(Nav, 'home')
     expect(screen.getAllByRole('button', { name: /switch to light mode/i })).toHaveLength(2)
     expect(error).not.toHaveBeenCalled()
   })
 
   it('hands the page back for the entry to export', async () => {
     await built(Measured)
-    expect(mount(Measured)).toBe(Measured)
+    expect(mount(Measured, 'home')).toBe(Measured)
+  })
+
+  it('names the page every event reports before the page takes over', async () => {
+    let named: string | null = null
+    function Naming() {
+      named ??= currentPage()
+      return <p>page</p>
+    }
+    await built(Naming)
+    named = null
+    mount(Naming, 'trust')
+    expect(named).toBe('trust')
   })
 
   it('turns smooth scrolling on only after load', async () => {
     await built(Measured)
-    mount(Measured)
+    mount(Measured, 'home')
     expect(document.documentElement.classList.contains('loaded')).toBe(false)
     window.dispatchEvent(new Event('load'))
     await new Promise((resolve) => requestAnimationFrame(resolve))

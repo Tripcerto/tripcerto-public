@@ -7,7 +7,6 @@ import { PageHero } from '@/components/site/PageHero'
 import { Section } from '@/components/site/Section'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { workspace } from '@/content/workspace'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
@@ -26,7 +25,6 @@ const COLUMN_GLYPH: Record<Column, LucideIcon> = {
    assistant pane, the itemised trip as three ruled columns, and the close.
    Every section shows the product or leads somewhere (23 Sep sync). */
 export function WorkspacePage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.workspace} />

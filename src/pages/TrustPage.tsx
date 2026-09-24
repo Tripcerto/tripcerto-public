@@ -6,7 +6,6 @@ import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { trust } from '@/content/trust'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES, STATUS_URL } from '@/lib/links'
 
 const ID = {
@@ -23,7 +22,6 @@ const ID = {
    the security programme with no certificate claimed, the legal position,
    the live status link, and the close. Words throughout. */
 export function TrustPage() {
-  usePageAnalytics()
   return (
     <>
       <Nav />

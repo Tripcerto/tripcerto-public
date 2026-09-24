@@ -5,7 +5,6 @@ import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { pilot } from '@/content/pilot'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 const MEASURES_ID = 'the-measures'
@@ -15,7 +14,6 @@ const MEASURES_ID = 'the-measures'
    belongs to, then the close (23 Sep sync). Words throughout; the frames
    belong to the product pages. */
 export function PilotPage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.pilot} />

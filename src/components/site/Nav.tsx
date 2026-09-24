@@ -3,11 +3,17 @@ import { ChevronRight, Moon, Sun } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Wordmark } from '@/components/site/Wordmark'
+import { useConsent } from '@/lib/consent'
+import { trackEvent } from '@/lib/events'
 import { LOGIN_URL, NAV_LINKS, PAGES } from '@/lib/links'
 import { useTheme } from '@/lib/theme'
 import { cn } from '@/lib/utils'
 
 const MENU_ID = 'site-menu'
+
+const MENU_ROW = 'shell flex h-14 items-center justify-between border-b text-subhead transition-colors'
+const MENU_ROW_BAND = 'border-white/25 text-paper hover:bg-white/10'
+const MENU_ROW_PAGE = 'border-line text-body hover:bg-soft'
 
 interface NavProps {
   /* The path of the page the bar is on, named by the page: the build renders
@@ -29,6 +35,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
   const [overBand, setOverBand] = useState(opensOnBand)
   const [menuOverBand, setMenuOverBand] = useState(false)
   const [theme, toggleTheme] = useTheme()
+  const { reopen } = useConsent()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -154,6 +161,7 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
             <ThemeButton theme={theme} overBand={overBand} onClick={toggleTheme} />
             <a
               href={LOGIN_URL}
+              onClick={() => trackEvent('login_click', { place: 'nav' })}
               className={cn(
                 'inline-flex h-11 items-center gap-1 text-nav transition-colors',
                 overBand ? 'text-paper/90 hover:text-paper' : 'text-body/85 hover:text-body',
@@ -205,16 +213,28 @@ export function Nav({ current, opensOnBand = true }: NavProps) {
                   key={link.href}
                   href={link.href}
                   aria-current={isCurrent(link.href) ? 'page' : undefined}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    'shell flex h-14 items-center justify-between border-b text-subhead transition-colors',
-                    menuOverBand ? 'border-white/25 text-paper hover:bg-white/10' : 'border-line text-body hover:bg-soft',
-                  )}
+                  onClick={() => {
+                    setOpen(false)
+                    if (link.href === LOGIN_URL) trackEvent('login_click', { place: 'menu' })
+                  }}
+                  className={cn(MENU_ROW, menuOverBand ? MENU_ROW_BAND : MENU_ROW_PAGE)}
                 >
                   {link.label}
                   <ChevronRight size={16} aria-hidden="true" className={menuOverBand ? 'text-paper/60' : 'text-body/40'} />
                 </a>
               ))}
+              {/* Asks the analytics question again, over the page the menu
+                  closes onto. */}
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false)
+                  reopen()
+                }}
+                className={cn(MENU_ROW, 'cursor-pointer text-left', menuOverBand ? MENU_ROW_BAND : MENU_ROW_PAGE)}
+              >
+                Cookie settings
+              </button>
             </div>
           </nav>
         </div>

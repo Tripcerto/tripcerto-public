@@ -5,11 +5,9 @@ import { Audience } from '@/components/site/Audience'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
 import { home } from '@/content/home'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 export function App() {
-  usePageAnalytics()
   return (
     <>
       <Nav />
