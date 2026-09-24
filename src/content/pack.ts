@@ -7,8 +7,8 @@
 
 export const pack = {
   label: 'Work email', // new
-  placeholder: 'Your work email', // new
-  submit: 'Send me the pack', // new
+  placeholder: 'Enter your email to get the pack', // new (Taylor, 24 Sep: the field says what it is for, so the button can be short)
+  submit: 'Send', // new (Taylor, 24 Sep)
   sending: 'Sending', // new
   sent: 'Thank you. We will email you the pack shortly.', // new
   failed: 'That did not send. Email us and we will send the pack.', // new

@@ -902,8 +902,9 @@ The founders went through the preview page by page. What changed, and why:
   columns were not what a pilot includes. The five measures are now under
   "What a pilot can measure". The way in is the pilot's information pack,
   asked for by email in the hero and in the close, with "Or book a call"
-  under each form. The send button is the small size, without an arrow
-  (Taylor).
+  under each form. The field's placeholder says what it is for ("Enter
+  your email to get the pack") so the button is a small "Send" (Taylor);
+  Enter in the field sends, once.
 - Information packs (`InfoPackForm.tsx`, `api/info-pack.ts`). The Pilot
   page asks for the pilot's pack; the Engage and Workspace closes ask for
   each product's, with "Or book a demo" under the form. A request is emailed

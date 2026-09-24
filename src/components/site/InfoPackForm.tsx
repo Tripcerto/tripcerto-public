@@ -10,7 +10,10 @@ type State = 'idle' | 'sending' | 'sent' | 'failed'
 
 /* A request for an information pack, on the band: a work email and a
    small send button beside it (Taylor, 24 Sep), one row from a small
-   tablet up and stacked on a phone, then what the email is for. It posts to /api/info-pack (api/info-pack.ts), which
+   tablet up and stacked on a phone, then what the email is for. The field
+   says what the form is for, so the button can say just "Send"; Enter in
+   the field sends, as in any form, and a second press while one request
+   is on its way is ignored. It posts to /api/info-pack (api/info-pack.ts), which
    emails the team. Sent, the form gives way to the thanks; failed, for
    any reason, it says so and gives the team's address, so no request is
    lost without the reader knowing. The field named `website` is off
@@ -22,6 +25,7 @@ export function InfoPackForm({ pack, label, className }: { pack: Pack; label?: s
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (state === 'sending') return
     const data = new FormData(event.currentTarget)
     setState('sending')
     try {

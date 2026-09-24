@@ -22,6 +22,25 @@ describe('the information pack form', () => {
     expect(JSON.parse(init.body as string)).toEqual({ email: 'ops@operator.example', pack: 'engage', website: '' })
   })
 
+  it('sends on Enter in the field, once, however often Enter is pressed while it sends', async () => {
+    let settle: (res: Response) => void = () => {}
+    const fetch = vi.fn(() => new Promise<Response>((resolve) => (settle = resolve)))
+    vi.stubGlobal('fetch', fetch)
+    render(<InfoPackForm pack="pilot" />)
+    await userEvent.type(screen.getByPlaceholderText(pack.placeholder), 'ops@operator.example{Enter}{Enter}')
+    expect(fetch).toHaveBeenCalledOnce()
+    settle(new Response(null, { status: 204 }))
+    expect(await screen.findByText(pack.sent)).toBeTruthy()
+  })
+
+  it('keeps an address the browser would refuse from being sent', async () => {
+    const fetch = answer(204)
+    vi.stubGlobal('fetch', fetch)
+    render(<InfoPackForm pack="pilot" />)
+    await userEvent.type(screen.getByLabelText(pack.label), 'not an address{Enter}')
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
   it('says when it did not send, and gives the address to write to instead', async () => {
     vi.stubGlobal('fetch', answer(503))
     render(<InfoPackForm pack="pilot" label="Get the pilot information pack by email" />)
