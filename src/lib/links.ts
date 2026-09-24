@@ -14,10 +14,14 @@ export const PAGES = {
   trust: '/trust',
 } as const
 
-/* The founders' public profiles, linked from the home page and About. */
+/* The team's public profiles, linked from the home page and About. */
 export const LINKEDIN = {
   charlie: 'https://www.linkedin.com/in/charlie-p-94383329',
   taylor: 'https://www.linkedin.com/in/taystyles',
+  nigel: 'https://www.linkedin.com/in/nigelclarke100',
+  joanne: 'https://www.linkedin.com/in/joannedickson1968',
+  steve: 'https://www.linkedin.com/in/steveendacott',
+  gerd: 'https://www.linkedin.com/in/gerdbommer',
 } as const
 
 /* The pages in the bar: the two products, the pilot, then the questions

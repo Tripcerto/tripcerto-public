@@ -766,9 +766,10 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   page and on About: a Founders label over Charlie and Taylor, two tiles,
   then an Advisers label over Nigel Clarke, Joanne Dickson, Steve Endacott
   and Gerd Bommer, four across from lg and two to a row below it, phones
-  included. Every tile carries its portrait across the top (a founder's
-  4:3, an adviser's square), so a founder's tile spans two adviser columns
-  and the edges line up. Each person is a name, a role and a fact or two,
+  included, on the same columns, so a founder's tile spans two adviser
+  columns and the edges line up. The words lead and the photographs stay
+  second (Taylor): a founder's portrait is a square beside the words (above
+  them on a phone), an adviser's a smaller square above the name. Each person is a name, a role and a fact or two,
   a figure and what it counts, set between hairlines (Taylor: no bullets);
   an adviser adds a line on what they bring. The advisers' words come from
   the Non-Executive Directors and Advisers document (July 2026) and, for

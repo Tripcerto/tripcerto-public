@@ -24,9 +24,9 @@ export type Person = {
      other (Taylor, 24 Sep: no bullets). */
   facts: readonly Fact[]
   linkedin?: string
-  /* A portrait in public/team/: 1200 by 900 WebP for a founder, cropped so
-     the face is the same width in every frame and the eyes sit 44% down;
-     square for an adviser. Until it is there the card shows the person's
+  /* A square portrait in public/team/, WebP: 400 by 400 for a founder,
+     cropped so the face is the same width in every frame and the eyes sit
+     36% down; 160 by 160 for an adviser. Until it is there the card shows the person's
      initials on the band. */
   photo?: string
 }
@@ -63,24 +63,28 @@ export const advisers: readonly Person[] = [
       { figure: '3', label: 'exits and an IPO' },
     ], // new
     note: 'SaaS, travel technology, ground transport and mobility, from capital raising to M&A.', // new
+    linkedin: LINKEDIN.nigel,
   },
   {
     name: 'Joanne Dickson',
     role: 'Adviser',
     facts: [{ figure: '30+', label: 'years leading travel and hospitality businesses' }], // new
     note: 'Scaling and modernising established travel businesses.', // new
+    linkedin: LINKEDIN.joanne,
   },
   {
     name: 'Steve Endacott',
     role: 'Adviser and investor',
     facts: [{ figure: '30+', label: 'years building and selling travel and leisure businesses' }], // new
     note: 'Portfolio chairman and non-executive across travel, tourism and online businesses.', // new
+    linkedin: LINKEDIN.steve,
   },
   {
     name: 'Gerd Bommer',
     role: 'Strategic adviser',
     facts: [{ figure: '25+', label: 'years building international markets' }], // new
     note: 'Founder of Zoenora, investing in and advising early-stage founders.', // new
+    linkedin: LINKEDIN.gerd,
   },
 ]
 

@@ -13,19 +13,18 @@ const initials = (name: string) =>
     .map((part) => part[0])
     .join('')
 
-/* A person's portrait, square-cornered and filling its box edge to edge:
-   the photograph where public/team/ has one, otherwise the initials set
-   large in the box's corner on the band's frosted pane (smoked by night),
-   as the product frames are painted. The same box either way, so a
-   photograph drops in without moving anything. */
-function Portrait({ person, className, square }: { person: Person; className: string; square: boolean }) {
+/* A person's portrait, a square with rounded corners: the photograph where
+   public/team/ has one, otherwise the initials on the band's frosted pane
+   (smoked by night), as the product frames are painted. The same box either
+   way, so a photograph drops in without moving anything. */
+function Portrait({ person, className, size }: { person: Person; className: string; size: number }) {
   if (person.photo) {
     return (
       <img
         src={person.photo}
         alt={person.name}
-        width={square ? 800 : 1200}
-        height={square ? 800 : 900}
+        width={size}
+        height={size}
         loading="lazy"
         decoding="async"
         className={cn(className, 'object-cover')}
@@ -33,8 +32,8 @@ function Portrait({ person, className, square }: { person: Person; className: st
     )
   }
   return (
-    <div aria-hidden className={cn(className, 'bg-band-frosted flex items-end p-4 dark:bg-band-smoked md:p-5')}>
-      <span className="text-display text-link">{initials(person.name)}</span>
+    <div aria-hidden className={cn(className, 'bg-band-frosted flex items-center justify-center dark:bg-band-smoked')}>
+      <span className="text-subhead text-link">{initials(person.name)}</span>
     </div>
   )
 }
@@ -78,22 +77,40 @@ function LinkedIn({ person }: { person: Person }) {
   )
 }
 
-/* A tile of the site's glass per person, the portrait across its top, as
-   the product tiles carry their frames: then the name, the role, the facts,
-   an adviser's note and the LinkedIn. A founder's portrait is 4:3 and an
-   adviser's square, so a founder's tile spans two adviser columns exactly
-   and every edge on the page lines up. */
-function Tile({ person, founder }: { person: Person; founder: boolean }) {
+/* A founder's tile, of the site's glass: the words lead and the portrait
+   stays second (Taylor, 24 Sep), a square beside them from sm and above
+   them on a phone, then the name, the role, the facts and the LinkedIn. */
+function FounderTile({ person }: { person: Person }) {
   return (
-    <li className="glass flex flex-col overflow-hidden rounded-xl shadow-card">
-      <Portrait person={person} square={!founder} className={cn('w-full', founder ? 'aspect-[4/3]' : 'aspect-square')} />
-      <div className={cn('flex flex-1 flex-col', founder ? 'px-6 pb-5 pt-5 md:px-7' : 'px-4 pb-4 pt-4 md:px-5')}>
+    <li className="glass flex flex-col gap-5 rounded-xl p-6 shadow-card sm:flex-row md:p-7">
+      <Portrait person={person} size={400} className="size-24 shrink-0 rounded-lg md:size-28" />
+      <div className="flex min-w-0 flex-1 flex-col">
         <h4 className="text-subhead">{person.name}</h4>
         <p className="text-small text-dim">{person.role}</p>
-        <Facts facts={person.facts} size={founder ? 'copy' : 'small'} />
-        {person.note && <p className="mt-3 text-small text-dim">{person.note}</p>}
+        <Facts facts={person.facts} size="copy" />
         <LinkedIn person={person} />
       </div>
+    </li>
+  )
+}
+
+/* An adviser's tile, a step down from a founder's: a small square portrait
+   (Taylor, 24 Sep) above the name, so every name stays on one line and
+   every tile opens the same way, then the facts, the line on what they
+   bring and the LinkedIn. */
+function AdviserTile({ person }: { person: Person }) {
+  return (
+    <li className="glass flex flex-col rounded-xl p-4 shadow-card md:p-5">
+      <div className="flex flex-col gap-3">
+        <Portrait person={person} size={160} className="size-14 shrink-0 rounded-lg" />
+        <div className="min-w-0">
+          <h4 className="text-subhead">{person.name}</h4>
+          <p className="text-small text-dim">{person.role}</p>
+        </div>
+      </div>
+      <Facts facts={person.facts} size="small" />
+      {person.note && <p className="mt-3 text-small text-dim">{person.note}</p>}
+      <LinkedIn person={person} />
     </li>
   )
 }
@@ -111,8 +128,8 @@ function Group({ label, children }: { label: string; children: ReactNode }) {
 
 /* The team as one section (Taylor, 24 Sep): the founders, two tiles side by
    side from sm, then the advisers, four across from lg and two to a row
-   below it, phones included, on the same columns, as wide as the product
-   tiles. Whatever follows (the home page's way on to About) sits under it. */
+   below it, phones included, on the same columns (a founder's tile spans
+   two adviser columns), as wide as the product tiles. Whatever follows (the home page's way on to About) sits under it. */
 export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: ReactNode }) {
   return (
     <Section id={SECTION.team} tone={tone} heading={team['A-3-A']}>
@@ -120,14 +137,14 @@ export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: Rea
         <Group label={team['A-3-B']}>
           <ul role="list" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
             {founders.map((person) => (
-              <Tile key={person.name} person={person} founder />
+              <FounderTile key={person.name} person={person} />
             ))}
           </ul>
         </Group>
         <Group label={team['A-3-C']}>
           <ul role="list" className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
             {advisers.map((person) => (
-              <Tile key={person.name} person={person} founder={false} />
+              <AdviserTile key={person.name} person={person} />
             ))}
           </ul>
         </Group>
