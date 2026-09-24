@@ -762,12 +762,18 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   the 12:20 call ("Tripcerto sits inside the planning and selling of complex
   trips and takes the repetitive work out of both"), so the home page says
   what Tripcerto is as well as what the tools do; his to confirm.
+- Meet the advisers (H-13, 24 Sep, Taylor) follows the founders: Nigel
+  Clarke, Joanne Dickson, Steve Endacott and Gerd Bommer, each a name, a
+  role and one line, on the founders' two columns, with "About Tripcerto"
+  under them. Each is called an adviser until both founders confirm who is
+  a registered director. The founder tiles are built as the product tiles
+  are, the portrait across the top and square-cornered (Taylor: no circles);
+  every person shows initials until a photograph is in `public/team/`.
 - The founders' facts are the ones both founders confirmed on 24 Sep:
   Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
   Taylor Styles, Co-founder and CTO, more than ten years in scalable
-  infrastructure and IoT, five of them as a senior software engineer at
-  Dyson. No board, no ownership, and no brand of either founder's is named
-  (Taylor, 24 Sep). The portraits go in `public/team/` and in each founder's
+  systems, five at Dyson (cut to match Charlie's line, Taylor). No
+  ownership and no brand of either founder's is named. The portraits go in `public/team/` and in each founder's
   `photo`; until then each tile shows the initials on the band.
 - About (`/about`): Charlie's company line as the headline, why Tripcerto was
   started told through Charlie's experience rather than as the buyer's

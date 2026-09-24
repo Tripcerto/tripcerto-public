@@ -5,17 +5,18 @@ import { Products } from '@/components/site/Products'
 import { Audience } from '@/components/site/Audience'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
-import { Founders } from '@/components/site/Founders'
+import { Advisers, Founders } from '@/components/site/Founders'
 import { Section } from '@/components/site/Section'
 import { Systems } from '@/components/site/Systems'
-import { founders } from '@/content/about'
+import { advisers, founders } from '@/content/about'
 import { home } from '@/content/home'
 import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 
 /* The home page: the hero, the two products, how they sit with the systems a
-   business already runs, the roles they are built for, the people who build
-   them, and the close. The tones alternate page and tint down to the band. */
+   business already runs, the roles they are built for, the founders, the
+   advisers with the way on to About under them, and the close. The tones
+   alternate page and tint down to the band. */
 export function App() {
   usePageAnalytics()
   return (
@@ -26,18 +27,17 @@ export function App() {
         <Products />
         <Systems tone="tint" />
         <Audience tone="page" />
-        <Section
-          id={SECTION.founders}
-          tone="tint"
-          heading={home.founders['H-12-A']}
-          action={
+        <Section id={SECTION.founders} tone="tint" heading={home.founders['H-12-A']}>
+          <Founders people={founders} />
+        </Section>
+        <Section id={SECTION.advisers} heading={home.advisers['H-13-A']}>
+          <Advisers people={advisers} />
+          <div className="mt-10 flex justify-center">
             <a href={PAGES.about} className="inline-flex min-h-11 items-center gap-1 text-action text-link">
-              {home.founders['H-12-B']}
+              {home.advisers['H-13-B']}
               <ArrowRight size={16} aria-hidden />
             </a>
-          }
-        >
-          <Founders founders={founders} detail="brief" />
+          </div>
         </Section>
         <Close
           heading={home.close['H-9-A']}

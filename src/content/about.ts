@@ -1,45 +1,64 @@
-/* About page strings, new on 24 Sep 2026: the company and the two founders.
-   Nothing here comes from the 21 Sep copy document, so every string is
-   `new`. The company line is Charlie's, from the 24 Sep call: Tripcerto sits
-   inside the planning and selling of complex trips and takes the friction
-   and the repetitive work out of it, so value reaches customers sooner and
-   more sales convert. The founders' facts are the ones both founders
-   confirmed for the site on 24 Sep: Charlie's ten years and more in travel
-   sales; Taylor's ten years and more in scalable systems and IoT, five of
-   them at Dyson. No board, no ownership and no brand of either founder's is
-   named. Why the opportunity exists is told through Charlie's experience,
-   not as the buyer's problem (Guide §3). Reply with the reference and the
-   change. */
+/* About page strings, new on 24 Sep 2026: the company, the two founders
+   and the advisers. Nothing here comes from the 21 Sep copy document, so
+   every string is `new`. The company line is Charlie's, from the 24 Sep
+   call. Each person is a name, a role and one line, in the same form as
+   Charlie's (Taylor, 24 Sep: cut to match). The founders' facts are the ones
+   both founders confirmed on 24 Sep; no ownership and no brand of either
+   founder's is named. The advisers' lines come from the Non-Executive
+   Directors and Advisers document (July 2026) and, for Gerd Bommer, his own
+   public profile; each is called an adviser until both founders confirm
+   who is a registered director. Why the opportunity exists is told through
+   Charlie's experience, not as the buyer's problem (Guide §3). Reply with
+   the reference and the change. */
 
 import { LINKEDIN } from '../lib/links'
 
-export type Founder = {
+export type Person = {
   name: string
   role: string
-  /* One line under the name on the home page. */
+  /* One line under the name, in the form "More than N years in …". */
   line: string
-  /* The fuller bio on the About page. */
-  bio: string
-  linkedin: string
-  /* A portrait in public/team/, square, at least 640px; until it is there
-     the card shows the founder's initials on the band. */
+  linkedin?: string
+  /* A portrait in public/team/, at least 800px wide; until it is there the
+     card shows the person's initials on the band. */
   photo?: string
 }
 
-export const founders: readonly Founder[] = [
+export const founders: readonly Person[] = [
   {
     name: 'Charlie Potter',
     role: 'Co-founder and CEO',
     line: 'More than ten years in travel sales.', // new
-    bio: 'More than ten years in travel sales. Charlie leads sales and partnerships.', // new
     linkedin: LINKEDIN.charlie,
   },
   {
     name: 'Taylor Styles',
     role: 'Co-founder and CTO',
-    line: 'More than ten years in scalable systems and IoT, five of them at Dyson.', // new
-    bio: 'More than ten years in scalable infrastructure and IoT, five of them as a senior software engineer at Dyson. Taylor designed and built the Tripcerto platform.', // new
+    line: 'More than ten years in scalable systems, five at Dyson.', // new (24 Sep, Taylor: shorter)
     linkedin: LINKEDIN.taylor,
+  },
+]
+
+export const advisers: readonly Person[] = [
+  {
+    name: 'Nigel Clarke',
+    role: 'Adviser',
+    line: 'More than 20 years in technology sales and growth, with three exits and an IPO.', // new
+  },
+  {
+    name: 'Joanne Dickson',
+    role: 'Adviser',
+    line: 'More than 30 years leading travel and hospitality businesses.', // new
+  },
+  {
+    name: 'Steve Endacott',
+    role: 'Adviser and investor',
+    line: 'More than 30 years building and selling travel and leisure businesses.', // new
+  },
+  {
+    name: 'Gerd Bommer',
+    role: 'Strategic adviser',
+    line: 'More than 25 years building international markets, now investing in early-stage founders.', // new
   },
 ]
 
@@ -57,6 +76,9 @@ export const about = {
   },
   founders: {
     'A-3-A': 'The founders', // new
+  },
+  advisers: {
+    'A-6-A': 'The advisers', // new (24 Sep)
   },
   company: {
     'A-4-A': 'The company', // new

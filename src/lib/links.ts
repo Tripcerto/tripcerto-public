@@ -47,5 +47,6 @@ export const SECTION = {
   systems: 'how-it-fits',
   audience: 'is-this-for-me',
   founders: 'founders',
+  advisers: 'advisers',
   close: 'close',
 } as const

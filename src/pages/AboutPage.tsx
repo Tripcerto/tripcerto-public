@@ -1,11 +1,11 @@
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
-import { Founders } from '@/components/site/Founders'
+import { Advisers, Founders } from '@/components/site/Founders'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
-import { about, founders } from '@/content/about'
+import { about, advisers, founders } from '@/content/about'
 import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 
@@ -15,7 +15,7 @@ const ID = {
 } as const
 
 /* The About page: what Tripcerto is, in Charlie's line, why it was
-   started, the two founders in full, and the company's registered facts.
+   started, the two founders, the advisers, and the company's registered facts.
    Words and portraits; the frames belong to the product pages. */
 export function AboutPage() {
   usePageAnalytics()
@@ -33,10 +33,14 @@ export function AboutPage() {
         <Section id={ID.story} heading={about.story['A-2-A']} lede={about.story['A-2-B']} />
 
         <Section id={SECTION.founders} tone="tint" heading={about.founders['A-3-A']}>
-          <Founders founders={founders} detail="full" />
+          <Founders people={founders} />
         </Section>
 
-        <Section id={ID.company} heading={about.company['A-4-A']}>
+        <Section id={SECTION.advisers} heading={about.advisers['A-6-A']}>
+          <Advisers people={advisers} />
+        </Section>
+
+        <Section id={ID.company} tone="tint" heading={about.company['A-4-A']}>
           <div className="mx-auto max-w-[56rem]">
             <Rows rows={about.company.rows} />
           </div>

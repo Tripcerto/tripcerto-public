@@ -16,7 +16,7 @@ import { workspace } from '@/content/workspace'
 import { pilot } from '@/content/pilot'
 import { trust } from '@/content/trust'
 import { faq } from '@/content/faq'
-import { about, founders } from '@/content/about'
+import { about, advisers, founders } from '@/content/about'
 import { DEMO_URL, LOGIN_URL, PAGES, SECTION } from '@/lib/links'
 
 /* Language Charlie's guide bans from headlines, and the category phrases the
@@ -45,6 +45,7 @@ const SITE = [
       home.systems['H-11-A'],
       home.audience['H-7-A'],
       home.founders['H-12-A'],
+      home.advisers['H-13-A'],
       home.close['H-9-A'],
     ],
   },
@@ -76,7 +77,7 @@ const SITE = [
     name: 'about',
     Page: AboutPage,
     h1: about.hero['A-1-A'],
-    headings: [about.story['A-2-A'], about.founders['A-3-A'], about.company['A-4-A'], about.close['A-5-A']],
+    headings: [about.story['A-2-A'], about.founders['A-3-A'], about.advisers['A-6-A'], about.company['A-4-A'], about.close['A-5-A']],
   },
   {
     name: 'trust',
@@ -208,20 +209,23 @@ describe('home roles grid', () => {
   })
 })
 
-/* The founders stand on the home page with a line each and on About with
-   the whole bio, each with a link to their LinkedIn. */
+/* The founders and the advisers stand on the home page and on About, each
+   with the role and the line, the founders with a link to their LinkedIn. */
 describe.each([
-  { name: 'home', Page: App, text: (f: (typeof founders)[number]) => f.line },
-  { name: 'about', Page: AboutPage, text: (f: (typeof founders)[number]) => f.bio },
-])('the founders on the $name page', ({ Page, text }) => {
-  it('give each founder a tile with the role, the words and the LinkedIn', () => {
+  { name: 'home', Page: App },
+  { name: 'about', Page: AboutPage },
+])('the people on the $name page', ({ Page }) => {
+  it.each([
+    { group: 'founders', id: SECTION.founders, people: founders },
+    { group: 'advisers', id: SECTION.advisers, people: advisers },
+  ])('give each of the $group a tile with the role and the line', ({ id, people }) => {
     render(<Page />)
-    const section = within(document.getElementById(SECTION.founders)!)
-    for (const founder of founders) {
-      const tile = within(section.getByRole('heading', { level: 3, name: founder.name }).closest('li')!)
-      tile.getByText(founder.role)
-      tile.getByText(text(founder))
-      expect(tile.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(founder.linkedin)
+    const section = within(document.getElementById(id)!)
+    for (const person of people) {
+      const tile = within(section.getByRole('heading', { level: 3, name: person.name }).closest('li')!)
+      tile.getByText(person.role)
+      tile.getByText(person.line)
+      if (person.linkedin) expect(tile.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(person.linkedin)
     }
   })
 })
