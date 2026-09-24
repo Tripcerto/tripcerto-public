@@ -41,6 +41,7 @@
 <li>messages you send in plan chats or other messaging features</li>
 <li>prompts, questions, and feedback you submit to AI-powered features</li>
 <li>uploaded photos and videos</li>
+<li>travel documents you choose to upload, such as an itinerary, quote or booking confirmation (a PDF or a photo), which may name you or the people travelling with you</li>
 </ul>
 <h3>Location and place information</h3>
 <ul>
@@ -80,7 +81,7 @@
 <li>for a transfer, the passenger and flight details you give</li>
 <li>the referral code, if you arrived through a partner&#39;s referral link</li>
 </ul>
-<p>In any planning conversation we also collect an anonymous identifier that links your activity within a visit, and the name of the travel company whose planning experience you are using.</p>
+<p>In any planning conversation we also collect an anonymous identifier that links your activity within a visit and when you return, and the name of the travel company whose planning experience you are using.</p>
 <h3>Demo bookings</h3>
 <ul>
 <li>the name, email address and any notes you enter when you book a demo with us through our Google Calendar booking page</li>
@@ -106,6 +107,7 @@
 <li>automatically from your browser or device when required to run, secure, and measure the service</li>
 <li>from authentication providers when you sign in with Google or similar services</li>
 <li>from collaborators or other users when they invite you to a plan or otherwise interact with you</li>
+<li>from a travel company acting for you, when its staff plan your trip with you in our consultant workspace or its own systems pass your conversation to us; then it supplies your details, not you</li>
 <li>from service integrations that help us resolve locations, travel content, or related media</li>
 </ul>
 <h2>5. How We Use Information</h2>
@@ -129,11 +131,12 @@
 <ul>
 <li>prompts and messages you submit</li>
 <li>trip context and preference information</li>
+<li>documents you upload, which an AI provider reads in full to extract your itinerary: the document&#39;s own text where it has one, and otherwise the PDF or image itself</li>
 <li>related metadata needed to generate, rank, or improve responses within the service</li>
 </ul>
 <p>We may send relevant content to third-party AI providers and supporting tools that process data on our behalf in order to provide these features.</p>
 <p>Tripcerto does not use your content to train its own proprietary models. Instead, we use third-party AI models and tools to help generate, organise, and deliver responses and workflows within the service.</p>
-<p>Current providers reflected in the codebase reviewed on 22 April 2026 include:</p>
+<p>Current AI providers reflected in the service include:</p>
 <ul>
 <li>OpenAI</li>
 <li>Anthropic</li>
@@ -183,7 +186,7 @@
 <ul>
 <li>local storage is used for authentication persistence</li>
 <li>session storage is used for short-lived auth and recovery flow state</li>
-<li>in our planning experiences, local storage holds an anonymous identifier for your visit</li>
+<li>in our planning experiences, local storage holds an anonymous identifier, and a pointer to your latest conversation with its title, so you can pick up where you left off</li>
 <li>on our website, local storage remembers whether you chose the light or dark theme (<code>theme</code>); it is set only when you change it</li>
 <li>browser notification permissions may be requested when you use notification features</li>
 </ul>
@@ -219,6 +222,7 @@
 <p>We retain trip plans, reviews, moments, messages, prompts, and similar user-generated content while it remains in your account or in a shared plan, review, or collaboration space. If you delete this content, or if it is removed as part of account deletion, we generally remove it from active systems within <code>30 days</code>. Content that is part of a shared plan, shared review, or conversation history may remain available to other participants until the shared item itself is deleted. Backups may persist for up to <code>90 days</code>.</p>
 <h3>Uploaded media</h3>
 <p>We retain uploaded photos, videos, thumbnails, and related media metadata while the media remains attached to your account content. If media is deleted by you or as part of account deletion, we generally remove it from active systems within <code>30 days</code>, subject to backups for up to <code>90 days</code> and longer retention where reasonably necessary for abuse prevention, legal claims, or compliance.</p>
+<p>A travel document you upload into a conversation is kept with that conversation, and is deleted with it when you ask us to delete your information.</p>
 <h3>Enquiries</h3>
 <p>An enquiry, meaning your contact details, the conversation and the trip summary, is kept for <code>24 months</code> from when you sent it and then deleted, or sooner if you ask.</p>
 <h3>Planning conversations</h3>
