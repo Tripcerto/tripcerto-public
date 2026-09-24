@@ -124,8 +124,8 @@
     font-family: inherit;
     cursor: pointer;
   }
-  /* A wash of the band's light fixed behind the page, so glass has
-     something to blur: peach by day, pink and peach by night. */
+  /* A wash of the band's light fixed in the top corner of the page, where
+     the nav's glass passes over it: peach by day, pink by night. */
   body::before {
     content: '';
     position: fixed;
@@ -133,13 +133,11 @@
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(60% 50% at 85% 5%, rgb(255 155 122 / 0.4), transparent 70%),
-      radial-gradient(50% 45% at 5% 95%, rgb(232 67 126 / 0.14), transparent 70%);
+      radial-gradient(60% 50% at 85% 5%, rgb(255 155 122 / 0.4), transparent 70%);
   }
   :root.dark body::before {
     background:
-      radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%),
-      radial-gradient(50% 45% at 5% 95%, rgb(255 155 122 / 0.16), transparent 70%);
+      radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%);
   }
   /* A document is the one white page by day: no cream and no wash behind
      the text. By night it is the same ink as every page. */
