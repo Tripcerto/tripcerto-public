@@ -62,7 +62,9 @@ export function PhoneScreen({ surface, sends }: { surface: Surface; sends: boole
           <span className="font-semibold">{trip.operator}</span>
         </div>
 
-        <div className="mt-auto flex flex-col gap-[3.4cqw] px-[4cqw] pb-[5cqw]">
+        {/* The chat ends above the home indicator, where a phone's own
+            chat app keeps its input: a bottom safe area of 9cqw. */}
+        <div className="mt-auto flex flex-col gap-[3.4cqw] px-[4cqw] pb-[9cqw]">
           <Traveller at={AT.ask}>{trip.ask}</Traveller>
 
           <p className="animate-pop px-[1cqw]" style={delay(AT.reply)}>
