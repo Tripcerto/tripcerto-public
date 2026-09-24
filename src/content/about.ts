@@ -39,7 +39,7 @@ export const founders: readonly Person[] = [
       { figure: '10+', label: 'years in travel sales' },
       { figure: '7,500+', label: 'enquiries handled' },
     ], // new (24 Sep, Taylor): the enquiry figure is the Our Team document's "7,500+ enquiry journeys managed"
-    note: 'Leads sales and partnerships.', // new
+    note: 'Leads the company: strategy, operations and sales.', // new (24 Sep): the Our Team document's "day-to-day operations" and "business development lead"
     linkedin: LINKEDIN.charlie,
     photo: '/team/charlie-potter.webp',
   },
@@ -50,7 +50,7 @@ export const founders: readonly Person[] = [
       { figure: '7+', label: 'years in scalable systems' },
       { figure: '2', label: 'products built: Engage and Workspace' },
     ], // new (24 Sep, Taylor: no Dyson)
-    note: 'Leads product and engineering.', // new
+    note: 'Leads the platform: product, architecture and engineering.', // new (24 Sep): the Our Team document's "all technical development and architecture"
     linkedin: LINKEDIN.taylor,
     photo: '/team/taylor-styles.webp',
   },
@@ -60,11 +60,8 @@ export const advisers: readonly Person[] = [
   {
     name: 'Nigel Clarke',
     role: 'Adviser',
-    facts: [
-      { figure: '20+', label: 'years in technology sales and growth' },
-      { figure: '3', label: 'exits and an IPO' },
-    ], // new
-    note: 'SaaS, travel technology, ground transport and mobility, from capital raising to M&A.', // new
+    facts: [{ figure: '20+', label: 'years in technology sales and growth' }], // new
+    note: 'Three exits and an IPO, across SaaS, travel technology and ground transport.', // new
     linkedin: LINKEDIN.nigel,
   },
   {

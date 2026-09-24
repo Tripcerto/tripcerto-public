@@ -771,7 +771,9 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   second (Taylor): a founder's portrait is a square beside the words (above
   them on a phone), an adviser's a smaller square above the name. Each person is a name, a role and a fact or two,
   a figure and what it counts, set between hairlines (Taylor: no bullets);
-  an adviser adds a line on what they bring. The advisers' words come from
+  an adviser has one fact (so the figures line up) and a line on what they
+  bring. The adviser tiles are subgrids of the list's rows, so across a row
+  the name, the fact, the line and the LinkedIn each start level. The advisers' words come from
   the Non-Executive Directors and Advisers document (July 2026) and, for
   Gerd, gerdbommer.com; each is called an adviser until both founders
   confirm who is a registered director. On the home page "About
@@ -782,9 +784,10 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
   Taylor Styles, Co-founder and CTO. On the tiles each founder has two
   facts and a line on what they lead: Charlie 10+ years in travel sales,
-  7,500+ enquiries handled (the Our Team document's figure), leads sales
-  and partnerships; Taylor 7+ years in scalable systems, 2 products
-  built (Engage and Workspace), leads product and engineering. No Dyson, no ownership, and no brand of either founder's is
+  7,500+ enquiries handled (the Our Team document's figure), "Leads the
+  company: strategy, operations and sales"; Taylor 7+ years in scalable
+  systems, 2 products built (Engage and Workspace), "Leads the platform:
+  product, architecture and engineering". No Dyson, no ownership, and no brand of either founder's is
   named (Taylor, 24 Sep). The portraits go in `public/team/` and in each founder's
   `photo`; until then each tile shows the initials on the band.
 - About (`/about`): Charlie's company line as the headline, why Tripcerto was

@@ -97,12 +97,13 @@ function FounderTile({ person }: { person: Person }) {
 }
 
 /* An adviser's tile, a step down from a founder's: a small square portrait
-   (Taylor, 24 Sep) above the name, so every name stays on one line and
-   every tile opens the same way, then the facts, the line on what they
-   bring and the LinkedIn. */
+   (Taylor, 24 Sep) above the name, the fact, the line on what they bring
+   and the LinkedIn. The tile is a subgrid of the list's rows, so across a
+   row of tiles each of the four parts starts on the same line, whatever
+   the one above it wraps to, and the line and the link sit at the foot. */
 function AdviserTile({ person }: { person: Person }) {
   return (
-    <li className="glass flex flex-col rounded-xl p-4 shadow-card md:p-5">
+    <li className="glass row-span-4 grid grid-rows-subgrid gap-y-0 rounded-xl p-4 shadow-card md:p-5">
       <div className="flex flex-col gap-3">
         <Portrait person={person} size={160} className="size-14 shrink-0 rounded-lg" />
         <div className="min-w-0">
@@ -111,7 +112,7 @@ function AdviserTile({ person }: { person: Person }) {
         </div>
       </div>
       <Facts facts={person.facts} size="small" />
-      {person.note && <p className="mt-3 text-small text-dim">{person.note}</p>}
+      <p className="mt-3 text-small text-dim">{person.note}</p>
       <LinkedIn person={person} />
     </li>
   )
@@ -145,6 +146,7 @@ export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: Rea
         </Group>
         <Group label={team['A-3-C']}>
           <ul role="list" className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+            {/* Each tile spans four of this list's rows (see AdviserTile). */}
             {advisers.map((person) => (
               <AdviserTile key={person.name} person={person} />
             ))}
