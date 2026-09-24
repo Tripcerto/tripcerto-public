@@ -55,12 +55,10 @@ export const engage = {
       },
     ], // changed: E-5-B and E-6-A, B, as rows
   },
-  /* E-9 Pilot and E-10 Close, together on the band: the measures and the call. */
+  /* The close on the band: the product's information pack, requested by
+     email, with the demo under it (24 Sep review: Charlie). */
   close: {
-    'E-9-A': 'A pilot proves it on one number, agreed with you', // changed
-    'E-9-B':
-      'Engaged visitors who become enquiries, or how complete each brief is when it reaches sales.', // changed (24 Sep): the two Engage measures the Pilot page lists
-    'E-10-B': 'Book a demo',
-    'E-10-C': 'What a pilot delivers', // added
+    'E-9-A': 'Get the Engage information pack', // changed (24 Sep review): the close is the pack's form; the pilot has its own page
+    'E-10-B': 'Or book a demo', // changed (24 Sep review)
   },
 } as const

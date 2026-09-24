@@ -1,6 +1,7 @@
 import { Check } from 'lucide-react'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
+import { InfoPackForm } from '@/components/site/InfoPackForm'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Reveal } from '@/components/site/Reveal'
@@ -58,16 +59,13 @@ export function EngagePage() {
         </Section>
 
         <Section id={ID.business} heading={engage.business['E-5-A']} lede={engage.business['E-5-B']}>
-          <div className="mx-auto max-w-[56rem]">
-            <Rows rows={engage.business.rows} />
-          </div>
+          <Rows rows={engage.business.rows} />
         </Section>
 
         <Close
           heading={engage.close['E-9-A']}
-          line={engage.close['E-9-B']}
-          primary={{ label: engage.close['E-10-B'], href: DEMO_URL }}
-          secondary={{ label: engage.close['E-10-C'], href: PAGES.pilot }}
+          form={<InfoPackForm pack="engage" />}
+          secondary={{ label: engage.close['E-10-B'], href: DEMO_URL }}
         />
       </main>
       <Footer />

@@ -5,6 +5,7 @@ import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { Team } from '@/components/site/Team'
+import { Timeline } from '@/components/site/Timeline'
 import { about } from '@/content/about'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 
@@ -14,7 +15,8 @@ const ID = {
 } as const
 
 /* The About page: what Tripcerto is, in Charlie's line, why it was
-   started, the team, and the company's registered facts.
+   started and the years that led to it, the team, and the company's
+   registered facts.
    Words and portraits; the frames belong to the product pages. */
 export function AboutPage() {
   return (
@@ -28,14 +30,14 @@ export function AboutPage() {
           secondary={{ label: about.hero['A-1-D'], href: `#${SECTION.team}` }}
         />
 
-        <Section id={ID.story} heading={about.story['A-2-A']} lede={about.story['A-2-B']} />
+        <Section id={ID.story} heading={about.story['A-2-A']} lede={about.story['A-2-B']}>
+          <Timeline moments={about.story.timeline} />
+        </Section>
 
         <Team tone="tint" />
 
         <Section id={ID.company} heading={about.company['A-4-A']}>
-          <div className="mx-auto max-w-[56rem]">
-            <Rows rows={about.company.rows} />
-          </div>
+          <Rows rows={about.company.rows} />
         </Section>
 
         <Close

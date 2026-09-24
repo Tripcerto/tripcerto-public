@@ -20,9 +20,12 @@ import { about, advisers, founders } from '@/content/about'
 import { DEMO_URL, LOGIN_URL, PAGES, SECTION } from '@/lib/links'
 
 /* Language Charlie's guide bans from headlines, and the category phrases the
-   messaging foundation refuses to lead with. */
+   messaging foundation refuses to lead with. The intelligence layer is
+   banned as the category ("the intelligence layer for travel"); the home
+   page's "the intelligence layer between your customers and your experts"
+   is the founders' own line, agreed on 24 Sep, and says where it sits. */
 const BANNED = [
-  /intelligence layer/i,
+  /intelligence layer for/i,
   /seamless/i,
   /AI-powered/i,
   /chatbot/i,
@@ -42,7 +45,7 @@ const SITE = [
     h1: home.hero['H-1-A'],
     headings: [
       home.products['H-3-A'],
-      home.systems['H-11-A'],
+      home.layer['H-11-A'].join(' '),
       home.audience['H-7-A'],
       about.team['A-3-A'],
       home.close['H-9-A'],
@@ -157,7 +160,7 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
 
   it('renders every section heading from the copy file', () => {
     render(<Page />)
-    for (const text of headings) expect(screen.getAllByText(text).length).toBeGreaterThan(0)
+    for (const text of headings) expect(screen.getAllByRole('heading', { name: text }).length).toBeGreaterThan(0)
   })
 
   it('lands every in-page link on a section of the page', () => {
@@ -209,41 +212,56 @@ describe('home roles grid', () => {
 })
 
 /* The team stands on the home page and on About as one section: the
-   founders, then the advisers, each with the role and the facts, an
-   adviser's note, and a link to the person's LinkedIn where there is one. */
+   founders, each with the role, the facts, the note and a link to the
+   person's LinkedIn, then the board of advisers, each a name and a
+   LinkedIn and nothing more. */
 describe.each([
   { name: 'home', Page: App },
   { name: 'about', Page: AboutPage },
 ])('the team on the $name page', ({ Page }) => {
-  it.each([
-    { group: about.team['A-3-B'], people: founders },
-    { group: about.team['A-3-C'], people: advisers },
-  ])('gives each of the $group a tile under its label', ({ group, people }) => {
+  const tiles = (group: string) => {
     render(<Page />)
     const section = within(document.getElementById(SECTION.team)!)
     const list = within(section.getByRole('heading', { level: 3, name: group }).nextElementSibling as HTMLElement)
-    for (const person of people) {
-      const tile = within(list.getByRole('heading', { level: 4, name: person.name }).closest('li')!)
-      tile.getByText(person.role)
+    return (name: string) => within(list.getByRole('heading', { level: 4, name }).closest('li')!)
+  }
+
+  it('gives each founder a tile with the role, the facts and the note', () => {
+    const tile = tiles(about.team['A-3-B'])
+    for (const person of founders) {
+      const t = tile(person.name)
+      t.getByText(person.role)
       for (const { figure, label } of person.facts) {
-        tile.getByText(figure)
-        tile.getByText(label)
+        t.getByText(figure)
+        t.getByText(label)
       }
-      if (person.note) tile.getByText(person.note)
-      if (person.linkedin) expect(tile.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(person.linkedin)
+      t.getByText(person.note)
+      if (person.linkedin) expect(t.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(person.linkedin)
+    }
+  })
+
+  it('gives each adviser a tile with the name and the LinkedIn alone', () => {
+    const tile = tiles(about.team['A-3-C'])
+    for (const person of advisers) {
+      const t = tile(person.name)
+      expect(t.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(person.linkedin)
+      expect(t.getAllByText(/./).map((el) => el.textContent)).toEqual([person.name, `LinkedIn: ${person.name} (opens in a new tab)`, `: ${person.name} (opens in a new tab)`])
     }
   })
 })
 
-describe('home systems section', () => {
-  it('names each step, what carries it, and the systems that stay', () => {
+describe('home layer section', () => {
+  it('sets Tripcerto between the customers and the experts, with a product for each side, on the business\'s own data', () => {
     render(<App />)
-    const section = within(document.getElementById(SECTION.systems)!)
-    for (const { name, owner } of home.systems.steps) {
-      const step = within(section.getByRole('heading', { level: 3, name }).closest('li')!)
-      step.getByText(owner)
+    const section = within(document.getElementById(SECTION.layer)!)
+    const { customers, products, experts, data } = home.layer
+    const names = section.getAllByRole('heading', { level: 3 }).map((h) => h.textContent)
+    expect(names).toEqual([customers.name, 'Tripcerto', experts.name])
+    for (const side of [customers, experts]) section.getByText(side.line)
+    for (const { name, line } of products) {
+      within(section.getByRole('heading', { level: 4, name }).closest('li')!).getByText(line)
     }
-    for (const system of home.systems.systems) section.getByText(system)
+    section.getByText(data)
   })
 })
 

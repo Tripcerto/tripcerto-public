@@ -8,6 +8,8 @@
    format is restated here; src/lib/consent.test.ts holds the two to the same
    strings. */
 
+import { NO_STORE, ownOrigin, readJson, refuse } from './_http.js'
+
 type ConsentDecision = 'granted' | 'denied'
 
 const CONSENT_COOKIE = 'tc_consent'
@@ -25,8 +27,6 @@ function cookieAttributes(hostname: string, secure: boolean, maxAge: number = CO
   return `Path=/; Max-Age=${maxAge}; SameSite=Lax${shared ? `; Domain=.${SHARED_DOMAIN}` : ''}${secure ? '; Secure' : ''}`
 }
 
-const NO_STORE = { 'cache-control': 'no-store' }
-
 /* The cookie a body asks for: exactly `{"analytics":"granted"|"denied"}` or
    `{"team":true|false}`, and nothing else. */
 function cookieFor(body: unknown, url: URL, now: number): string | null {
@@ -41,42 +41,12 @@ function cookieFor(body: unknown, url: URL, now: number): string | null {
   return null
 }
 
-async function readJson(req: Request): Promise<unknown> {
-  const type = req.headers.get('content-type')?.split(';')[0].trim().toLowerCase()
-  if (type !== 'application/json') return undefined
-  try {
-    return await req.json()
-  } catch {
-    return undefined
-  }
-}
-
-function refuse(status: number, error: string, headers: Record<string, string> = {}): Response {
-  return Response.json({ ok: false, error }, { status, headers: { ...NO_STORE, ...headers } })
-}
-
-/* The address the browser used. Behind Vercel's proxy the request may carry
-   an internal one; the forwarded headers carry the public scheme and host,
-   which is what `Origin` names. Either header missing, the request's own
-   value stands in for it. */
-function publicOrigin(req: Request): URL {
-  const url = new URL(req.url)
-  const proto = req.headers.get('x-forwarded-proto')?.split(',')[0].trim()
-  const host = req.headers.get('x-forwarded-host')?.split(',')[0].trim()
-  return new URL(`${proto ? `${proto}:` : url.protocol}//${host ?? url.host}`)
-}
-
 /* Only the page's own origin may set the cookie: a request from anywhere
    else, or with no Origin at all, is refused before its body is read. */
 export async function handleConsent(req: Request, now: number): Promise<Response> {
   if (req.method !== 'POST') return refuse(405, 'method_not_allowed', { allow: 'POST' })
-  let own: URL
-  try {
-    own = publicOrigin(req)
-  } catch {
-    return refuse(403, 'forbidden_origin')
-  }
-  if (req.headers.get('origin') !== own.origin) return refuse(403, 'forbidden_origin')
+  const own = ownOrigin(req)
+  if (!own) return refuse(403, 'forbidden_origin')
   const cookie = cookieFor(await readJson(req), own, now)
   if (!cookie) return refuse(400, 'invalid_body')
   return new Response(null, { status: 204, headers: { ...NO_STORE, 'set-cookie': cookie } })

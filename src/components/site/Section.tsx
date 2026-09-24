@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Lines, type Copy } from '@/components/site/Lines'
 import { cn } from '@/lib/utils'
 
 /* Every section below a hero is one strip in the same rhythm, and this
@@ -15,8 +16,8 @@ export const SECTION_PAD = 'py-[clamp(5rem,3.8rem+5vw,7rem)]'
 /* The width tiles take, so their edges line up down the page: below lg,
    where they stack or sit two to a row, one centred column 36rem wide, so
    a tile on a tablet is the size it is on a laptop; from lg, where they sit
-   side by side, the shell's whole width. The product tiles, the systems
-   box, the roles and the team all take it. */
+   side by side, the shell's whole width. The product tiles, the layer's
+   panel, the roles and the team all take it. */
 export const TILES = 'mx-auto w-full max-w-[36rem] lg:max-w-none'
 
 /* A hero's padding, on the home page and every other, and the legal
@@ -33,8 +34,8 @@ export function Section({
   children,
 }: {
   id?: string
-  heading: string
-  lede?: string
+  heading: Copy
+  lede?: Copy
   action?: ReactNode
   tone?: 'page' | 'tint'
   children?: ReactNode
@@ -51,23 +52,33 @@ export function Section({
 
 /* A section's head: the heading, the lede under it, and an action under
    that where the section has one (a link, or the close's buttons), all
-   centred. On the band it is set in paper. */
+   centred. The heading's measure is wide enough that no heading on the site
+   runs past two lines from a tablet up (but the home page's layer
+   heading, the founders' sentence word for word, which takes three on a
+   tablet held upright and two from a laptop), and a short one, as every
+   close's is, stands on one; the lede keeps the narrower measure prose reads best
+   at. Either can set its own lines (Lines). On the band it is set in
+   paper. */
 export function SectionHead({
   heading,
   lede,
   action,
   onBand = false,
 }: {
-  heading: string
-  lede?: string
+  heading: Copy
+  lede?: Copy
   action?: ReactNode
   onBand?: boolean
 }) {
   return (
-    <div className="mx-auto max-w-[44rem] text-center">
-      <h2 className={cn('text-heading text-balance', onBand && 'text-paper')}>{heading}</h2>
+    <div className="mx-auto max-w-[52rem] text-center">
+      <h2 className={cn('text-heading text-balance', onBand && 'text-paper')}>
+        <Lines text={heading} />
+      </h2>
       {lede && (
-        <p className={cn('mx-auto mt-5 max-w-[40rem] text-lede text-pretty', onBand ? 'text-paper/85' : 'text-dim')}>{lede}</p>
+        <p className={cn('mx-auto mt-5 max-w-[40rem] text-lede text-pretty', onBand ? 'text-paper/85' : 'text-dim')}>
+          <Lines text={lede} />
+        </p>
       )}
       {action && <div className="mt-10 flex flex-wrap items-center justify-center gap-3">{action}</div>}
     </div>

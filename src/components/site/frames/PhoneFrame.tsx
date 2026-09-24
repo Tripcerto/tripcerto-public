@@ -5,7 +5,9 @@ import { cn } from '@/lib/utils'
    width, corners and rim included, and the screen is a size container, so
    what is drawn on it sizes itself in cqw: the whole phone scales like a
    screenshot would, and its corners never cut into the screen at a small
-   size. Bezel and island tones are overridden by class. */
+   size. The island stands at the top and the home indicator at the foot,
+   as on the phone itself, so a screen keeps clear of both. Bezel and
+   island tones are overridden by class. */
 export function PhoneFrame({
   children,
   className,
@@ -28,6 +30,10 @@ export function PhoneFrame({
           aria-hidden
         />
         <div className="@container h-full w-full overflow-hidden">{children}</div>
+        <div
+          className="absolute bottom-[1%] left-1/2 z-10 h-[0.65%] w-[34%] -translate-x-1/2 rounded-full bg-ink/70 dark:bg-paper/70"
+          aria-hidden
+        />
       </div>
     </div>
   )

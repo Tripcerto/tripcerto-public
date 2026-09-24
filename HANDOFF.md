@@ -267,12 +267,13 @@ They are guidelines for the register, never lines to lift.
   each role carried beside it ("drop the right hand column") and asked for
   the role and its measures as a grid. `Close.tsx` stands on the hero's band
   (`Band.tsx`, the mesh extracted from the hero; it pauses off-screen so two
-  on a page cost nothing) with paper copy: a heading, an optional line, the
-  accent button and a secondary link. The home passes H-9-A and the two
-  buttons, with nothing between them (Taylor, 22 Sep). There is no Proof
-  section: guide §10 wants it enquiry-related and no pilot has measured
-  anything, so the pilot's measures ride in the Engage and Workspace closes
-  (E-9-B, W-8-B) and on the Pilot page, and the proof is the call.
+  on a page cost nothing) with paper copy: one short heading, the accent
+  button and a secondary link, nothing between them. Every close's heading
+  stands on one line from a tablet up (Taylor, 24 Sep: "way punchier", as
+  the Pilot and FAQ closes were); on a phone it may take two. There is no
+  Proof section: guide §10 wants it enquiry-related and no pilot has
+  measured anything, so the pilot's measures are on the Pilot page, and the
+  proof is the call.
 - `src/components/site/Footer.tsx` (rebuilt 22 Sep evening at Taylor's ask):
   on the page tokens like the nav, cream by day and ink by night, under a
   hairline, so the page ends quietly after the band. It had been fixed to
@@ -393,7 +394,7 @@ review below changed strings around them, never those.
   guide applied: the software is the subject; the hero ends at the booking
   (§5); what travellers get is told apart from how the business uses it (§6);
   no problem section (§3); no sector cards (§8); the boundaries are said as
-  what stays where it is; the pilot measures ride in each product page's close.
+  what stays where it is; the pilot measures are on the Pilot page.
 - Idioms reused from the home page and nothing new but two pieces:
   `PageHero.tsx` (the band opening, a step smaller than the home hero, with a
   `layout` of `phone` or `window` for the column split) and
@@ -788,13 +789,10 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   7+ years in scalable systems, 5+ apps and platforms shipped (shortened to
   one line on Taylor's ask), "Leads the platform: product, architecture and
   engineering". No employer, product, ownership or brand of either
-  founder's is named (Taylor, 24 Sep). Each adviser has one fact, so the
-  four figures line up. Both kinds of tile are subgrids of their list's
-  rows, so across a row the header, the facts, the line and the LinkedIn
-  each start level. The advisers' words come from the Non-Executive
-  Directors and Advisers document (July 2026) and, for Gerd,
-  gerdbommer.com; each is called an adviser until both founders confirm
-  who is a registered director.
+  founder's is named (Taylor, 24 Sep). A founder's tile is a subgrid of
+  the list's rows, so across a row the header, the facts, the line and the
+  LinkedIn each start level. An adviser is now a portrait, a name and a
+  LinkedIn, under "Board of advisers" (see the afternoon review below).
 - One rhythm at every width (Taylor, 24 Sep: the heroes changed size four
   or five times as the window narrowed, and dragging it lost his place).
   The display, heading and lede roles are fluid, growing with the screen
@@ -803,10 +801,10 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   to 32px the same way; `Section.tsx` holds the section padding and the
   hero padding (`HERO_PAD`, shared by the home hero, every `PageHero` and
   the legal pages) as fluid values, and `TILES`, the one width every group
-  of tiles takes (the product tiles, the systems box, the roles, the
+  of tiles takes (the product tiles, the journey box, the roles, the
   team): a centred 36rem column below lg, so a tile on a tablet is the size
   it is on a laptop, and the shell's whole width from lg, so their edges
-  line up down the page (the systems box and the team were 64rem, narrower
+  line up down the page (the box under H-11 and the team were 64rem, narrower
   than the product tiles above them on a wide screen). Tiles keep their
   padding at every width, and column gaps are one value. What still changes at a breakpoint is layout only: columns, the
   nav's links, and the home hero's frames moving beside the copy at lg.
@@ -857,6 +855,109 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   the traveller's words; the demo's "72% ready" is illustrative and could
   become the counts Workspace shows (gaps, priced lines); the brand kit's SWAPS example "Workspace builds the quote-ready
   trip" predates W-1-A's correction.
+
+## The 24 Sep afternoon review (Charlie and Taylor)
+
+The founders went through the preview page by page. What changed, and why:
+
+- Home. H-1-B is Charlie's: "Tripcerto answers travellers on your website,
+  profiles each customer and turns their enquiry into an itemised trip".
+  H-3-B is his word for word: "Tripcerto takes the repetitive manual tasks
+  out of planning and selling complex trips". The product tiles' one-line
+  slogans became a short paragraph each (H-4-A, H-5-A); Engage's is
+  Charlie's, Workspace's drafted from what he asked for (speed, many trips,
+  the gap checking), without his "ultimate". H-7-A is "Built for the people
+  who make travel possible" (selling is one role of five). H-9-A is a call
+  to action, "See how it works for you with a pilot"; Charlie's "Tripcerto"
+  became "it" so it stands on one line.
+- H-11 is now where Tripcerto sits (`Layer.tsx`, anchor `#where-it-sits`;
+  `Systems.tsx` is gone). "Your systems stay where they are" went: Charlie
+  read it as "nothing changes", which is the wrong thing to promise. The
+  heading is the line both founders agreed, "Tripcerto is the intelligence
+  layer between your customers and your experts"; `site.test.tsx` now bans
+  only the category phrase ("intelligence layer for"). It is the one
+  heading on the site that takes three lines on a tablet held upright. The
+  drawing says what the heading says: your customers on the left, your
+  experts on the right, and between them one Tripcerto panel with Engage
+  facing the customers and Workspace facing the experts, over a line with a
+  small database mark, "Runs on your own content, products and prices".
+  Taylor asked for something simpler than the slides in "The Changing
+  Customer Journey", drawn from the feedback rather than copied; a first
+  pass that redrew the slide's nine-step journey was replaced the same
+  afternoon. It shows no systems and no wiring (Charlie: a buyer whose
+  set-up differs will say "this wouldn't work for us"; Taylor: no API
+  labels), and the expert is no longer drawn as doing everything after the
+  quote.
+- Advisers: one label, "Board of advisers"; each adviser is a portrait, a
+  name and a LinkedIn. The titles ("Adviser and investor" in particular),
+  the years and the notes went. Gemini's action list says the LinkedIn
+  links went too; the transcript ends with both founders keeping them.
+- Pilot. The headline is about speed, "Pilots go live in one week": a
+  promise both founders made, confirmed by Taylor after the call (no set-up
+  time had been promised to an operator before). The lede is Charlie's. "What a pilot includes" was rebuilt from
+  what the founders told operators on their calls (one agreed slice, a
+  light set-up on what the business already holds, a baseline and one
+  agreed measure, a say in what comes next); Charlie had said the morning's
+  columns were not what a pilot includes. The five measures are now under
+  "What a pilot can measure". The way in is the pilot's information pack,
+  asked for by email in the hero and in the close, with "Or book a call"
+  under each form. The field's placeholder says what it is for ("Enter
+  your email to get the pack") so the button is a small "Send" (Taylor);
+  Enter in the field sends, once.
+- Information packs (`InfoPackForm.tsx`, `api/info-pack.ts`). The Pilot
+  page asks for the pilot's pack; the Engage and Workspace closes ask for
+  each product's, with "Or book a demo" under the form. A request is emailed
+  to hello@tripcerto.com through Resend, from
+  website@notifications.tripcerto.com with the requester as the reply-to,
+  and the team replies with the pack; nothing is stored. The packs do not
+  exist yet, and neither does the automation Charlie described (an
+  automatic reply with the PDF and a row in the sales pipeline). Until the
+  Vercel project holds `RESEND_API_KEY` the endpoint answers 503 and the
+  form tells the reader to email hello@tripcerto.com instead, with a
+  prefilled link, so no request is lost silently. The product's own Resend
+  key is a Supabase function secret and cannot be read back; a key of the
+  website's own, restricted to sending from notifications.tripcerto.com, is
+  the one to add, so either can be revoked without the other. When it
+  goes in, add a rate limit on `/api/info-pack` too (a Vercel firewall
+  rule is enough): the origin check stops other websites, not a script
+  that sets the header, so without one a loop could fill hello@ and use up
+  the Resend quota. A hidden `website` field
+  catches form fillers. `api/_http.ts` now holds what both functions share
+  (the origin check, the JSON read, the refusal). The privacy notice now
+  covers pack requests (Taylor, 24 Sep): what is collected, the use, the
+  basis (a step at the reader's request, then legitimate interest in
+  following up, which the reader can stop) and 24 months' retention in the
+  company email, matching enquiries.
+- Trust: "Tripcerto holds no certificate today and claims none" and the
+  promise to say so went from the programme (Taylor, 24 Sep); the page
+  still claims no certificate and still names the route to one.
+- Open: Charlie asked on the call that the registered office, a family
+  address, not be shown. The About page does not show it, but the privacy
+  notice and the terms do, and UK trading disclosure rules require a
+  company's website to state its registered office address, so it cannot
+  simply come off: the fix is a different registered office at Companies
+  House (an accountant's or a registered-office service), then the two
+  documents.
+- FAQ. The h1 is written to rank, as Charlie asked: "How does AI help
+  travel companies plan and sell complex trips?", with the description,
+  og:title and `llms.txt` to match; the tab keeps its one-word title, as
+  `head.test.ts` holds. "Is Tripcerto certified? Not yet" is off the page
+  (Taylor: no need to say so on the public site today), and so is the
+  Trust page's line saying so (below). "How much do we need to build?" is
+  new, the question operators asked most. The rest of the questions wait
+  for the keyword research the founders plan after the videos.
+- About. The lede lost its "So". Under "Started at the sales desk" the
+  story now names the fragmentation Charlie saw and the systems Taylor
+  built, then the line both keep, and a timeline follows (`Timeline.tsx`):
+  2009, 2016 and 2017 from Charlie on the call; Bristol in 2022, planning
+  from 2023 and Taylor full time from April 2026 from Taylor after it;
+  2024 the incorporation; and 2026 as "the pilot programme opens", since no
+  pilot is live yet. Taylor's early years are kept general, by Taylor's
+  ask, and no employer is named. The first angel investor has no year yet
+  and is not on it.
+- Left off the site on purpose: accounting and tax, the registered address,
+  the filming plans, the social push, why the investor label came off, and
+  every client or prospect named on the call.
 
 ## Analytics (23 Sep)
 

@@ -1,7 +1,8 @@
-import { Fragment, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import type { CloseLink } from '@/components/site/Close'
+import { Lines, type Copy } from '@/components/site/Lines'
 import { Reveal } from '@/components/site/Reveal'
 import { HERO_PAD } from '@/components/site/Section'
 import { Tag } from '@/components/site/Tag'
@@ -18,16 +19,19 @@ export function PageHero({
   title,
   lede,
   primary,
+  form,
   secondary,
   visual,
   layout = 'phone',
 }: {
   /* A label in a pill above the title, as on the home hero. */
   tag?: string
-  /* A list sets the headline's lines; a string wraps where it falls. */
-  title: string | readonly string[]
+  title: Copy
   lede: string
-  primary: CloseLink
+  /* The way in: a button, or a form in its place (the Pilot page's
+     information pack), with the secondary link under the form. */
+  primary?: CloseLink
+  form?: ReactNode
   secondary?: CloseLink
   visual?: ReactNode
   /* A phone stands in the narrower column; a window needs the wider one. */
@@ -50,27 +54,27 @@ export function PageHero({
               id="hero-title"
               className="max-w-[18ch] text-display text-paper"
             >
-              {typeof title === 'string'
-                ? title
-                : title.map((line, i) => (
-                    <Fragment key={line}>
-                      {i > 0 && ' '}
-                      {/* Each line stays whole on a narrow phone: the type
-                          steps down with the viewport rather than wrapping. */}
-                      <span className="block text-[length:min(1em,11.8vw)]">{line}</span>
-                    </Fragment>
-                  ))}
+              {/* Set lines stay whole on a narrow phone: the type steps
+                  down with the viewport rather than wrapping. */}
+              <Lines text={title} className="text-[length:min(1em,11.8vw)]" />
             </h1>
             <p className="mt-7 max-w-[34rem] text-lede text-paper/85">{lede}</p>
-            <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Button asChild size="lg" variant="accent">
-                <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}>
-                  {primary.label}
-                  <ArrowRight aria-hidden />
-                </a>
-              </Button>
+            {form && <div className="mt-9">{form}</div>}
+            <div className={cn('flex flex-wrap items-center gap-x-6 gap-y-3', form ? 'mt-4' : 'mt-9')}>
+              {primary && (
+                <Button asChild size="lg" variant="accent">
+                  <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}>
+                    {primary.label}
+                    <ArrowRight aria-hidden />
+                  </a>
+                </Button>
+              )}
               {secondary && (
-                <a href={secondary.href} className="inline-flex min-h-11 items-center gap-1 text-action text-paper">
+                <a
+                  href={secondary.href}
+                  onClick={secondary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}
+                  className="inline-flex min-h-11 items-center gap-1 text-action text-paper"
+                >
                   {secondary.label}
                   <ArrowRight size={16} aria-hidden />
                 </a>

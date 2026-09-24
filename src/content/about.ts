@@ -1,15 +1,14 @@
 /* About page strings, new on 24 Sep 2026: the company, the two founders
-   and the advisers. Nothing here comes from the 21 Sep copy document, so
-   every string is `new`. The company line is Charlie's, from the 24 Sep
-   call. Each person is a name, a role and a fact or two, a figure and what
-   it counts (Taylor, 24 Sep). The founders' facts are the ones
-   both founders confirmed on 24 Sep; no ownership and no brand of either
-   founder's is named. The advisers' facts and notes come from the
-   Non-Executive Directors and Advisers document (July 2026) and, for Gerd
-   Bommer, his own public profile (gerdbommer.com); each is called an adviser until both founders confirm
-   who is a registered director. Why the opportunity exists is told through
-   Charlie's experience, not as the buyer's problem (Guide §3). Reply with
-   the reference and the change. */
+   and the board of advisers. Nothing here comes from the 21 Sep copy
+   document, so every string is `new`. The company line is Charlie's, from
+   the 24 Sep call. A founder is a name, a role and a fact or two, a figure
+   and what it counts (Taylor, 24 Sep); the founders' facts are the ones
+   both founders confirmed on 24 Sep, and no ownership and no brand of
+   either founder's is named. An adviser is a portrait, a name and a
+   LinkedIn, and nothing else: no title, no years, no line on what they
+   bring (both founders, 24 Sep afternoon review). Why the opportunity
+   exists is told through Charlie's experience, not as the buyer's problem
+   (Guide §3). Reply with the reference and the change. */
 
 import { LINKEDIN } from '../lib/links'
 
@@ -33,6 +32,9 @@ export type Person = {
   photo?: string
 }
 
+/* An adviser: the portrait, the name and the LinkedIn, as a Person's are. */
+export type Adviser = Pick<Person, 'name' | 'linkedin' | 'photo'>
+
 export const founders: readonly Person[] = [
   {
     name: 'Charlie Potter',
@@ -51,66 +53,55 @@ export const founders: readonly Person[] = [
     facts: [
       { figure: '7+', label: 'years in scalable systems' },
       { figure: '5+', label: 'apps and platforms shipped' },
-    ], // new (24 Sep, Taylor: no Dyson; one line)
+    ], // new (24 Sep, Taylor: no employer named; one line)
     note: 'Leads the platform: product, architecture and engineering.', // new (24 Sep): the Our Team document's "all technical development and architecture"
     linkedin: LINKEDIN.taylor,
     photo: '/team/taylor-styles.webp',
   },
 ]
 
-export const advisers: readonly Person[] = [
-  {
-    name: 'Nigel Clarke',
-    role: 'Adviser',
-    facts: [{ figure: '20+', label: 'years in technology sales' }], // new
-    note: 'Three exits and an IPO, across SaaS and travel technology.', // new
-    linkedin: LINKEDIN.nigel,
-    photo: '/team/nigel-clarke.webp',
-  },
-  {
-    name: 'Joanne Dickson',
-    role: 'Adviser',
-    facts: [{ figure: '30+', label: 'years in travel and hospitality' }], // new
-    note: 'Scaling and modernising established travel businesses.', // new
-    linkedin: LINKEDIN.joanne,
-    photo: '/team/joanne-dickson.webp',
-  },
-  {
-    name: 'Steve Endacott',
-    role: 'Adviser and investor',
-    facts: [{ figure: '30+', label: 'years building and selling businesses' }], // new
-    note: 'Portfolio chairman across travel, tourism and online businesses.', // new
-    linkedin: LINKEDIN.steve,
-    photo: '/team/steve-endacott.webp',
-  },
-  {
-    name: 'Gerd Bommer',
-    role: 'Strategic adviser',
-    facts: [{ figure: '25+', label: 'years in international markets' }], // new
-    note: 'Founder of Zoenora, investing in early-stage founders.', // new
-    linkedin: LINKEDIN.gerd,
-    photo: '/team/gerd-bommer.webp',
-  },
-]
+export const advisers: readonly Adviser[] = [
+  { name: 'Nigel Clarke', linkedin: LINKEDIN.nigel, photo: '/team/nigel-clarke.webp' },
+  { name: 'Joanne Dickson', linkedin: LINKEDIN.joanne, photo: '/team/joanne-dickson.webp' },
+  { name: 'Steve Endacott', linkedin: LINKEDIN.steve, photo: '/team/steve-endacott.webp' },
+  { name: 'Gerd Bommer', linkedin: LINKEDIN.gerd, photo: '/team/gerd-bommer.webp' },
+] // changed (24 Sep review): the titles, the years and the notes went
 
 export const about = {
   hero: {
     'A-1-A': 'Tripcerto takes the repetitive work out of planning and selling complex travel', // new: Charlie's line, 24 Sep
-    'A-1-B': 'So customers get what they asked for sooner, and more enquiries can become bookings.', // new: the rest of Charlie's line
+    'A-1-B': 'Customers get what they asked for sooner, and more enquiries can become bookings.', // new: the rest of Charlie's line, without its "So" (24 Sep review)
     'A-1-C': 'Book a demo', // new
     'A-1-D': 'Meet the team', // new
   },
+  /* A-2: the founding story, then the timeline under it (24 Sep review:
+     Charlie, agreed by both founders): the founders did the work Tripcerto
+     is built for long before they built it, which is what no one else can
+     copy. Each entry is a year and one line, and each year is one a
+     founder gave. */
   story: {
     'A-2-A': 'Started at the sales desk', // new
-    'A-2-B':
-      'Selling complex trips, Charlie saw how much of each day went on rekeying, searching and checking. Tripcerto was started to give that time back to the expert.', // new: why the opportunity exists, told through the founder's experience (Guide §3)
+    'A-2-B': [
+      'Selling complex trips, Charlie dealt first-hand with how fragmented the work behind each one is: the rekeying, the searching and the checking.',
+      'Taylor spent the same years building systems that scale.',
+      'Tripcerto was started to give that time back to the expert.',
+    ], // changed (24 Sep review): the fragmentation Charlie saw and the systems Taylor built, then the line both founders keep
+    timeline: [
+      { year: '2009', line: 'Charlie takes a first tailor-made trip, then travels the world.' },
+      { year: '2016', line: 'Charlie starts selling tailor-made travel, and Taylor starts building apps and platforms.' },
+      { year: '2017', line: 'Charlie sees how fragmented the work behind every trip is.' },
+      { year: '2022', line: 'Charlie and Taylor meet in Bristol.' },
+      { year: '2023', line: 'They start planning the foundations of Tripcerto.' },
+      { year: '2024', line: 'Tripcerto is incorporated.' },
+      { year: '2026', line: 'Taylor goes full time on Tripcerto in April, and the pilot programme opens.' },
+    ], // new (24 Sep review): Charlie's years from the call and Taylor's after it (Bristol 2022, planning from 2023, full time from April 2026); Taylor's early years kept general, by Taylor's ask
   },
   /* The team, on the home page and on About (Taylor, 24 Sep): one section,
      the founders then the advisers. */
   team: {
     'A-3-A': 'Meet the team', // new (24 Sep, Taylor)
     'A-3-B': 'Founders', // new
-    'A-3-C': 'Advisers', // new
+    'A-3-C': 'Board of advisers', // changed (24 Sep review, Charlie)
   },
   company: {
     'A-4-A': 'The company', // new
@@ -129,7 +120,7 @@ export const about = {
     ], // new
   },
   close: {
-    'A-5-A': 'Every demo is run by one of the founders', // new
+    'A-5-A': 'Your experts get their time back', // changed (24 Sep, Taylor): what the reader gains, where "Every demo is run by one of the founders" said nothing they gain; one line
     'A-5-B': 'Book a demo', // new
     'A-5-C': 'What a pilot delivers', // new
   },

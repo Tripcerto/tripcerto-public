@@ -159,7 +159,7 @@ it('keeps every test out of the functions Vercel deploys', () => {
     .filter((entry) => entry.isFile())
     .map((entry) => relative(api, join(entry.parentPath, entry.name)))
     .filter((path) => !path.split('/').some((segment) => segment.startsWith('_') || segment.startsWith('.')) && !path.endsWith('.d.ts'))
-  expect(deployed).toEqual(['consent.ts'])
+  expect(deployed.sort()).toEqual(['consent.ts', 'info-pack.ts'])
 })
 
 /* Vercel runs a function in iad1 (Washington) unless the project names a
