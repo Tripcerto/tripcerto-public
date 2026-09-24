@@ -91,7 +91,7 @@ export const faq = {
         },
         {
           q: 'Which AI models does Tripcerto use?',
-          a: 'Anthropic’s model writes each reply and keeps nothing afterwards. A model from OpenAI turns short phrases into the vectors used for matching.',
+          a: 'Anthropic’s model writes each reply and keeps nothing afterwards. A model from OpenAI turns short phrases into the vectors used for matching, and keeps those phrases without training on them.',
           link: { label: 'How information moves', href: trust(TRUST_SECTION.moves) },
         },
         {
@@ -106,7 +106,7 @@ export const faq = {
         },
         {
           q: 'Is Tripcerto certified?',
-          a: 'Tripcerto is working towards ISO/IEC 27001, with Cyber Essentials first. Its security management system is written, approved and operating.',
+          a: 'Not yet. Tripcerto is working towards ISO/IEC 27001, with Cyber Essentials first. Its security management system is written, approved and operating.',
           link: { label: 'The security programme', href: trust(TRUST_SECTION.programme) },
         },
       ],

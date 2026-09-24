@@ -757,7 +757,11 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   and a LinkedIn link, and "About Tripcerto" under the heading. The roles
   section moved to the page tone so the tones still alternate. H-9-A lost
   its "we" ("A pilot finds where Tripcerto does the most for your business,
-  then proves it there"), the item left open at the design sync.
+  then proves it there"), the item left open at the design sync. H-3-B,
+  Charlie's 23 Sep line under the product tiles, is now his definition from
+  the 12:20 call ("Tripcerto sits inside the planning and selling of complex
+  trips and takes the repetitive work out of both"), so the home page says
+  what Tripcerto is as well as what the tools do; his to confirm.
 - The founders' facts are the ones both founders confirmed on 24 Sep:
   Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
   Taylor Styles, Co-founder and CTO, more than ten years in scalable

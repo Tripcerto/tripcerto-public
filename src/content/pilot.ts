@@ -16,14 +16,14 @@ export const pilot = {
     tag: 'The pilot programme is open', // new (24 Sep)
     'P-1-A': 'A pilot proves what Tripcerto does for your business', // changed
     'P-1-B':
-      'Tripcerto works with you to find where it will do the most for your business, then proves it there on one agreed number.', // changed (24 Sep)
+      'Tripcerto works with you to find where it will do the most, then proves it there on one agreed number.', // changed (24 Sep)
     'P-1-C': 'Book a call', // changed
     'P-1-D': 'What a pilot includes', // added
   },
   includes: {
     'P-7-A': 'What a pilot includes', // new (24 Sep)
     columns: [
-      { name: 'Found together', line: 'Led by the founders, alongside your team.' },
+      { name: 'Led by the founders', line: 'Where the pilot runs is chosen with your team.' },
       { name: 'Built on what you have', line: 'It starts from the content and data you already hold.' },
       { name: 'Measured from today', line: 'One agreed number, its baseline from your own data, and the result against it.' },
       { name: 'A say in what is next', line: 'Direct influence on the roadmap, and early access to what is built.' },

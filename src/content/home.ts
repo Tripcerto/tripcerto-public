@@ -24,7 +24,7 @@ export const home = {
      line under the product's name. */
   products: {
     'H-3-A': 'One for your website. One for your sales team.', // changed (23 Sep review: the design's "Two products. Built for your travel business." said nothing the tiles do not)
-    'H-3-B': 'Explore the right solution for your customers and your team.', // changed (23 Sep design)
+    'H-3-B': 'Tripcerto sits inside the planning and selling of complex trips and takes the repetitive work out of both.', // changed (24 Sep): Charlie's definition from the 12:20 call, said where the products are introduced; it replaces his 23 Sep line, so it is his to confirm
   },
   engage: {
     'H-4-A': 'Understand every visitor. Before the first call.', // changed (23 Sep design)

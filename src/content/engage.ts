@@ -59,7 +59,7 @@ export const engage = {
   close: {
     'E-9-A': 'A pilot proves it on one number, agreed with you', // changed
     'E-9-B':
-      'Engaged visitors who become enquiries, the quality of each enquiry, time to a useful answer, or the completeness of the brief.', // changed (23 Sep sync)
+      'Engaged visitors who become enquiries, or how complete each brief is when it reaches sales.', // changed (24 Sep): the two Engage measures the Pilot page lists
     'E-10-B': 'Book a demo',
     'E-10-C': 'What a pilot delivers', // added
   },
