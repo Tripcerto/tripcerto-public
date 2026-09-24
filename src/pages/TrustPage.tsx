@@ -7,16 +7,7 @@ import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { trust } from '@/content/trust'
 import { usePageAnalytics } from '@/lib/analytics'
-import { DEMO_URL, PAGES, STATUS_URL } from '@/lib/links'
-
-const ID = {
-  moves: 'how-information-moves',
-  decides: 'what-decides',
-  access: 'who-can-reach-what',
-  programme: 'security-programme',
-  legal: 'terms-and-rights',
-  status: 'live-status',
-} as const
+import { DEMO_URL, PAGES, STATUS_URL, TRUST_SECTION as ID } from '@/lib/links'
 
 /* The trust page, for the technical buyer: how information moves as ruled
    rows, what decides a recommendation as three columns, who can reach what,

@@ -24,9 +24,9 @@ const ROLE_GLYPH: Record<Role, LucideIcon> = {
    each centred on the other, so no measure runs past two lines at any
    width. The glyph and name are centred in their column, and in their
    column from lg, with the measures centred as a block under them. */
-export function Audience() {
+export function Audience({ tone = 'tint' }: { tone?: 'page' | 'tint' }) {
   return (
-    <Section id={SECTION.audience} tone="tint" heading={home.audience['H-7-A']}>
+    <Section id={SECTION.audience} tone={tone} heading={home.audience['H-7-A']}>
       <ul
         role="list"
         className="glass mx-auto max-w-[40rem] divide-y divide-line overflow-hidden rounded-xl shadow-card lg:grid lg:max-w-none lg:grid-cols-5 lg:divide-x lg:divide-y-0"

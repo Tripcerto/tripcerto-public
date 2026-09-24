@@ -33,7 +33,7 @@ jobs:
         run: npm run build
       - name: Every page built
         run: |
-          for f in index.html engage/index.html workspace/index.html pilot/index.html trust/index.html legal/privacy/index.html legal/terms/index.html; do
+          for f in index.html engage/index.html workspace/index.html pilot/index.html faq/index.html about/index.html trust/index.html legal/privacy/index.html legal/terms/index.html; do
             test -f "dist/$f" || { echo "missing dist/$f"; exit 1; }
           done
       - name: Audit

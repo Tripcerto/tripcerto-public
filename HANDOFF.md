@@ -280,7 +280,7 @@ They are guidelines for the register, never lines to lift.
   slab after the band in light, with the mono uppercase headings he had
   removed everywhere else. Now: the page-toned wordmark and the contact
   email, then under a hairline the site's pages in order on the left (Engage,
-  Workspace, Pilot, Status, Login) and the legal links on the right (Trust,
+  Workspace, Pilot, FAQ, About, Status, Login) and the legal links on the right (Trust,
   Privacy, Terms), then the copyright. No tagline and no column headings.
   `Section`'s `ink` tone went with it; the tones are `page` and `tint`.
 - The product tiles (H-3 to H-5) sit straight under the hero, the roles
@@ -290,7 +290,7 @@ They are guidelines for the register, never lines to lift.
   `// changed`. H-1-A is "AI that makes complex travel easier to plan and sell"
   (Taylor, 23 Sep, after the design sync moved the site off "we" statements;
   it has been reworded often, so check the file rather than any quote in this
-  doc). It is also the og:image:alt on all five pages, the
+  doc). It is also the og:image:alt on every page, the
   webmanifest description, and the headline on the link-preview card
   (`scripts/og/copy.js`, `variants.a.head` and `pages.home.head`, baked into
   `public/og-image.png`): change all of them together and re-shoot the card.
@@ -608,7 +608,7 @@ Taylor's go was "1-7".
   inside the edge so 16px shows no pale rim; only `favicon.svg` and
   `favicon.ico` changed (the square icons already carry a white tc), and
   their `?v=` is 10. `brand.test.ts` holds the SVG to it.
-- `robots.txt` and `sitemap.xml` (the seven canonical URLs) are in
+- `robots.txt` and `sitemap.xml` (the nine canonical URLs since 24 Sep) are in
   `public/`; live answered 404 for both.
 - `vite preview` answers clean URLs as Vercel does, so a local build serves
   `/engage` and the legal routes.
@@ -711,8 +711,8 @@ to block the clicks for while its animating"); the band's contrast stays
 - Crawl files and the search consoles: README, "Search engines and AI
   assistants". Search Console is a domain property verified by DNS TXT at
   IONOS (do not remove the record); the sitemap is submitted; Bing imported
-  it; IndexNow posts after every production deploy. `/about`, from an earlier
-  site and still in Google's and Brave's indexes, redirects home.
+  it; IndexNow posts after every production deploy. `/about`, once an earlier
+  site's page that redirected home, is the About page since 24 Sep.
 - This repo is public, and its pull requests show up when people search for
   "Tripcerto". A PR description or commit message here is published; keep
   internal findings in the product repo.
@@ -733,3 +733,73 @@ turnaround, enquiry response time and qualifying questions; an honest,
 dated comparison of AI tools by job; FAQs; an About page; directory
 listings; and a fix to the LinkedIn company page, which is named
 "tripcerto." and claims results no pilot has measured.
+
+## The 24 Sep pass: founders, About, FAQ, the pilot, and copy that matches the product
+
+Taylor's brief, after an outside review of the site and a call with Charlie:
+put the founders on the site, add an FAQ and new menu items, make the Pilot
+page say what a pilot is for and what it includes, bring back how the
+products sit with a business's own systems (second to the value, Charlie),
+and fill out the product pages; all without boosting the word count
+(Charlie: add the review's points "without massively boosting the word
+count"; Taylor: every sentence earns its place). Charlie's
+Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
+§12 and §13 decided most of what follows.
+
+- Nav: Engage · Workspace · Pilot · FAQ · About. The footer carries the same
+  two. `PAGES` and `NAV_LINKS` in `src/lib/links.ts`.
+- Home: H-1-B now says what the demo shows ("…and shows what is missing
+  before the quote goes out"); H-1-A is untouched. Two sections are new:
+  H-11 (`Systems.tsx`), Charlie's line from "Built for the changing customer
+  journey" over the four steps (Research, Enquiry: Engage; Quote: Workspace;
+  Proposal: your expert) and the systems that stay; and H-12, "Meet the
+  founders" (Taylor's pick), two tiles from `Founders.tsx` with a line each
+  and a LinkedIn link, and "About Tripcerto" under the heading. The roles
+  section moved to the page tone so the tones still alternate. H-9-A lost
+  its "we" ("A pilot finds where Tripcerto does the most for your business,
+  then proves it there"), the item left open at the design sync.
+- The founders' facts are the ones both founders confirmed on 24 Sep:
+  Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
+  Taylor Styles, Co-founder and CTO, more than ten years in scalable
+  infrastructure and IoT, five of them as a senior software engineer at
+  Dyson. No board, no ownership, and no brand of either founder's is named
+  (Taylor, 24 Sep). The portraits go in `public/team/` and in each founder's
+  `photo`; until then each tile shows the initials on the band.
+- About (`/about`): Charlie's company line as the headline, why Tripcerto was
+  started told through Charlie's experience rather than as the buyer's
+  problem (Guide §3), the founders in full, and the registered facts. The
+  home page's Organization JSON-LD names the founders, and `head.test.ts`
+  holds it to `src/content/about.ts`.
+- FAQ (`/faq`): the questions buyers have asked (Guide §16), answered in a
+  sentence or two from what the product does; every answer shows, with the
+  topics down the left from lg and as pills above them below lg (Taylor
+  disliked the first, accordion version). The answers about data state the
+  fact and link to the Trust section that holds it: the Trust page stays the
+  full account and is not turned into a list of objections (Guide §14). The
+  Trust page's section ids moved to `TRUST_SECTION` in `links.ts` so both
+  pages use one address, and a test fails on an FAQ link to a section Trust
+  does not have. The FAQPage structured data is written from the copy file
+  in the page body. The brand kit's "no question marks" and "no menu of
+  questions" measured the site before the founders asked for an FAQ; this
+  page is the exception, by their ask.
+- Pilot: a label above the headline ("The pilot programme is open", via a
+  new `tag` on `PageHero`), a lede that puts the proposing on Tripcerto
+  (Guide §12), "What a pilot includes" in four columns, the five measures,
+  and the call. No preparation list and no workflow for the buyer to choose,
+  as §12 asks. The pilot's measures are still to be settled by both
+  founders, and whether pilots are paid is open.
+- Engage and Workspace each regained one section on how the product sits in
+  the business (Guide §6): E-5 as three rows, W-4 as three rows. Every claim
+  on both pages, and in their heads, JSON-LD and `llms.txt`, was checked
+  against the product code on 24 Sep and says what ships: the brief reaches
+  the team by email; Workspace takes a typed, dictated, pasted or uploaded
+  requirement, prices from the rates set up with the business and from
+  uploaded supplier documents, and sends nothing to a customer on its own;
+  connections to a business's own systems are built at set-up.
+- Open for Taylor and Charlie: the pilot's measures and terms; pricing pages
+  (Guide §11) versus the FAQ's one-line pricing model; the founders'
+  portraits; the Engage brief frame (`BriefCard.tsx`) still draws
+  preferences and concerns as fields where the copy now says they arrive in
+  the traveller's words; the demo's "72% ready" is illustrative and could
+  become the counts Workspace shows (gaps, priced lines); the brand kit's SWAPS example "Workspace builds the quote-ready
+  trip" predates W-1-A's correction.

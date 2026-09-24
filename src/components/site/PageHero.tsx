@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import type { CloseLink } from '@/components/site/Close'
 import { Reveal } from '@/components/site/Reveal'
+import { Tag } from '@/components/site/Tag'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -10,6 +11,7 @@ import { cn } from '@/lib/utils'
    paper copy, the two ways in, and the page's frame beside it where it
    has one. Not viewport-tall; the page's own sections follow at once. */
 export function PageHero({
+  tag,
   title,
   lede,
   primary,
@@ -17,6 +19,8 @@ export function PageHero({
   visual,
   layout = 'phone',
 }: {
+  /* A label in a pill above the title, as on the home hero. */
+  tag?: string
   /* A list sets the headline's lines; a string wraps where it falls. */
   title: string | readonly string[]
   lede: string
@@ -38,6 +42,7 @@ export function PageHero({
           )}
         >
           <div className="animate-rise min-w-0">
+            {tag && <Tag className="mb-6">{tag}</Tag>}
             <h1
               id="hero-title"
               className="max-w-[18ch] text-display text-paper"

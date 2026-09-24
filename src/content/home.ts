@@ -3,14 +3,18 @@
    Positioning and Messaging Guide (22 Sep 2026): the software is the subject, the framing
    is the opportunity, the hero covers both products, section 6 is removed. Section 2 went
    in the 23 Sep review, once the hero and the product tiles said it. Sections 3 to 5 are the
-   23 Sep 2026 design's. Reply with the reference and the change. */
+   23 Sep 2026 design's. H-11 and H-12 are new on 24 Sep, after the review
+   of the site: how Tripcerto sits with the systems a business already runs
+   (the diagram from Charlie's "Built for the changing customer journey",
+   kept second to the value, as Charlie asked on 24 Sep), and the founders.
+   Reply with the reference and the change. */
 
 export const home = {
   hero: {
     audience: 'For tour operators and DMCs', // added (23 Sep sync): who it is for, before the headline
     'H-1-A': 'AI that makes complex travel easier to plan and sell', // changed (23 Sep sync)
     'H-1-B':
-      'Tripcerto answers travellers on your website, then turns each enquiry into an itemised trip your team can check and quote.', // changed (23 Sep sync): the products are named on their cards below
+      'Tripcerto answers travellers on your website, turns each enquiry into an itemised trip and shows what is missing before the quote goes out.', // changed (24 Sep): the gaps the demo shows, said in words
     'H-1-C': 'Book a demo',
     'H-1-D': 'See how it works',
   },
@@ -28,6 +32,21 @@ export const home = {
   workspace: {
     'H-5-A': 'Turn every enquiry into a sellable trip.', // changed (23 Sep design)
   },
+  /* H-11: the tools in the systems a business already runs. The journey
+     runs left to right, each step with the product that carries it; the
+     systems sit under it and stay where they are. */
+  systems: {
+    'H-11-A': 'Your systems stay where they are. The work between them gets faster.', // new (24 Sep): Charlie's, from "Built for the changing customer journey"
+    steps: [
+      { name: 'Research', owner: 'Engage', line: 'Travellers ask on your website.' },
+      { name: 'Enquiry', owner: 'Engage', line: 'Sales receives the brief.' },
+      { name: 'Quote', owner: 'Workspace', line: 'The trip is itemised, priced and checked for gaps.' },
+      { name: 'Proposal', owner: 'Your expert', line: 'Your expert decides what the customer sees.' },
+    ],
+    'H-11-C': 'Your systems', // new
+    systems: ['Content and products', 'CRM', 'Pricing and availability', 'Reservations', 'Itinerary and proposal tools'],
+    'H-11-D': 'Connections to your systems are built with you at set-up.', // new
+  },
   audience: {
     'H-7-A': 'Built for the people who sell complex travel', // changed
     /* Buying roles and what they are measured on (Guide §8; the Foundation's
@@ -41,11 +60,16 @@ export const home = {
       { role: 'Finance', measures: ['Total cost', 'Payback', 'Contract exposure'] },
     ], // changed: roles, not sectors; the measures as a list and the sentences dropped (23 Sep)
   },
+  /* H-12: who builds it, a line each, with the whole story on About. */
+  founders: {
+    'H-12-A': 'Meet the founders', // new (24 Sep, Taylor)
+    'H-12-B': 'About Tripcerto', // new
+  },
   /* No Proof section (Guide §10): the close is the call, with the pilot
      page beside it. Taylor, 22 Sep: nothing stands between the headline
      and the two buttons. */
   close: {
-    'H-9-A': 'We find where our AI has the most effect in your business, then prove it there', // changed (Taylor, 22 Sep)
+    'H-9-A': 'A pilot finds where Tripcerto does the most for your business, then proves it there', // changed (24 Sep): the software is the subject, and "we" no longer reads as an agency (open since the 23 Sep sync)
     'H-9-C': 'Book a demo',
     'H-9-D': 'What a pilot delivers',
   },
