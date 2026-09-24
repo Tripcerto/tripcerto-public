@@ -12,12 +12,24 @@ const initials = (name: string) =>
    has one, otherwise the initials set large on the band's frosted pane
    (smoked by night), as the product frames are painted. The same box
    either way, so a photograph drops in without moving anything. */
-function Portrait({ person, className, type }: { person: Person; className: string; type: 'text-display' | 'text-subhead' }) {
+function Portrait({
+  person,
+  className,
+  initialsClassName,
+  type,
+}: {
+  person: Person
+  /* The box, which the photograph fills edge to edge. */
+  className: string
+  /* Where the initials sit in the box when there is no photograph. */
+  initialsClassName: string
+  type: 'text-display' | 'text-subhead'
+}) {
   if (person.photo) {
-    return <img src={person.photo} alt={person.name} width={800} height={600} loading="lazy" decoding="async" className={cn(className, 'object-cover object-[center_25%]')} />
+    return <img src={person.photo} alt={person.name} width={1200} height={900} loading="lazy" decoding="async" className={cn(className, 'object-cover')} />
   }
   return (
-    <div aria-hidden className={cn(className, 'bg-band-frosted flex dark:bg-band-smoked')}>
+    <div aria-hidden className={cn(className, initialsClassName, 'bg-band-frosted flex dark:bg-band-smoked')}>
       <span className={cn(type, 'text-link')}>{initials(person.name)}</span>
     </div>
   )
@@ -48,7 +60,7 @@ export function Founders({ people }: { people: readonly Person[] }) {
     <ul role="list" className="mx-auto grid max-w-[48rem] grid-cols-1 gap-6 sm:grid-cols-2">
       {people.map((person) => (
         <li key={person.name} className="glass flex flex-col overflow-hidden rounded-xl shadow-card">
-          <Portrait person={person} type="text-display" className="aspect-[4/3] w-full items-end p-6" />
+          <Portrait person={person} type="text-display" className="aspect-[4/3] w-full" initialsClassName="items-end p-6" />
           <div className="flex flex-1 flex-col px-6 pb-5 pt-5 md:px-7">
             <h3 className="text-subhead">{person.name}</h3>
             <p className="text-small text-dim">{person.role}</p>
@@ -71,7 +83,7 @@ export function Advisers({ people }: { people: readonly Person[] }) {
       {people.map((person) => (
         <li key={person.name} className="glass flex flex-col rounded-xl p-6 shadow-card md:px-7">
           <div className="flex items-center gap-4">
-            <Portrait person={person} type="text-subhead" className="size-16 shrink-0 items-center justify-center rounded-lg" />
+            <Portrait person={person} type="text-subhead" className="size-16 shrink-0 rounded-lg" initialsClassName="items-center justify-center" />
             <div className="min-w-0">
               <h3 className="text-subhead">{person.name}</h3>
               <p className="text-small text-dim">{person.role}</p>

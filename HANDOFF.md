@@ -769,6 +769,9 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   a registered director. The founder tiles are built as the product tiles
   are, the portrait across the top and square-cornered (Taylor: no circles);
   every person shows initials until a photograph is in `public/team/`.
+  Charlie's and Taylor's portraits are in (Taylor, 24 Sep): 1200 by 900
+  WebP cropped from the square originals so the eyes sit 40% down and level
+  across the pair, filling the tile's top edge to edge.
 - The founders' facts are the ones both founders confirmed on 24 Sep:
   Charlie Potter, Co-founder and CEO, more than ten years in travel sales;
   Taylor Styles, Co-founder and CTO, more than ten years in scalable

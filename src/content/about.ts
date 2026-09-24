@@ -19,8 +19,9 @@ export type Person = {
   /* One line under the name, in the form "More than N years in …". */
   line: string
   linkedin?: string
-  /* A portrait in public/team/, at least 800px wide; until it is there the
-     card shows the person's initials on the band. */
+  /* A portrait in public/team/: 1200 by 900 WebP for a founder, cropped so
+     the eyes sit 40% down, level across the pair; square for an adviser.
+     Until it is there the card shows the person's initials on the band. */
   photo?: string
 }
 
@@ -30,12 +31,14 @@ export const founders: readonly Person[] = [
     role: 'Co-founder and CEO',
     line: 'More than ten years in travel sales.', // new
     linkedin: LINKEDIN.charlie,
+    photo: '/team/charlie-potter.webp',
   },
   {
     name: 'Taylor Styles',
     role: 'Co-founder and CTO',
     line: 'More than ten years in scalable systems, five at Dyson.', // new (24 Sep, Taylor: shorter)
     linkedin: LINKEDIN.taylor,
+    photo: '/team/taylor-styles.webp',
   },
 ]
 
