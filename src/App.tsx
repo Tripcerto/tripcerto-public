@@ -5,13 +5,13 @@ import { Products } from '@/components/site/Products'
 import { Audience } from '@/components/site/Audience'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
-import { Systems } from '@/components/site/Systems'
+import { Journey } from '@/components/site/Journey'
 import { Team } from '@/components/site/Team'
 import { home } from '@/content/home'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
-/* The home page: the hero, the two products, how they sit with the systems a
-   business already runs, the roles they are built for, the team with the
+/* The home page: the hero, the two products, the journey they carry from
+   a visitor to a sale, the roles they are built for, the team with the
    way on to About under it, and the close. The tones alternate page and
    tint down to the band. */
 export function App() {
@@ -21,7 +21,7 @@ export function App() {
       <main>
         <Hero />
         <Products />
-        <Systems tone="tint" />
+        <Journey tone="tint" />
         <Audience tone="page" />
         <Team tone="tint">
           <div className="mt-10 flex justify-center">

@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react'
 import { BadgeCheck, Flag, ListOrdered } from 'lucide-react'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
+import { InfoPackForm } from '@/components/site/InfoPackForm'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
@@ -68,8 +69,8 @@ export function WorkspacePage() {
 
         <Close
           heading={workspace.close['W-8-A']}
-          primary={{ label: workspace.close['W-9-B'], href: DEMO_URL }}
-          secondary={{ label: workspace.close['W-9-C'], href: PAGES.pilot }}
+          form={<InfoPackForm pack="workspace" />}
+          secondary={{ label: workspace.close['W-9-B'], href: DEMO_URL }}
         />
       </main>
       <Footer />

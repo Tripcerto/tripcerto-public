@@ -48,7 +48,7 @@ export const TRUST_SECTION = {
 
 export const SECTION = {
   products: 'products',
-  systems: 'how-it-fits',
+  journey: 'journey',
   audience: 'is-this-for-me',
   team: 'team',
   close: 'close',

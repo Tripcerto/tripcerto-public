@@ -16,8 +16,8 @@ const trust = (section: string) => `${PAGES.trust}#${section}`
 
 export const faq = {
   hero: {
-    'F-1-A': 'Questions travel businesses ask about Tripcerto', // new
-    'F-1-B': 'What the two products do, where your data goes, and what a pilot delivers.', // new
+    'F-1-A': 'How does AI help travel companies plan and sell complex trips?', // changed (24 Sep review, Charlie): the page's title is written to rank for what buyers ask a search engine or an assistant, before it reads well
+    'F-1-B': 'Tripcerto’s answers: what its two products do, where your data goes and what a pilot delivers.', // changed (24 Sep review): names Tripcerto against the question
     'F-1-C': 'Book a demo', // new
     'F-1-D': 'Pilots and pricing', // new
   },
@@ -104,11 +104,6 @@ export const faq = {
           a: 'Enquiries are stored in London and each business is kept apart. Tripcerto staff are given access only against a stated need.',
           link: { label: 'Who can reach what', href: trust(TRUST_SECTION.access) },
         },
-        {
-          q: 'Is Tripcerto certified?',
-          a: 'Not yet. Tripcerto is working towards ISO/IEC 27001, with Cyber Essentials first. Its security management system is written, approved and operating.',
-          link: { label: 'The security programme', href: trust(TRUST_SECTION.programme) },
-        },
       ],
     },
     {
@@ -120,6 +115,10 @@ export const faq = {
           a: 'Engage, Workspace or both on one part of your business, set up with the founders and measured on one agreed number.',
           link: { label: 'What a pilot delivers', href: PAGES.pilot },
         },
+        {
+          q: 'How much do we need to build?',
+          a: 'Very little. Tripcerto builds the connections to your systems; your team gives access to them and the documentation for it.',
+        }, // new (24 Sep review): the question operators asked most on the founders' calls, with the answer the founders gave
         {
           q: 'How much data do we need to prepare?',
           a: 'A pilot starts from the content and data you already hold.',

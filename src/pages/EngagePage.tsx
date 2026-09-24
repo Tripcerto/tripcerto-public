@@ -1,6 +1,7 @@
 import { Check } from 'lucide-react'
 import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
+import { InfoPackForm } from '@/components/site/InfoPackForm'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Reveal } from '@/components/site/Reveal'
@@ -63,8 +64,8 @@ export function EngagePage() {
 
         <Close
           heading={engage.close['E-9-A']}
-          primary={{ label: engage.close['E-10-B'], href: DEMO_URL }}
-          secondary={{ label: engage.close['E-10-C'], href: PAGES.pilot }}
+          form={<InfoPackForm pack="engage" />}
+          secondary={{ label: engage.close['E-10-B'], href: DEMO_URL }}
         />
       </main>
       <Footer />

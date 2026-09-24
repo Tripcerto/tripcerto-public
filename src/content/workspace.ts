@@ -64,10 +64,10 @@ export const workspace = {
       },
     ], // added (24 Sep)
   },
-  /* W-8 Pilot and W-9 Close, together on the band: the measures and the call. */
+  /* The close on the band: the product's information pack, requested by
+     email, with the demo under it (24 Sep review: Charlie). */
   close: {
-    'W-8-A': 'A pilot proves it on one number', // changed (24 Sep): every close is one line (Taylor); W-8-B, the three Workspace measures, went, and the Pilot page lists them
-    'W-9-B': 'Book a demo',
-    'W-9-C': 'What a pilot delivers', // added
+    'W-8-A': 'Get the Workspace information pack', // changed (24 Sep review): the close is the pack's form; the pilot has its own page
+    'W-9-B': 'Or book a demo', // changed (24 Sep review)
   },
 } as const

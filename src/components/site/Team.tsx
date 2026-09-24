@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Section, TILES } from '@/components/site/Section'
-import { about, advisers, founders, type Fact, type Person } from '@/content/about'
+import { about, advisers, founders, type Adviser, type Fact, type Person } from '@/content/about'
 import { SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
 
@@ -17,7 +17,7 @@ const initials = (name: string) =>
    public/team/ has one, otherwise the initials on the band's frosted pane
    (smoked by night), as the product frames are painted. The same box either
    way, so a photograph drops in without moving anything. */
-function Portrait({ person, className, size }: { person: Person; className: string; size: number }) {
+function Portrait({ person, className, size }: { person: Adviser; className: string; size: number }) {
   if (person.photo) {
     return (
       <img
@@ -61,7 +61,7 @@ function Facts({ facts, size }: { facts: readonly Fact[]; size: 'copy' | 'small'
   )
 }
 
-function LinkedIn({ person }: { person: Person }) {
+function LinkedIn({ person }: { person: Adviser }) {
   if (!person.linkedin) return null
   return (
     <a
@@ -100,23 +100,14 @@ function FounderTile({ person }: { person: Person }) {
   )
 }
 
-/* An adviser's tile, a step down from a founder's: a small square portrait
-   (Taylor, 24 Sep) above the name, the fact, the line on what they bring
-   and the LinkedIn. The tile is a subgrid of the list's rows, so across a
-   row of tiles each of the four parts starts on the same line, whatever
-   the one above it wraps to, and the line and the link sit at the foot. */
-function AdviserTile({ person }: { person: Person }) {
+/* An adviser's tile, a step down from a founder's: the portrait, the
+   name under it and the LinkedIn at the foot, and nothing else (both
+   founders, 24 Sep afternoon review). */
+function AdviserTile({ person }: { person: Adviser }) {
   return (
-    <li className="glass row-span-4 grid grid-rows-subgrid gap-y-0 rounded-xl p-5 shadow-card">
-      <div className="flex flex-col gap-3">
-        <Portrait person={person} size={192} className="size-14 shrink-0 rounded-lg" />
-        <div className="min-w-0">
-          <h4 className="text-subhead">{person.name}</h4>
-          <p className="text-small text-dim">{person.role}</p>
-        </div>
-      </div>
-      <Facts facts={person.facts} size="small" />
-      <p className="mt-3 text-small text-dim">{person.note}</p>
+    <li className="glass flex flex-col items-start gap-3 rounded-xl p-5 shadow-card">
+      <Portrait person={person} size={192} className="size-16 shrink-0 rounded-lg" />
+      <h4 className="text-subhead">{person.name}</h4>
       <LinkedIn person={person} />
     </li>
   )
@@ -155,7 +146,6 @@ export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: Rea
         </Group>
         <Group label={team['A-3-C']}>
           <ul role="list" className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-            {/* Each tile spans four of this list's rows (see AdviserTile). */}
             {advisers.map((person) => (
               <AdviserTile key={person.name} person={person} />
             ))}

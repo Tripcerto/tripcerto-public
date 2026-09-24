@@ -19,6 +19,7 @@ export function PageHero({
   title,
   lede,
   primary,
+  form,
   secondary,
   visual,
   layout = 'phone',
@@ -27,7 +28,10 @@ export function PageHero({
   tag?: string
   title: Copy
   lede: string
-  primary: CloseLink
+  /* The way in: a button, or a form in its place (the Pilot page's
+     information pack), with the secondary link under the form. */
+  primary?: CloseLink
+  form?: ReactNode
   secondary?: CloseLink
   visual?: ReactNode
   /* A phone stands in the narrower column; a window needs the wider one. */
@@ -55,15 +59,22 @@ export function PageHero({
               <Lines text={title} className="text-[length:min(1em,11.8vw)]" />
             </h1>
             <p className="mt-7 max-w-[34rem] text-lede text-paper/85">{lede}</p>
-            <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Button asChild size="lg" variant="accent">
-                <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}>
-                  {primary.label}
-                  <ArrowRight aria-hidden />
-                </a>
-              </Button>
+            {form && <div className="mt-9">{form}</div>}
+            <div className={cn('flex flex-wrap items-center gap-x-6 gap-y-3', form ? 'mt-4' : 'mt-9')}>
+              {primary && (
+                <Button asChild size="lg" variant="accent">
+                  <a href={primary.href} onClick={primary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}>
+                    {primary.label}
+                    <ArrowRight aria-hidden />
+                  </a>
+                </Button>
+              )}
               {secondary && (
-                <a href={secondary.href} className="inline-flex min-h-11 items-center gap-1 text-action text-paper">
+                <a
+                  href={secondary.href}
+                  onClick={secondary.href === DEMO_URL ? () => trackEvent('demo_click', { button: 'hero' }) : undefined}
+                  className="inline-flex min-h-11 items-center gap-1 text-action text-paper"
+                >
                   {secondary.label}
                   <ArrowRight size={16} aria-hidden />
                 </a>

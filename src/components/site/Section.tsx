@@ -16,7 +16,7 @@ export const SECTION_PAD = 'py-[clamp(5rem,3.8rem+5vw,7rem)]'
 /* The width tiles take, so their edges line up down the page: below lg,
    where they stack or sit two to a row, one centred column 36rem wide, so
    a tile on a tablet is the size it is on a laptop; from lg, where they sit
-   side by side, the shell's whole width. The product tiles, the systems
+   side by side, the shell's whole width. The product tiles, the journey
    box, the roles and the team all take it. */
 export const TILES = 'mx-auto w-full max-w-[36rem] lg:max-w-none'
 
@@ -53,8 +53,10 @@ export function Section({
 /* A section's head: the heading, the lede under it, and an action under
    that where the section has one (a link, or the close's buttons), all
    centred. The heading's measure is wide enough that no heading on the site
-   runs past two lines from a tablet up, and a short one, as every close's
-   is, stands on one; the lede keeps the narrower measure prose reads best
+   runs past two lines from a tablet up (but the home page's journey
+   heading, the founders' sentence word for word, which takes three on a
+   tablet held upright and two from a laptop), and a short one, as every
+   close's is, stands on one; the lede keeps the narrower measure prose reads best
    at. Either can set its own lines (Lines). On the band it is set in
    paper. */
 export function SectionHead({
