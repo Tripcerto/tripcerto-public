@@ -56,15 +56,22 @@ export function FaqPage() {
               </ul>
             </nav>
 
-            <div className="space-y-14 md:space-y-16">
+            <div className="space-y-16">
               {faq.groups.map((group) => (
-                <section key={group.id} id={group.id} aria-labelledby={`${group.id}-heading`}>
+                <section
+                  key={group.id}
+                  id={group.id}
+                  aria-labelledby={`${group.id}-heading`}
+                  /* A topic's link lands its label 40px under the bar, level
+                     with the topics, which stick at the same line from lg. */
+                  className="scroll-mt-10"
+                >
                   <h2 id={`${group.id}-heading`} className="text-label text-link">
                     {group.heading}
                   </h2>
                   <ul role="list" className="mt-4 divide-y divide-line border-t border-line">
                     {group.items.map(({ q, a, link }) => (
-                      <li key={q} className="grid grid-cols-1 gap-2 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-x-10">
+                      <li key={q} className="grid grid-cols-1 gap-2 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-x-12">
                         <h3 className="text-subhead">{q}</h3>
                         <div>
                           <p className="text-copy text-dim">{a}</p>

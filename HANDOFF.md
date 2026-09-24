@@ -763,15 +763,17 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   trips and takes the repetitive work out of both"), so the home page says
   what Tripcerto is as well as what the tools do; his to confirm.
 - Meet the team (`Team.tsx`, Taylor, 24 Sep) is one section on the home
-  page and on About: a Founders label over Charlie and Taylor, two tiles,
-  then an Advisers label over Nigel Clarke, Joanne Dickson, Steve Endacott
-  and Gerd Bommer, four across from lg and two to a row below it, phones
-  included, on the same columns, so a founder's tile spans two adviser
-  columns and the edges line up. On the home page "About Tripcerto" sits
-  under the team.
+  page and on About: a Founders label over Charlie and Taylor, then an
+  Advisers label over Nigel Clarke, Joanne Dickson, Steve Endacott and Gerd
+  Bommer. A tile keeps one size and one design at every width and only the
+  rows around it change (Taylor: "the cards really shouldn't change the
+  size, just the layout"): from lg the founders sit two across and the
+  advisers four; below lg the founders stand one above the other and the
+  advisers two to a row. On the home page "About Tripcerto" sits under the
+  team.
 - The words lead and the photographs stay second (Taylor): a founder's
-  portrait is a square beside the words (above them on a phone), an
-  adviser's a smaller square above the name. Portraits are square with
+  portrait is an 80px square beside the name and role, an adviser's a 56px
+  square above the name, at every width. Portraits are square with
   rounded corners (Taylor: no circles), all WebP in `public/team/`, each
   cropped so the face is the same share of the frame (measured with a face
   detector, not eyeballed) and the eyes sit level: the founders' 400 by 400
@@ -784,15 +786,40 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   confirmed on 24 Sep: Charlie, Co-founder and CEO, 10+ years in travel
   sales, 7,500+ enquiries handled (the Our Team document's figure), "Leads
   the company: strategy, operations and sales"; Taylor, Co-founder and CTO,
-  7+ years in scalable systems, 5+ products shipped from mobile apps to web
-  platforms, "Leads the platform: product, architecture and engineering".
-  No employer, product, ownership or brand of either founder's is named
-  (Taylor, 24 Sep). Each adviser has one fact, so the four figures line up,
-  and the adviser tiles are subgrids of the list's rows, so across a row the
-  name, the fact, the line and the LinkedIn each start level. The advisers'
-  words come from the Non-Executive Directors and Advisers document (July
-  2026) and, for Gerd, gerdbommer.com; each is called an adviser until both
-  founders confirm who is a registered director.
+  7+ years in scalable systems, 5+ apps and platforms shipped (shortened to
+  one line on Taylor's ask), "Leads the platform: product, architecture and
+  engineering". No employer, product, ownership or brand of either
+  founder's is named (Taylor, 24 Sep). Each adviser has one fact, so the
+  four figures line up. Both kinds of tile are subgrids of their list's
+  rows, so across a row the header, the facts, the line and the LinkedIn
+  each start level. The advisers' words come from the Non-Executive
+  Directors and Advisers document (July 2026) and, for Gerd,
+  gerdbommer.com; each is called an adviser until both founders confirm
+  who is a registered director.
+- One rhythm at every width (Taylor, 24 Sep: the heroes changed size four
+  or five times as the window narrowed, and dragging it lost his place).
+  The display, heading and lede roles are fluid, growing with the screen
+  from a 390px phone to a laptop instead of stepping at breakpoints (the
+  brand kit shows them as ranges); the shell's side margin grows from 20px
+  to 32px the same way; `Section.tsx` holds the section padding and the
+  hero padding (`HERO_PAD`, shared by the home hero, every `PageHero` and
+  the legal pages) as fluid values, and `TILES`, the one width every group
+  of tiles takes (the product tiles, the systems box, the roles, the
+  team): a centred 36rem column below lg, so a tile on a tablet is the size
+  it is on a laptop, and the shell's whole width from lg, so their edges
+  line up down the page (the systems box and the team were 64rem, narrower
+  than the product tiles above them on a wide screen). Tiles keep their
+  padding at every width, and column gaps are one value. What still changes at a breakpoint is layout only: columns, the
+  nav's links, and the home hero's frames moving beside the copy at lg.
+- The reader's place is kept when the window changes width (`lib/place.ts`,
+  started in `boot.tsx`). Browsers' own scroll anchoring gives up whenever
+  a breakpoint changes the padding or width around what it holds, so the
+  page slid about 1,800px when dragged from a laptop to a tablet width;
+  now whatever sits under the bar stays there, within tens of pixels, with
+  or without the browser's anchoring. A height-only change (a phone's
+  toolbar) moves nothing. An FAQ topic link lands its label level with the
+  sticky topics (`scroll-mt-10`); every other in-page link lands its
+  section just under the bar, as `scroll-padding-top` sets it.
 - About (`/about`): Charlie's company line as the headline, why Tripcerto was
   started told through Charlie's experience rather than as the buyer's
   problem (Guide §3), the founders in full, and the registered facts. The

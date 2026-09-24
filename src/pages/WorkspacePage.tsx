@@ -48,7 +48,7 @@ export function WorkspacePage() {
         />
 
         <Section id={ID.trip} heading={workspace.trip['W-3-A']} lede={workspace.trip['W-3-B']}>
-          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
+          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-12">
             {workspace.trip.columns.map(({ name, line }) => {
               const Glyph = COLUMN_GLYPH[name]
               return (

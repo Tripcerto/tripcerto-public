@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { Section } from '@/components/site/Section'
+import { Section, TILES } from '@/components/site/Section'
 import { about, advisers, founders, type Fact, type Person } from '@/content/about'
 import { SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
@@ -38,10 +38,10 @@ function Portrait({ person, className, size }: { person: Person; className: stri
   )
 }
 
-/* A person's facts, one under the other between hairlines: the figure in a
-   column of its own so the figures line up, and what it counts beside it.
-   In an adviser's narrow tile below lg the figure stands over its label, so
-   the label keeps the tile's width. */
+/* A person's facts, one under the other between hairlines. In a founder's
+   tile the figure has a column of its own so the figures line up, and what
+   it counts sits beside it; in an adviser's narrower tile the figure stands
+   over its label. The same at every screen width. */
 function Facts({ facts, size }: { facts: readonly Fact[]; size: 'copy' | 'small' }) {
   return (
     <ul role="list" className="mt-4 divide-y divide-line border-y border-line">
@@ -50,7 +50,7 @@ function Facts({ facts, size }: { facts: readonly Fact[]; size: 'copy' | 'small'
           key={label}
           className={cn(
             'grid items-baseline gap-3 py-2.5',
-            size === 'copy' ? 'grid-cols-[4.5rem_minmax(0,1fr)]' : 'grid-cols-1 gap-0.5 lg:grid-cols-[2.75rem_minmax(0,1fr)] lg:gap-3',
+            size === 'copy' ? 'grid-cols-[4.5rem_minmax(0,1fr)]' : 'grid-cols-1 gap-0.5',
           )}
         >
           <span className="text-subhead tabular-nums">{figure}</span>
@@ -77,21 +77,25 @@ function LinkedIn({ person }: { person: Person }) {
   )
 }
 
-/* A founder's tile, of the site's glass: the words lead and the portrait
-   stays second (Taylor, 24 Sep), a square beside them from sm and above
-   them on a phone, then the name, the role, the facts, what they lead and
-   the LinkedIn. */
+/* A founder's tile, of the site's glass: the portrait beside the name and
+   the role, then the facts, what they lead and the LinkedIn, the words
+   leading and the portrait second (Taylor, 24 Sep). Like an adviser's, the
+   tile is a subgrid of the list's rows, so the two founders' parts start on
+   the same lines. One design at every width: the list changes how many sit
+   in a row, never what a tile looks like (Taylor, 24 Sep). */
 function FounderTile({ person }: { person: Person }) {
   return (
-    <li className="glass flex flex-col gap-5 rounded-xl p-6 shadow-card sm:flex-row md:p-7">
-      <Portrait person={person} size={400} className="size-24 shrink-0 rounded-lg md:size-28" />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <h4 className="text-subhead">{person.name}</h4>
-        <p className="text-small text-dim">{person.role}</p>
-        <Facts facts={person.facts} size="copy" />
-        {person.note && <p className="mt-3 text-copy text-dim">{person.note}</p>}
-        <LinkedIn person={person} />
+    <li className="glass row-span-4 grid grid-rows-subgrid gap-y-0 rounded-xl p-5 shadow-card">
+      <div className="flex items-center gap-4">
+        <Portrait person={person} size={400} className="size-20 shrink-0 rounded-lg" />
+        <div className="min-w-0">
+          <h4 className="text-subhead">{person.name}</h4>
+          <p className="text-small text-dim">{person.role}</p>
+        </div>
       </div>
+      <Facts facts={person.facts} size="copy" />
+      <p className="mt-3 text-copy text-dim">{person.note}</p>
+      <LinkedIn person={person} />
     </li>
   )
 }
@@ -103,7 +107,7 @@ function FounderTile({ person }: { person: Person }) {
    the one above it wraps to, and the line and the link sit at the foot. */
 function AdviserTile({ person }: { person: Person }) {
   return (
-    <li className="glass row-span-4 grid grid-rows-subgrid gap-y-0 rounded-xl p-4 shadow-card md:p-5">
+    <li className="glass row-span-4 grid grid-rows-subgrid gap-y-0 rounded-xl p-5 shadow-card">
       <div className="flex flex-col gap-3">
         <Portrait person={person} size={192} className="size-14 shrink-0 rounded-lg" />
         <div className="min-w-0">
@@ -129,23 +133,28 @@ function Group({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
-/* The team as one section (Taylor, 24 Sep): the founders, two tiles side by
-   side from sm, then the advisers, four across from lg and two to a row
-   below it, phones included, on the same columns (a founder's tile spans
-   two adviser columns), as wide as the product tiles. Whatever follows (the home page's way on to About) sits under it. */
+/* The team as one section (Taylor, 24 Sep): the founders, then the
+   advisers, in tiles that keep one design at every width while the rows
+   around them change, across the tiles' width (TILES) with the product
+   tiles' gap, so the founders' edges meet the product tiles'. From lg the
+   founders sit two across and the advisers four; below it the founders
+   stand one above the other and the advisers two to a row, in the one
+   centred column. Whatever follows (the home page's way on to About) sits
+   under it. */
 export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: ReactNode }) {
   return (
     <Section id={SECTION.team} tone={tone} heading={team['A-3-A']}>
-      <div className="mx-auto max-w-[64rem] space-y-12">
+      <div className={cn(TILES, 'space-y-12')}>
         <Group label={team['A-3-B']}>
-          <ul role="list" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
+          <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {/* Each tile spans four of this list's rows (see FounderTile). */}
             {founders.map((person) => (
               <FounderTile key={person.name} person={person} />
             ))}
           </ul>
         </Group>
         <Group label={team['A-3-C']}>
-          <ul role="list" className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+          <ul role="list" className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {/* Each tile spans four of this list's rows (see AdviserTile). */}
             {advisers.map((person) => (
               <AdviserTile key={person.name} person={person} />

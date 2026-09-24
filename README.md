@@ -43,7 +43,7 @@ src/
   components/site/         # Nav, Hero, PageHero, Products, Systems, Audience, Team, Close, Footer, Section, Rows, Stage, Tag, Band, Reveal, Wordmark
   components/site/frames/  # the two product frames: phone, window, the brief card, the trip they tell
   components/ui/           # button, gradient-mesh (the band shader)
-  lib/                     # links, theme, analytics, utils
+  lib/                     # links, theme, analytics, place (keeps the reader's place when the width changes), utils
   index.css                # Ember tokens (@theme), page surfaces, utilities
   site.test.tsx, test/     # the five checks run over every page, the legal pages' chrome, and the jsdom setup
 public/

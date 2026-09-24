@@ -1,4 +1,4 @@
-import { Section } from '@/components/site/Section'
+import { Section, TILES } from '@/components/site/Section'
 import { home } from '@/content/home'
 import { SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
@@ -16,7 +16,7 @@ export function Systems({ tone = 'page' }: { tone?: 'page' | 'tint' }) {
   const last = systems.steps.length - 1
   return (
     <Section id={SECTION.systems} tone={tone} heading={systems['H-11-A']}>
-      <div className="glass mx-auto max-w-[64rem] rounded-xl p-6 shadow-card md:p-10">
+      <div className={cn(TILES, 'glass rounded-xl p-8 shadow-card')}>
         <ol role="list" className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-6">
           {systems.steps.map(({ name, owner, line }, i) => (
             <li key={name} className="relative pl-8 lg:pl-0 lg:pt-8">

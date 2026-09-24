@@ -32,7 +32,7 @@ export function PilotPage() {
         />
 
         <Section id={ID.includes} heading={pilot.includes['P-7-A']}>
-          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-2 md:gap-x-10 lg:grid-cols-4 xl:gap-x-14">
+          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-2 md:gap-x-12 lg:grid-cols-4">
             {pilot.includes.columns.map(({ name, line }) => (
               <li key={name} className="border-t border-line pt-6">
                 <h3 className="text-subhead">{name}</h3>

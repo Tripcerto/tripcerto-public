@@ -19,7 +19,7 @@ export type Person = {
   name: string
   role: string
   /* What the person leads or brings, in a line under the facts. */
-  note?: string
+  note: string
   /* One or two facts, each a figure and what it counts, set one under the
      other (Taylor, 24 Sep: no bullets). */
   facts: readonly Fact[]
@@ -50,8 +50,8 @@ export const founders: readonly Person[] = [
     role: 'Co-founder and CTO',
     facts: [
       { figure: '7+', label: 'years in scalable systems' },
-      { figure: '5+', label: 'products shipped, from mobile apps to web platforms' },
-    ], // new (24 Sep, Taylor: no Dyson)
+      { figure: '5+', label: 'apps and platforms shipped' },
+    ], // new (24 Sep, Taylor: no Dyson; one line)
     note: 'Leads the platform: product, architecture and engineering.', // new (24 Sep): the Our Team document's "all technical development and architecture"
     linkedin: LINKEDIN.taylor,
     photo: '/team/taylor-styles.webp',
