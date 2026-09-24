@@ -60,29 +60,29 @@ export const advisers: readonly Person[] = [
   {
     name: 'Nigel Clarke',
     role: 'Adviser',
-    facts: [{ figure: '20+', label: 'years in technology sales and growth' }], // new
-    note: 'Three exits and an IPO, across SaaS, travel technology and ground transport.', // new
+    facts: [{ figure: '20+', label: 'years in technology sales' }], // new
+    note: 'Three exits and an IPO, across SaaS and travel technology.', // new
     linkedin: LINKEDIN.nigel,
   },
   {
     name: 'Joanne Dickson',
     role: 'Adviser',
-    facts: [{ figure: '30+', label: 'years leading travel and hospitality businesses' }], // new
+    facts: [{ figure: '30+', label: 'years in travel and hospitality' }], // new
     note: 'Scaling and modernising established travel businesses.', // new
     linkedin: LINKEDIN.joanne,
   },
   {
     name: 'Steve Endacott',
     role: 'Adviser and investor',
-    facts: [{ figure: '30+', label: 'years building and selling travel and leisure businesses' }], // new
-    note: 'Portfolio chairman and non-executive across travel, tourism and online businesses.', // new
+    facts: [{ figure: '30+', label: 'years building and selling businesses' }], // new
+    note: 'Portfolio chairman across travel, tourism and online businesses.', // new
     linkedin: LINKEDIN.steve,
   },
   {
     name: 'Gerd Bommer',
     role: 'Strategic adviser',
-    facts: [{ figure: '25+', label: 'years building international markets' }], // new
-    note: 'Founder of Zoenora, investing in and advising early-stage founders.', // new
+    facts: [{ figure: '25+', label: 'years in international markets' }], // new
+    note: 'Founder of Zoenora, investing in early-stage founders.', // new
     linkedin: LINKEDIN.gerd,
   },
 ]
