@@ -25,8 +25,9 @@
   --color-up-tint: color-mix(in srgb, var(--color-up) 16%, white);
 
   /* The page surfaces: cream by day, ink by night. These switch in dark
-     mode; the brand colours above do not. White is not a surface; it only
-     ever appears as a glass wash over the cream. */
+     mode; the brand colours above do not. White is a surface only on a
+     document (body.document); everywhere else it only ever appears as a
+     glass wash over the cream. */
   --color-page: #fff1ea;
   --color-body: #281131;
   --color-dim: #685A6E;
@@ -139,6 +140,14 @@
     background:
       radial-gradient(60% 50% at 85% 5%, rgb(232 67 126 / 0.22), transparent 70%),
       radial-gradient(50% 45% at 5% 95%, rgb(255 155 122 / 0.16), transparent 70%);
+  }
+  /* A document is the one white page by day: no cream and no wash behind
+     the text. By night it is the same ink as every page. */
+  :root:not(.dark) body.document {
+    background: white;
+  }
+  :root:not(.dark) body.document::before {
+    content: none;
   }
   :focus-visible {
     outline: 2px solid var(--color-link);
@@ -827,9 +836,12 @@
   .legal code {
     font: inherit;
   }
+  /* A link inside running text is the text's own colour, marked by the
+     accent on its underline: the accent as text is under the body bar. */
   .legal a {
-    color: var(--color-link);
+    color: var(--color-body);
     text-decoration: underline;
+    text-decoration-color: var(--color-link);
     text-underline-offset: 3px;
   }
   .legal hr {
