@@ -192,15 +192,16 @@ const ROLE = {
 
 const px = (rem) => String(Math.round(Number(rem) * 16 * 100) / 100)
 
-const SCALE = [...css.matchAll(/^@utility text-([a-z]+) \{\n\s+font-size: ([\d.]+)rem;([\s\S]*?)^\}/gm)].map(([, role, base, body]) => {
+/* A role's size is one value, or a fluid clamp() from its phone size to its
+   laptop size, shown as the two ends. */
+const SCALE = [...css.matchAll(/^@utility text-([a-z]+) \{\n\s+font-size: (?:clamp\(([\d.]+)rem, [^,]+, ([\d.]+)rem\)|([\d.]+)rem);([\s\S]*?)^\}/gm)].map(([, role, from, to, fixed, body]) => {
   if (!ROLE[role]) throw new Error(`src/index.css declares text-${role}, which the kit does not describe`)
-  const steps = [...body.matchAll(/@variant \w+ \{\s*font-size: ([\d.]+)rem;/g)].map((m) => px(m[1]))
   const tracking = body.match(/letter-spacing: (-?[\d.]+em)/)?.[1] ?? ''
   return {
     role,
     name: ROLE[role][0],
     where: ROLE[role][1],
-    size: [px(base), ...steps].join(' / '),
+    size: fixed ? px(fixed) : `${px(from)} to ${px(to)}`,
     weight: body.match(/font-weight: (\d+)/)[1],
     leading: body.match(/line-height: ([\d.]+)/)[1],
     tracking: tracking.replace('-', '−'),
@@ -508,9 +509,9 @@ ${rows([
 
 <h3>The scale</h3>
 <p>Nine roles, and the only sizes text on the site takes. Each is one utility in ${w('src/index.css')}
-carrying size, weight, leading and tracking; colour stays with the surface. Sizes in px; a slash
-means it steps at a breakpoint, smallest first. The product frames alone keep their own scale,
-drawn to the frame's width.</p>
+carrying size, weight, leading and tracking; colour stays with the surface. Sizes in px; a range
+grows with the screen, from a phone to a laptop, and never steps at a breakpoint. The product
+frames alone keep their own scale, drawn to the frame's width.</p>
 <table class="scale"><thead><tr><th>Role</th><th>Where</th><th>Size</th><th>Weight</th><th>Leading</th><th>Tracking</th></tr></thead><tbody>
 ${SCALE.map((r) => `<tr><td>${r.name}<br>${w(`text-${r.role}`)}</td><td class="dim">${r.where}</td><td class="px">${r.size}</td><td class="px">${r.weight}</td><td class="px">${r.leading}</td><td class="px">${r.tracking}</td></tr>`).join('')}
 </tbody></table>

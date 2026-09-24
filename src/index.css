@@ -173,14 +173,13 @@
   animation-timing-function: ease-in-out;
 }
 
+/* The page's column, its side margin growing with the screen from 20px
+   on a phone to 32px at 640px rather than stepping there. */
 @utility shell {
   width: 100%;
   max-width: var(--shell);
   margin-inline: auto;
-  padding-inline: 20px;
-  @media (width >= 40rem) {
-    padding-inline: 32px;
-  }
+  padding-inline: clamp(20px, 5vw, 32px);
 }
 
 /* The type scale. Every piece of text on the site takes one of these roles
@@ -201,38 +200,32 @@
    nav       the bar's links
    action    buttons and the links that act as buttons
 
+   The three larger roles are fluid: each grows with the screen between the
+   phone size and the laptop size, and never steps at a breakpoint.
+
    The names are listed again for tailwind-merge in src/lib/utils.ts, and the
    brand kit reads them out of this block; a test holds all three together. */
+/* 44px on a 390px phone to 64px at 1280px. */
 @utility text-display {
-  font-size: 2.75rem;
+  font-size: clamp(2.75rem, 2.2rem + 2.25vw, 4rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
-  @variant sm {
-    font-size: 3.5rem;
-  }
-  @variant xl {
-    font-size: 4rem;
-  }
 }
 
+/* 32px on a 390px phone to 44px at 1024px. */
 @utility text-heading {
-  font-size: 2rem;
+  font-size: clamp(2rem, 1.55rem + 1.9vw, 2.75rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  @variant md {
-    font-size: 2.75rem;
-  }
 }
 
+/* 18px on a 390px phone to 20px at 1024px. */
 @utility text-lede {
-  font-size: 1.125rem;
+  font-size: clamp(1.125rem, 1.05rem + 0.32vw, 1.25rem);
   font-weight: 400;
   line-height: 1.55;
-  @variant md {
-    font-size: 1.25rem;
-  }
 }
 
 @utility text-subhead {

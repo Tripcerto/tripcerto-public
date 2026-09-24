@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom'
 import { hydrateRoot } from 'react-dom/client'
 import { enterPage, type PageKey } from '@/lib/events'
 import { Site } from './Site'
+import { keepPlace } from './lib/place'
 import './index.css'
 
 /* Every page of the site boots the same way: one entry file per page
@@ -20,7 +21,8 @@ import './index.css'
    script returns, so the first frame painted after it already has the
    nav's measured tone and the stored theme. Smooth scrolling (index.css,
    html.loaded) waits for the frame after load, so that restore and that
-   jump are not animated from the top. */
+   jump are not animated from the top. From then on the reader's place is
+   kept when the window changes width (lib/place.ts). */
 export function mount(page: ComponentType, key: PageKey): ComponentType {
   if (import.meta.env.SSR) return page
   enterPage(key)
@@ -28,5 +30,6 @@ export function mount(page: ComponentType, key: PageKey): ComponentType {
     hydrateRoot(document.getElementById('root')!, <Site page={page} />)
   })
   addEventListener('load', () => requestAnimationFrame(() => document.documentElement.classList.add('loaded')), { once: true })
+  keepPlace()
   return page
 }

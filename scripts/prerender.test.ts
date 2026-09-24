@@ -6,6 +6,8 @@ import { home } from '../src/content/home'
 import { engage } from '../src/content/engage'
 import { workspace } from '../src/content/workspace'
 import { pilot } from '../src/content/pilot'
+import { faq } from '../src/content/faq'
+import { about } from '../src/content/about'
 import { trust } from '../src/content/trust'
 
 /* Every page the build ships, rendered the way the build renders it: the
@@ -25,6 +27,8 @@ const H1: Record<string, string> = {
   engage: engage.hero['E-1-A'],
   workspace: workspace.hero['W-1-A'],
   pilot: pilot.hero['P-1-A'],
+  faq: faq.hero['F-1-A'],
+  about: about.hero['A-1-A'],
   trust: trust.hero['T-1-A'].join(' '),
   privacy: 'Privacy Policy',
   terms: 'Terms of Use',

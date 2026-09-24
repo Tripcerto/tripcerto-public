@@ -14,6 +14,8 @@ const SITE: readonly FooterLink[] = [
   { href: PAGES.engage, label: 'Engage' },
   { href: PAGES.workspace, label: 'Workspace' },
   { href: PAGES.pilot, label: 'Pilot' },
+  { href: PAGES.faq, label: 'FAQ' },
+  { href: PAGES.about, label: 'About' },
   { href: STATUS_URL, label: 'Status' },
   { href: LOGIN_URL, label: 'Login', onClick: () => trackEvent('login_click', { place: 'footer' }) },
 ]

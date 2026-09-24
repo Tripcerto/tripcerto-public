@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Section } from '@/components/site/Section'
+import { Section, TILES } from '@/components/site/Section'
 import { PhoneScreen } from '@/components/site/frames/PhoneScreen'
 import { ItineraryScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
@@ -29,8 +29,8 @@ function Product({
   frame: ReactNode
 }) {
   return (
-    <article className="glass group relative mx-auto flex w-full max-w-[36rem] flex-col overflow-hidden rounded-xl shadow-card lg:max-w-none">
-      <div className="flex justify-center py-6 md:py-7">
+    <article className="glass group relative flex flex-col overflow-hidden rounded-xl shadow-card">
+      <div className="flex justify-center py-7">
         <div
           className={cn(
             'still transition-transform duration-300 ease-site group-hover:-translate-y-1.5 group-active:translate-y-0 motion-reduce:transition-none',
@@ -40,7 +40,7 @@ function Product({
           {frame}
         </div>
       </div>
-      <div className="px-6 pb-6 md:px-8 md:pb-8">
+      <div className="px-7 pb-7">
         <h3 className="text-subhead">
           <a
             href={href}
@@ -63,7 +63,7 @@ function Product({
 export function Products() {
   return (
     <Section id={SECTION.products} heading={home.products['H-3-A']} lede={home.products['H-3-B']}>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className={cn(TILES, 'grid grid-cols-1 gap-6 lg:grid-cols-2')}>
         <Product
           name="Engage"
           line={home.engage['H-4-A']}

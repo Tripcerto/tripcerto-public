@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
+import { founders } from '../src/content/about'
 
 /* What a crawler or an AI assistant reads about each page before it reads
    the page: the description, the canonical address, the structured data and
@@ -23,10 +24,13 @@ const title = (html: string) => html.match(/<title>([^<]*)<\/title>/)?.[1]
 const description = (html: string) => html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1]
 
 /* The tab names the page in one word, its entry's name, then the company;
-   the home page is the company alone. A link preview may carry the page's
-   headline in og:title; the tab does not. */
+   the home page is the company alone, and an initialism is set in capitals.
+   A link preview may carry the page's headline in og:title; the tab does not. */
+const INITIALISMS = new Set(['faq'])
 const tabTitle = (name: string) =>
-  name === 'home' ? 'Tripcerto' : `${name[0].toUpperCase()}${name.slice(1)} | Tripcerto`
+  name === 'home'
+    ? 'Tripcerto'
+    : `${INITIALISMS.has(name) ? name.toUpperCase() : `${name[0].toUpperCase()}${name.slice(1)}`} | Tripcerto`
 const structured = (html: string) =>
   [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]))
 
@@ -91,6 +95,17 @@ describe.each(ENTRIES)('the $name head', ({ name, html, url }) => {
     const script = html.match(/<script type="module" src="\/([^"]+)"><\/script>/)?.[1] ?? ''
     expect(read(join(ROOT, script))).toMatch(new RegExp(`\\bmount\\(\\w+, '${name}'\\)`))
   })
+})
+
+/* The home page names the founders in its structured data; they are the
+   founders the page shows. */
+it('names in the home page structured data the founders the site shows', () => {
+  const home = ENTRIES.find((entry) => entry.name === 'home')!
+  const organization = structured(home.html)
+    .flatMap((data) => data['@graph'] ?? [data])
+    .find((node) => node['@type'] === 'Organization')
+  const named = (organization?.founder ?? []).map((person: { name: string; sameAs: string }) => [person.name, person.sameAs])
+  expect(named).toEqual(founders.map((founder) => [founder.name, founder.linkedin]))
 })
 
 describe('the crawl files', () => {

@@ -4,6 +4,7 @@ import { Close } from '@/components/site/Close'
 import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
+import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { workspace } from '@/content/workspace'
@@ -11,6 +12,7 @@ import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
   trip: 'the-itemised-trip',
+  fit: 'in-and-out',
 } as const
 
 type Column = (typeof workspace.trip.columns)[number]['name']
@@ -18,12 +20,13 @@ type Column = (typeof workspace.trip.columns)[number]['name']
 const COLUMN_GLYPH: Record<Column, LucideIcon> = {
   'Structured, in order': ListOrdered,
   'The gaps, flagged': Flag,
-  'Resolved, then approved': BadgeCheck,
+  'Priced, then checked': BadgeCheck,
 }
 
 /* The Workspace page: the opening on the band with the window and its
-   assistant pane, the itemised trip as three ruled columns, and the close.
-   Every section shows the product or leads somewhere (23 Sep sync). */
+   assistant pane, the itemised trip as three ruled columns, what goes in and
+   what comes out as ruled rows, and the close. Every section shows the
+   product or leads somewhere (23 Sep sync). */
 export function WorkspacePage() {
   return (
     <>
@@ -43,7 +46,7 @@ export function WorkspacePage() {
         />
 
         <Section id={ID.trip} heading={workspace.trip['W-3-A']} lede={workspace.trip['W-3-B']}>
-          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
+          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-12">
             {workspace.trip.columns.map(({ name, line }) => {
               const Glyph = COLUMN_GLYPH[name]
               return (
@@ -57,6 +60,12 @@ export function WorkspacePage() {
               )
             })}
           </ul>
+        </Section>
+
+        <Section id={ID.fit} tone="tint" heading={workspace.fit['W-4-A']}>
+          <div className="mx-auto max-w-[56rem]">
+            <Rows rows={workspace.fit.rows} />
+          </div>
         </Section>
 
         <Close

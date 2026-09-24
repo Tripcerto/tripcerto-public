@@ -4,6 +4,7 @@ import { Footer } from '@/components/site/Footer'
 import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { Reveal } from '@/components/site/Reveal'
+import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { Stage } from '@/components/site/Stage'
 import { BriefCard } from '@/components/site/frames/BriefCard'
@@ -14,11 +15,13 @@ import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
   sales: 'what-reaches-sales',
+  business: 'on-your-site',
 } as const
 
 /* The Engage page: the opening on the band with the phone, the brief that
-   reaches sales beside its frame, and the close. Every section shows the
-   product or leads somewhere (23 Sep sync). */
+   reaches sales beside its frame, how it sits on the business's site as
+   ruled rows, and the close. Every section shows the product or leads
+   somewhere (23 Sep sync). */
 export function EngagePage() {
   return (
     <>
@@ -51,6 +54,12 @@ export function EngagePage() {
                 <BriefCard />
               </Reveal>
             </Stage>
+          </div>
+        </Section>
+
+        <Section id={ID.business} heading={engage.business['E-5-A']} lede={engage.business['E-5-B']}>
+          <div className="mx-auto max-w-[56rem]">
+            <Rows rows={engage.business.rows} />
           </div>
         </Section>
 

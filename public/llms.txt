@@ -6,12 +6,14 @@ Engage understands what each website visitor wants and passes the full brief to 
 
 ## Products
 
-- [Engage](https://www.tripcerto.com/engage): Engage answers travellers on your website from the expertise and products you approve, records what matters to them as they research, and hands your sales team a brief in place of a form.
-- [Workspace](https://www.tripcerto.com/workspace): Workspace turns an enquiry into an itemised, quote-ready trip, resolves prices and availability through the systems you already run, and shows what still needs an expert before the quote goes out.
+- [Engage](https://www.tripcerto.com/engage): Engage answers travellers on your website from the expertise and products you approve, records what matters to them as they research, and hands your sales team the conversation and a brief.
+- [Workspace](https://www.tripcerto.com/workspace): Workspace turns an enquiry into an itemised, priced trip and shows what still needs an expert before the quote goes out.
 
 ## Working with Tripcerto
 
-- [Pilot](https://www.tripcerto.com/pilot): We find the workflow where Tripcerto will have the most effect in your business and prove it there on one number. The result decides the rollout.
+- [Pilot](https://www.tripcerto.com/pilot): Tripcerto works with you to find where it will do the most for your business, then proves it there on one agreed number.
+- [FAQ](https://www.tripcerto.com/faq): Answers to the questions travel businesses ask about Tripcerto: what Engage and Workspace do, where your data goes, and what a pilot delivers.
+- [About](https://www.tripcerto.com/about): Tripcerto takes the repetitive work out of planning and selling complex travel. It was founded by Charlie Potter, with more than ten years in travel sales, and Taylor Styles, who designed and built its platform.
 - [Trust](https://www.tripcerto.com/trust): How Tripcerto puts a travel business’s content and customer data to work with AI: where information goes, who can reach it, how each customer stays separate, and the security programme behind it.
 
 ## Optional

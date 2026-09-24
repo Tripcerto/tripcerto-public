@@ -5,6 +5,8 @@ import { EngagePage } from './pages/EngagePage'
 import { WorkspacePage } from './pages/WorkspacePage'
 import { PilotPage } from './pages/PilotPage'
 import { TrustPage } from './pages/TrustPage'
+import { FaqPage } from './pages/FaqPage'
+import { AboutPage } from './pages/AboutPage'
 import { LegalPage } from './pages/LegalPage'
 import privacyHtml from './content/legal/privacy.html?raw'
 import termsHtml from './content/legal/terms.html?raw'
@@ -13,6 +15,8 @@ import { engage } from '@/content/engage'
 import { workspace } from '@/content/workspace'
 import { pilot } from '@/content/pilot'
 import { trust } from '@/content/trust'
+import { faq } from '@/content/faq'
+import { about, advisers, founders } from '@/content/about'
 import { DEMO_URL, LOGIN_URL, PAGES, SECTION } from '@/lib/links'
 
 /* Language Charlie's guide bans from headlines, and the category phrases the
@@ -36,25 +40,43 @@ const SITE = [
     name: 'home',
     Page: App,
     h1: home.hero['H-1-A'],
-    headings: [home.products['H-3-A'], home.audience['H-7-A'], home.close['H-9-A']],
+    headings: [
+      home.products['H-3-A'],
+      home.systems['H-11-A'],
+      home.audience['H-7-A'],
+      about.team['A-3-A'],
+      home.close['H-9-A'],
+    ],
   },
   {
     name: 'engage',
     Page: EngagePage,
     h1: engage.hero['E-1-A'],
-    headings: [engage.sales['E-4-A'], engage.close['E-9-A']],
+    headings: [engage.sales['E-4-A'], engage.business['E-5-A'], engage.close['E-9-A']],
   },
   {
     name: 'workspace',
     Page: WorkspacePage,
     h1: workspace.hero['W-1-A'],
-    headings: [workspace.trip['W-3-A'], workspace.close['W-8-A']],
+    headings: [workspace.trip['W-3-A'], workspace.fit['W-4-A'], workspace.close['W-8-A']],
   },
   {
     name: 'pilot',
     Page: PilotPage,
     h1: pilot.hero['P-1-A'],
-    headings: [pilot.measures['P-3-A'], pilot.close['P-6-A']],
+    headings: [pilot.includes['P-7-A'], pilot.measures['P-3-A'], pilot.close['P-6-A']],
+  },
+  {
+    name: 'faq',
+    Page: FaqPage,
+    h1: faq.hero['F-1-A'],
+    headings: [...faq.groups.map((group) => group.heading), faq.close['F-7-A']],
+  },
+  {
+    name: 'about',
+    Page: AboutPage,
+    h1: about.hero['A-1-A'],
+    headings: [about.story['A-2-A'], about.team['A-3-A'], about.company['A-4-A'], about.close['A-5-A']],
   },
   {
     name: 'trust',
@@ -128,7 +150,7 @@ describe.each(SITE)('$name page', ({ Page, h1, headings }) => {
     const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'))
     expect(hrefs).toContain(DEMO_URL)
     expect(hrefs).toContain(LOGIN_URL)
-    for (const p of [PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.trust]) expect(hrefs).toContain(p)
+    for (const p of [PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.faq, PAGES.about, PAGES.trust]) expect(hrefs).toContain(p)
     expect(hrefs).toContain('/legal/privacy')
     expect(hrefs).toContain('/legal/terms')
   })
@@ -186,6 +208,74 @@ describe('home roles grid', () => {
   })
 })
 
+/* The team stands on the home page and on About as one section: the
+   founders, then the advisers, each with the role and the facts, an
+   adviser's note, and a link to the person's LinkedIn where there is one. */
+describe.each([
+  { name: 'home', Page: App },
+  { name: 'about', Page: AboutPage },
+])('the team on the $name page', ({ Page }) => {
+  it.each([
+    { group: about.team['A-3-B'], people: founders },
+    { group: about.team['A-3-C'], people: advisers },
+  ])('gives each of the $group a tile under its label', ({ group, people }) => {
+    render(<Page />)
+    const section = within(document.getElementById(SECTION.team)!)
+    const list = within(section.getByRole('heading', { level: 3, name: group }).nextElementSibling as HTMLElement)
+    for (const person of people) {
+      const tile = within(list.getByRole('heading', { level: 4, name: person.name }).closest('li')!)
+      tile.getByText(person.role)
+      for (const { figure, label } of person.facts) {
+        tile.getByText(figure)
+        tile.getByText(label)
+      }
+      if (person.note) tile.getByText(person.note)
+      if (person.linkedin) expect(tile.getByRole('link', { name: /LinkedIn/ }).getAttribute('href')).toBe(person.linkedin)
+    }
+  })
+})
+
+describe('home systems section', () => {
+  it('names each step, what carries it, and the systems that stay', () => {
+    render(<App />)
+    const section = within(document.getElementById(SECTION.systems)!)
+    for (const { name, owner } of home.systems.steps) {
+      const step = within(section.getByRole('heading', { level: 3, name }).closest('li')!)
+      step.getByText(owner)
+    }
+    for (const system of home.systems.systems) section.getByText(system)
+  })
+})
+
+describe('faq page', () => {
+  it('sets every question in its group, with its answer in the markup', () => {
+    render(<FaqPage />)
+    for (const group of faq.groups) {
+      const section = within(document.getElementById(group.id)!)
+      for (const { q, a } of group.items) {
+        section.getByRole('heading', { level: 3, name: q })
+        section.getByText(a)
+      }
+    }
+  })
+
+  it('links each answer about data to a section the Trust page has', () => {
+    render(<TrustPage />)
+    for (const { link } of faq.groups.flatMap((group) => group.items)) {
+      if (!link?.href.startsWith(`${PAGES.trust}#`)) continue
+      expect(document.getElementById(link.href.split('#')[1])).not.toBeNull()
+    }
+  })
+
+  it('writes its structured data from the questions on the page', () => {
+    const { container } = render(<FaqPage />)
+    const script = container.querySelector('script[type="application/ld+json"]')
+    const data = JSON.parse(script?.textContent ?? '{}')
+    expect(data['@type']).toBe('FAQPage')
+    expect(data.mainEntity.map((q: { name: string }) => q.name)).toEqual(faq.groups.flatMap((g) => g.items.map((i) => i.q)))
+  })
+})
+
 /* The legal documents sit inside the site's nav and footer, so a reader
    can leave them for any page. */
 describe.each([
@@ -198,7 +288,7 @@ describe.each([
     expect(h1s).toHaveLength(1)
     expect(h1s[0].textContent).toBe(h1)
     const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'))
-    for (const p of ['/', PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.trust, '/legal/privacy', '/legal/terms']) expect(hrefs).toContain(p)
+    for (const p of ['/', PAGES.engage, PAGES.workspace, PAGES.pilot, PAGES.faq, PAGES.about, PAGES.trust, '/legal/privacy', '/legal/terms']) expect(hrefs).toContain(p)
     expect(hrefs).toContain(LOGIN_URL)
   })
 })

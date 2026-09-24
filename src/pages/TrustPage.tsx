@@ -6,16 +6,7 @@ import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { trust } from '@/content/trust'
-import { DEMO_URL, PAGES, STATUS_URL } from '@/lib/links'
-
-const ID = {
-  moves: 'how-information-moves',
-  decides: 'what-decides',
-  access: 'who-can-reach-what',
-  programme: 'security-programme',
-  legal: 'terms-and-rights',
-  status: 'live-status',
-} as const
+import { DEMO_URL, PAGES, STATUS_URL, TRUST_SECTION as ID } from '@/lib/links'
 
 /* The trust page, for the technical buyer: how information moves as ruled
    rows, what decides a recommendation as three columns, who can reach what,
@@ -38,7 +29,7 @@ export function TrustPage() {
         </Section>
 
         <Section id={ID.decides} tone="tint" heading={trust.decides['T-3-A']} lede={trust.decides['T-3-B']}>
-          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-10 xl:gap-x-14">
+          <ul role="list" className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-12">
             {trust.decides.columns.map(({ name, line }) => (
               <li key={name} className="border-t border-line pt-6">
                 <h3 className="text-subhead">{name}</h3>

@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import { Reveal } from '@/components/site/Reveal'
+import { HERO_PAD } from '@/components/site/Section'
 import { Tag } from '@/components/site/Tag'
 import { Button } from '@/components/ui/button'
 import { HeroVisuals } from '@/components/site/frames/HeroVisuals'
@@ -9,22 +10,25 @@ import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
 import { trackEvent } from '@/lib/events'
 import { DEMO_URL, SECTION } from '@/lib/links'
+import { cn } from '@/lib/utils'
 
 const HOW_IT_WORKS_HREF = `#${SECTION.products}`
 
 /* The hero: paper copy on the band (who it is for, headline, lede, the two actions, one
    centred group; the Pilot pill above it went on Taylor's ask, 22 Sep
-   evening), the two product frames beside it. The
-   container runs wider than the nav's shell on large screens, so the frames
-   grow and the copy and visuals spread apart, and everything tightens towards
-   the middle as the screen narrows. */
+   evening), the two product frames beside it. The column runs wider than
+   the nav's shell on large screens, up to 1680px, so the frames grow and the
+   copy and visuals spread apart; the gap between them and the hero's
+   padding (HERO_PAD, shared with every page's hero) grow with the screen
+   rather than stepping, so the only change as it narrows is the frames
+   moving under the copy below lg. */
 export function Hero() {
   return (
     <section id="hero" data-band aria-labelledby="hero-title" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-paper">
       <Band />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-1 flex-col justify-center px-5 pb-16 pt-28 sm:px-8 md:pt-32 lg:pb-20 lg:pt-[calc(72px+5rem)] xl:max-w-[1480px] 2xl:max-w-[1680px]">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-10 xl:gap-16">
+      <div className={cn('shell relative z-10 flex flex-1 flex-col justify-center [--shell:1680px]', HERO_PAD)}>
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-[min(5vw,4rem)]">
           <div className="animate-rise min-w-0 lg:col-span-5">
             <Tag className="mb-6">
               {home.hero.audience}

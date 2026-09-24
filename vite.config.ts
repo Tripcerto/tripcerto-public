@@ -168,6 +168,8 @@ export default defineConfig({
         engage: fileURLToPath(new URL('./engage/index.html', import.meta.url)),
         workspace: fileURLToPath(new URL('./workspace/index.html', import.meta.url)),
         pilot: fileURLToPath(new URL('./pilot/index.html', import.meta.url)),
+        faq: fileURLToPath(new URL('./faq/index.html', import.meta.url)),
+        about: fileURLToPath(new URL('./about/index.html', import.meta.url)),
         trust: fileURLToPath(new URL('./trust/index.html', import.meta.url)),
         privacy: fileURLToPath(new URL('./legal/privacy/index.html', import.meta.url)),
         terms: fileURLToPath(new URL('./legal/terms/index.html', import.meta.url)),

@@ -2,16 +2,32 @@
    (21 Sep 2026); every string on that page was ours. Strings marked
    `changed` depart from it on the direction in Charlie's Positioning and
    Messaging Guide (22 Sep 2026): nothing reads as an instruction to the
-   buyer. This page sits where a pricing page normally would and carries no
-   price. The design sync (23 Sep 2026) cut it to the measures: P-1-D, P-2, P-3-B,
-   P-4 and P-5 are not on the page. Reply with the reference and the change. */
+   buyer. The page sells the opportunity to try a pilot, with the proposing
+   on us (Guide §12): no preparation list, no workflow for the buyer to
+   choose. It carries no price; whether pricing gets pages of its own
+   (Guide §11) is open. The design sync (23 Sep 2026) cut it to the
+   measures; on 24 Sep, after the review of the site found the pilot's goal
+   and what it delivers unclear, it gained what a pilot includes (P-7). The
+   pilot's measures are still to be settled by both founders. Reply with
+   the reference and the change. */
 
 export const pilot = {
   hero: {
+    tag: 'The pilot programme is open', // new (24 Sep)
     'P-1-A': 'A pilot proves what Tripcerto does for your business', // changed
     'P-1-B':
-      'We work with you to find the workflow where Tripcerto will have the most effect, then prove it there on one number, measured from where you are today. The result decides what happens next.', // changed
+      'Tripcerto works with you to find where it will do the most, then proves it there on one agreed number.', // changed (24 Sep)
     'P-1-C': 'Book a call', // changed
+    'P-1-D': 'What a pilot includes', // added
+  },
+  includes: {
+    'P-7-A': 'What a pilot includes', // new (24 Sep)
+    columns: [
+      { name: 'Led by the founders', line: 'Where the pilot runs is chosen with your team.' },
+      { name: 'Built on what you have', line: 'It starts from the content and data you already hold.' },
+      { name: 'Measured from today', line: 'One agreed number, its baseline from your own data, and the result against it.' },
+      { name: 'A say in what is next', line: 'Direct influence on the roadmap, and early access to what is built.' },
+    ], // new (24 Sep)
   },
   measures: {
     'P-3-A': 'Conversion, lead quality, quote time, handling time or completeness',
@@ -44,7 +60,8 @@ export const pilot = {
     ], // added: the five measures, each with its product and its definition
   },
   close: {
-    'P-6-A': 'It starts with a conversation with our team about where Tripcerto would do the most for your business', // added: the document had the button alone
+    'P-6-A': 'A pilot starts with a call', // changed (24 Sep)
     'P-6-B': 'Book a call', // changed
+    'P-6-C': 'Questions about pilots', // new (24 Sep)
   },
 } as const

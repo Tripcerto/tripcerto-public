@@ -8,7 +8,7 @@ import { gaEvent } from '@/lib/ga'
 
 /* The build's name for each page (vite.config.ts), which its entry mounts
    it under. */
-export type PageKey = 'home' | 'engage' | 'workspace' | 'pilot' | 'trust' | 'privacy' | 'terms'
+export type PageKey = 'home' | 'engage' | 'workspace' | 'pilot' | 'faq' | 'about' | 'trust' | 'privacy' | 'terms'
 
 type Destination = 'vercel' | 'ga'
 
