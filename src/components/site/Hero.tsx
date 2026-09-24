@@ -8,6 +8,7 @@ import { HeroVisuals } from '@/components/site/frames/HeroVisuals'
 import { PhoneScreen } from '@/components/site/frames/PhoneScreen'
 import { WorkspaceScreen } from '@/components/site/frames/WorkspaceScreen'
 import { home } from '@/content/home'
+import { trackEvent } from '@/lib/events'
 import { DEMO_URL, SECTION } from '@/lib/links'
 import { cn } from '@/lib/utils'
 
@@ -43,7 +44,7 @@ export function Hero() {
 
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button asChild size="lg" variant="accent">
-                <a href={DEMO_URL}>
+                <a href={DEMO_URL} onClick={() => trackEvent('demo_click', { button: 'hero' })}>
                   {home.hero['H-1-C']}
                   <ArrowRight aria-hidden />
                 </a>

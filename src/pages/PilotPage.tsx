@@ -5,7 +5,6 @@ import { PageHero } from '@/components/site/PageHero'
 import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { pilot } from '@/content/pilot'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
@@ -18,7 +17,6 @@ const ID = {
    with the product each belongs to, then the call. Words throughout; the
    frames belong to the product pages. */
 export function PilotPage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.pilot} />

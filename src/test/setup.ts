@@ -54,3 +54,12 @@ class MockIntersectionObserver implements IntersectionObserver {
   takeRecords = () => []
 }
 if (browser) vi.stubGlobal('IntersectionObserver', MockIntersectionObserver)
+
+// jsdom has no ResizeObserver, which the consent bar measures itself with,
+// and lays nothing out, so there is never a resize to report.
+class MockResizeObserver implements ResizeObserver {
+  observe = () => {}
+  unobserve = () => {}
+  disconnect = () => {}
+}
+if (browser) vi.stubGlobal('ResizeObserver', MockResizeObserver)

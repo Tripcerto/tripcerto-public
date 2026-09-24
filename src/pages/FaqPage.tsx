@@ -5,7 +5,6 @@ import { Nav } from '@/components/site/Nav'
 import { PageHero } from '@/components/site/PageHero'
 import { SECTION_PAD } from '@/components/site/Section'
 import { faq } from '@/content/faq'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 const PILOT = faq.groups.find((group) => group.id === 'pilot')!
@@ -27,7 +26,6 @@ const STRUCTURED = JSON.stringify({
    a label over ruled rows, the question on the left and the answer on the
    right, as the site's other rows are set. */
 export function FaqPage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.faq} />

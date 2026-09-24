@@ -11,7 +11,6 @@ import { BriefCard } from '@/components/site/frames/BriefCard'
 import { PhoneScreen } from '@/components/site/frames/PhoneScreen'
 import { delay } from '@/components/site/frames/motion'
 import { engage } from '@/content/engage'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 const ID = {
@@ -24,7 +23,6 @@ const ID = {
    ruled rows, and the close. Every section shows the product or leads
    somewhere (23 Sep sync). */
 export function EngagePage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.engage} />

@@ -23,16 +23,21 @@ Tripcerto has two products for travel sales. Engage sits on a travel company's w
 
 ## How the site is put together
 
-- One HTML entry per page, each carrying its own title, description, canonical and social tags. Each entry file exports the page it mounts (`export default mount(EngagePage)`).
+- One HTML entry per page, each carrying its own title, description, canonical and social tags. Each entry file exports the page it mounts, under the build's name for it (`export default mount(EngagePage, 'engage')`); that name is the `page` every analytics event reports.
 - The build writes every page's full markup into its HTML: the `prerender` plugin in `vite.config.ts` imports each entry and renders its default export through `src/prerender.tsx`, inside the same `src/Site.tsx` tree the browser renders. A crawler that runs no JavaScript reads the whole page, and `src/boot.tsx` hydrates it in the browser. The build fails if a page throws or renders nothing, and the dev server renders the same way.
 - Every string on the site is in `src/content/<page>.ts`, keyed by the reference in the copy document. Components carry no copy.
 - `src/components/site/` holds the sections; `frames/` under it holds the two product frames, which tell one trip from the traveller's chat to the consultant's quote. `src/components/ui/` holds the button and the band shader.
 - `src/index.css` holds the Ember tokens (`@theme`), the page surfaces that switch in dark mode, and the utilities.
+- Analytics: `src/lib/events.ts` lists every event the site sends, with why it exists, who owns it, where it goes and whether it is a conversion, and `trackEvent` routes from that list. `src/lib/ga.ts` is the only file that talks to Google Analytics (a test fails on a `gtag(` or `dataLayer` anywhere else). `src/lib/Measurement.tsx`, mounted on every page, runs Vercel Web Analytics for every visitor, loads Google Analytics only after Accept and stops it on Reject, reports section views, and marks our own browsers: `?team` on any address sets `tc_team`, `?team=off` clears it, and neither service counts a marked browser. Every address that leaves the page for either service is its origin and path plus any `utm_*` campaign tags; every other parameter and the hash are dropped (`src/lib/address.ts`). Google Analytics loads on the tripcerto.com hosts only; `VITE_GA_DEBUG=1` loads it anywhere, in debug mode.
+- `api/consent.ts` is the site's one Vercel Function. `POST /api/consent` sets the visitor's analytics answer (`tc_consent`), or the mark on our own browsers (`tc_team`), as a cookie on `.tripcerto.com`, which every tripcerto.com host can read, so a visitor answers once. `src/lib/consent.ts` reads and writes that answer in the page, and `src/components/site/ConsentBar.tsx` asks for it. The build renders no bar: it appears once the page has read the cookie. It runs in London (`regions` in `vercel.json`). Its tests sit in `api/__tests__/`, because Vercel deploys every other file under `api/` as a function.
 
 ## Project structure
 
 ```
 index.html, engage/, workspace/, pilot/, faq/, about/, trust/, legal/   # one entry per page, each with its own head tags
+api/
+  consent.ts               # POST /api/consent: sets the analytics answer as a cookie on .tripcerto.com
+  __tests__/               # its tests, on a path Vercel does not deploy
 src/
   boot.tsx                 # hydrates a page
   prerender.tsx, Site.tsx  # the build's render of a page, and the tree both sides render
@@ -40,10 +45,10 @@ src/
   App.tsx                  # the home page; the others are in pages/
   pages/                   # EngagePage, WorkspacePage, PilotPage, FaqPage, AboutPage, TrustPage, PrivacyPage, TermsPage, LegalPage
   content/                 # every string on the site, one file per page, keyed by reference; legal/ holds the two documents as HTML
-  components/site/         # Nav, Hero, PageHero, Products, Systems, Audience, Team, Close, Footer, Section, Rows, Stage, Tag, Band, Reveal, Wordmark
+  components/site/         # Nav, Hero, PageHero, Products, Systems, Audience, Team, Close, Footer, Section, Rows, Stage, Tag, Band, Reveal, Wordmark, ConsentBar
   components/site/frames/  # the two product frames: phone, window, the brief card, the trip they tell
   components/ui/           # button, gradient-mesh (the band shader)
-  lib/                     # links, theme, analytics, place (keeps the reader's place when the width changes), utils
+  lib/                     # links, theme, consent, events (the event list), ga (the GA loader), address, Measurement, place (keeps the reader's place when the width changes), utils
   index.css                # Ember tokens (@theme), page surfaces, utilities
   site.test.tsx, test/     # the five checks run over every page, the legal pages' chrome, and the jsdom setup
 public/
@@ -66,18 +71,18 @@ npm install
 npm run dev        # Vite dev server; /engage and the other clean URLs answer as in production
 npm run build      # tsc -b && vite build; emits the seven pages and the two legal pages into dist/
 npm run lint       # eslint .
-npm run test:run   # vitest: the checks over every page, the nav, boot, theme, head tags and prerender, plus the brand kit's
+npm run test:run   # vitest: the checks over every page, the nav, boot, theme, consent, the event list, the GA loader, measurement, the clicks each page counts, head tags and prerender, the consent endpoint, plus the brand kit's
 npm run audit      # npm audit at every level; zero advisories is the bar
 npm run preview    # serve dist/ locally
 ```
 
-`.github/workflows/validate.yml` runs the type-check, lint, tests, build (and checks every page and both legal pages were emitted) and audit on every pull request. There is no prettier config here and none should be run: the code is single-quoted with no semicolons, and eslint is the only formatting gate. No runtime environment variables are required.
+`.github/workflows/validate.yml` runs the type-check, lint, tests, build (and checks every page and both legal pages were emitted) and audit on every pull request. There is no prettier config here and none should be run: the code is single-quoted with no semicolons, and eslint is the only formatting gate. No runtime environment variables are required; `VITE_GA_DEBUG=1` is for testing Google Analytics off the tripcerto.com hosts.
 
 ## Search engines and AI assistants
 
 - `robots.txt` lets every crawler in and names the sitemap; `sitemap.xml` lists the nine pages; `llms.txt` describes the site for AI assistants, one line per page. Home, Engage and Workspace carry JSON-LD in their heads (the organisation, its founders and the website on home, a service on each product page: Google's software-app type wants prices and ratings the site does not have). The FAQ page writes its FAQPage data from `src/content/faq.ts`, so the questions a search engine reads are the ones on the page.
 - `scripts/head.test.ts` holds these to the pages: every build entry is in the sitemap, and every JSON-LD description and every `llms.txt` line is the page's own meta description. Change a description in the page's `<head>` and the test names each place that has to follow.
-- Adding a page takes five things: the HTML entry, its line in the `input` block of `vite.config.ts` (the test reads that block as written), an entry file that exports `mount(ThePage)`, a `<loc>` in the sitemap and a line in `llms.txt`.
+- Adding a page takes five things: the HTML entry, its line in the `input` block of `vite.config.ts` (the test reads that block as written), an entry file that exports `mount(ThePage, '<its input name>')` with that name added to `PageKey` in `src/lib/events.ts`, a `<loc>` in the sitemap and a line in `llms.txt`.
 - Google Search Console holds `tripcerto.com` as a domain property, verified by a TXT record in the domain's DNS at IONOS; removing that record loses the property. Bing Webmaster Tools imported it from Search Console.
 - IndexNow (Bing, and the engines that share with it): the key is the one `.txt` file named by 32 hex characters in `public/`, and its content is its own name. After every successful production deploy, `.github/workflows/indexnow.yml` posts every URL in the live sitemap to `api.indexnow.org`. To change the key, generate one in Bing Webmaster Tools and replace the file; the head test allows exactly one.
 

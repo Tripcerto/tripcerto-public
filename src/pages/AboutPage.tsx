@@ -6,7 +6,6 @@ import { Rows } from '@/components/site/Rows'
 import { Section } from '@/components/site/Section'
 import { Team } from '@/components/site/Team'
 import { about } from '@/content/about'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES, SECTION } from '@/lib/links'
 
 const ID = {
@@ -18,7 +17,6 @@ const ID = {
    started, the team, and the company's registered facts.
    Words and portraits; the frames belong to the product pages. */
 export function AboutPage() {
-  usePageAnalytics()
   return (
     <>
       <Nav current={PAGES.about} />

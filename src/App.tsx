@@ -8,7 +8,6 @@ import { Footer } from '@/components/site/Footer'
 import { Systems } from '@/components/site/Systems'
 import { Team } from '@/components/site/Team'
 import { home } from '@/content/home'
-import { usePageAnalytics } from '@/lib/analytics'
 import { DEMO_URL, PAGES } from '@/lib/links'
 
 /* The home page: the hero, the two products, how they sit with the systems a
@@ -16,7 +15,6 @@ import { DEMO_URL, PAGES } from '@/lib/links'
    way on to About under it, and the close. The tones alternate page and
    tint down to the band. */
 export function App() {
-  usePageAnalytics()
   return (
     <>
       <Nav />

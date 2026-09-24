@@ -281,7 +281,7 @@ They are guidelines for the register, never lines to lift.
   removed everywhere else. Now: the page-toned wordmark and the contact
   email, then under a hairline the site's pages in order on the left (Engage,
   Workspace, Pilot, FAQ, About, Status, Login) and the legal links on the right (Trust,
-  Privacy, Terms), then the copyright. No tagline and no column headings.
+  Privacy, Terms, Cookie settings), then the copyright. No tagline and no column headings.
   `Section`'s `ink` tone went with it; the tones are `page` and `tint`.
 - The product tiles (H-3 to H-5) sit straight under the hero, the roles
   follow them. "See how it works" scrolls to `#products`, and a test holds
@@ -669,10 +669,9 @@ Open, for Charlie's wording pass (new words, his to write):
 
 Later: content pages under each product (what, who for, how, FAQs) for
 search and AI answers; a page per role; downloadable PDFs; the pilot page's
-detail; Tripcerto Ground as its own site or route; Google Analytics on
-Jack's ticket (Vercel Analytics already records views, scroll depth,
-sections, clicks and time; GA adds cookies and a consent banner); the Trust
-page shorter, with an ISO 27001 target date only Taylor can give. Taylor's to reopen, since they reverse his 22 Sep calls:
+detail; Tripcerto Ground as its own site or route; the Trust page shorter,
+with an ISO 27001 target date only Taylor can give. Analytics is no longer
+later work: see "Analytics (23 Sep)" below. Taylor's to reopen, since they reverse his 22 Sep calls:
 real content in the frames instead of bars (Ryan; Taylor also wants a
 fuller Engage picture) and following the system theme. All the video ideas
 are parked until the videos exist.
@@ -858,3 +857,22 @@ Positioning and Messaging Guide was read in full for this pass; §3, §6, §9,
   the traveller's words; the demo's "72% ready" is illustrative and could
   become the counts Workspace shows (gaps, priced lines); the brand kit's SWAPS example "Workspace builds the quote-ready
   trip" predates W-1-A's correction.
+
+## Analytics (23 Sep)
+
+- Vercel Web Analytics counts every visitor with no cookie and no
+  identifier: page views, section views, and demo, contact and login clicks.
+  Scroll depth and time on page are no longer recorded.
+- Google Analytics 4 loads only after a visitor chooses Accept in the
+  consent bar (`src/components/site/ConsentBar.tsx`). Reject stops it and
+  deletes its cookies; Cookie settings, in the footer and the phone menu,
+  brings the bar back. `src/lib/ga.ts` is the only file that talks to it.
+- Every event the site sends is typed in `src/lib/events.ts`, with why it
+  exists, who owns it, where it goes and whether it is a conversion (demo and
+  contact clicks are).
+- `POST /api/consent` (`api/consent.ts`, run in London) sets the answer as
+  the `tc_consent` cookie on `.tripcerto.com`, so one answer holds on the
+  website, chat and workspace. `?team` on any address marks one of our own
+  browsers, and neither service counts it.
+- Both services receive addresses as origin and path plus any `utm_*`
+  campaign tags; nothing else from the query, and never the hash.
