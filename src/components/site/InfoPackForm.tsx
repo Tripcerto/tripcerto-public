@@ -1,5 +1,4 @@
 import { useId, useState, type FormEvent } from 'react'
-import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { pack as copy } from '@/content/pack'
 import { CONTACT_EMAIL } from '@/lib/links'
@@ -9,9 +8,9 @@ export type Pack = keyof typeof copy.names
 
 type State = 'idle' | 'sending' | 'sent' | 'failed'
 
-/* A request for an information pack, on the band: a work email and the
-   send, one row from a small tablet up and stacked on a phone, then what
-   the email is for. It posts to /api/info-pack (api/info-pack.ts), which
+/* A request for an information pack, on the band: a work email and a
+   small send button beside it (Taylor, 24 Sep), one row from a small
+   tablet up and stacked on a phone, then what the email is for. It posts to /api/info-pack (api/info-pack.ts), which
    emails the team. Sent, the form gives way to the thanks; failed, for
    any reason, it says so and gives the team's address, so no request is
    lost without the reader knowing. The field named `website` is off
@@ -62,11 +61,10 @@ export function InfoPackForm({ pack, label, className }: { pack: Pack; label?: s
           maxLength={254}
           autoComplete="email"
           placeholder={copy.placeholder}
-          className="h-12 min-w-0 flex-1 rounded-full border border-white/60 bg-white px-5 text-copy text-ink placeholder:text-ink/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          className="h-11 min-w-0 flex-1 rounded-full border border-white/60 bg-white px-5 text-copy text-ink placeholder:text-ink/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
         />
-        <Button type="submit" variant="accent" size="lg" disabled={state === 'sending'}>
+        <Button type="submit" variant="accent" disabled={state === 'sending'}>
           {state === 'sending' ? copy.sending : copy.submit}
-          <ArrowRight aria-hidden />
         </Button>
       </div>
       <div aria-hidden className="absolute -left-[9999px] top-0">

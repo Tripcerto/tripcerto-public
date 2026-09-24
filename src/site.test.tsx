@@ -45,7 +45,7 @@ const SITE = [
     h1: home.hero['H-1-A'],
     headings: [
       home.products['H-3-A'],
-      home.journey['H-11-A'].join(' '),
+      home.layer['H-11-A'].join(' '),
       home.audience['H-7-A'],
       about.team['A-3-A'],
       home.close['H-9-A'],
@@ -250,22 +250,18 @@ describe.each([
   })
 })
 
-describe('home journey section', () => {
-  it('names each stage, its steps and the data it draws on, the enquiry, the expert and the sale', () => {
+describe('home layer section', () => {
+  it('sets Tripcerto between the customers and the experts, with a product for each side, on the business\'s own data', () => {
     render(<App />)
-    const section = within(document.getElementById(SECTION.journey)!)
-    const { engage, handoff, workspace } = home.journey
-    for (const [product, stage] of [['Engage', engage], ['Workspace', workspace]] as const) {
-      const panel = within(section.getByRole('heading', { level: 3, name: `${product} · ${stage.when}` }).parentElement!)
-      for (const step of stage.steps) panel.getByText(step)
-      panel.getByText(stage.data)
+    const section = within(document.getElementById(SECTION.layer)!)
+    const { customers, products, experts, data } = home.layer
+    const names = section.getAllByRole('heading', { level: 3 }).map((h) => h.textContent)
+    expect(names).toEqual([customers.name, 'Tripcerto', experts.name])
+    for (const side of [customers, experts]) section.getByText(side.line)
+    for (const { name, line } of products) {
+      within(section.getByRole('heading', { level: 4, name }).closest('li')!).getByText(line)
     }
-    section.getByText(engage['H-11-B'])
-    section.getByText(workspace['H-11-D'])
-    section.getByText(handoff.enquiry)
-    section.getByText(handoff.expert)
-    section.getByText(handoff['H-11-C'])
-    section.getByText(home.journey.sale)
+    section.getByText(data)
   })
 })
 

@@ -870,26 +870,24 @@ The founders went through the preview page by page. What changed, and why:
   who make travel possible" (selling is one role of five). H-9-A is a call
   to action, "See how it works for you with a pilot"; Charlie's "Tripcerto"
   became "it" so it stands on one line.
-- H-11 is now the journey (`Journey.tsx`, anchor `#journey`; `Systems.tsx`
-  is gone). "Your systems stay where they are" went: Charlie read it as
-  "nothing changes", which is the wrong thing to promise. The heading is
-  the line both founders agreed, "Tripcerto is the intelligence layer
-  between your customers and your experts"; `site.test.tsx` now bans only
-  the category phrase ("intelligence layer for"). It is the one heading on
-  the site that takes three lines on a tablet held upright. The diagram is
-  Charlie's pick from "The Changing Customer Journey" (slide 01): Engage
-  before the enquiry (website traffic, personalised research, greater
-  insight), the web enquiry and your expert in the middle, Workspace after
-  it (customer profile, quote creation, proposal), then the sale. Taylor
-  disliked the old one because it looked as if the expert did everything
-  after the quote; now the expert sits at the handoff. Each product names
-  the kinds of data it draws on with a small database mark, and nothing
-  shows how a business wires its systems (Charlie: a buyer whose set-up
-  differs will say "this wouldn't work for us"; Taylor: no API labels).
-  The slide's "More visitors enquire" became "More insight in every
-  enquiry", since no pilot has measured the first. One grid shares its
-  five rows across every part through subgrid, so the rail and each row
-  line up; below lg the parts stack, each on its own short rail.
+- H-11 is now where Tripcerto sits (`Layer.tsx`, anchor `#where-it-sits`;
+  `Systems.tsx` is gone). "Your systems stay where they are" went: Charlie
+  read it as "nothing changes", which is the wrong thing to promise. The
+  heading is the line both founders agreed, "Tripcerto is the intelligence
+  layer between your customers and your experts"; `site.test.tsx` now bans
+  only the category phrase ("intelligence layer for"). It is the one
+  heading on the site that takes three lines on a tablet held upright. The
+  drawing says what the heading says: your customers on the left, your
+  experts on the right, and between them one Tripcerto panel with Engage
+  facing the customers and Workspace facing the experts, over a line with a
+  small database mark, "Runs on your own content, products and prices".
+  Taylor asked for something simpler than the slides in "The Changing
+  Customer Journey", drawn from the feedback rather than copied; a first
+  pass that redrew the slide's nine-step journey was replaced the same
+  afternoon. It shows no systems and no wiring (Charlie: a buyer whose
+  set-up differs will say "this wouldn't work for us"; Taylor: no API
+  labels), and the expert is no longer drawn as doing everything after the
+  quote.
 - Advisers: one label, "Board of advisers"; each adviser is a portrait, a
   name and a LinkedIn. The titles ("Adviser and investor" in particular),
   the years and the notes went. Gemini's action list says the LinkedIn
@@ -904,7 +902,8 @@ The founders went through the preview page by page. What changed, and why:
   columns were not what a pilot includes. The five measures are now under
   "What a pilot can measure". The way in is the pilot's information pack,
   asked for by email in the hero and in the close, with "Or book a call"
-  under each form.
+  under each form. The send button is the small size, without an arrow
+  (Taylor).
 - Information packs (`InfoPackForm.tsx`, `api/info-pack.ts`). The Pilot
   page asks for the pilot's pack; the Engage and Workspace closes ask for
   each product's, with "Or book a demo" under the form. A request is emailed
@@ -931,12 +930,13 @@ The founders went through the preview page by page. What changed, and why:
   for the keyword research the founders plan after the videos.
 - About. The lede lost its "So". Under "Started at the sales desk" the
   story now names the fragmentation Charlie saw and the systems Taylor
-  built, then the line both keep, and a timeline follows (`Timeline.tsx`).
-  It carries only the years given on the call or on the record (2009,
-  2016, 2017, the 2024 incorporation, and 2026 as "The pilot programme
-  opens", since no pilot is live yet). Taylor's years, the meeting in
-  Bristol, leaving their jobs to build it and the first angel investor are
-  to be added once their years are confirmed. No employer is named.
+  built, then the line both keep, and a timeline follows (`Timeline.tsx`):
+  2009, 2016 and 2017 from Charlie on the call; Bristol in 2022, planning
+  from 2023 and Taylor full time from April 2026 from Taylor after it;
+  2024 the incorporation; and 2026 as "the pilot programme opens", since no
+  pilot is live yet. Taylor's early years are kept general, by Taylor's
+  ask, and no employer is named. The first angel investor has no year yet
+  and is not on it.
 - Left off the site on purpose: accounting and tax, the registered address,
   the filming plans, the social push, why the investor label came off, and
   every client or prospect named on the call.

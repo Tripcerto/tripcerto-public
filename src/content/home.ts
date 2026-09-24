@@ -3,9 +3,9 @@
    Positioning and Messaging Guide (22 Sep 2026): the software is the subject, the framing
    is the opportunity, the hero covers both products, section 6 is removed. Section 2 went
    in the 23 Sep review, once the hero and the product tiles said it. Sections 3 to 5 are the
-   23 Sep 2026 design's. H-11 and H-12 are new on 24 Sep: the journey
-   the two products carry (Charlie's diagram from "The Changing Customer
-   Journey", redrawn after the 24 Sep afternoon review), and the founders.
+   23 Sep 2026 design's. H-11 and H-12 are new on 24 Sep: where Tripcerto
+   sits, between a business's customers and its experts (redrawn after the
+   24 Sep afternoon review), and the founders.
    Reply with the reference and the change. */
 
 export const home = {
@@ -34,32 +34,22 @@ export const home = {
     'H-5-A':
       'Workspace is the travel expert’s tool for building complex multi-day, multi-service trips quickly. It takes out the repetitive manual tasks and checks every trip for gaps before the quote goes out.', // changed (24 Sep review): drafted from Charlie's, which asked for speed, many trips at once and the gap checking; "ultimate" left out
   },
-  /* H-11: the journey the two products carry, from Charlie's diagram in
-     "The Changing Customer Journey": before the enquiry on Engage, the
-     enquiry and the expert who takes it, after the enquiry on Workspace,
-     then the sale. Each product names the data of the business's own it
-     draws on, and no more: how a business runs its systems is not drawn
-     (Charlie, 24 Sep), and "systems" is not in the heading. */
-  journey: {
+  /* H-11: where Tripcerto sits, drawn as the heading says it: your
+     customers on one side, your experts on the other, Tripcerto between
+     them with a product for each side, running on the business's own
+     data. Drawn for the site from the founders' 24 Sep review rather than
+     copied from a slide: simple, with nothing about how a business wires
+     its systems (Charlie: a buyer whose set-up differs will say "this
+     wouldn't work for us"), and "systems" is not in the heading. */
+  layer: {
     'H-11-A': ['Tripcerto is the intelligence layer', 'between your customers and your experts'], // changed (24 Sep review): agreed by both founders; "your systems stay where they are" went, as it says nothing changes
-    engage: {
-      when: 'Before the enquiry',
-      steps: ['Website traffic', 'Personalised research', 'Greater insight'],
-      data: 'Your content and products',
-      'H-11-B': 'More insight in every enquiry', // new: the diagram's "More visitors enquire" is a result no pilot has measured
-    },
-    handoff: {
-      enquiry: 'Web enquiry',
-      expert: 'Your expert',
-      'H-11-C': 'Your expert begins with context', // new: the diagram's
-    },
-    workspace: {
-      when: 'After the enquiry',
-      steps: ['Customer profile', 'Quote creation', 'Proposal'],
-      data: 'Your CRM, pricing, availability and itineraries',
-      'H-11-D': 'Less manual work, faster options', // new: the diagram's
-    },
-    sale: 'Sale',
+    customers: { name: 'Your customers', line: 'Research and ask on your website, in their own words.' }, // new
+    products: [
+      { name: 'Engage', line: 'Answers them and learns what each one wants.' },
+      { name: 'Workspace', line: 'Turns each enquiry into an itemised trip, checked for gaps.' },
+    ], // new
+    experts: { name: 'Your experts', line: 'Start with the full picture and decide what goes out.' }, // new
+    data: 'Runs on your own content, products and prices', // new
   },
   audience: {
     'H-7-A': 'Built for the people who make travel possible', // changed (24 Sep review, Charlie): selling is one of the five roles, not all of them

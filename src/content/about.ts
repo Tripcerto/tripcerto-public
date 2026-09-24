@@ -77,8 +77,8 @@ export const about = {
   /* A-2: the founding story, then the timeline under it (24 Sep review:
      Charlie, agreed by both founders): the founders did the work Tripcerto
      is built for long before they built it, which is what no one else can
-     copy. Each entry is a year and one line; an entry whose year is not
-     yet confirmed is left out rather than guessed. */
+     copy. Each entry is a year and one line, and each year is one a
+     founder gave. */
   story: {
     'A-2-A': 'Started at the sales desk', // new
     'A-2-B': [
@@ -88,11 +88,13 @@ export const about = {
     ], // changed (24 Sep review): the fragmentation Charlie saw and the systems Taylor built, then the line both founders keep
     timeline: [
       { year: '2009', line: 'Charlie takes a first tailor-made trip, then travels the world.' },
-      { year: '2016', line: 'Charlie starts selling tailor-made travel.' },
+      { year: '2016', line: 'Charlie starts selling tailor-made travel, and Taylor starts building apps and platforms.' },
       { year: '2017', line: 'Charlie sees how fragmented the work behind every trip is.' },
+      { year: '2022', line: 'Charlie and Taylor meet in Bristol.' },
+      { year: '2023', line: 'They start planning the foundations of Tripcerto.' },
       { year: '2024', line: 'Tripcerto is incorporated.' },
-      { year: '2026', line: 'The pilot programme opens.' },
-    ], // new (24 Sep review): the years Charlie gave on the call and the company's own; Taylor's years, the meeting in Bristol, leaving to build it and the first investor wait on confirmed years
+      { year: '2026', line: 'Taylor goes full time on Tripcerto in April, and the pilot programme opens.' },
+    ], // new (24 Sep review): Charlie's years from the call and Taylor's after it (Bristol 2022, planning from 2023, full time from April 2026); Taylor's early years kept general, by Taylor's ask
   },
   /* The team, on the home page and on About (Taylor, 24 Sep): one section,
      the founders then the advisers. */
