@@ -3,7 +3,6 @@ import { ArrowRight } from 'lucide-react'
 import { Band } from '@/components/site/Band'
 import type { CloseLink } from '@/components/site/Close'
 import { Reveal } from '@/components/site/Reveal'
-import { delay } from '@/components/site/frames/motion'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -72,7 +71,7 @@ export function PageHero({
           </div>
           {visual && (
             <Reveal className="min-w-0">
-              <div className="animate-pop flex justify-center lg:justify-end" style={delay(0.15)}>
+              <div className="flex justify-center lg:justify-end">
                 {visual}
               </div>
             </Reveal>

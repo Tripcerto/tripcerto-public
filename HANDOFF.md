@@ -165,7 +165,10 @@ They are guidelines for the register, never lines to lift.
   inside it on its first frame until the frame is wholly on screen
   (`src/lib/view.ts`), so on a phone the hero waits to be scrolled into
   view; a site test fails on any frame animation outside a Reveal or a
-  still frame. Reduced motion shows the finished state. The phone's bezel
+  still frame. The frames themselves have no entrance (Taylor, 24 Sep):
+  they stand from the first paint in the story's opening state, the window
+  empty and the phone waiting, so a frame not yet wholly on screen shows
+  rather than leaving a blank band; only what happens inside them waits. Reduced motion shows the finished state. The phone's bezel
   sizes in its own width, corners and rim included, so it is the same
   drawing at every size and its corners never cut into the screen.
   Both frames are painted (`bg-band-frosted` / `bg-band-smoked`), so the

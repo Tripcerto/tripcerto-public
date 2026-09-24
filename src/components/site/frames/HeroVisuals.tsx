@@ -9,7 +9,10 @@ import { BEAT, HANDOFF } from '@/components/site/frames/trip'
    phone; once the phone has sent the trip (--handoff), the phone steps
    aside and back out of focus, the window comes forward into it and fills
    in from it, every entrance inside it held
-   back by the same time (--d0). Both are sized from the column width, so
+   back by the same time (--d0). Both frames stand from the first paint in
+   the story's opening state, so a pair not yet wholly on screen still
+   shows them; only what happens inside them waits for the Reveal. Both
+   are sized from the column width, so
    the pair keeps its shape from a phone screen to a 1680 shell. Once the
    story has played, Replay under the window plays it again from the start
    (a new key remounts the pair, and with it every entrance). */
@@ -22,9 +25,7 @@ export function HeroVisuals({ window, phone }: { window: ReactNode; phone: React
   return (
     <div key={run} className="relative mx-auto flow-root w-full max-w-[880px] lg:max-w-none" style={STORY}>
       <div className="animate-window-front relative mb-[9%] ml-[8%]">
-        <div className="animate-pop" style={delay(0.15)}>
-          <div style={HELD_BACK}>{window}</div>
-        </div>
+        <div style={HELD_BACK}>{window}</div>
         <button
           type="button"
           onClick={() => setRun((n) => n + 1)}
@@ -35,7 +36,7 @@ export function HeroVisuals({ window, phone }: { window: ReactNode; phone: React
           Replay
         </button>
       </div>
-      <div className="animate-pop absolute bottom-0 left-0 z-10 w-[36%]" style={delay(0.15)}>
+      <div className="absolute bottom-0 left-0 z-10 w-[36%]">
         <div className="animate-phone-back">
           <div className="animate-float" style={delay(1.6)}>
             {phone}
