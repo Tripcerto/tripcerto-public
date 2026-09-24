@@ -892,10 +892,9 @@ The founders went through the preview page by page. What changed, and why:
   name and a LinkedIn. The titles ("Adviser and investor" in particular),
   the years and the notes went. Gemini's action list says the LinkedIn
   links went too; the transcript ends with both founders keeping them.
-- Pilot. The headline is about speed, "Pilots go live in one week", from
-  both founders on the call and marked there as not final; no set-up time
-  has been promised to any operator, so it is a new promise and theirs to
-  settle. The lede is Charlie's. "What a pilot includes" was rebuilt from
+- Pilot. The headline is about speed, "Pilots go live in one week": a
+  promise both founders made, confirmed by Taylor after the call (no set-up
+  time had been promised to an operator before). The lede is Charlie's. "What a pilot includes" was rebuilt from
   what the founders told operators on their calls (one agreed slice, a
   light set-up on what the business already holds, a baseline and one
   agreed measure, a say in what comes next); Charlie had said the morning's
@@ -915,18 +914,32 @@ The founders went through the preview page by page. What changed, and why:
   automatic reply with the PDF and a row in the sales pipeline). Until the
   Vercel project holds `RESEND_API_KEY` the endpoint answers 503 and the
   form tells the reader to email hello@tripcerto.com instead, with a
-  prefilled link, so no request is lost silently. A hidden `website` field
+  prefilled link, so no request is lost silently. The product's own Resend
+  key is a Supabase function secret and cannot be read back; a key of the
+  website's own, restricted to sending from notifications.tripcerto.com, is
+  the one to add, so either can be revoked without the other. A hidden `website` field
   catches form fillers. `api/_http.ts` now holds what both functions share
-  (the origin check, the JSON read, the refusal). The privacy notice does
-  not yet mention pack requests; the form says what the email is used for,
-  and the notice needs a line before the forms go to production (legal
-  text waits for Taylor, as above).
+  (the origin check, the JSON read, the refusal). The privacy notice now
+  covers pack requests (Taylor, 24 Sep): what is collected, the use, the
+  basis (a step at the reader's request, then legitimate interest in
+  following up, which the reader can stop) and 24 months' retention in the
+  company email, matching enquiries.
+- Trust: "Tripcerto holds no certificate today and claims none" and the
+  promise to say so went from the programme (Taylor, 24 Sep); the page
+  still claims no certificate and still names the route to one.
+- Open: Charlie asked on the call that the registered office, a family
+  address, not be shown. The About page does not show it, but the privacy
+  notice and the terms do, and UK trading disclosure rules require a
+  company's website to state its registered office address, so it cannot
+  simply come off: the fix is a different registered office at Companies
+  House (an accountant's or a registered-office service), then the two
+  documents.
 - FAQ. The h1 is written to rank, as Charlie asked: "How does AI help
   travel companies plan and sell complex trips?", with the description,
   og:title and `llms.txt` to match; the tab keeps its one-word title, as
   `head.test.ts` holds. "Is Tripcerto certified? Not yet" is off the page
-  (Taylor: no need to say so on the public site today); the Trust page
-  still says no certificate is held. "How much do we need to build?" is
+  (Taylor: no need to say so on the public site today), and so is the
+  Trust page's line saying so (below). "How much do we need to build?" is
   new, the question operators asked most. The rest of the questions wait
   for the keyword research the founders plan after the videos.
 - About. The lede lost its "So". Under "Started at the sales desk" the

@@ -4,7 +4,7 @@
    Messaging Guide (22 Sep 2026): nothing reads as an instruction to the
    buyer, and the page sells the opportunity to try a pilot. It carries no
    price. The 24 Sep afternoon review turned it round: the headline says how
-   quickly a pilot starts, as both founders put it, the way in is the
+   quickly a pilot starts, a promise both founders made, the way in is the
    pilot's information pack, requested by email at the top and the foot,
    and what a pilot includes is what the founders have told operators on
    their calls, kept short. The five measures are what a pilot can prove, not what it
@@ -13,7 +13,7 @@
 export const pilot = {
   hero: {
     tag: 'The pilot programme is open', // new (24 Sep)
-    'P-1-A': 'Pilots go live in one week', // changed (24 Sep review): the founders' line on speed, still to be settled
+    'P-1-A': 'Pilots go live in one week', // changed (24 Sep review): a promise both founders made (Taylor, 24 Sep)
     'P-1-B': 'An easy-to-install pilot proves the business case before you commit more time or money.', // changed (24 Sep review): Charlie's
     'P-1-E': 'Get the pilot information pack by email', // new (24 Sep review): the form's label
     'P-1-C': 'Or book a call', // changed (24 Sep review): the second way in, under the form

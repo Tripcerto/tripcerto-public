@@ -100,7 +100,7 @@ export const trust = {
   programme: {
     'T-4-A': 'An information security management system aligned to ISO/IEC 27001',
     'T-4-B':
-      'The management system is written, approved and operating, and certification is what it is run towards. Tripcerto holds no certificate today and claims none.', // changed: the PDF asked for the programme and the direction of travel
+      'The management system is written, approved and operating, and certification is what it is run towards.', // changed: the PDF asked for the programme and the direction of travel; the line saying no certificate is held went (Taylor, 24 Sep)
     rows: [
       {
         name: 'Written and approved',
@@ -130,7 +130,7 @@ export const trust = {
       {
         name: 'The route',
         note: 'Cyber Essentials, then assessment',
-        line: 'Cyber Essentials first, then an independent internal audit, then the two-stage ISO/IEC 27001 assessment. Until a certificate is issued, this page will say that none is held.',
+        line: 'Cyber Essentials first, then an independent internal audit, then the two-stage ISO/IEC 27001 assessment.', // changed (24 Sep, Taylor): the promise to say none is held went
       },
     ], // added
   },
