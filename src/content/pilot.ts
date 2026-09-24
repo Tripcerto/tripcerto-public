@@ -21,8 +21,8 @@ export const pilot = {
   /* What a pilot includes, as the founders have described it to
      operators: one agreed slice, a light set-up on what the business
      already holds, a baseline and one measure agreed up front, and a hand
-     in what is built next. No set-up time or length is given, as none has
-     been. */
+     in what is built next. How quickly it starts is the headline's
+     promise; how long it runs is not given. */
   includes: {
     'P-7-A': 'What a pilot includes', // new (24 Sep)
     columns: [

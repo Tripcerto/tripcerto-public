@@ -53,7 +53,7 @@ export const founders: readonly Person[] = [
     facts: [
       { figure: '7+', label: 'years in scalable systems' },
       { figure: '5+', label: 'apps and platforms shipped' },
-    ], // new (24 Sep, Taylor: no Dyson; one line)
+    ], // new (24 Sep, Taylor: no employer named; one line)
     note: 'Leads the platform: product, architecture and engineering.', // new (24 Sep): the Our Team document's "all technical development and architecture"
     linkedin: LINKEDIN.taylor,
     photo: '/team/taylor-styles.webp',

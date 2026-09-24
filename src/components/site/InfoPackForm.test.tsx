@@ -16,7 +16,10 @@ describe('the information pack form', () => {
     render(<InfoPackForm pack="engage" />)
     await userEvent.type(screen.getByLabelText(pack.label), 'ops@operator.example')
     await userEvent.click(screen.getByRole('button', { name: pack.submit }))
-    expect(await screen.findByText(pack.sent)).toBeTruthy()
+    const thanks = await screen.findByText(pack.sent)
+    expect(thanks.getAttribute('role')).toBe('status')
+    expect(document.activeElement).toBe(thanks)
+    expect(screen.queryByRole('button', { name: pack.submit })).toBeNull()
     expect(fetch).toHaveBeenCalledWith('/api/info-pack', expect.objectContaining({ method: 'POST' }))
     const [, init] = fetch.mock.calls[0] as unknown as [string, RequestInit]
     expect(JSON.parse(init.body as string)).toEqual({ email: 'ops@operator.example', pack: 'engage', website: '' })

@@ -917,7 +917,11 @@ The founders went through the preview page by page. What changed, and why:
   prefilled link, so no request is lost silently. The product's own Resend
   key is a Supabase function secret and cannot be read back; a key of the
   website's own, restricted to sending from notifications.tripcerto.com, is
-  the one to add, so either can be revoked without the other. A hidden `website` field
+  the one to add, so either can be revoked without the other. When it
+  goes in, add a rate limit on `/api/info-pack` too (a Vercel firewall
+  rule is enough): the origin check stops other websites, not a script
+  that sets the header, so without one a loop could fill hello@ and use up
+  the Resend quota. A hidden `website` field
   catches form fillers. `api/_http.ts` now holds what both functions share
   (the origin check, the JSON read, the refusal). The privacy notice now
   covers pack requests (Taylor, 24 Sep): what is collected, the use, the
