@@ -959,6 +959,38 @@ The founders went through the preview page by page. What changed, and why:
   the filming plans, the social push, why the investor label came off, and
   every client or prospect named on the call.
 
+## The About timeline and the advisers' tiles (25 Sep)
+
+Taylor: "we can do better with this timeline". Three candidates went up
+behind a query switch: two paths joining in 2022, two ruled chapters, and
+one rail. He picked the rail ("right idea"), then sent it back twice ("it
+doesn't look nice", "the text isn't even enough, the final one is too
+big"). What he signed off:
+
+- One rail, the years in turn above and below it, each centred on its dot,
+  the years in two rows hugging the rail and the lines running outward. No
+  hairline stems. The rail fades in and out at both ends; the last dot is
+  ringed, as now. Below lg the rail runs down the left, as before.
+- Every line fills exactly two lines of one measure (15.5rem), so the
+  entries stand level. That is a copy rule as much as a layout one: a line
+  must be 40 to 64 characters, and `site.test.tsx` holds it. Measured in
+  Chrome: 42 to 63 characters set in two lines at every measure from 232px
+  to 275px.
+- The copy changes, by year, all marked in `about.ts`:
+  - 2016: "Charlie starts in travel sales, Taylor in building platforms." (was
+    both halves in one long line)
+  - 2022: "Taylor leaves New Zealand and meets Charlie in Bristol, UK."
+    (Taylor, 25 Sep)
+  - 2024: "Tripcerto Ltd is incorporated in December." (the month from the
+    company's own rows)
+  - 2026: "Both founders go full time, and the pilot programme opens." Both
+    founders left their jobs at the start of 2026 (Taylor, 25 Sep); this
+    replaces "Taylor full time from April 2026" in the 24 Sep section.
+- The advisers' tiles are laid out as a founder's opens: the portrait
+  beside the name, the LinkedIn under the name, both centred on the
+  portrait. One to a row on a phone, two from sm, four from xl, where each
+  name keeps to one line. The home page's team changes with it.
+
 ## Analytics (23 Sep)
 
 - Vercel Web Analytics counts every visitor with no cookie and no

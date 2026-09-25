@@ -61,14 +61,14 @@ function Facts({ facts, size }: { facts: readonly Fact[]; size: 'copy' | 'small'
   )
 }
 
-function LinkedIn({ person }: { person: Adviser }) {
+function LinkedIn({ person, className }: { person: Adviser; className?: string }) {
   if (!person.linkedin) return null
   return (
     <a
       href={person.linkedin}
       target="_blank"
       rel="noopener noreferrer"
-      className="mt-auto inline-flex min-h-11 items-center gap-1 self-start pt-2 text-small text-link underline-offset-4 hover:underline"
+      className={cn('inline-flex min-h-11 items-center gap-1 self-start text-small text-link underline-offset-4 hover:underline', className)}
     >
       LinkedIn
       <span className="sr-only">: {person.name} (opens in a new tab)</span>
@@ -95,20 +95,23 @@ function FounderTile({ person }: { person: Person }) {
       </div>
       <Facts facts={person.facts} size="copy" />
       <p className="mt-3 text-copy text-dim">{person.note}</p>
-      <LinkedIn person={person} />
+      <LinkedIn person={person} className="mt-auto pt-2" />
     </li>
   )
 }
 
-/* An adviser's tile, a step down from a founder's: the portrait, the
-   name under it and the LinkedIn at the foot, and nothing else (both
-   founders, 24 Sep afternoon review). */
+/* An adviser's tile, a step down from a founder's and laid out as a
+   founder's opens: the portrait beside the name, the LinkedIn under the
+   name, the two centred on the portrait, and nothing else (both founders,
+   24 Sep afternoon review). */
 function AdviserTile({ person }: { person: Adviser }) {
   return (
-    <li className="glass flex flex-col items-start gap-3 rounded-xl p-5 shadow-card">
+    <li className="glass flex items-center gap-4 rounded-xl p-5 shadow-card">
       <Portrait person={person} size={192} className="size-16 shrink-0 rounded-lg" />
-      <h4 className="text-subhead">{person.name}</h4>
-      <LinkedIn person={person} />
+      <div className="min-w-0">
+        <h4 className="text-subhead">{person.name}</h4>
+        <LinkedIn person={person} className="-mb-3 -mt-1.5" />
+      </div>
     </li>
   )
 }
@@ -128,9 +131,10 @@ function Group({ label, children }: { label: string; children: ReactNode }) {
    advisers, in tiles that keep one design at every width while the rows
    around them change, across the tiles' width (TILES) with the product
    tiles' gap, so the founders' edges meet the product tiles'. From lg the
-   founders sit two across and the advisers four; below it the founders
-   stand one above the other and the advisers two to a row, in the one
-   centred column. Whatever follows (the home page's way on to About) sits
+   founders sit two across, and below it one above the other, in the one
+   centred column. The advisers stand one to a row on a phone, two from sm
+   and four from xl, where the name beside each portrait keeps to one
+   line. Whatever follows (the home page's way on to About) sits
    under it. */
 export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: ReactNode }) {
   return (
@@ -145,7 +149,7 @@ export function Team({ tone, children }: { tone: 'page' | 'tint'; children?: Rea
           </ul>
         </Group>
         <Group label={team['A-3-C']}>
-          <ul role="list" className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {advisers.map((person) => (
               <AdviserTile key={person.name} person={person} />
             ))}

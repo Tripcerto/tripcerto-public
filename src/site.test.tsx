@@ -250,6 +250,28 @@ describe.each([
   })
 })
 
+/* The About story's timeline: each year a heading, in order, with its
+   line; and each line written to fill two lines of the timeline's measure,
+   so the entries above and below the rail stand level. The length is the
+   proxy jsdom can check for the rendered width: measured in Chrome, lines
+   of 42 to 63 characters set in two lines at every measure from 232px to
+   275px, and the timeline's is 248px. */
+describe('the About timeline', () => {
+  it('gives each year its line, in order', () => {
+    render(<AboutPage />)
+    const story = within(document.getElementById('why-tripcerto')!)
+    expect(story.getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(about.story.timeline.map((m) => m.year))
+    for (const { line } of about.story.timeline) story.getByText(line)
+  })
+
+  it('writes every line to fill two lines of the measure', () => {
+    for (const { line } of about.story.timeline) {
+      expect(line.length, line).toBeGreaterThanOrEqual(40)
+      expect(line.length, line).toBeLessThanOrEqual(64)
+    }
+  })
+})
+
 describe('home layer section', () => {
   it('sets Tripcerto between the customers and the experts, with a product for each side, on the business\'s own data', () => {
     render(<App />)

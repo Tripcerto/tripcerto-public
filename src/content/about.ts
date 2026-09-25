@@ -78,7 +78,8 @@ export const about = {
      Charlie, agreed by both founders): the founders did the work Tripcerto
      is built for long before they built it, which is what no one else can
      copy. Each entry is a year and one line, and each year is one a
-     founder gave. */
+     founder gave. Each line fills two lines of the timeline's measure,
+     between 40 and 64 characters, so the entries stand level. */
   story: {
     'A-2-A': 'Started at the sales desk', // new
     'A-2-B': [
@@ -88,13 +89,13 @@ export const about = {
     ], // changed (24 Sep review): the fragmentation Charlie saw and the systems Taylor built, then the line both founders keep
     timeline: [
       { year: '2009', line: 'Charlie takes a first tailor-made trip, then travels the world.' },
-      { year: '2016', line: 'Charlie starts selling tailor-made travel, and Taylor starts building apps and platforms.' },
+      { year: '2016', line: 'Charlie starts in travel sales, Taylor in building platforms.' }, // changed (25 Sep): two lines, as long as the others
       { year: '2017', line: 'Charlie sees how fragmented the work behind every trip is.' },
-      { year: '2022', line: 'Charlie and Taylor meet in Bristol.' },
+      { year: '2022', line: 'Taylor leaves New Zealand and meets Charlie in Bristol, UK.' }, // changed (25 Sep): the move from New Zealand, and where the founders met
       { year: '2023', line: 'They start planning the foundations of Tripcerto.' },
-      { year: '2024', line: 'Tripcerto is incorporated.' },
-      { year: '2026', line: 'Taylor goes full time on Tripcerto in April, and the pilot programme opens.' },
-    ], // new (24 Sep review): Charlie's years from the call and Taylor's after it (Bristol 2022, planning from 2023, full time from April 2026); Taylor's early years kept general, by Taylor's ask
+      { year: '2024', line: 'Tripcerto Ltd is incorporated in December.' }, // changed (25 Sep): two lines, as long as the others; the month from the company's rows
+      { year: '2026', line: 'Both founders go full time, and the pilot programme opens.' }, // changed (25 Sep): both founders full time from the start of 2026, in two lines
+    ], // new (24 Sep review): Charlie's years from the call and Taylor's after it (Bristol 2022, planning from 2023); Taylor's early years kept general, by Taylor's ask
   },
   /* The team, on the home page and on About (Taylor, 24 Sep): one section,
      the founders then the advisers. */
