@@ -84,9 +84,9 @@ export const about = {
     'A-2-A': 'Started at the sales desk', // new
     'A-2-B': [
       'Selling complex trips, Charlie dealt first-hand with how fragmented the work behind each one is: the rekeying, the searching and the checking.',
-      'Taylor spent the same years building systems that scale.',
+      '',
       'Tripcerto was started to give that time back to the expert.',
-    ], // changed (24 Sep review): the fragmentation Charlie saw and the systems Taylor built, then the line both founders keep
+    ], // changed (25 Sep): the fragmentation seen at the sales desk, a blank line, then the line both founders keep
     timeline: [
       { year: '2009', line: 'Charlie takes a first tailor-made trip, then travels the world.' },
       { year: '2016', line: 'Charlie starts in travel sales, Taylor in building platforms.' }, // changed (25 Sep): two lines, as long as the others
